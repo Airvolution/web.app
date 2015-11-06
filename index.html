@@ -3,34 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>AitU - Air Quality Monitoring</title>
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="bower_components/angular/angular.min.js"></script>
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="build/styles/css/app.min.css">
+    <script src="static/lib/js/jquery.min.js"></script>
+    <script src="static/lib/js/bootstrap.min.js"></script>
+    <script src="static/lib/js/angular.min.js"></script>
+    <link rel="stylesheet" href="static/lib/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/app.min.css">
 </head>
 <body ng-app="app">
-<div>
+<div class="container">
     <header>Header</header>
-    <nav class="container">Navigation
-        <ul class="nav nav-pills nav-stacked">
-            <li>Explore</li>
-            <li>Map</li>
-            <li>Almanac</li>
-            <li>Radar</li>
-        </ul>
-    </nav>
-    <main class="container">
-        <div class="row">
-            <section class="mainToolbox col-lg-1">ToolBox</section>
-            <section class="mainView col-lg-6">Main</section>
-            <section class="mainDetails col-lg-3">Details</section>
-        </div>
-    </main>
+    <div class="row">
+        <nav class="col-lg-2">Navigation
+            <ul class="nav nav-pills nav-stacked">
+                <li>Explore</li>
+                <li>Map</li>
+                <li>Almanac</li>
+                <li>Radar</li>
+            </ul>
+        </nav>
+        <main class="col-lg-10">
+            <div class="row">
+                <section class="mainToolbox col-lg-1">ToolBox</section>
+                <section class="mainView col-lg-8">Main</section>
+                <section class="mainDetails col-lg-3">Details</section>
+            </div>
+        </main>
+    </div>
+
     <footer>AirU Footer and About Us</footer>
 </div>
 <!--Resources-->
-<script src="bower_components/angular-resource/angular-resource.min.js"></script>
+<script src="static/lib/js/angular-resource.min.js"></script>
 
 <!--Controllers-->
 </body>

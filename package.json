@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prestart": "npm install && grunt",
-    "start": "http-server -a localhost -p 8084 -c-1"
+    "start": "http-server ./build -a localhost -p 8084 -c-1 verbose=true"
   },
   "repository": {
     "type": "git",
@@ -31,8 +31,10 @@
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-concat": "^0.5.1",
     "grunt-contrib-copy": "^0.8.2",
+    "grunt-contrib-cssmin": "^0.14.0",
     "grunt-contrib-less": "^1.0.1",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-subgrunt": "^1.0.0",
     "grunt-typescript": "^0.8.0",
     "http-server": "^0.8.5"
   }
