@@ -5,5 +5,3 @@ build/*
 *.map
 .idea
 .idea/*
-*.css
-*.min.css

@@ -11,9 +11,9 @@
 </head>
 <body ng-app="app">
 <div class="container">
-    <header>Header</header>
-    <div class="row">
-        <nav class="col-lg-2">Navigation
+    <header class="header row">Header</header>
+    <div id="mainContent" class="row">
+        <nav class="sidenav col-lg-2">Navigation
             <ul class="nav nav-pills nav-stacked">
                 <li>Explore</li>
                 <li>Map</li>
@@ -21,7 +21,7 @@
                 <li>Radar</li>
             </ul>
         </nav>
-        <main class="col-lg-10">
+        <main id="mainContainer" class="col-lg-10">
             <div class="row">
                 <section class="mainToolbox col-lg-1">ToolBox</section>
                 <section class="mainView col-lg-8">Main</section>
@@ -30,7 +30,7 @@
         </main>
     </div>
 
-    <footer>AirU Footer and About Us</footer>
+    <footer class="footer row">AirU Footer and About Us</footer>
 </div>
 <!--Resources-->
 <script src="static/lib/js/angular-resource.min.js"></script>
