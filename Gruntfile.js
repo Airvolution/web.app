@@ -37,6 +37,12 @@ module.exports = function (grunt) {
                 src: 'main.css',
                 dest: 'build/main_app.css'
             },
+            images_styles: {
+                src: 'bower_components/airu.web.styles/app/assets/images/*',
+                dest: 'build/static/images/',
+                flatten:true,
+                expand:true
+            },
             custom: {
                 nonull: true,
                 src: '<%= copy_src %>',
@@ -45,11 +51,33 @@ module.exports = function (grunt) {
                 flatten: true
             }
         },
+        bowercopy: {
+            options: {
+                srcPrefix: 'bower_components'
+            },
+            libs: {
+                options: {
+                    srcPrefix: 'bower_components',
+                    destPrefix: 'build/static/lib'
+                },
+                files: {
+                    'jquery': 'jquery/dist/*',
+                    'bootstrap': 'bootstrap/dist/**/*',
+                    'font-awesome/css': 'font-awesome/css',
+                    'font-awesome/fonts': 'font-awesome/fonts',
+                    'weather-icons/css': 'weather-icons/css',
+                    'weather-icons/font': 'weather-icons/font',
+                    'angular/js': 'angular/angular*.js',
+                    'angular-resource/js': 'angular-resource/angular-resource*.js',
+                    'angular-route/js': 'angular-route/angular-route*.js',
+                }
+            }
+        },
         concat: {
             styles: {
-                src: ['build/main_app.css','build/main_styles.css'],
+                src: ['build/main_app.css', 'build/main_styles.css'],
                 dest: 'build/static/css/app.css',
-                nonull:true
+                nonull: true
             }
         },
         cssmin: {
@@ -59,11 +87,11 @@ module.exports = function (grunt) {
             }
         },
         clean: {
-            all: ['build/**/*','build/*'],
-            build: ['build/main_styles.css', 'build/main_app.css', 'build/static/css/app.css']
+            all: ['build/**/*', 'build/*'],
+            build: ['build/main_styles.css', 'build/main_app.css', 'build/static/css/app.css', 'build/static/libs/js/npm.js']
         }
     });
-    grunt.config.set('typescript_src',['app/**/*.ts']);
+    grunt.config.set('typescript_src', ['app/**/*.ts']);
 
     grunt.loadNpmTasks('grunt-typescript');
     grunt.loadNpmTasks('grunt-subgrunt');
@@ -72,63 +100,13 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-bowercopy');
 
-    grunt.registerTask('copy:jquery',function(){
-        var done = this.async();
-        setTimeout(function(){
-            grunt.config.set('copy_src','bower_components/jquery/dist/jquery.min.js');
-            grunt.config.set('copy_dst', 'build/static/lib/js/');
-            grunt.task.run('copy:custom');
-            done();
-        });
-    });
 
-    grunt.registerTask('copy:bootstrap-css', function(){
-        var done = this.async();
-        setTimeout(function(){
-            grunt.config.set('copy_src','bower_components/bootstrap/dist/css/bootstrap.min.css');
-            grunt.config.set('copy_dst', 'build/static/lib/css/');
-            grunt.task.run('copy:custom');
-            done();
-        });
-    });
 
-    grunt.registerTask('copy:bootstrap-js', function(){
-        var done = this.async();
-        setTimeout(function(){
-            grunt.config.set('copy_src','bower_components/bootstrap/dist/js/bootstrap.min.js');
-            grunt.config.set('copy_dst', 'build/static/lib/js/');
-            grunt.task.run('copy:custom');
-            done();
-        });
-    });
-
-    grunt.registerTask('copy:bootstrap', ['copy:bootstrap-css', 'copy:bootstrap-js']);
-
-    grunt.registerTask('copy:angular-js',function(){
-        var done = this.async();
-        setTimeout(function(){
-            grunt.config.set('copy_src','bower_components/angular/angular.min.js');
-            grunt.config.set('copy_dst', 'build/static/lib/js//');
-            grunt.task.run('copy:custom');
-            done();
-        });
-    });
-
-    grunt.registerTask('copy:angular-resource', function(){
-        var done = this.async();
-        setTimeout(function(){
-            grunt.config.set('copy_src','bower_components/angular-resource/angular-resource.min.js');
-            grunt.config.set('copy_dst', 'build/static/lib/js/');
-            grunt.task.run('copy:custom');
-            done();
-        });
-    });
-
-    grunt.registerTask('copy:angular', ['copy:angular-js','copy:angular-resource']);
-    grunt.registerTask('build:app', ['typescript','copy:main']);
-    grunt.registerTask('build:libs', ['copy:jquery', 'copy:bootstrap','copy:angular']);
-    grunt.registerTask('build:styles', ['subgrunt:styles', 'copy:app_styles', 'copy:main_styles', 'concat:styles','cssmin:app']);
+    grunt.registerTask('build:app', ['typescript', 'copy:main']);
+    grunt.registerTask('build:libs', ['bowercopy:libs']);
+    grunt.registerTask('build:styles', ['subgrunt:styles', 'copy:app_styles', 'copy:main_styles', 'concat:styles', 'cssmin:app', 'copy:images_styles']);
     grunt.registerTask('build:dependencies', ['build:styles']);
     grunt.registerTask('build:all', ['clean:all', 'build:libs', 'build:dependencies', 'build:app', 'clean:build']); //release build
     grunt.registerTask('build:all-dirty', ['clean:all', 'build:libs', 'build:dependencies', 'build:app']); //don't clean generated files

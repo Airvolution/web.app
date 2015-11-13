@@ -3,37 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <title>AitU - Air Quality Monitoring</title>
-    <script src="static/lib/js/jquery.min.js"></script>
-    <script src="static/lib/js/bootstrap.min.js"></script>
-    <script src="static/lib/js/angular.min.js"></script>
-    <link rel="stylesheet" href="static/lib/css/bootstrap.min.css">
+    <script src="static/lib/jquery/jquery.min.js"></script>
+    <script src="static/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="static/lib/angular/js/angular.min.js"></script>
+    <link rel="stylesheet" href="static/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="static/lib/weather-icons/css/weather-icons.min.css">
     <link rel="stylesheet" href="static/css/app.min.css">
-</head>
 <body ng-app="app">
 <div class="container">
-    <header class="header row">Header</header>
+    <header class="header row">
+        <div class="headerzone col-lg-1" id="hamburger"><i class="fa fa-bars fa-3x"></i></div>
+        <div class="headerzone col-lg-1"><img src="static/images/uublock.png" alt="University of Utah"></div>
+        <!--
+        <div class="headerzone col-lg-2 col-lg-offset-1"><div id="quicklinks"><input type="text" placeholder="QuickLinks"/><i class="fa fa-search fa-2x"></i></div></div>
+        -->
+        <div class="headerzone col-lg-2 col-lg-offset-3" id="weather">
+            <div class="weather_wrapper">
+                <i class="fa fa-sun-o fa-3x"></i>
+                <i class="wi wi-thermometer fa-3x">
+                </i> <span class="high-temp">82</span>
+                <span class="low-temp">41</span>
+            </div>
+        </div>
+        <div class="headerzone col-lg-3" id="aqi">
+            <span class="epa-aqi-title">EPA AQI, <br/>Salt Lake City</span>
+            <span class="fa-stack fa-2x epa-aqi-icon">
+                <i class="fa fa-circle fa-stack-2x epa-aqi"></i><span class="fa-stack-1x epa-aqi-text">83</span>
+            </span></div>
+        <div class="headerzone col-lg-3" id="login">
+            <button class="btn btn-default btn-lg">Log In</button>
+            <button class="btn btn-default btn-lg">Sign Up</button>
+        </div>
+    </header>
     <div id="mainContent" class="row">
-        <nav class="sidenav col-lg-2">Navigation
+        <nav class="col-lg-2" id="navigation">
             <ul class="nav nav-pills nav-stacked">
-                <li>Explore</li>
-                <li>Map</li>
-                <li>Almanac</li>
-                <li>Radar</li>
+                <li><a>Almanac</a></li>
+                <li><a>Map</a></li>
+                <li><a>Radar</a></li>
+                <li><a>Compare</a></li>
+                <li><a>Indoor</a></li>
             </ul>
         </nav>
-        <main id="mainContainer" class="col-lg-10">
+        <div id="mainContainer" class="col-lg-10">
             <div class="row">
-                <section class="mainToolbox col-lg-1">ToolBox</section>
-                <section class="mainView col-lg-8">Main</section>
-                <section class="mainDetails col-lg-3">Details</section>
+                <section class="col-lg-1" id="toolbox">
+                    <ul>
+                        <li>
+                            <div class="tool-wrapper">tool1</div>
+                        </li>
+                        <li>
+                            <div class="tool-wrapper">tool2</div>
+                        </li>
+                        <li>
+                            <div class="tool-wrapper">tool3</div>
+                        </li>
+                        <li>
+                            <div class="tool-wrapper">tool4</div>
+                        </li>
+                    </ul>
+                </section>
+                <section class="col-lg-11 main-wrapper">
+                    <main>
+                        Main
+                    </main>
+                </section>
+
+                <section class="col-lg-4" id="details">
+                    <div class="panel">
+                        <span class="panel-title">Panel 1</span>
+
+                        <div class="panel-body">
+                            <img src="static/images/uublock.png" alt="logo">
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <span class="panel-title">Panel 2</span>
+
+                        <div class="panel-body">
+                            <div>some text</div>
+                            <br/>
+
+                            <div>some more text</div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <span class="panel-title">Panel 3</span>
+
+                        <div class="panel-body">
+                            <label for="text1">Field</label>
+                            <input id="text1" type="text">
+                            <label for="text2">Status</label>
+                            <input id="text2" type="text">
+                            <label for="text3">Other thing</label>
+                            <input id="text3" type="text">
+                            <label for="text4">More thing</label>
+                            <input id="text4" type="text">
+                        </div>
+                    </div>
+                </section>
             </div>
-        </main>
+        </div>
+    </div>
+    <div class="row">
+        <footer class="col-lg-12">
+            <span><a href="">About Us</a></span>
+            |
+            <span><a href="">Contact Us</a></span>
+            |
+            <span><a href="">FAQs</a></span>
+            |
+            <span><a href="">Disclaimer</a></span>
+        </footer>
     </div>
 
-    <footer class="footer row">AirU Footer and About Us</footer>
 </div>
 <!--Resources-->
-<script src="static/lib/js/angular-resource.min.js"></script>
+<script src="static/lib/angular-resource/js/angular-resource.min.js"></script>
 
 <!--Controllers-->
 </body>
