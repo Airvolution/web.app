@@ -1,9 +1,9 @@
-///<reference path="../../typings/tsd.d.ts"/>
+///<reference path="../../../typings/tsd.d.ts"/>
 import angular = require('angular');
 export = SiteNavDirective;
 
 class SiteNavDirective implements ng.IDirective {
-    public name = "siteNav";
+    public static htmlName:string = "siteNav";
     public templateUrl = "app/templates/siteNav.html";
     public restrict = "E";
 

@@ -3,14 +3,10 @@
   "version": "1.0.0",
   "description": "AirU Web Application",
   "main": "index.js",
-  "browserify": {
-    "transform": [
-      "debowerify"
-    ]
-  },
   "scripts": {
     "prestart": "npm install && grunt",
-    "start": "http-server ./build -a localhost -p 8084 -c-1 verbose=true"
+    "start": "http-server ./build -a localhost -p 8084 -c-1 verbose=true",
+    "start-no-build" : "http-server ./build -a localhost -p 8084 -c-1 verbose=true"
   },
   "repository": {
     "type": "git",
@@ -31,8 +27,6 @@
   "homepage": "https://gitlab.com/jmoore1127/airu.web.app#README",
   "dependencies": {
     "bower": "^1.6.5",
-    "browserify": "^12.0.1",
-    "debowerify": "^1.3.1",
     "grunt": "^0.4.5",
     "grunt-bowercopy": "^1.2.3",
     "grunt-browserify": "^4.0.1",
@@ -47,6 +41,9 @@
     "grunt-subgrunt": "^1.0.0",
     "grunt-typescript": "^0.8.0",
     "http-server": "^0.8.5",
-    "tsify": "^0.12.2"
+    "requirejs": "^2.1.22"
+  },
+  "devDependencies": {
+    "grunt-ts": "^5.1.1"
   }
 }

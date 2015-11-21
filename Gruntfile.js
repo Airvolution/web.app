@@ -11,32 +11,46 @@ module.exports = function (grunt) {
                 command: "browserify -p [ tsify --noImplicitAny ] -t debowerify app/**/*.ts -o build/static/js/app.js"
             }
         },
-        browserify: {
-            build: {
-                options: {
-                    plugin: ['tsify'],
-                },
-                files: {
-                    'build/static/js/app.js' : ['app/app.ts']
-                }
-            }
-        },
         subgrunt: {
             styles: {
                 'bower_components/airu.web.styles': 'default'
             }
         },
-        typescript: {
-            base: {
-                src: '<%= typescript_src %>',
-                options: {
+        ts: {
+            dev: {
+                files:{
+                    'build/app' : ['*.ts', "!node_modules/**/*.ts","!bower_components/**/*.ts","!**/*.d.ts"],
+                    'build/app/js' : ['app/**/*.ts']
+                },
+                options:{
                     module: 'amd',
                     sourceMap: true,
-                    target: 'es5'
+                    target: 'es5',
+                    verbose: true,
+                    outDir: 'build/static/js'
+
+                }
+            },
+            release: {
+                files:{
+                    'build/app' : ['*.ts', "!node_modules/**/*.ts","!bower_components/**/*.ts","!**/*.d.ts"],
+                    'build/app/js' : ['app/**/*.ts']
+                },
+                options: {
+                    module: 'amd',
+                    sourceMap: false,
+                    target: 'es5',
+                    outDir: 'build/static/js'
                 }
             }
         },
         copy: {
+            templates: {
+                src: 'app/**/*.html',
+                dest: 'build/app/templates/',
+                expand:true,
+                flatten:true
+            },
             main: {
                 nonull: true,
                 src: 'index.html',
@@ -44,8 +58,13 @@ module.exports = function (grunt) {
             },
             main_require: {
                 nonull: true,
-                src: 'main.js',
-                dest: 'build/static/js/main.js'
+                src: ['main.js','app.js'],
+                dest: 'build/app/js/'
+            },
+            main_require_dev: {
+                nonull: true,
+                src: ['main*.js','app*.js'],
+                dest: 'build/app/js/'
             },
             main_styles: {
                 nonull: true,
@@ -85,7 +104,12 @@ module.exports = function (grunt) {
                     'font-awesome/css': 'font-awesome/css',
                     'font-awesome/fonts': 'font-awesome/fonts',
                     'weather-icons/css': 'weather-icons/css',
-                    'weather-icons/font': 'weather-icons/font'
+                    'weather-icons/font': 'weather-icons/font',
+                    'jquery': 'jquery/dist/*',
+                    'angular/js': 'angular/angular*.js',
+                    'angular-resource/js': 'angular-resource/angular-resource*.js',
+                    'angular-route/js': 'angular-route/angular-route*.js',
+                    'requirejs': 'requirejs*/*.js',
                 }
             }
         },
@@ -107,9 +131,8 @@ module.exports = function (grunt) {
             build: ['build/main_styles.css', 'build/main_app.css', 'build/static/css/app.css', 'build/static/libs/js/npm.js']
         }
     });
-    grunt.config.set('typescript_src', ['app/**/*.ts']);
 
-    grunt.loadNpmTasks('grunt-typescript');
+    grunt.loadNpmTasks('grunt-ts');
     grunt.loadNpmTasks('grunt-subgrunt');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-concat');
@@ -117,19 +140,20 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-bowercopy');
-    grunt.loadNpmTasks('grunt-browserify');
     grunt.loadNpmTasks('grunt-shell');
 
 
-    grunt.registerTask('build:app', ['browserify:build', 'copy:main']);
+    grunt.registerTask('build:app_dev', ['ts:dev', 'copy:main','copy:main_require_dev','copy:templates']);
+    grunt.registerTask('build:app_release', ['ts:release', 'copy:main','copy:main_require','copy:templates']);
     grunt.registerTask('build:libs', ['bowercopy:libs']);
     grunt.registerTask('build:styles', ['subgrunt:styles', 'copy:app_styles', 'copy:main_styles', 'concat:styles', 'cssmin:app', 'copy:images_styles']);
     grunt.registerTask('build:dependencies', ['build:styles']);
-    grunt.registerTask('build:all', ['clean:all', 'build:libs', 'build:dependencies', 'build:app', 'clean:build']); //release build
+    grunt.registerTask('build:dev', ['clean:all', 'build:libs', 'build:dependencies', 'build:app_dev', 'clean:build']); //release build
+    grunt.registerTask('build:release', ['clean:all', 'build:libs', 'build:dependencies', 'build:app_release', 'clean:build']); //release build
     grunt.registerTask('build:all-dirty', ['clean:all', 'build:libs', 'build:dependencies', 'build:app']); //don't clean generated files
 
     // Default task
-    grunt.registerTask('default', ['build:all']);
+    grunt.registerTask('default', ['build:dev']);
 };
 
 /*  'jquery': 'jquery/dist/*',
