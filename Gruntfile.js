@@ -6,6 +6,21 @@ module.exports = function (grunt) {
     grunt.initConfig({
 
         pkg: grunt.file.readJSON('package.json'),
+        shell: {
+            test: {
+                command: "browserify -p [ tsify --noImplicitAny ] -t debowerify app/**/*.ts -o build/static/js/app.js"
+            }
+        },
+        browserify: {
+            build: {
+                options: {
+                    plugin: ['tsify'],
+                },
+                files: {
+                    'build/static/js/app.js' : ['app/app.ts']
+                }
+            }
+        },
         subgrunt: {
             styles: {
                 'bower_components/airu.web.styles': 'default'
@@ -26,6 +41,11 @@ module.exports = function (grunt) {
                 nonull: true,
                 src: 'index.html',
                 dest: 'build/index.html'
+            },
+            main_require: {
+                nonull: true,
+                src: 'main.js',
+                dest: 'build/static/js/main.js'
             },
             main_styles: {
                 nonull: true,
@@ -61,15 +81,11 @@ module.exports = function (grunt) {
                     destPrefix: 'build/static/lib'
                 },
                 files: {
-                    'jquery': 'jquery/dist/*',
                     'bootstrap': 'bootstrap/dist/**/*',
                     'font-awesome/css': 'font-awesome/css',
                     'font-awesome/fonts': 'font-awesome/fonts',
                     'weather-icons/css': 'weather-icons/css',
-                    'weather-icons/font': 'weather-icons/font',
-                    'angular/js': 'angular/angular*.js',
-                    'angular-resource/js': 'angular-resource/angular-resource*.js',
-                    'angular-route/js': 'angular-route/angular-route*.js',
+                    'weather-icons/font': 'weather-icons/font'
                 }
             }
         },
@@ -101,10 +117,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-bowercopy');
+    grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-shell');
 
 
-
-    grunt.registerTask('build:app', ['typescript', 'copy:main']);
+    grunt.registerTask('build:app', ['browserify:build', 'copy:main']);
     grunt.registerTask('build:libs', ['bowercopy:libs']);
     grunt.registerTask('build:styles', ['subgrunt:styles', 'copy:app_styles', 'copy:main_styles', 'concat:styles', 'cssmin:app', 'copy:images_styles']);
     grunt.registerTask('build:dependencies', ['build:styles']);
@@ -114,3 +131,9 @@ module.exports = function (grunt) {
     // Default task
     grunt.registerTask('default', ['build:all']);
 };
+
+/*  'jquery': 'jquery/dist/*',
+    'angular/js': 'angular/angular*.js',
+    'angular-resource/js': 'angular-resource/angular-resource*.js',
+    'angular-route/js': 'angular-route/angular-route*.js'
+ */

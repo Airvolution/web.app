@@ -5,3 +5,5 @@ build/*
 *.map
 .idea
 .idea/*
+app/*.js
+*.map.js
