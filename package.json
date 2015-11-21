@@ -1,0 +1,42 @@
+{
+  "name": "airu.web.app",
+  "version": "1.0.0",
+  "description": "AirU Web Application",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "npm install && grunt",
+    "start": "http-server ./build -a localhost -p 8084 -c-1 verbose=true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/jmoore1127/airu.web.app.git"
+  },
+  "keywords": [
+    "AirU",
+    "Air",
+    "Quality",
+    "Web",
+    "App"
+  ],
+  "author": "AirU",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/jmoore1127/airu.web.app/issues"
+  },
+  "homepage": "https://gitlab.com/jmoore1127/airu.web.app#README",
+  "dependencies": {
+    "bower": "^1.6.5",
+    "grunt": "^0.4.5",
+    "grunt-bowercopy": "^1.2.3",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-copy": "^0.8.2",
+    "grunt-contrib-cssmin": "^0.14.0",
+    "grunt-contrib-less": "^1.0.1",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-subgrunt": "^1.0.0",
+    "grunt-typescript": "^0.8.0",
+    "http-server": "^0.8.5"
+  }
+}

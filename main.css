@@ -1,0 +1,61 @@
+html,body {
+    height:100%;
+}
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+/* Content Below this point should be moved to styles, it is here for now to help with the skeleton */
+
+nav, section, header, footer, details {
+    border: 1px dotted black;
+}
+
+#mainContent{
+    height: 100%;
+}
+
+.header {
+    background-color: #00b3ee;
+    height: 50px;
+}
+.footer {
+    background-color: #0d3349;
+    height: 75px;
+}
+
+.sidenav {
+    background-color: #4d2926;
+    height: inherit;
+}
+
+.mainToolbox {
+    background-color: #7a43b6;
+    height: inherit;
+}
+
+.mainView {
+    background-color: #00ee00;
+    height: inherit;
+}
+
+.mainDetails {
+    background-color: #985f0d;
+    height: inherit;
+}
+
+.sidenav li {
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 10px 5px;
+    text-align: center;
+}
+
+#mainContainer {
+    height: 100%;
+}
+
+#mainContainer>div {
+    height: 100%;
+}
