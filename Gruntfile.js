@@ -27,7 +27,7 @@ module.exports = function (grunt) {
                     sourceMap: true,
                     target: 'es5',
                     verbose: true,
-                    outDir: 'build/static/js'
+                    outDir: 'build/app/js'
 
                 }
             },
@@ -40,7 +40,7 @@ module.exports = function (grunt) {
                     module: 'amd',
                     sourceMap: false,
                     target: 'es5',
-                    outDir: 'build/static/js'
+                    outDir: 'build/app/js'
                 }
             }
         },
@@ -55,16 +55,6 @@ module.exports = function (grunt) {
                 nonull: true,
                 src: 'index.html',
                 dest: 'build/index.html'
-            },
-            main_require: {
-                nonull: true,
-                src: ['main.js','app.js'],
-                dest: 'build/app/js/'
-            },
-            main_require_dev: {
-                nonull: true,
-                src: ['main*.js','app*.js'],
-                dest: 'build/app/js/'
             },
             main_styles: {
                 nonull: true,
@@ -110,6 +100,8 @@ module.exports = function (grunt) {
                     'angular-resource/js': 'angular-resource/angular-resource*.js',
                     'angular-route/js': 'angular-route/angular-route*.js',
                     'requirejs': 'requirejs*/*.js',
+                    'leaflet': 'leaflet/dist/**/*',
+                    'Leaflet-HeatMap': 'Leaflet-HeatMap/dist/**/*'
                 }
             }
         },
@@ -143,8 +135,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-shell');
 
 
-    grunt.registerTask('build:app_dev', ['ts:dev', 'copy:main','copy:main_require_dev','copy:templates']);
-    grunt.registerTask('build:app_release', ['ts:release', 'copy:main','copy:main_require','copy:templates']);
+    grunt.registerTask('build:app_dev', ['ts:dev', 'copy:main','copy:templates']);
+    grunt.registerTask('build:app_release', ['ts:release', 'copy:main','copy:templates']);
     grunt.registerTask('build:libs', ['bowercopy:libs']);
     grunt.registerTask('build:styles', ['subgrunt:styles', 'copy:app_styles', 'copy:main_styles', 'concat:styles', 'cssmin:app', 'copy:images_styles']);
     grunt.registerTask('build:dependencies', ['build:styles']);
