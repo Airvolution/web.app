@@ -2,15 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AirU - Air Quality Monitoring</title>
-    <script src="static/lib/jquery/jquery.min.js"></script>
-    <script src="static/lib/bootstrap/js/bootstrap.min.js"></script>
-    <script src="static/lib/angular/js/angular.min.js"></script>
     <link rel="stylesheet" href="static/lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/lib/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="static/lib/weather-icons/css/weather-icons.min.css">
     <link rel="stylesheet" href="static/css/app.min.css">
-<body ng-app="app">
+    <script src="static/lib/requirejs/require.js" data-main="app/main.js"></script>
+    <style>
+        [ng-cloak] {
+            display: none;
+        }
+    </style>
+<body ng-cloak>
 <div class="container">
     <header class="header row">
         <div class="headerzone col-lg-1" id="hamburger"><i class="fa fa-bars fa-3x"></i></div>
@@ -37,15 +39,7 @@
         </div>
     </header>
     <div id="mainContent" class="row">
-        <nav class="col-lg-2" id="navigation">
-            <ul class="nav nav-pills nav-stacked">
-                <li><a>Almanac</a></li>
-                <li><a>Map</a></li>
-                <li><a>Radar</a></li>
-                <li><a>Compare</a></li>
-                <li><a>Indoor</a></li>
-            </ul>
-        </nav>
+       <site-nav></site-nav>
         <div id="mainContainer" class="col-lg-10">
             <div class="row">
                 <section class="col-lg-1" id="toolbox">
@@ -64,10 +58,7 @@
                         </li>
                     </ul>
                 </section>
-                <section class="col-lg-11 main-wrapper">
-                    <main>
-                        Main
-                    </main>
+                <section class="col-lg-11 main-wrapper" ng-view>
                 </section>
 
                 <section class="col-lg-4" id="details">
@@ -117,12 +108,6 @@
             <span><a href="">Disclaimer</a></span>
         </footer>
     </div>
-
 </div>
-<!--Resources-->
-<script src="static/lib/angular-resource/js/angular-resource.min.js"></script>
-<script src="static/lib/angular-route/js/angular-route.min.js"></script>
-
-<!--Controllers-->
 </body>
 </html>
