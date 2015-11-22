@@ -3,7 +3,6 @@
 require.config({
     baseUrl:'./',
     paths: {
-        'app': '/app/app',
         'services': '/app/js/services/module',
         'controllers': '/app/js/controllers/module',
         'directives': '/app/js/directives/module',
@@ -12,7 +11,8 @@ require.config({
         'angular-route': '/static/lib/angular-route/js/angular-route',
         'angular-resource': '/static/lib/angular-resource/js/angular-resource',
         'bootstrap': '/static/lib/bootstrap/js/bootstrap',
-        'leaflet': '/static/lib/leaflet/leaflet'
+        'leaflet': '/static/lib/leaflet/leaflet',
+        'leaflet-heatmap': 'static/lib/leaflet-heatmap/leaflet-heat'
     },
 
     shim: {
@@ -25,12 +25,16 @@ require.config({
         'bootstrap': ['jquery'],
         'leaflet': {
             exports: 'L'
+        },
+        'leaflet-heatmap': {
+            exports: 'L',
+            deps: ['leaflet']
         }
     }
 });
 
 // startup the application
-require(['angular', 'leaflet', 'app'],
+require(['angular', 'app'],
     function (angular,app) {
                 angular.bootstrap(document, ['app']);
     }

@@ -55,12 +55,6 @@ module.exports = function (grunt) {
             }
         },
         copy: {
-            require_temp: {
-                src: ['app.js*', 'main.js*'],
-                dest: 'build/app/',
-                cwd:'build/',
-                flatten:true,
-            },
             templates: {
                 src: 'app/**/*.html',
                 dest: 'build/app/templates/',
@@ -116,6 +110,8 @@ module.exports = function (grunt) {
                     'angular-resource/js': 'angular-resource/angular-resource*.js',
                     'angular-route/js': 'angular-route/angular-route*.js',
                     'requirejs': 'requirejs*/*.js',
+                    'leaflet': 'leaflet/dist/**/*',
+                    'leaflet-heatmap': 'leaflet-heatmap/dist/*'
                 }
             }
         },
@@ -134,7 +130,7 @@ module.exports = function (grunt) {
         },
         clean: {
             all: ['build/**/*', 'build/*'],
-            build: ['build/main_styles.css', 'build/main_app.css', 'build/static/css/app.css', 'build/static/libs/js/npm.js','build/app.js*','build/main.js*']
+            build: ['build/main_styles.css', 'build/main_app.css', 'build/static/css/app.css', 'build/static/libs/js/npm.js']
         }
     });
 
@@ -149,8 +145,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-shell');
 
 
-    grunt.registerTask('build:app_dev', ['typescript:require_dev','typescript:dev', 'copy:require_temp','copy:main','copy:templates']);
-    grunt.registerTask('build:app_release', ['typescript:require_release','typescript:release','copy:require_temp','copy:main','copy:templates']);
+    grunt.registerTask('build:app_dev', ['typescript:require_dev','typescript:dev', 'copy:main','copy:templates']);
+    grunt.registerTask('build:app_release', ['typescript:require_release','typescript:release','copy:main','copy:templates']);
     grunt.registerTask('build:libs', ['bowercopy:libs']);
     grunt.registerTask('build:styles', ['subgrunt:styles', 'copy:app_styles', 'copy:main_styles', 'concat:styles', 'cssmin:app', 'copy:images_styles']);
     grunt.registerTask('build:dependencies', ['build:styles']);
@@ -166,4 +162,14 @@ module.exports = function (grunt) {
     'angular/js': 'angular/angular*.js',
     'angular-resource/js': 'angular-resource/angular-resource*.js',
     'angular-route/js': 'angular-route/angular-route*.js'
+
+
+ require_temp: {
+ src: ['app.js*', 'main.js*'],
+ dest: 'build/app/',
+ cwd:'build/',
+ flatten:true,
+ },
+
+ build: ['build/main_styles.css', 'build/main_app.css', 'build/static/css/app.css', 'build/static/libs/js/npm.js','build/app.js*','build/main.js*']
  */
