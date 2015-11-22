@@ -11,7 +11,8 @@ require.config({
         'angular': '/static/lib/angular/js/angular',
         'angular-route': '/static/lib/angular-route/js/angular-route',
         'angular-resource': '/static/lib/angular-resource/js/angular-resource',
-        'bootstrap': '/static/lib/bootstrap/js/bootstrap'
+        'bootstrap': '/static/lib/bootstrap/js/bootstrap',
+        'leaflet': '/static/lib/leaflet/leaflet'
     },
 
     shim: {
@@ -21,12 +22,15 @@ require.config({
         },
         'angular-route': ['angular'],
         'angular-resource': ['angular'],
-        'bootstrap': ['jquery']
+        'bootstrap': ['jquery'],
+        'leaflet': {
+            exports: 'L'
+        }
     }
 });
 
 // startup the application
-require(['angular', 'app'],
+require(['angular', 'leaflet', 'app'],
     function (angular,app) {
                 angular.bootstrap(document, ['app']);
     }
