@@ -16,35 +16,51 @@ module.exports = function (grunt) {
                 'bower_components/airu.web.styles': 'default'
             }
         },
-        ts: {
-            dev: {
-                files:{
-                    'build/app' : ['*.ts', "!node_modules/**/*.ts","!bower_components/**/*.ts","!**/*.d.ts"],
-                    'build/app/js' : ['app/**/*.ts']
-                },
-                options:{
-                    module: 'amd',
+        typescript: {
+            require_dev: {
+                options: {
                     sourceMap: true,
+                    module: 'amd',
                     target: 'es5',
-                    verbose: true,
-                    outDir: 'build/static/js'
-
-                }
+                },
+                src: ['app.ts','main.ts'],
+                dest: 'build'
+            },
+            dev: {
+                options: {
+                    sourceMap: true,
+                    module: 'amd',
+                    target: 'es5',
+                },
+                src: ['**/*.ts','!app.ts','!main.ts','!node_modules/**/*.ts','!bower_components/**/*.ts',"!**/*.d.ts"],
+                dest: 'build/app'
+            },
+            require_release: {
+                options: {
+                    sourceMap: false,
+                    module: 'amd',
+                    target: 'es5',
+                },
+                src: ['app.ts','main.ts'],
+                dest: 'build'
             },
             release: {
-                files:{
-                    'build/app' : ['*.ts', "!node_modules/**/*.ts","!bower_components/**/*.ts","!**/*.d.ts"],
-                    'build/app/js' : ['app/**/*.ts']
-                },
                 options: {
-                    module: 'amd',
                     sourceMap: false,
+                    module: 'amd',
                     target: 'es5',
-                    outDir: 'build/static/js'
-                }
+                },
+                src: ['**/*.ts','!app.ts','!main.ts','!node_modules/**/*.ts','!bower_components/**/*.ts',"!**/*.d.ts"],
+                dest: 'build/app'
             }
         },
         copy: {
+            require_temp: {
+                src: ['app.js*', 'main.js*'],
+                dest: 'build/app/',
+                cwd:'build/',
+                flatten:true,
+            },
             templates: {
                 src: 'app/**/*.html',
                 dest: 'build/app/templates/',
@@ -55,16 +71,6 @@ module.exports = function (grunt) {
                 nonull: true,
                 src: 'index.html',
                 dest: 'build/index.html'
-            },
-            main_require: {
-                nonull: true,
-                src: ['main.js','app.js'],
-                dest: 'build/app/js/'
-            },
-            main_require_dev: {
-                nonull: true,
-                src: ['main*.js','app*.js'],
-                dest: 'build/app/js/'
             },
             main_styles: {
                 nonull: true,
@@ -128,11 +134,11 @@ module.exports = function (grunt) {
         },
         clean: {
             all: ['build/**/*', 'build/*'],
-            build: ['build/main_styles.css', 'build/main_app.css', 'build/static/css/app.css', 'build/static/libs/js/npm.js']
+            build: ['build/main_styles.css', 'build/main_app.css', 'build/static/css/app.css', 'build/static/libs/js/npm.js','build/app.js*','build/main.js*']
         }
     });
 
-    grunt.loadNpmTasks('grunt-ts');
+    grunt.loadNpmTasks('grunt-typescript');
     grunt.loadNpmTasks('grunt-subgrunt');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-concat');
@@ -143,8 +149,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-shell');
 
 
-    grunt.registerTask('build:app_dev', ['ts:dev', 'copy:main','copy:main_require_dev','copy:templates']);
-    grunt.registerTask('build:app_release', ['ts:release', 'copy:main','copy:main_require','copy:templates']);
+    grunt.registerTask('build:app_dev', ['typescript:require_dev','typescript:dev', 'copy:require_temp','copy:main','copy:templates']);
+    grunt.registerTask('build:app_release', ['typescript:require_release','typescript:release','copy:require_temp','copy:main','copy:templates']);
     grunt.registerTask('build:libs', ['bowercopy:libs']);
     grunt.registerTask('build:styles', ['subgrunt:styles', 'copy:app_styles', 'copy:main_styles', 'concat:styles', 'cssmin:app', 'copy:images_styles']);
     grunt.registerTask('build:dependencies', ['build:styles']);
