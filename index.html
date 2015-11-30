@@ -7,17 +7,20 @@
     <link rel="stylesheet" href="static/lib/weather-icons/css/weather-icons.min.css">
     <link rel="stylesheet" href="/static/lib/leaflet/leaflet.css"/>
     <link rel="stylesheet" href="static/css/app.min.css">
-    <script src="static/lib/requirejs/require.js" data-main="main.js"></script>
-    <style>
-        [ng-cloak] {
-            display: none;
-        }
-    </style>
-<body ng-cloak>
+    <script src="static/lib/jquery/jquery.js"></script>
+    <script src="static/lib/angular/js/angular.js"></script>
+    <script src="static/lib/angular-route/js/angular-route.js"></script>
+    <script src="static/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="static/lib/leaflet/leaflet.js"></script>
+    <script src="static/lib/leaflet-heatmap/leaflet-heat.js"></script>
+    <script src="static/lib/angular-simple-logger/angular-simple-logger.js"></script>
+    <script src="static/lib/ui-leaflet/ui-leaflet.js"></script>
+    <script src="app/app.js"></script>
+<body ng-app="app" ng-cloak>
 <div class="container">
     <header class="header row">
         <div class="headerzone col-lg-1" id="hamburger"><i class="fa fa-bars fa-3x"></i></div>
-        <div class="headerzone col-lg-1"><img src="static/images/uublock.png" alt="University of Utah"></div>
+        <div class="headerzone col-lg-1"><img src="static/images/AirU.png" alt="University of Utah"></div>
         <!--
         <div class="headerzone col-lg-2 col-lg-offset-1"><div id="quicklinks"><input type="text" placeholder="QuickLinks"/><i class="fa fa-search fa-2x"></i></div></div>
         -->
@@ -59,7 +62,7 @@
                         </li>
                     </ul>
                 </section>
-                <section class="col-lg-11 main-wrapper" ng-view>
+                <section class="col-lg-12 main-wrapper" ng-view >
                 </section>
 
                 <section class="col-lg-4" id="details">
@@ -67,7 +70,7 @@
                         <span class="panel-title">Panel 1</span>
 
                         <div class="panel-body">
-                            <img src="static/images/uublock.png" alt="logo">
+                            <img src="static/images/AirU.png" alt="logo">
                         </div>
                     </div>
                     <div class="panel">

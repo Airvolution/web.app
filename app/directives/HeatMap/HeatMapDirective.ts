@@ -1,5 +1,4 @@
 ///<reference path="../../../typings/tsd.d.ts"/>
-import angular = require('angular');
 export = HeatMapDirective;
 
 class HeatMapDirective implements ng.IDirective {

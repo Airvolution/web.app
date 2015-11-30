@@ -20,8 +20,6 @@
     "bootstrap": "~3.3.5",
     "font-awesome": "~4.4.0",
     "weather-icons": "~2.0.10",
-    "requirejs": "~2.1.22",
-    "requirejs-domready": "~2.0.1",
     "leaflet": "~0.7.7",
     "leaflet-heatmap": "https://github.com/Leaflet/Leaflet.heat.git#gh-pages"
   }

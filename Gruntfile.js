@@ -7,8 +7,24 @@ module.exports = function (grunt) {
 
         pkg: grunt.file.readJSON('package.json'),
         shell: {
-            test: {
-                command: "browserify -p [ tsify --noImplicitAny ] -t debowerify app/**/*.ts -o build/static/js/app.js"
+            webpack:{
+                command: "webpack"
+            }
+        },
+        webpack: {
+            base: {
+                entry: './app.ts',
+                output: {
+                    filename: 'build/app/app.js'
+                },
+                resolve: {
+                    extensions: ['', '.webpack.js', '.web.js', '.ts', '.js']
+                },
+                module: {
+                    loaders: [
+                        {test: /\.ts$/, loader: 'ts-loader'}
+                    ]
+                }
             }
         },
         subgrunt: {
@@ -17,41 +33,21 @@ module.exports = function (grunt) {
             }
         },
         typescript: {
-            require_dev: {
-                options: {
-                    sourceMap: true,
-                    module: 'amd',
-                    target: 'es5',
-                },
-                src: ['app.ts','main.ts'],
-                dest: 'build'
-            },
             dev: {
+                src: ['**/*.ts','!bower_components/**/*','!node_modules/**/*','!typings/**/*'],
                 options: {
-                    sourceMap: true,
+                    sourceMap:true,
                     module: 'amd',
-                    target: 'es5',
-                },
-                src: ['**/*.ts','!app.ts','!main.ts','!node_modules/**/*.ts','!bower_components/**/*.ts',"!**/*.d.ts"],
-                dest: 'build/app'
-            },
-            require_release: {
-                options: {
-                    sourceMap: false,
-                    module: 'amd',
-                    target: 'es5',
-                },
-                src: ['app.ts','main.ts'],
-                dest: 'build'
+                    target: 'es5'
+                }
             },
             release: {
+                src: ['**/*.ts','!bower_components/**/*','!node_modules/**/*','!**/*.d.ts'],
                 options: {
                     sourceMap: false,
                     module: 'amd',
-                    target: 'es5',
-                },
-                src: ['**/*.ts','!app.ts','!main.ts','!node_modules/**/*.ts','!bower_components/**/*.ts',"!**/*.d.ts"],
-                dest: 'build/app'
+                    target: 'es5'
+                }
             }
         },
         copy: {
@@ -111,7 +107,9 @@ module.exports = function (grunt) {
                     'angular-route/js': 'angular-route/angular-route*.js',
                     'requirejs': 'requirejs*/*.js',
                     'leaflet': 'leaflet/dist/**/*',
-                    'leaflet-heatmap': 'leaflet-heatmap/dist/*'
+                    'leaflet-heatmap': 'leaflet-heatmap/dist/*',
+                    'ui-leaflet': 'ui-leaflet/dist/ui-leaflet.js',
+                    'angular-simple-logger': 'angular-simple-logger/dist/angular-simple-logger.js'
                 }
             }
         },
@@ -133,7 +131,7 @@ module.exports = function (grunt) {
             build: ['build/main_styles.css', 'build/main_app.css', 'build/static/css/app.css', 'build/static/libs/js/npm.js']
         }
     });
-
+    grunt.loadNpmTasks('grunt-webpack');
     grunt.loadNpmTasks('grunt-typescript');
     grunt.loadNpmTasks('grunt-subgrunt');
     grunt.loadNpmTasks('grunt-contrib-watch');
@@ -145,8 +143,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-shell');
 
 
-    grunt.registerTask('build:app_dev', ['typescript:require_dev','typescript:dev', 'copy:main','copy:templates']);
-    grunt.registerTask('build:app_release', ['typescript:require_release','typescript:release','copy:main','copy:templates']);
+    grunt.registerTask('build:app_dev', ['webpack:base', 'copy:main','copy:templates']);
+    grunt.registerTask('build:app_release', ['webpack:base','copy:main','copy:templates']);
     grunt.registerTask('build:libs', ['bowercopy:libs']);
     grunt.registerTask('build:styles', ['subgrunt:styles', 'copy:app_styles', 'copy:main_styles', 'concat:styles', 'cssmin:app', 'copy:images_styles']);
     grunt.registerTask('build:dependencies', ['build:styles']);
@@ -172,4 +170,45 @@ module.exports = function (grunt) {
  },
 
  build: ['build/main_styles.css', 'build/main_app.css', 'build/static/css/app.css', 'build/static/libs/js/npm.js','build/app.js*','build/main.js*']
+
+
  */
+
+//typescript: {
+//    require_dev: {
+//        options: {
+//            sourceMap: true,
+//                module: 'amd',
+//                target: 'es5',
+//        },
+//        src: ['app.ts','main.ts'],
+//            dest: 'build'
+//    },
+//    dev: {
+//        options: {
+//            sourceMap: true,
+//                module: 'amd',
+//                target: 'es5',
+//        },
+//        src: ['**/*.ts','!app.ts','!main.ts','!node_modules/**/*.ts','!bower_components/**/*.ts',"!**/*.d.ts"],
+//            dest: 'build/app'
+//    },
+//    require_release: {
+//        options: {
+//            sourceMap: false,
+//                module: 'amd',
+//                target: 'es5',
+//        },
+//        src: ['app.ts','main.ts'],
+//            dest: 'build'
+//    },
+//    release: {
+//        options: {
+//            sourceMap: false,
+//                module: 'amd',
+//                target: 'es5',
+//        },
+//        src: ['**/*.ts','!app.ts','!main.ts','!node_modules/**/*.ts','!bower_components/**/*.ts',"!**/*.d.ts"],
+//            dest: 'build/app'
+//    }
+//},

@@ -1,5 +1,5 @@
 /// <reference path="../../typings/tsd.d.ts" />
-import L = require ("leaflet");
+declare var L;
 
 var map = L.map('map').setView([40.1, -111.5], 11);
 

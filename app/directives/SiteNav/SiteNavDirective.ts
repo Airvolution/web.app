@@ -1,5 +1,4 @@
 ///<reference path="../../../typings/tsd.d.ts"/>
-import angular = require('angular');
 export = SiteNavDirective;
 
 class SiteNavDirective implements ng.IDirective {
