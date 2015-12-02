@@ -21,7 +21,7 @@ angular.module('app', [
         $routeProvider.when('/Almanac', {
                 templateUrl: "app/templates/almanac.html"
             })
-            .when('/',{
+            .when('/', {
                 templateUrl: 'app/templates/almanac.html'
             })
             .when('/Compare', {
@@ -36,7 +36,16 @@ angular.module('app', [
             .when('/Radar', {
                 templateUrl: 'app/templates/radar.html'
             })
-            .when('/404',{
+            .when('/MyProfile',{
+                templateUrl: 'app/templates/myProfile.html'
+            })
+            .when('/MyStations',{
+                templateUrl: 'app/templates/myStations.html'
+            })
+            .when('/RegisterStation',{
+                templateUrl: 'app/templates/registerStation.html'
+            })
+            .when('/404', {
                 templateUrl: 'app/templates/404.html'
             })
             .otherwise({

@@ -105,7 +105,6 @@ module.exports = function (grunt) {
                     'angular/js': 'angular/angular*.js',
                     'angular-resource/js': 'angular-resource/angular-resource*.js',
                     'angular-route/js': 'angular-route/angular-route*.js',
-                    'requirejs': 'requirejs*/*.js',
                     'leaflet': 'leaflet/dist/**/*',
                     'leaflet-heatmap': 'leaflet-heatmap/dist/*',
                     'ui-leaflet': 'ui-leaflet/dist/ui-leaflet.js',
