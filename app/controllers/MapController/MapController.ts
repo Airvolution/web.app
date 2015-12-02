@@ -55,22 +55,22 @@ class MapController {
                 console.log('======================');
                 
 
-            // TODO: Parse the returned DATA into JSON
-            var data = response.data['ams'];
+                // TODO: Parse the returned DATA into JSON
+                var data = response.data['ams'];
 
-            // Add custom attributes to each Marker
-            for (var key in data) {
-                //console.log('key: ' + key);
-                if (data.hasOwnProperty(key)) {
-                    data[key]['clickable'] = true;
-                    data[key]['riseOnHover'] = true;
-                    data[key]['draggable'] = true;
-                    data[key]['message'] = "Lat: " + data[key]['lat'] + "</br>Lng: " + data[key]['lng'];
+                // Add custom attributes to each Marker
+                for (var key in data) {
+                    //console.log('key: ' + key);
+                    if (data.hasOwnProperty(key)) {
+                        data[key]['clickable'] = true;
+                        data[key]['riseOnHover'] = true;
+                        data[key]['draggable'] = true;
+                        data[key]['message'] = "Lat: " + data[key]['lat'] + "</br>Lng: " + data[key]['lng'];
+                    }
                 }
-            }
 
-            // Add markers to map
-            $scope.markers = data;
+                // Add markers to map
+                $scope.markers = data;
             },
             function(response) {
                 console.log('Failure!');
@@ -86,39 +86,39 @@ class MapController {
             // Jared, how do I call the private methods at the bottom of this class?
             // TODO: API call to get [deviceIDs and locations]
             var url = 'api/ams/map'
-        var obj  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
-        var data = JSON.stringify(obj);
-        console.log('JSON: ' + data);
-        $http.post(url, data, {} ).then(
-            function(response) {
-                console.log('Success!');
-                console.log('  status: ' + response.status);
-                console.log('======================');
-                
+            var obj  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
+            var data = JSON.stringify(obj);
+            console.log('JSON: ' + data);
+            $http.post(url, data, {} ).then(
+                function(response) {
+                    console.log('Success!');
+                    console.log('  status: ' + response.status);
+                    console.log('======================');
 
-            // TODO: Parse the returned DATA into JSON
-            var data = response.data['ams'];
 
-            // Add custom attributes to each Marker
-            for (var key in data) {
-                //console.log('key: ' + key);
-                if (data.hasOwnProperty(key)) {
-                    data[key]['clickable'] = true;
-                    data[key]['riseOnHover'] = true;
-                    data[key]['draggable'] = true;
-                    data[key]['message'] = "Lat: " + data[key]['lat'] + "</br>Lng: " + data[key]['lng'];
+                    // TODO: Parse the returned DATA into JSON
+                    var data = response.data['ams'];
+
+                    // Add custom attributes to each Marker
+                    for (var key in data) {
+                        //console.log('key: ' + key);
+                        if (data.hasOwnProperty(key)) {
+                            data[key]['clickable'] = true;
+                            data[key]['riseOnHover'] = true;
+                            data[key]['draggable'] = true;
+                            data[key]['message'] = "Lat: " + data[key]['lat'] + "</br>Lng: " + data[key]['lng'];
+                        }
+                    }
+
+                    // Add markers to map
+                    $scope.markers = data;
+                },
+                function(response) {
+                    console.log('Failure!');
+                    console.log('  status: ' + response.status);
+                    console.log('======================');
                 }
-            }
-
-            // Add markers to map
-            $scope.markers = data;
-            },
-            function(response) {
-                console.log('Failure!');
-                console.log('  status: ' + response.status);
-                console.log('======================');
-            }
-        );
+            );
         });
 
         $scope.$on('leafletDirectiveMarker.map.click', function(event, args){
