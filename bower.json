@@ -22,6 +22,8 @@
     "weather-icons": "~2.0.10",
     "leaflet": "~0.7.7",
     "leaflet-heatmap": "https://github.com/Leaflet/Leaflet.heat.git#gh-pages",
-    "ui-leaflet": "~1.0.0"
+    "ui-leaflet": "~1.0.0",
+    "nvd3": "~1.8.1",
+    "d3": "~3.5.10"
   }
 }
