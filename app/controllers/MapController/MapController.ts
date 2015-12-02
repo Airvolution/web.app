@@ -1,11 +1,11 @@
 ///<referecnce path="../../typings/tsd.d.ts"/>
 declare var L;
 
-export = HeatMapController;
-class HeatMapController {
+export = MapController;
+class MapController {
     // TODO: This controller is currently providing functionality for MAP
     // TODO: We should move this where it belongs at some point
-    public static name = "HeatMapController";
+    public static name = "MapController";
     static $inject = ['$scope','leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http'];
     constructor(
         private $scope,
@@ -104,7 +104,7 @@ class HeatMapController {
         });
 
 
-        // TODO: keep this around for the actual HeatMap
+        // TODO: keep this around for the actual Map
         //    var heat = L.heatLayer([
         //        [40.1, -111.71, 1.0],
         //        [40.1, -111.72, 1.0],
@@ -176,21 +176,21 @@ class HeatMapController {
         switch(opt) {
             case 0:
                 response['Taylor'] = { 'lat': 40.1, 'lng': -111.7, 'clickable': true, 'riseOnHover': true };
-                //console.log('switch 0');
+            //console.log('switch 0');
             case 1:
                 response['JaredM'] = { 'lat': 40.2, 'lng': -111.8, 'clickable': true, 'riseOnHover': true };
-                //console.log('switch 1');
+            //console.log('switch 1');
             case 2:
                 response['JaredP'] = { 'lat': 40.3, 'lng': -111.9, 'clickable': true, 'riseOnHover': true };
-                //console.log('switch 2');
+            //console.log('switch 2');
             case 3:
                 response['ZachLo'] = { 'lat': 40.4, 'lng': -111.6, 'clickable': true, 'riseOnHover': true };
-                //console.log('switch 3');
+            //console.log('switch 3');
             case 4:
                 response['YourMom'] = { 'lat': 40.5, 'lng': -111.5, 'clickable': true, 'riseOnHover': true };
-                //console.log('switch 4');
+            //console.log('switch 4');
             default:
-                //console.log('switch default');
+            //console.log('switch default');
         }
         return JSON.stringify(response);
     }
