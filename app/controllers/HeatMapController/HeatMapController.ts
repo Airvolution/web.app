@@ -43,8 +43,9 @@ class HeatMapController {
             }
         });
 
-        $scope.mapEventDetected = "No events yet...";
-        $scope.markerEventDetected = "Give me a click..."
+        $scope.mapEventDetected = 'No events yet...';
+        $scope.markerEventDetected = 'Give me a click...';
+        $scope.url = 'http://air.eng.utah.edu/api/'
 
         // TODO: It would be nice to make an API class
         //var data = leafletData.getMap('map').getBounds();
@@ -61,6 +62,8 @@ class HeatMapController {
             $scope.mapEventDetected = "Map moved to " + $scope.bounds.northEast.lat;
 
             // TODO: API call to get [deviceIDs and locations]
+            console.log('url: ' + $scope.url);
+
             var resp = {};
             resp['Taylor'] = { 'lat': 40.1, 'lng': -111.7 };
             resp['JaredM'] = { 'lat': 40.2, 'lng': -111.8 };
@@ -74,7 +77,6 @@ class HeatMapController {
 
             // Add custom attributes to each Marker
             for (var key in data) {
-                console.log('key: ' + key);
                 if (data.hasOwnProperty(key)) {
                     data[key]['clickable'] = true;
                     data[key]['riseOnHover'] = true;

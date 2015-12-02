@@ -43,15 +43,54 @@ class MapController {
             }
         });
 
-        $scope.mapEventDetected = "No events yet...";
-        $scope.markerEventDetected = "Give me a click..."
+        $scope.mapEventDetected = 'No events yet...';
+        $scope.markerEventDetected = 'Give me a click...';
+        $scope.url = 'http://air.eng.utah.edu/api/';
 
         // TODO: It would be nice to make an API class
-        //var data = leafletData.getMap('map').getBounds();
-        var url = 'http://air.eng.utah.edu/api/ams/map'
-        var str  = { 'northEast': { 'lat': 42, 'lng': -102 }, 'southWest': { 'lat': 36, 'lng': -117 } };
-        var data = JSON.stringify(str);
-        //$http.post(url, data, {} ).then(function() { alert('success' ), function() { alert('failure') } })
+        console.log('bounds: ' + $scope.bounds.northEast.lat);
+        var url = $scope.url + 'ams/map'
+        var obj  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
+        var data = JSON.stringify(obj);
+        console.log('JSON: ' + data);
+        $http.post(url, data, {} ).then(
+            function(response) {
+                console.log('Success!');
+                console.log('  data: ' + response.data);
+                console.log('  status: ' + response.status);
+                console.log('  headers: ' + response.headers);
+                console.log('  config: ' + response.config);
+                console.log('======================');
+            },
+            function(response) {
+                console.log('Failure!');
+                console.log('  data: ' + response.data);
+                console.log('  status: ' + response.status);
+                console.log('  headers: ' + response.headers);
+                console.log('  config: ' + response.config);
+                console.log('======================');
+            }
+        );
+
+        // DEPRECATED!!
+        //$http.post(url, data, {} ).
+        //    success(function(data, status, headers, config) {
+        //        console.log('Success!');
+        //        console.log('  data: ' + data);
+        //        console.log('  status: ' + status);
+        //        console.log('  headers: ' + headers);
+        //        console.log('  config: ' + config);
+        //        console.log('======================');
+        //    })
+        //    .error(function(data, status, headers, config) {
+        //        console.log('Failure!');
+        //        console.log('  data: ' + data);
+        //        console.log('  status: ' + status);
+        //        console.log('  headers: ' + headers);
+        //        console.log('  config: ' + config);
+        //        console.log('======================');
+        //    });
+
 
         var response = JSON.parse(this.getMockResponse(4));
         this.loadDeviceLocations(response);
@@ -61,6 +100,8 @@ class MapController {
             $scope.mapEventDetected = "Map moved to " + $scope.bounds.northEast.lat;
 
             // TODO: API call to get [deviceIDs and locations]
+            console.log('url: ' + $scope.url);
+
             var resp = {};
             resp['Taylor'] = { 'lat': 40.1, 'lng': -111.7 };
             resp['JaredM'] = { 'lat': 40.2, 'lng': -111.8 };
@@ -74,7 +115,7 @@ class MapController {
 
             // Add custom attributes to each Marker
             for (var key in data) {
-                console.log('key: ' + key);
+                //console.log('key: ' + key);
                 if (data.hasOwnProperty(key)) {
                     data[key]['clickable'] = true;
                     data[key]['riseOnHover'] = true;
