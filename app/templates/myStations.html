@@ -1,0 +1,194 @@
+<script>
+    var removeNotifications = function(){
+        if($('.warning-wrapper .close').length == 0){
+            $('.warning-wrapper').remove();
+        }
+
+    }
+    $('.close').click(function(){
+        $(this).parent().remove();
+        removeNotifications();
+    });
+
+    $('.expander').click(function(){
+        var body = $(this).parent().find('.station-body');
+        if(body.is(':visible')){
+            onStationHidden($(this));
+            body.toggleClass('hidden');
+        }else {
+            onStationVisible($(this));
+            body.toggleClass('hidden');
+        }
+    });
+    var onStationVisible = function(expander){
+        var el = expander.find('i');
+        el.removeClass('fa-angle-double-down');
+        el.addClass('fa-angle-double-up');
+    };
+
+    var onStationHidden = function(expander){
+        var el = expander.find('i');
+        el.removeClass('fa-angle-double-up');
+        el.addClass('fa-angle-double-down');
+    };
+
+    $('.ams-refresh').click(function(){
+        var spinner = $(this).find('.fa-rotate-right')
+        spinner.addClass('fa-spin');
+        setTimeout(function(){
+            spinner.removeClass('fa-spin');
+
+            var now = new Date();
+            var lastUpdated = "Last updated "+(now.getMonth()+1)+"/"+now.getDate()+"/"+(now.getYear()+1900)+" at "+now.getHours()%12+':'+now.getMinutes()+' '+(now.getHours() < 12? 'am':'pm');
+            spinner.closest('.station').find('.station-last-updated').text(lastUpdated);
+        },4000);
+
+    });
+    //# sourceURL=dynamicScript.js
+</script>
+<main id="myStations">
+    <div class="stations-wrapper col-lg-8 col-lg-offset-2">
+        <h1>My Stations</h1>
+        <div class="col-lg-12 warning-wrapper">
+            <span class="warning-title">System Notifications</span>
+            <div class="system-warning">
+                <span class="warning-indicator"></span>
+                <div class="system-notification">Warning! <a>Station 12345</a> has a sensor which may be malfunctioning.</div>
+                <span class="close">X</span>
+            </div>
+            <div class="system-error">
+                <span class="error-indicator"></span>
+                <div class="system-notification">Warning! <a>Station 12346</a> may be offline.</div>
+                <span class="close">X</span>
+            </div>
+            <div class="system-warning">
+                <span class="warning-indicator"></span>
+                <div class="system-notification">Warning! <a>Station 12347</a> may be incorrectly marked as 'Outdoor'.</div>
+                <span class="close">X</span>
+            </div>
+        </div>
+        <div class="col-lg-12 download-btn">
+            <button class="btn btn-default btn-sm">Download Configuration</button>
+        </div>
+        <div class="col-lg-12 station-wrapper">
+            <div class="station">
+                <div class="station-content">
+                    <span class="warning-indicator"></span>
+                    <div class="station-header row">
+                        <div class="station-title">
+                            <span class="station-name col-lg-3">Station - <a class="station-id">12346</a></span>
+                            <span class="station-nickname-none col-lg-3">No Nickname</span>
+                        </div>
+                        <span class="station-location col-lg-5">Salt Lake City, UT</span>
+                        <div class="col-lg-1 ams-refresh">
+                            <i class="fa fa-rotate-right"></i>
+                        </div>
+                    </div>
+                    <form class="station-body hidden">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="radio-group">
+                                    <label>
+                                        <input type="radio" name="ams12346IndoorOutdoor">
+                                        Indoor
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="ams12346IndoorOutdoor">
+                                        Outdoor
+                                    </label>
+                                </div>
+                                <div class="radio-group">
+                                    <label>
+                                        <input type="radio" name="ams12346PublicPrivate">
+                                        Public
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="ams12346PublicPrivate">
+                                        Private
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="sr-only">Station Nickname</label>
+                                <input type="text" class="form-control" placeholder="Station Nickname">
+                            </div>
+                            <div class="station-details col-lg-6">
+                                <span class="station-location">lat: 84.1234216 lon: -111.12346322</span><br />
+                                <span class="station-last-updated">Last updated 1/1/2015 at 9:33 pm</span>
+                            </div>
+                        </div>
+                        <div class="station-update row">
+                            <span class="ams-owner col-lg-6">Owner: Joe User</span>
+                            <div class=" update-buttons col-lg-6">
+                                <button class="btn btn-default btn-lg" type="submit">Save</button>
+                                <button class="btn btn-default btn-lg">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="expander">
+                    <i class="fa fa-angle-double-down"></i>
+                </div>
+            </div>
+            <div class="station">
+                <div class="station-content">
+                    <span class="error-indicator"></span>
+                    <div class="station-header row">
+                        <div class="station-title">
+                            <span class="station-name col-lg-3">Station - <a class="station-id">12346</a></span>
+                            <span class="station-nickname-none col-lg-3">No Nickname</span>
+                        </div>
+                        <span class="station-location col-lg-5">Salt Lake City, UT</span>
+                        <div class="col-lg-1 ams-refresh">
+                            <i class="fa fa-rotate-right"></i>
+                        </div>
+                    </div>
+                    <form class="station-body hidden">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="radio-group">
+                                    <label>
+                                        <input type="radio" name="ams12346IndoorOutdoor">
+                                        Indoor
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="ams12346IndoorOutdoor">
+                                        Outdoor
+                                    </label>
+                                </div>
+                                <div class="radio-group">
+                                    <label>
+                                        <input type="radio" name="ams12346PublicPrivate">
+                                        Public
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="ams12346PublicPrivate">
+                                        Private
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="sr-only">Station Nickname</label>
+                                <input type="text" class="form-control" placeholder="Station Nickname">
+                            </div>
+                            <div class="station-details col-lg-6">
+                                <span class="station-location">lat: 84.1234216 lon: -111.12346322</span><br />
+                                <span class="station-last-updated">Last updated 1/1/2015 at 9:33 pm</span>
+                            </div>
+                        </div>
+                        <div class="station-update row">
+                            <span class="ams-owner col-lg-6">Owner: Joe User</span>
+                            <div class=" update-buttons col-lg-6">
+                                <button class="btn btn-default btn-lg" type="submit">Save</button>
+                                <button class="btn btn-default btn-lg">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="expander">
+                    <i class="fa fa-angle-double-down"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

@@ -18,7 +18,7 @@
     <script src="app/app.js"></script>
 <body ng-app="app" ng-cloak>
 <div class="container">
-    <header class="header row">
+    <header class="header">
         <div class="headerzone col-lg-1" id="hamburger"><i class="fa fa-bars fa-3x"></i></div>
         <div class="headerzone col-lg-1"><img src="static/images/AirU.png" alt="University of Utah"></div>
         <!--
@@ -38,15 +38,25 @@
                 <i class="fa fa-circle fa-stack-2x epa-aqi"></i><span class="fa-stack-1x epa-aqi-text">83</span>
             </span></div>
         <div class="headerzone col-lg-3" id="login">
-            <button class="btn btn-default btn-lg">Log In</button>
-            <button class="btn btn-default btn-lg">Sign Up</button>
+            <span class="welcome-message">Welcome, Joe User!</span>
+            <div class="dropdown">
+                <i class="fa fa-cog fa-2x config-menu-icon dropdown-toggle" data-toggle="dropdown"></i>
+                <ul class="dropdown-menu dropdown-menu-right config-menu">
+                    <li><a href="#/MyProfile">My Profile</a></li>
+                    <li><a href="#/MyStations">My Stations</a></li>
+                    <li><a href="#/RegisterStation">Register Station</a></li>
+                    <li class="divider"></li>
+                    <li><a>Logout</a></li>
+                </ul>
+            </div>
+
         </div>
     </header>
     <div id="mainContent" class="row">
        <site-nav></site-nav>
         <div id="mainContainer" class="col-lg-10">
             <div class="row">
-                <section class="col-lg-1" id="toolbox">
+                <section class="col-lg-1 hidden" id="toolbox">
                     <ul>
                         <li>
                             <div class="tool-wrapper">tool1</div>
@@ -65,7 +75,7 @@
                 <section class="col-lg-12 main-wrapper" ng-view >
                 </section>
 
-                <section class="col-lg-4" id="details">
+                <section class="col-lg-4 hidden" id="details">
                     <div class="panel">
                         <span class="panel-title">Panel 1</span>
 
