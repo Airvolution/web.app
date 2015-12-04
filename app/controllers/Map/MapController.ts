@@ -44,7 +44,7 @@ class MapController {
         });
         // TODO: It would be nice to make an API class
         console.log('bounds: ' + $scope.bounds.northEast.lat);
-        var url = 'api/ams/map'
+        var url = 'api/frontend/map'
         var obj  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
         var data = JSON.stringify(obj);
         console.log('JSON: ' + data);
@@ -79,13 +79,10 @@ class MapController {
             }
         );
 
-        //var response = JSON.parse(this.getMockResponse(4));
-        //this.loadDeviceLocations(response);
-
         $scope.$on('leafletDirectiveMap.map.moveend', function(event) {
             // Jared, how do I call the private methods at the bottom of this class?
             // TODO: API call to get [deviceIDs and locations]
-            var url = 'api/ams/map'
+            var url = 'api/frontend/map'
             var obj  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
             var data = JSON.stringify(obj);
             console.log('JSON: ' + data);
@@ -135,40 +132,5 @@ class MapController {
 
             // TODO: Open Details Panel / Details PLot
         });
-
-    }
-
-    private handleMapChange(map) {
-        console.log('map moved, but to where?');
-        var temp = this.$scope;
-        console.log('alsfjk');
-    }
-
-    private getMockResponse(opt) {
-        var response = {};
-        switch(opt) {
-            case 0:
-                response['Taylor'] = { 'lat': 40.1, 'lng': -111.7, 'clickable': true, 'riseOnHover': true };
-            //console.log('switch 0');
-            case 1:
-                response['JaredM'] = { 'lat': 40.2, 'lng': -111.8, 'clickable': true, 'riseOnHover': true };
-            //console.log('switch 1');
-            case 2:
-                response['JaredP'] = { 'lat': 40.3, 'lng': -111.9, 'clickable': true, 'riseOnHover': true };
-            //console.log('switch 2');
-            case 3:
-                response['ZachLo'] = { 'lat': 40.4, 'lng': -111.6, 'clickable': true, 'riseOnHover': true };
-            //console.log('switch 3');
-            case 4:
-                response['YourMom'] = { 'lat': 40.5, 'lng': -111.5, 'clickable': true, 'riseOnHover': true };
-            //console.log('switch 4');
-            default:
-            //console.log('switch default');
-        }
-        return JSON.stringify(response);
-    }
-
-    private loadDeviceLocations(data) {
-        this.$scope.markers = data;
     }
 }
