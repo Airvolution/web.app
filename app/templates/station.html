@@ -1,0 +1,73 @@
+<div class="station">
+    <div class="station-content">
+        <span ng-if="ctrl.hasError" class="error-indicator"></span>
+        <span ng-if="ctrl.hasWarning" class="warning-indicator"></span>
+
+        <div class="station-header row">
+            <div class="station-title">
+                <span class="station-name col-lg-3">Station - {{ctrl.station.id}}</span>
+                <span ng-class="ctrl.station.name ? 'station-nickname' : 'station-nickname-none'" class="col-lg-3">
+                    {{ctrl.station.name || 'No Nickname'}}
+                </span>
+            </div>
+            <span class="station-location col-lg-5">{{ctrl.station.location.name}}</span>
+
+            <div class="col-lg-1 ams-refresh" ng-click="ctrl.onUpdate()">
+                <i ng-class="{'fa-spin':ctrl.updating} "class="fa fa-rotate-right"></i>
+            </div>
+        </div>
+        <form class="station-body" ng-hide="ctrl.collapsed" ng-submit="ctrl.onSubmit()">
+            <input type="hidden" name="id" value="{{ctrl.station.id}}" ng-model="ctrl.formData.id">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="indoor" value="true" ng-model="ctrl.formData.indoor">
+                            Indoor
+                        </label>
+                        <label>
+                            <input type="radio" name="indoor" value="false" ng-model="ctrl.formData.indoor">
+                            Outdoor
+                        </label>
+                    </div>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="private" value="false" ng-model="ctrl.formData.private">
+                            Public
+                        </label>
+                        <label>
+                            <input type="radio" name="private" value="true" ng-model="ctrl.formData.private">
+                            Private
+                        </label>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <label class="sr-only">Station Nickname</label>
+                    <input type="text" class="form-control" placeholder="Station Nickname" ng-model="ctrl.formData.name">
+                </div>
+                <div class="station-details col-lg-6">
+                    <span class="station-location">lat: {{ctrl.station.location.lat}} lon: {{ctrl.station.location.lng}}</span><br/>
+                    <span class="station-last-updated">{{ctrl.station.lastUpdated}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class=" col-lg-10 col-lg-offset-1">
+                    <label class="sr-only">Purpose</label>
+                    <textarea class="form-control" ng-model="ctrl.formData.purpose"
+                              style="resize: vertical;" placeholder="Station Purpose">{{ctrl.station.purpose}}</textarea>
+                </div>
+            </div>
+            <div class="station-update row">
+                <span class="ams-owner col-lg-6">Owner: {{ctrl.station.owner}}</span>
+
+                <div class=" update-buttons col-lg-6">
+                    <button class="btn btn-default btn-lg" type="submit">Save</button>
+                    <button class="btn btn-default btn-lg">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="expander" ng-click="ctrl.collapsed = !ctrl.collapsed">
+        <i ng-class="{'fa-angle-double-down': ctrl.collapsed, 'fa-angle-double-up': !ctrl.collapsed}" class="fa fa-angle-double-down"></i>
+    </div>
+</div>

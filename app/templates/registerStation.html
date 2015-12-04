@@ -1,38 +1,38 @@
-<main id="registerAMSPage">
+<main id="registerAMSPage" ng-controller="RegisterAMSController as ctrl">
     <h1 class="col-lg-8 col-lg-offset-2">Register AMS</h1>
 
-    <form id="registerAMS">
+    <form id="registerAMS" novalidate ng-submit="ctrl.formSubmit()">
         <div class="form-group col-lg-offset-2 col-lg-8">
             <label for="stationName" class="sr-only">Station Name</label>
-            <input type="text" id="stationName" name="stationName" class="form-control"
+            <input type="text" id="stationName" name="stationName" class="form-control" ng-model="ctrl.formData.name"
                    placeholder="Station Name"/>
         </div>
         <div class="form-group col-lg-offset-2 col-lg-8">
             <label for="stationID" class="sr-only">Station ID</label>
-            <input type="text" name="stationID" class="form-control" id="stationID" placeholder="Station ID"/>
+            <input type="text" name="stationID" class="form-control" id="stationID" placeholder="Station ID" ng-model="ctrl.formData.id"/>
         </div>
         <div class="form-group col-lg-offset-2 col-lg-8">
             <label for="stationPurpose" class="sr-only">Sation Purpose</label>
-            <textarea class="form-control vresize" id="stationPurpose" placeholder="Station Purpose"></textarea>
+            <textarea class="form-control vresize" id="stationPurpose" placeholder="Station Purpose" ng-model="ctrl.formData.purpose"></textarea>
         </div>
         <div class="form-group col-lg-offset-2 col-lg-8">
             <div class="radio-group col-lg-2">
                 <label for="amsPublic">
-                    <input type="radio" name="amsPublicPrivate" id="amsPublic">
+                    <input type="radio" name="private" id="amsPublic" value="false" ng-model="ctrl.formData.private">
                     Public
                 </label>
                 <label for="amsPrivate">
-                    <input type="radio" name="amsPublicPrivate" id="amsPrivate">
+                    <input type="radio" name="private" id="amsPrivate" value="true" ng-model="ctrl.formData.private">
                     Private
                 </label>
             </div>
             <div class="radio-group col-lg-2">
                 <label for="amsOutdoor">
-                    <input type="radio" name="amsIndoorOutdoor" id="amsOutdoor">
+                    <input type="radio" name="indoor" id="amsOutdoor" value="false" ng-model="ctrl.formData.indoor">
                     Outdoor
                 </label>
                 <label for="amsIndoor">
-                    <input type="radio" name="amsIndoorOutdoor" id="amsIndoor">
+                    <input type="radio" name="indoor" id="amsIndoor" value="true" ng-model="ctrl.formData.indoor">
                     Indoor
                 </label>
             </div>

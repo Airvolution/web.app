@@ -1,5 +1,6 @@
 ///<referecnce path="../../typings/tsd.d.ts"/>
 declare var L;
+declare var angular;
 
 export = HeatMapController;
 class HeatMapController {
