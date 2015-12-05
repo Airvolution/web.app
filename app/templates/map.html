@@ -1,7 +1,11 @@
-<main  ng-controller="MapController as ctrl">
+<main  ng-controller="MapController as map-ctrl" ng-controller="NVD3Controller as nvd3-ctrl">
     <!-- This is the MAP and everything with it -->
     <leaflet id="map" bounds="bounds" markers="markers" layers="layers" event-broadcast="events"></leaflet>
-
+   
+    <nvd3-stacked-area-chart>
+        <svg></svg>
+    </nvd3-stacked-area-chart>
+   
     <!-- Coordinate bounds of Map for development purposes -->
     <div class="col-lg-12" id="map-coords">
         <div class="coord-bound" id="sw">

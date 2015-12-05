@@ -140,19 +140,14 @@ class HeatMapController {
                 console.log('======================');
 
                 var data = response.data['values'];
-                var points = [];
-                
-                for (var pt in data) {
-                    points.push([data[pt]['lat'], data[pt]['lng'], data[pt]['value']]);
-                }
-                
+
                 var heatmap = {
                     name: 'Heat Map',
                     type: 'heat',
-                    data: points,
+                    data: data,
                     layerOptions: {
                         radius: 100,
-                        blur: 0
+                        blur: 5
                     },
                     visible: true
                 };
