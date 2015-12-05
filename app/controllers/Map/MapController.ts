@@ -20,16 +20,20 @@ class MapController {
             [ 39.640479, -112.236828 ]
         ]);
 
+        // TODO: We should have a way to do this only once (not in two different controllers)
         angular.extend($scope, {
             bounds: bounds,
-            center: {},
-            defaults: {
-                tileLayer: 'https://api.tiles.mapbox.com/v4/tjhooker33.o78l0n36/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g',
-                maxZoom: 18,
-                path: {
-                    weight: 10,
-                    color: '#800000',
-                    opacity: 1
+            layers: {
+                baselayers: {
+                    mapbox_light: { 
+                        name: 'Mapbox Light',
+                        url: 'https://api.tiles.mapbox.com/v4/tjhooker33.o78l0n36/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g',
+                        type: 'xyz',
+                        layerOptions: {
+                            apikey: 'pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g',
+                            mapid: 'tjhooker33.o78l0n36'
+                        }
+                    }
                 }
             },
             events: {
@@ -42,6 +46,8 @@ class MapController {
                 }
             }
         });
+        
+        
         // TODO: It would be nice to make an API class
         console.log('bounds: ' + $scope.bounds.northEast.lat);
         var url = 'api/frontend/map'
@@ -80,8 +86,6 @@ class MapController {
         );
 
         $scope.$on('leafletDirectiveMap.map.moveend', function(event) {
-            // Jared, how do I call the private methods at the bottom of this class?
-            // TODO: API call to get [deviceIDs and locations]
             var url = 'api/frontend/map'
             var obj  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
             var data = JSON.stringify(obj);
@@ -92,13 +96,10 @@ class MapController {
                     console.log('  status: ' + response.status);
                     console.log('======================');
 
-
-                    // TODO: Parse the returned DATA into JSON
                     var data = response.data['ams'];
 
                     // Add custom attributes to each Marker
                     for (var key in data) {
-                        //console.log('key: ' + key);
                         if (data.hasOwnProperty(key)) {
                             data[key]['clickable'] = true;
                             data[key]['riseOnHover'] = true;

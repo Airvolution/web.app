@@ -1,11 +1,8 @@
 ///<referecnce path="../../typings/tsd.d.ts"/>
 declare var L;
-declare var angular;
 
 export = HeatMapController;
 class HeatMapController {
-    // TODO: This controller is currently providing functionality for MAP
-    // TODO: We should move this where it belongs at some point
     public static name = "HeatMapController";
     static $inject = ['$scope','leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http'];
     constructor(
@@ -15,22 +12,26 @@ class HeatMapController {
         private leafletMarkerEvents,
         private $http
     ) {
-        var bounds = leafletBoundsHelpers.createBoundsFromArray([
+       var bounds = leafletBoundsHelpers.createBoundsFromArray([
             // TODO: use location from IP address of client
             [ 41.381483, -110.387754],
             [ 39.640479, -112.236828 ]
         ]);
 
+        // TODO: We should have a way to do this only once (not in two different controllers)
         angular.extend($scope, {
             bounds: bounds,
-            center: {},
-            defaults: {
-                tileLayer: 'https://api.tiles.mapbox.com/v4/tjhooker33.o78l0n36/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g',
-                maxZoom: 18,
-                path: {
-                    weight: 10,
-                    color: '#800000',
-                    opacity: 1
+            layers: {
+                baselayers: {
+                    mapbox_light: { 
+                        name: 'Mapbox Light',
+                        url: 'https://api.tiles.mapbox.com/v4/tjhooker33.o78l0n36/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g',
+                        type: 'xyz',
+                        layerOptions: {
+                            apikey: 'pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g',
+                            mapid: 'tjhooker33.o78l0n36'
+                        }
+                    }
                 }
             },
             events: {
@@ -43,57 +44,79 @@ class HeatMapController {
                 }
             }
         });
-
-        $scope.mapEventDetected = 'No events yet...';
-        $scope.markerEventDetected = 'Give me a click...';
-        $scope.url = 'http://air.eng.utah.edu/api/'
-
+        
         // TODO: It would be nice to make an API class
-        //var data = leafletData.getMap('map').getBounds();
-        var url = 'http://air.eng.utah.edu/api/ams/map'
-        var str  = { 'northEast': { 'lat': 42, 'lng': -102 }, 'southWest': { 'lat': 36, 'lng': -117 } };
-        var data = JSON.stringify(str);
-        //$http.post(url, data, {} ).then(function() { alert('success' ), function() { alert('failure') } })
+        console.log('bounds: ' + $scope.bounds.northEast.lat);
+        var url = 'api/frontend/map'
+        var obj  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
+        var data = JSON.stringify(obj);
+        console.log('JSON: ' + data);
+        $http.post(url, data, {} ).then(
+            function(response) {
+                console.log('Success!');
+                console.log('  status: ' + response.status);
+                console.log('======================');
+                
+                var data = response.data['ams'];
 
-        var response = JSON.parse(this.getMockResponse(4));
-        this.loadDeviceLocations(response);
+                // Add custom attributes to each Marker
+                for (var key in data) {
+                    //console.log('key: ' + key);
+                    if (data.hasOwnProperty(key)) {
+                        data[key]['clickable'] = true;
+                        data[key]['riseOnHover'] = true;
+                        data[key]['draggable'] = true;
+                        data[key]['message'] = "Lat: " + data[key]['lat'] + "</br>Lng: " + data[key]['lng'];
+                    }
+                }
+
+                // Add markers to map
+                $scope.markers = data;
+            },
+            function(response) {
+                console.log('Failure!');
+                console.log('  status: ' + response.status);
+                console.log('======================');
+            }
+        );
 
         $scope.$on('leafletDirectiveMap.map.moveend', function(event) {
-            // Jared, how do I call the private methods at the bottom of this class?
-            $scope.mapEventDetected = "Map moved to " + $scope.bounds.northEast.lat;
+            var url = 'api/frontend/map'
+            var obj  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
+            var data = JSON.stringify(obj);
+            console.log('JSON: ' + data);
+            $http.post(url, data, {} ).then(
+                function(response) {
+                    console.log('Success!');
+                    console.log('  ' + url + ':\t status: ' + response.status);
+                    console.log('======================');
 
-            // TODO: API call to get [deviceIDs and locations]
-            console.log('url: ' + $scope.url);
+                    var data = response.data['ams'];
 
-            var resp = {};
-            resp['Taylor'] = { 'lat': 40.1, 'lng': -111.7 };
-            resp['JaredM'] = { 'lat': 40.2, 'lng': -111.8 };
-            resp['JaredP'] = { 'lat': 40.3, 'lng': -111.9 };
-            resp['ZachLo'] = { 'lat': 40.4, 'lng': -111.6 };
-            resp['YourMom'] = { 'lat': 40.5, 'lng': -111.5 };
-            var resp_str = JSON.stringify(resp);
+                    // Add custom attributes to each Marker
+                    for (var key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            data[key]['clickable'] = true;
+                            data[key]['riseOnHover'] = true;
+                            data[key]['draggable'] = true;
+                            data[key]['message'] = "Lat: " + data[key]['lat'] + "</br>Lng: " + data[key]['lng'];
+                        }
+                    }
 
-            // TODO: Parse the returned JSON
-            var data = JSON.parse(resp_str);
-
-            // Add custom attributes to each Marker
-            for (var key in data) {
-                if (data.hasOwnProperty(key)) {
-                    data[key]['clickable'] = true;
-                    data[key]['riseOnHover'] = true;
-                    data[key]['draggable'] = true;
-                    data[key]['message'] = "Lat: " + data[key]['lat'] + "</br>Lng: " + data[key]['lng'];
+                    // Add markers to map
+                    $scope.markers = data;
+                },
+                function(response) {
+                    console.log('Failure!');
+                    console.log('  status: ' + response.status);
+                    console.log('======================');
                 }
-            }
-
-            // Add markers to map
-            $scope.markers = data;
+            );
         });
 
         $scope.$on('leafletDirectiveMarker.map.click', function(event, args){
             // Resource on how to add Marker Events
             // https://github.com/angular-ui/ui-leaflet/blob/master/examples/0513-markers-events-example.html
-            $scope.markerEventDetected = event.name;
             console.log('a marker has been clicked');
 
             var data = { 'deviceID': args.modelName };
@@ -105,100 +128,44 @@ class HeatMapController {
 
             // TODO: Open Details Panel / Details PLot
         });
+        
+        var url = 'api/frontend/heatmap'
+        var obj2  = { 'mapParameters': { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } }, 'pollutantName': 'PM' };
+        var data = JSON.stringify(obj2);
+        console.log('JSON: ' + data);
+        $http.post(url, data, {} ).then(
+            function(response) {
+                console.log('Success!');
+                console.log('  ' + url + ':\t status: ' + response.status);
+                console.log('======================');
 
-
-        // TODO: keep this around for the actual HeatMap
-        //    var heat = L.heatLayer([
-        //        [40.1, -111.71, 1.0],
-        //        [40.1, -111.72, 1.0],
-        //        [40.1, -111.73, 1.0],
-        //        [40.1, -111.74, 1.0],
-        //        [40.1, -111.75, 1.0],
-        //        [40.11, -111.71, 1.0],
-        //        [40.12, -111.72, 1.0],
-        //        [40.13, -111.73, 1.0],
-        //        [40.14, -111.74, 1.0],
-        //        [40.15, -111.75, 1.0],
-        //        [40.16, -111.76, 1.0],
-        //        [40.11, -111.71, 1.0],
-        //        [40.12, -111.72, 1.0],
-        //        [40.13, -111.73, 1.0],
-        //        [40.14, -111.714, 1.0],
-        //        [40.15, -111.725, 1.0],
-        //        [40.16, -111.716, 1.0],
-        //        [40.1, -111.8, 1.0],
-        //        [40.1, -111.82, 1.0],
-        //        [40.1, -111.83, 1.0],
-        //        [40.1, -111.84, 1.0],
-        //        [40.1, -111.85, 1.0],
-        //        [40.11, -111.81, 1.0],
-        //        [40.12, -111.82, 1.0],
-        //        [40.13, -111.83, 1.0],
-        //        [40.14, -111.84, 1.0],
-        //        [40.15, -111.85, 1.0],
-        //        [40.16, -111.86, 1.0],
-        //        [40.11, -111.81, 1.0],
-        //        [40.12, -111.82, 1.0],
-        //        [40.13, -111.83, 1.0],
-        //        [40.14, -111.814, 1.0],
-        //        [40.15, -111.825, 1.0],
-        //        [40.16, -111.816, 1.0],
-        //        [40.2, -111.6, 1.0],
-        //        [40.2, -111.62, 1.0],
-        //        [40.2, -111.63, 1.0],
-        //        [40.2, -111.64, 1.0],
-        //        [40.2, -111.65, 1.0],
-        //        [40.21, -111.61, 1.0],
-        //        [40.22, -111.62, 1.0],
-        //        [40.23, -111.63, 1.0],
-        //        [40.24, -111.64, 1.0],
-        //        [40.25, -111.65, 1.0],
-        //        [40.26, -111.66, 1.0],
-        //        [40.21, -111.61, 1.0],
-        //        [40.22, -111.62, 1.0],
-        //        [40.23, -111.63, 1.0],
-        //        [40.24, -111.614, 1.0],
-        //        [40.25, -111.625, 1.0],
-        //        [40.26, -111.616, 1.0],
-        //        [40.1, -111.7, 0.2]
-        //    ], { radius: 50,
-        //        blur: 15,
-        //        maxZoom: 14}).addTo(map);
-        //
-        //});
-    }
-
-    private handleMapChange(map) {
-        console.log('map moved, but to where?');
-        var temp = this.$scope;
-        console.log('alsfjk');
-    }
-
-    private getMockResponse(opt) {
-        var response = {};
-        switch(opt) {
-            case 0:
-                response['Taylor'] = { 'lat': 40.1, 'lng': -111.7, 'clickable': true, 'riseOnHover': true };
-                //console.log('switch 0');
-            case 1:
-                response['JaredM'] = { 'lat': 40.2, 'lng': -111.8, 'clickable': true, 'riseOnHover': true };
-                //console.log('switch 1');
-            case 2:
-                response['JaredP'] = { 'lat': 40.3, 'lng': -111.9, 'clickable': true, 'riseOnHover': true };
-                //console.log('switch 2');
-            case 3:
-                response['ZachLo'] = { 'lat': 40.4, 'lng': -111.6, 'clickable': true, 'riseOnHover': true };
-                //console.log('switch 3');
-            case 4:
-                response['YourMom'] = { 'lat': 40.5, 'lng': -111.5, 'clickable': true, 'riseOnHover': true };
-                //console.log('switch 4');
-            default:
-                //console.log('switch default');
-        }
-        return JSON.stringify(response);
-    }
-
-    private loadDeviceLocations(data) {
-        this.$scope.markers = data;
+                var data = response.data['values'];
+                var points = [];
+                
+                for (var pt in data) {
+                    points.push([data[pt]['lat'], data[pt]['lng'], data[pt]['value']]);
+                }
+                
+                var heatmap = {
+                    name: 'Heat Map',
+                    type: 'heat',
+                    data: points,
+                    layerOptions: {
+                        radius: 100,
+                        blur: 0
+                    },
+                    visible: true
+                };
+                
+                $scope.layers.overlays = {
+                    heat: heatmap
+                };
+            },
+            function(response) {
+                console.log('Failure!');
+                console.log('  status: ' + response.status);
+                console.log('======================');
+            }
+        );
     }
 }
