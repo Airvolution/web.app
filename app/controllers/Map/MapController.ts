@@ -1,7 +1,5 @@
 ///<referecnce path="../../typings/tsd.d.ts"/>
 declare var L;
-declare var d3;
-declare var nv;
 
 export = MapController;
 class MapController {
