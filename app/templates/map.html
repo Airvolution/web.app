@@ -1,6 +1,12 @@
-<main  ng-controller="MapController as ctrl">
+<main>
     <!-- This is the MAP and everything with it -->
-    <leaflet id="map" bounds="bounds" markers="markers" layers="layers" event-broadcast="events"></leaflet>
+    <div ng-controller="MapController as ctrl">
+        <leaflet id="map" bounds="bounds" markers="markers" layers="layers" event-broadcast="events"></leaflet>
+    </div>
+
+    <!--<div class="col-lg-12" ng-controller="NVD3Controller as ctrl">-->
+        <!--<nvd3 class="col-lg-12" options="ctrl.options" data="ctrl.data"></nvd3>-->
+    <!--</div>-->
 
     <!-- Coordinate bounds of Map for development purposes -->
     <div class="col-lg-12" id="map-coords">

@@ -14,7 +14,8 @@ angular.module('app', [
         'ngRoute',
         'services',
         'controllers',
-        'directives'
+        'directives',
+        'nvd3'
 
     ])
     .config(($routeProvider)=> {

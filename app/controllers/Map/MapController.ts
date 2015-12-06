@@ -132,6 +132,7 @@ class MapController {
             // TODO: Make API call
 
             // TODO: Open Details Panel / Details PLot
+
         });
     }
 }
