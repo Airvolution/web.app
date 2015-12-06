@@ -1,7 +1,9 @@
 <main ng-controller="MapPageController as pctrl">
+
     <!-- This is the MAP and everything with it -->
     <div ng-controller="MapController as mctrl">
         <leaflet id="map" bounds="bounds" markers="markers" layers="layers" event-broadcast="events"></leaflet>
+
         <!-- Coordinate bounds of Map for development purposes -->
         <div class="col-lg-12" id="map-coords">
             <div class="coord-bound" id="sw">
@@ -21,10 +23,12 @@
         </div>
     </div>
 
+    <!-- This is the NVD3 data plot that is linked with the Details Panel -->
     <div ng-class="{'hidden':!plotVisible}" class="col-lg-8" ng-controller="NVD3Controller as cctrl">
         <nvd3 class="col-lg-12" options="cctrl.options" data="cctrl.data"></nvd3>
     </div>
 
+    <!-- Details Panel -->
     <section ng-class="{'hidden':!showDetails}" class="col-lg-4" id="details">
         <div class="panel">
             <span class="panel-title">Device Information</span>

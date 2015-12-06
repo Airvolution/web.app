@@ -153,6 +153,8 @@ class MapController {
                     pscope.station.location.lng = args.model.lng;
                     
                     var data = response.data['latest'];
+
+                    // TODO: the current API really doesn't make this easy
                     pscope.station.pm = data['PM'];
                     pscope.station.co = data['CO'];
                     pscope.station.co2 = data['CO2'];
