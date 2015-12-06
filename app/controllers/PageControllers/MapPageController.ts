@@ -4,6 +4,11 @@ export = MapPageController;
 
 class MapPageController {
     public static name = "MapPageController";
-    static $inject = [];
-    constructor(){}
+    static $inject = ['$scope'];
+    constructor(
+        private $scope
+    ){}
+    public togglePlot(){
+        this.$scope.plotVisible = !this.$scope.plotVisible;
+    }
 }

@@ -1,28 +1,62 @@
-<main>
+<main ng-controller="MapPageController as pctrl">
     <!-- This is the MAP and everything with it -->
-    <div ng-controller="MapController as ctrl">
+    <div ng-controller="MapController as mctrl">
         <leaflet id="map" bounds="bounds" markers="markers" layers="layers" event-broadcast="events"></leaflet>
-    </div>
-
-    <!--<div class="col-lg-12" ng-controller="NVD3Controller as ctrl">-->
-        <!--<nvd3 class="col-lg-12" options="ctrl.options" data="ctrl.data"></nvd3>-->
-    <!--</div>-->
-
-    <!-- Coordinate bounds of Map for development purposes -->
-    <div class="col-lg-12" id="map-coords">
-        <div class="coord-bound" id="sw">
-            <h3 class="coord-title">South West</h3>
-            <form class="coord-lat-lng">
-                Lat : <input type="number" step="any" ng-model="bounds.southWest.lat" />
-                Lng : <input type="number" step="any" ng-model="bounds.southWest.lng" />
-            </form>
-        </div>
-        <div class="coord-bound" id="ne">
-            <h3 class="coord-title">North East</h3>
-            <form class="coord-lat-lng">
-                Lat : <input type="number" step="any" ng-model="bounds.northEast.lat" />
-                Lng : <input type="number" step="any" ng-model="bounds.northEast.lng" />
-            </form>
+        <!-- Coordinate bounds of Map for development purposes -->
+        <div class="col-lg-12" id="map-coords">
+            <div class="coord-bound" id="sw">
+                <h3 class="coord-title">South West</h3>
+                <form class="coord-lat-lng">
+                    Lat : <input type="number" step="any" ng-model="bounds.southWest.lat" />
+                    Lng : <input type="number" step="any" ng-model="bounds.southWest.lng" />
+                </form>
+            </div>
+            <div class="coord-bound" id="ne">
+                <h3 class="coord-title">North East</h3>
+                <form class="coord-lat-lng">
+                    Lat : <input type="number" step="any" ng-model="bounds.northEast.lat" />
+                    Lng : <input type="number" step="any" ng-model="bounds.northEast.lng" />
+                </form>
+            </div>
         </div>
     </div>
+
+    <div ng-class="{'hidden':!plotVisible}" class="col-lg-8" ng-controller="NVD3Controller as cctrl">
+        <nvd3 class="col-lg-12" options="cctrl.options" data="cctrl.data"></nvd3>
+    </div>
+
+    <section ng-class="{'hidden':!showDetails}" class="col-lg-4" id="details">
+        <div class="panel">
+            <span class="panel-title">Device Information</span>
+            <div class="panel-body">
+                <div class="col-lg-10 col-lg-offset-1">Name: {{station.name}}</div>
+                <div class="col-lg-10 col-lg-offset-1">ID: {{station.id}}</div>
+                <div class="col-lg-10 col-lg-offset-1">Lat: {{station.location.lat}}</div>
+                <div class="col-lg-10 col-lg-offset-1">Lon: {{station.location.lng}}</div>
+                <div class="col-lg-10 col-lg-offset-1">Visibility: {{station.private ? 'Private':'Public'}}</div>
+                <div class="col-lg-10 col-lg-offset-1">Type: {{station.indoor ? 'Indoor':'Outdoor'}}</div>
+                <div class="col-lg-10 col-lg-offset-1">{{station.lastUpdated}}</div>
+            </div>
+        </div>
+        <div class="panel">
+            <span class="panel-title">Latest Readings <i ng-class="{'fa-spin':station.updating}" class="fa fa-rotate-right fa-2x"></i></span>
+            <div class="panel-body">
+                <div class="col-lg-10 col-lg-offset-1">CO: {{station.last.co}}</div>
+                <div class="col-lg-10 col-lg-offset-1">PM 2.5: {{station.last.pm}}</div>
+                <div class="col-lg-10 col-lg-offset-1">CO2: {{station.last.co2}}</div>
+                <div class="col-lg-10 col-lg-offset-1">NO2: {{station.last.no2}}</div>
+                <div class="col-lg-10 col-lg-offset-1">O3: {{station.last.o3}}</div>
+                <div class="col-lg-10 col-lg-offset-1">Temp: {{station.last.temp}}</div>
+                <div class="col-lg-10 col-lg-offset-1">Humidity: {{station.last.humidity}}</div>
+                <div class="col-lg-10 col-lg-offset-1">Pressure: {{station.last.pressure}}</div>
+                <div class="col-lg-10 col-lg-offset-1">Altitude: {{station.last.altitude}}</div>
+            </div>
+        </div>
+        <div class="panel">
+            <span class="panel-title">AMS Data</span>
+            <div class="panel-body">
+                <button id="toggle-plot" ng-click="pctrl.togglePlot()">{{plotVisible ? 'Hide' :'Show'}} Data Plot</button>
+            </div>
+        </div>
+    </section>
 </main>
