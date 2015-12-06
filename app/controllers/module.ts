@@ -5,6 +5,7 @@ import MapController = require('./Map/MapController');
 import RegisterAMSController = require("./RegisterAMS/RegisterAMSController");
 import MyProfileController = require("./MyProfile/MyProfileController");
 import MyStationsController = require("./MyStations/MyStationsController");
+import MapPageController = require("./PageControllers/MapPageController");
 
 export = angular.module('controllers',
     [   "services"
@@ -13,4 +14,5 @@ export = angular.module('controllers',
             .controller(MapController.name, MapController)
             .controller(RegisterAMSController.name, RegisterAMSController)
             .controller(MyProfileController.name, MyProfileController)
-            .controller(MyStationsController.name, MyStationsController);
+            .controller(MyStationsController.name, MyStationsController)
+            .controller(MapPageController.name, MapPageController);
