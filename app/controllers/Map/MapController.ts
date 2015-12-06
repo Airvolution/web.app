@@ -123,16 +123,53 @@ class MapController {
             // Resource on how to add Marker Events
             // https://github.com/angular-ui/ui-leaflet/blob/master/examples/0513-markers-events-example.html
             console.log('a marker has been clicked');
+           
+            var pscope = $scope.$parent;
+           
+           
+            if (pscope.station && pscope.station.id && args.model.deviceID == pscope.station.id) {
+                pscope.showDetails = false;
+                pscope.station = undefined;
+                return;
+            }
+           
+            var url = 'api/frontend/singleLatest'
+            var obj = JSON.stringify(args.model.deviceID);
+            console.log('JSON: ' + obj);
+            $http({
+                url:url,
+                data:obj,
+                method: 'POST'
+                }).then(
+                function(response) {
+                    console.log('Success!');
+                    console.log('  status: ' + response.status);
+                    console.log('======================');
+    
+                    pscope.station = { location: {} };
+                    
+                    pscope.station.id = args.model.deviceID;
+                    pscope.station.location.lat = args.model.lat;
+                    pscope.station.location.lng = args.model.lng;
+                    
+                    var data = response.data['latest'];
+                    pscope.station.pm = data['PM'];
+                    pscope.station.co = data['CO'];
+                    pscope.station.co2 = data['CO2'];
+                    pscope.station.no2 = data['NO2'];
+                    pscope.station.temp = data['Temperature'];
+                    pscope.station.humidty = data['Humidty'];
+                    pscope.station.pressure = data['Pressure'];
+                    pscope.station.altitude = data['Altitude'];                    
 
-            var data = { 'deviceID': args.modelName };
-
-            // TODO: Stringify data to JSON
-            // JSON.stringify(data);
-
-            // TODO: Make API call
-
-            // TODO: Open Details Panel / Details PLot
-
+                    pscope.showDetails = true;
+                },
+                function(response) {
+                    console.log('Failure!');
+                    console.log('  status: ' + response.status);
+                    console.log('======================');
+                }
+            );
         });
     }
 }
