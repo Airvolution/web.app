@@ -126,9 +126,9 @@ class MapController {
            
             var pscope = $scope.$parent;
            
-           
             if (pscope.station && pscope.station.id && args.model.deviceID == pscope.station.id) {
                 pscope.showDetails = false;
+                pscope.plotVisible = false;
                 pscope.station = undefined;
                 return;
             }
@@ -146,25 +146,30 @@ class MapController {
                     console.log('  status: ' + response.status);
                     console.log('======================');
     
-                    pscope.station = { location: {} };
+                    pscope.station = { location: {}, last: {} };
                     
-                    pscope.station.id = args.model.deviceID;
+                    pscope.station.id           = args.model.deviceID;
                     pscope.station.location.lat = args.model.lat;
                     pscope.station.location.lng = args.model.lng;
                     
-                    var data = response.data['latest'];
+                    var data = response.data;
 
                     // TODO: the current API really doesn't make this easy
-                    pscope.station.pm = data['PM'];
-                    pscope.station.co = data['CO'];
-                    pscope.station.co2 = data['CO2'];
-                    pscope.station.no2 = data['NO2'];
-                    pscope.station.temp = data['Temperature'];
-                    pscope.station.humidty = data['Humidty'];
-                    pscope.station.pressure = data['Pressure'];
-                    pscope.station.altitude = data['Altitude'];                    
+                    pscope.station.last.pm       = data['pm'];
+                    pscope.station.last.co       = data['co'];
+                    pscope.station.last.co2      = data['co2'];
+                    pscope.station.last.no2      = data['no2'];
+                    pscope.station.last.o3       = data['os3'];
+                    pscope.station.last.temp     = data['temp'];
+                    pscope.station.last.humidity = data['humidity'];
+                    pscope.station.last.pressure = data['pressure'];
+                    pscope.station.last.altitude = data['altitude'];                    
 
                     pscope.showDetails = true;
+                    
+                    if (pscope.plotVisible) {
+                        pscope.pctrl.togglePlot(false);
+                    }
                 },
                 function(response) {
                     console.log('Failure!');
