@@ -121,6 +121,8 @@ class MapController {
             }
         );
        
+       /*
+        // TODO: Please DO NOT DELETE - we may want this functionality later
         $scope.$on('leafletDirectiveMap.map.moveend', function(event) {
             var url = 'api/frontend/map'
             var obj  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
@@ -185,6 +187,7 @@ class MapController {
                 }
             );
         });
+        */
 
         $scope.$on('leafletDirectiveMarker.map.click', function(event, args){
             // Resource on how to add Marker Events
