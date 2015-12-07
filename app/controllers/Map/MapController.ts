@@ -203,8 +203,27 @@ class MapController {
                 return;
             }
            
-            var url = 'api/frontend/singleLatest'
-            var obj = JSON.stringify(args.model.deviceID);
+            var id = args.model.deviceID;
+            if (id == 'Box Elder County' || id == 'Cache County' || id == 'Price' || id == 'Davis County' || id == 'Duchesne County' || id == 'Salt Lake County' || id == 'Tooele County' || id == 'Uintah County' || id == 'Utah County' || id =='Washington County' || id == 'Weber County') {
+                
+                pscope.station = { location: {}, last: {} };
+                    
+                pscope.station.id           = args.model.deviceID;
+                pscope.station.location.lat = args.model.lat;
+                pscope.station.location.lng = args.model.lng;
+                
+                // TODO: get latest values from deq site
+                
+                pscope.showDetails = true;
+                    
+                if (pscope.plotVisible) {
+                    pscope.pctrl.togglePlot(false);
+                }
+                return;
+            }
+            
+            var url = 'api/frontend/singleLatest';
+            var obj = JSON.stringify(id);
             console.log('JSON: ' + obj);
             $http({
                 url:url,
