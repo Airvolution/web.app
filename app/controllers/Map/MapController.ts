@@ -69,8 +69,6 @@ class MapController {
                     //console.log('key: ' + key);
                     if (data.hasOwnProperty(key)) {
                         data[key]['clickable'] = true;
-                        data[key]['riseOnHover'] = true;
-                        data[key]['draggable'] = true;
                         data[key]['message'] = "Lat: " + data[key]['lat'] + "</br>Lng: " + data[key]['lng'];
                     }
                 }
@@ -84,7 +82,41 @@ class MapController {
                 console.log('======================');
             }
         );
+        
+        var url = 'api/frontend/daq'
+        var data = JSON.stringify(obj);
+        console.log('JSON: ' + data);
+        $http({
+            url: url,
+            method: 'GET'
+        }).then(
+            function(response) {
+                console.log('Success!');
+                console.log('  status: ' + response.status);
+                console.log('======================');
+                
 
+                // TODO: Parse the returned DATA into JSON
+                var data = response.data;
+                var daqSites = [];
+                
+                // Add custom attributes to each Marker
+                for (var index in data) {
+                    var site = data[index]['site'];
+                    var obj = ({ deviceID: site['name'], lat: site['latitude'], lng: site['longitude'], 'clickable': true, 'message': 'PM2.5: ' + site['data']['pm25'] + '</br>CO: ' + site['data']['co'] + '</br>NO2: ' + site['data']['no2'] + '</br>O3: ' + site['data']['ozone'] + '</br>SO2: ' + site['data']['so2'] + '</br>Temperature: ' + site['data']['temperature'] + '</br>Date: ' + site['data']['date'] });
+                    console.log($scope.markers);
+                    $scope.markers.push(obj);
+                }
+                console.log($scope.markers);
+                console.log($scope.markers);
+            },
+            function(response) {
+                console.log('Failure!');
+                console.log('  status: ' + response.status);
+                console.log('======================');
+            }
+        );
+       
         $scope.$on('leafletDirectiveMap.map.moveend', function(event) {
             var url = 'api/frontend/map'
             var obj  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
@@ -102,14 +134,45 @@ class MapController {
                     for (var key in data) {
                         if (data.hasOwnProperty(key)) {
                             data[key]['clickable'] = true;
-                            data[key]['riseOnHover'] = true;
-                            data[key]['draggable'] = true;
                             data[key]['message'] = "Lat: " + data[key]['lat'] + "</br>Lng: " + data[key]['lng'];
                         }
                     }
 
                     // Add markers to map
                     $scope.markers = data;
+                },
+                function(response) {
+                    console.log('Failure!');
+                    console.log('  status: ' + response.status);
+                    console.log('======================');
+                }
+            );
+            
+            var url = 'api/frontend/daq'
+            var data = JSON.stringify(obj);
+            console.log('JSON: ' + data);
+            $http({
+                url: url,
+                method: 'GET'
+            }).then(
+                function(response) {
+                    console.log('Success!');
+                    console.log('  status: ' + response.status);
+                    console.log('======================');
+
+                    // TODO: Parse the returned DATA into JSON
+                    var data = response.data;
+                    var daqSites = [];
+                    
+                    // Add custom attributes to each Marker
+                    for (var index in data) {
+                    var site = data[index]['site'];
+                    var obj = ({ deviceID: site['name'], lat: site['latitude'], lng: site['longitude'], 'clickable': true, 'message': 'PM2.5: ' + site['data']['pm25'] + '</br>CO: ' + site['data']['co'] + '</br>NO2: ' + site['data']['no2'] + '</br>O3: ' + site['data']['ozone'] + '</br>SO2: ' + site['data']['so2'] + '</br>Temperature: ' + site['data']['temperature'] + '</br>Date: ' + site['data']['date'] });
+                    console.log($scope.markers);
+                    $scope.markers.push(obj);
+                    }
+                    console.log($scope.markers);
+                    console.log($scope.markers);
                 },
                 function(response) {
                     console.log('Failure!');
