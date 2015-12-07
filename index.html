@@ -36,10 +36,10 @@
                 <span class="low-temp">41</span>
             </div>
         </div>
-        <div class="headerzone col-lg-3" id="aqi">
+        <div class="headerzone col-lg-3" id="aqi" ng-controller="AQIController as qctrl">
             <span class="epa-aqi-title">EPA AQI, <br/>Salt Lake City</span>
             <span class="fa-stack fa-2x epa-aqi-icon">
-                <i class="fa fa-circle fa-stack-2x epa-aqi"></i><span class="fa-stack-1x epa-aqi-text">83</span>
+                <i class="fa fa-circle fa-stack-2x epa-aqi"></i><span class="fa-stack-1x epa-aqi-text">{{qctrl.localAQI}}</span>
             </span></div>
         <div class="headerzone col-lg-3" id="login">
             <span class="welcome-message">Welcome, Joe User!</span>
