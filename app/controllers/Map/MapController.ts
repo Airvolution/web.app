@@ -108,11 +108,8 @@ class MapController {
                 for (var index in data) {
                     var site = data[index]['site'];
                     var obj = ({ deviceID: site['name'], lat: site['latitude'], lng: site['longitude'], 'clickable': true, 'message': 'PM2.5: ' + site['data']['pm25'] + '</br>CO: ' + site['data']['co'] + '</br>NO2: ' + site['data']['no2'] + '</br>O3: ' + site['data']['ozone'] + '</br>SO2: ' + site['data']['so2'] + '</br>Temperature: ' + site['data']['temperature'] + '</br>Date: ' + site['data']['date'] });
-                    console.log($scope.markers);
                     $scope.markers.push(obj);
                 }
-                console.log($scope.markers);
-                console.log($scope.markers);
             },
             function(response) {
                 console.log('Failure!');
