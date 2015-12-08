@@ -1,7 +1,10 @@
 <main id="registerAMSPage" ng-controller="RegisterAMSController as ctrl">
     <h1 class="col-lg-8 col-lg-offset-2">Register AMS</h1>
 
-    <form id="registerAMS" novalidate ng-submit="ctrl.formSubmit()">
+    <form id="registerAMS" novalidate ng-submit="ctrl.formSubmit()" autocomplete="off">
+        <input type="hidden" ng-model="ctrl.formData.owner" value="">
+        <input type="hidden" ng-model="ctrl.formData.location.lat" value="">
+        <input type="hidden" ng-model="ctrl.formData.location.lng" value="">
         <div class="form-group col-lg-offset-2 col-lg-8">
             <label for="stationName" class="sr-only">Station Name</label>
             <input type="text" id="stationName" name="stationName" class="form-control" ng-model="ctrl.formData.name"
@@ -18,7 +21,7 @@
         <div class="form-group col-lg-offset-2 col-lg-8">
             <div class="radio-group col-lg-2">
                 <label for="amsPublic">
-                    <input type="radio" name="private" id="amsPublic" value="false" ng-model="ctrl.formData.private">
+                    <input type="radio" name="private" id="amsPublic" value="false" ng-model="ctrl.formData.private" checked>
                     Public
                 </label>
                 <label for="amsPrivate">
@@ -28,7 +31,7 @@
             </div>
             <div class="radio-group col-lg-2">
                 <label for="amsOutdoor">
-                    <input type="radio" name="indoor" id="amsOutdoor" value="false" ng-model="ctrl.formData.indoor">
+                    <input type="radio" name="indoor" id="amsOutdoor" value="false" ng-model="ctrl.formData.indoor" checked>
                     Outdoor
                 </label>
                 <label for="amsIndoor">
