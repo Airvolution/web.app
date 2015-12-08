@@ -23,7 +23,7 @@ angular.module('app', [
                 templateUrl: "app/templates/almanac.html"
             })
             .when('/', {
-                templateUrl: 'app/templates/almanac.html'
+                redirectTo: '/Map'
             })
             .when('/Compare', {
                 templateUrl: 'app/templates/compare.html'
@@ -50,6 +50,6 @@ angular.module('app', [
                 templateUrl: 'app/templates/404.html'
             })
             .otherwise({
-                redirectTo: '/404'
+                redirectTo: '/Map'
             });
     });
