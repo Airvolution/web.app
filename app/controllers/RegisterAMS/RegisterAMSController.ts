@@ -17,6 +17,6 @@ class RegisterAMSController {
             this.formData.location = {lat:'',lng:''};
         if(this.formData.id == undefined || this.formData.private == undefined || this.formData.indoor == undefined)
             return;
-        this.$http.post('/frontend/registerDevice', this.formData);
+        this.$http.post('/api/frontend/registerDevice', this.formData);
     }
 }
