@@ -22,6 +22,9 @@ class NVD3Controller {
         if (!pscope.station || !pscope.station.id) {
             return;
         }
+        
+        this.options = undefined;
+        this.data = undefined;
 
         var url = undefined;
         var obj = undefined;
