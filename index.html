@@ -23,12 +23,12 @@
 <body ng-app="app" ng-cloak>
 <div class="container" ng-controller="AppController as actrl">
     <header class="header row" ng-controller="HeaderController as hctrl">
-        <div class="headerzone col-lg-1" id="hamburger" ng-click="$parent.navVisible = !$parent.navVisible"><i class="fa fa-bars fa-3x"></i></div>
-        <div class="headerzone col-lg-1"><img src="static/images/AirU.png" alt="University of Utah"></div>
+        <div class="headerzone col-md-1" id="hamburger" ng-click="$parent.navVisible = !$parent.navVisible"><i class="fa fa-bars fa-3x"></i></div>
+        <div class="headerzone col-md-1"><img src="static/images/AirU.png" alt="University of Utah"></div>
         <!--
-        <div class="headerzone col-lg-2 col-lg-offset-1"><div id="quicklinks"><input type="text" placeholder="QuickLinks"/><i class="fa fa-search fa-2x"></i></div></div>
+        <div class="headerzone col-md-2 col-md-offset-1"><div id="quicklinks"><input type="text" placeholder="QuickLinks"/><i class="fa fa-search fa-2x"></i></div></div>
         -->
-        <div class="headerzone col-lg-2 col-lg-offset-3" id="weather">
+        <div class="headerzone col-md-2 col-md-offset-3" id="weather">
             <div class="weather_wrapper">
                 <i class="fa fa-sun-o fa-3x"></i>
                 <i class="wi wi-thermometer fa-3x">
@@ -36,12 +36,12 @@
                 <span class="low-temp">41</span>
             </div>
         </div>
-        <div class="headerzone col-lg-3" id="aqi" ng-controller="AQIController as qctrl">
+        <div class="headerzone col-md-3" id="aqi" ng-controller="AQIController as qctrl">
             <span class="epa-aqi-title">EPA AQI, <br/>Salt Lake City</span>
             <span class="fa-stack fa-2x epa-aqi-icon">
                 <i class="fa fa-circle fa-stack-2x epa-aqi"></i><span class="fa-stack-1x epa-aqi-text">{{qctrl.localAQI}}</span>
             </span></div>
-        <div class="headerzone col-lg-3" id="login">
+        <div class="headerzone col-md-3" id="login">
             <span class="welcome-message">Welcome, Joe User!</span>
             <div class="dropdown">
                 <i class="fa fa-cog fa-2x config-menu-icon dropdown-toggle" data-toggle="dropdown"></i>
@@ -58,9 +58,9 @@
     </header>
     <div id="mainContent" class="row">
        <site-nav ng-class="{'hidden':navVisible == false}"></site-nav>
-        <div id="mainContainer" ng-class="{'col-lg-10':navVisible == true, 'col-lg-12':navVisible == false}">
+        <div id="mainContainer" ng-class="{'col-md-10':navVisible == true, 'col-lg-12':navVisible == false}">
             <div class="row">
-                <!--<section class="col-lg-1 hidden" id="toolbox">-->
+                <!--<section class="col-md-1 hidden" id="toolbox">-->
                     <!--<ul>-->
                         <!--<li>-->
                             <!--<div class="tool-wrapper">tool1</div>-->
@@ -76,13 +76,13 @@
                         <!--</li>-->
                     <!--</ul>-->
                 <!--</section>-->
-                <section class="col-lg-12 main-wrapper" ng-view >
+                <section class="col-md-12 main-wrapper" ng-view >
                 </section>
             </div>
         </div>
     </div>
     <div class="row">
-        <footer class="col-lg-12">
+        <footer class="col-md-12">
             <span><a href="">About Us</a></span>
             |
             <span><a href="">Contact Us</a></span>
