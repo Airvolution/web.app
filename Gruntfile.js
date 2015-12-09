@@ -73,8 +73,8 @@ module.exports = function (grunt) {
                 dest: 'build/main_app.css'
             },
             images_styles: {
-                src: 'bower_components/airu.web.styles/app/assets/images/*',
-                dest: 'build/static/images/**/*',
+                src: 'bower_components/airu.web.styles/app/assets/images/**/*',
+                dest: 'build/static/images/',
                 flatten:true,
                 expand:true
             },
