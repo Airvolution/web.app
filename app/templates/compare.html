@@ -1,3 +1,12 @@
 <main>
-    Compare
+    <!-- This is the NVD3 data plot that is linked with the Details Panel -->
+    <div id="compare-plots" ng-class="{'hidden':!plotVisible}" class="col-lg-8" ng-controller="NVD3Controller as cctrl">
+        <div class="data-plot">
+            <nvd3 class="col-lg-8" options="cctrl.options" data="cctrl.data"></nvd3>
+        </div>
+
+        <div class="data-plot">
+            <nvd3 class="col-lg-8" options="cctrl.options" data="cctrl.data"></nvd3>
+        </div>
+    </div>
 </main>
