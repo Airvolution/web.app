@@ -73,7 +73,11 @@ class MapController {
                     //console.log('key: ' + key);
                     if (data.hasOwnProperty(key)) {
                         data[key]['clickable'] = true;
-                        data[key]['message'] = "Lat: " + data[key]['lat'] + "</br>Lng: " + data[key]['lng'];
+                        data[key]['icon'] = { 
+                            iconUrl: 'static/images/markers/green.png', 
+                            iconSize: [35,45], 
+                            iconAnchor: [17,28] 
+                        };
                     }
                 }
 
@@ -107,7 +111,17 @@ class MapController {
                 // Add custom attributes to each Marker
                 for (var index in data) {
                     var site = data[index]['site'];
-                    var obj = ({ deviceID: site['name'], lat: site['latitude'], lng: site['longitude'], 'clickable': true, 'message': 'PM2.5: ' + site['data']['pm25'] + '</br>CO: ' + site['data']['co'] + '</br>NO2: ' + site['data']['no2'] + '</br>O3: ' + site['data']['ozone'] + '</br>SO2: ' + site['data']['so2'] + '</br>Temperature: ' + site['data']['temperature'] + '</br>Date: ' + site['data']['date'] });
+                    var obj = ({ 
+                        deviceID: site['name'], 
+                        lat: site['latitude'], 
+                        lng: site['longitude'], 
+                        'clickable': true, 
+                        'icon': { 
+                            iconUrl: 'static/images/markers/red.png', 
+                            iconSize: [35,45], 
+                            iconAnchor: [17,28] 
+                        } 
+                    });
                     $scope.markers.push(obj);
                 }
             },
