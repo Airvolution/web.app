@@ -1,4 +1,4 @@
-<main ng-controller="ComparePageController as pctrl" id="compareWrappe">
+<main ng-controller="ComparePageController as pctrl" id="compareWrapper">
     <div id="compare-plots" class="col-md-8">
         <div ng-repeat="plot in pctrl.plots" class="data-plot well" style="margin: 1em 0;" ng-class="{'hidden':plot.visible == false}">
             <nvd3 options="pctrl.options" data="plot.data" ></nvd3>
