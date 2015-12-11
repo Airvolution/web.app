@@ -4,7 +4,6 @@ export = StationController;
 
 class StationController {
     public station;
-    public formData = {};
     public collapsed = true;
     public updating = false;
 
@@ -23,7 +22,7 @@ class StationController {
     }
 
     public onSubmit() {
-        this.$http.post(Globals.api_base + '/frontend/ams', this.formData);
+        this.$http.post(Globals.api_base + '/frontend/ams', this.station);
     }
 
     public onUpdate(){
