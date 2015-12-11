@@ -22,7 +22,7 @@ class StationController {
     }
 
     public onSubmit() {
-        this.$http.post('api/frontend/ams', this.station);
+        this.$http.put('api/frontend/updateUserDeviceState', this.station);
     }
 
     public onUpdate(){
