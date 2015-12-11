@@ -5,6 +5,8 @@ class AQIController {
     public static name = "AQIController";
     static $inject = ['$scope', '$http'];
     public localAQI;
+    public localCategory;
+    public showPopup = false;
 
     constructor(private $scope,
                 private $http) {
@@ -26,6 +28,7 @@ class AQIController {
                 // TODO: Parse the returned DATA into JSON
                 var data = response.data;
                 self.localAQI = data['AQI'];
+                self.localCategory = data['Category']['Name'];
             },
             function(response) {
                 console.log('Failure!');
