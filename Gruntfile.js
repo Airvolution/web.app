@@ -111,7 +111,8 @@ module.exports = function (grunt) {
                     'angular-simple-logger': 'angular-simple-logger/dist/angular-simple-logger.js',
                     'd3': 'd3/d3.js',
                     'nvd3': 'nvd3/build/*',
-                    'angular-nvd3': 'angular-nvd3/dist/angular-nvd3.js'
+                    'angular-nvd3': 'angular-nvd3/dist/angular-nvd3.js',
+                    'underscore': 'underscore/underscore.js'
                 }
             }
         },

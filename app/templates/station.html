@@ -5,9 +5,9 @@
 
         <div class="station-header row">
             <div class="station-title">
-                <span class="station-name col-md-3">Station - {{ctrl.station.Id}}</span>
-                <span ng-class="ctrl.station.Name ? 'station-nickname' : 'station-nickname-none'" class="col-md-3">
-                    {{ctrl.station.Name || 'No Nickname'}}
+                <span class="station-name col-md-3">Station - {{ctrl.station.id}}</span>
+                <span ng-class="ctrl.station.name ? 'station-nickname' : 'station-nickname-none'" class="col-md-3">
+                    {{ctrl.station.name || 'No Nickname'}}
                 </span>
             </div>
             <span class="station-location col-md-5">[Station Location Name]</span>
@@ -17,48 +17,48 @@
             </div>
         </div>
         <form class="station-body" ng-hide="ctrl.collapsed" ng-submit="ctrl.onSubmit()">
-            <input type="hidden" name="id" value="{{ctrl.station.Id}}" ng-model="ctrl.station.Id">
+            <input type="hidden" name="id" value="{{ctrl.station.id}}" ng-model="ctrl.station.id">
             <div class="row">
                 <div class="col-md-3">
                     <div class="radio-group">
                         <label>
-                            <input type="radio" name="indoor" ng-value="true" ng-model="ctrl.station.Indoor">
+                            <input type="radio" name="indoor" ng-value="true" ng-model="ctrl.station.indoor">
                             Indoor
                         </label>
                         <label>
-                            <input type="radio" name="indoor" ng-value="false" ng-model="ctrl.station.Indoor">
+                            <input type="radio" name="indoor" ng-value="false" ng-model="ctrl.station.indoor">
                             Outdoor
                         </label>
                     </div>
                     <div class="radio-group">
                         <label>
-                            <input type="radio" name="private" ng-value="false" ng-model="ctrl.station.Privacy">
+                            <input type="radio" name="private" ng-value="false" ng-model="ctrl.station.privacy">
                             Public
                         </label>
                         <label>
-                            <input type="radio" name="private" ng-value="true" ng-model="ctrl.station.Privacy">
+                            <input type="radio" name="private" ng-value="true" ng-model="ctrl.station.privacy">
                             Private
                         </label>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <label class="sr-only">Station Nickname</label>
-                    <input type="text" class="form-control" placeholder="Station Nickname" ng-model="ctrl.station.Name">
+                    <input type="text" class="form-control" placeholder="Station Nickname" ng-model="ctrl.station.name">
                 </div>
                 <div class="station-details col-md-6">
-                    <span class="station-location">lat: {{ctrl.station.Location.Lat}} lon: {{ctrl.station.Location.Lng}}</span><br/>
+                    <span class="station-location">lat: {{ctrl.station.location.lat}} lon: {{ctrl.station.location.lng}}</span><br/>
                     <span class="station-last-updated">{{ctrl.station.lastUpdated}}</span>
                 </div>
             </div>
             <div class="row">
                 <div class=" col-md-10 col-md-offset-1">
                     <label class="sr-only">Purpose</label>
-                    <textarea class="form-control" ng-model="ctrl.station.Purpose"
-                              style="resize: vertical;" placeholder="Station Purpose">{{ctrl.station.Purpose}}</textarea>
+                    <textarea class="form-control" ng-model="ctrl.station.purpose"
+                              style="resize: vertical;" placeholder="Station Purpose">{{ctrl.station.purpose}}</textarea>
                 </div>
             </div>
             <div class="station-update row">
-                <span class="ams-owner col-md-6">Owner: {{ctrl.station.Owner}}</span>
+                <span class="ams-owner col-md-6">Owner: {{ctrl.station.owner}}</span>
 
                 <div class=" update-buttons col-md-6">
                     <button class="btn btn-default btn-lg" type="submit">Save</button>
