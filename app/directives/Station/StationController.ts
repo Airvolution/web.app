@@ -22,7 +22,7 @@ class StationController {
     }
 
     public onSubmit() {
-        this.$http.post(Globals.api_base + '/frontend/ams', this.station);
+        this.$http.post('api/frontend/ams', this.station);
     }
 
     public onUpdate(){
