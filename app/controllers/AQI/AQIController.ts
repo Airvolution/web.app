@@ -27,8 +27,8 @@ class AQIController {
 
                 // TODO: Parse the returned DATA into JSON
                 var data = response.data;
-                self.localAQI = data['AQI'];
-                self.localCategory = data['Category']['Name'];
+                self.localAQI = data['aqi'];
+                self.localCategory = data['category']['name'];
             },
             function(response) {
                 console.log('Failure!');

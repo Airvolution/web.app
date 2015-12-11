@@ -1,19 +1,12 @@
 <main ng-controller="ComparePageController as pctrl">
-    <div class="col-md-9" ng-controller="NVD3Controller as cctrl">
-        <div class="data-plot">
-            <nvd3 class="col-lg-8" options="cctrl.options" data="cctrl.data"></nvd3>
-        </div>
-
-        <div class="data-plot">
-            <nvd3 class="col-lg-8" options="cctrl.options" data="cctrl.data"></nvd3>
+    <div id="compare-plots" class="col-md-8">
+        <div ng-repeat="plot in pctrl.plots" class="data-plot well" style="margin: 1em 0;" ng-class="{'hidden':plot.visible == false}">
+            <nvd3 options="pctrl.options" data="plot.data" ></nvd3>
         </div>
     </div>
-    <div id="compare-plots" ng-class="{'hidden':!plotVisible}" class="col-lg-8" >
-
-    </div>
-    <div class="col-md-3 well" id="compare-list">
+    <div class="col-md-4 well" id="compare-list">
         <div ng-repeat="station in pctrl.stations" class="list-element well well-sm">
-            <input type="checkbox" class="checkbox-inline" ng-model="station.plotVisible">
+            <input type="checkbox" class="checkbox-inline" ng-model="station.visible" ng-change="pctrl.onListChange(station.id)">
             <span class="checkbox-text">Station - {{station.id}}</span>
         </div>
     </div>
