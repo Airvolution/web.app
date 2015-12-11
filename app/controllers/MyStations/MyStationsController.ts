@@ -6,13 +6,17 @@ export = MyStationsController;
 
 class MyStationsController {
     public static name = "MyStationsController";
+    public stations = [];
+    
     static $inject = ['$http'];
     constructor($http){
+        var self = this;
         $http({
             url: 'api/frontend/getUserDeviceStates',
             method: 'GET'
         }).then(function(data){
-            this.stations = JSON.parse(data);
+            self.stations = data.data;
+            console.log('what is data: ' + data);
         })
     }
 
@@ -39,5 +43,5 @@ class MyStationsController {
         }
     ];
 
-    public stations = [];
+    
 }
