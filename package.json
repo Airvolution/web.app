@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prestart": "grunt",
-    "start": "http-server ./build -a localhost -p 8084 -c-1 verbose=true",
+    "start": "node server.js",
     "start-no-build": "http-server ./build -a localhost -p 8084 -c-1 verbose=true"
   },
   "repository": {
@@ -26,34 +26,26 @@
   },
   "homepage": "https://gitlab.com/jmoore1127/airu.web.app#README",
   "dependencies": {
-    "angular": "^1.4.8",
-    "angular-route": "^1.4.8",
-    "bootstrap": "^3.3.5",
     "bower": "^1.6.5",
     "grunt": "^0.4.5",
     "grunt-bowercopy": "^1.2.3",
-    "grunt-browserify": "^4.0.1",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-concat": "^0.5.1",
     "grunt-contrib-copy": "^0.8.2",
     "grunt-contrib-cssmin": "^0.14.0",
     "grunt-contrib-less": "^1.0.1",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-shell": "^1.1.2",
     "grunt-subgrunt": "^1.0.0",
-    "grunt-typescript": "^0.8.0",
     "grunt-webpack": "^1.0.11",
-    "http-server": "^0.8.5",
     "leaflet": "^0.7.7",
-    "requirejs": "^2.1.22",
     "ts-loader": "^0.7.1",
-    "typescript": "^1.6.2",
     "ui-leaflet": "^1.0.0",
     "webpack": "^1.12.8",
-    "webpack-dev-server": "^1.12.1"
+    "airu.web.styles": "https://bitbucket.org/Jmoore1127/airu.web.styles.git"
   },
   "devDependencies": {
+    "express": "^4.13.3",
+    "express-http-proxy": "^0.6.0",
     "grunt-ts": "^5.1.1"
   }
 }
