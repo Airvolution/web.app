@@ -6,7 +6,10 @@ app/**/*.map.js
 app/**/*.js.map
 .tscache
 bower_components
+lib
 build
 node_modules
 app.js
 main.js
+boot.js
+static

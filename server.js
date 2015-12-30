@@ -8,7 +8,7 @@ app.use('/api',proxy('http://localhost:2307',{
     }
 }));
 
-app.use(express.static('build'));
+app.use(express.static(__dirname));
 
 var server = app.listen(8084, function () {
     var host = server.address().address;

@@ -2,26 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="static/lib/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="static/lib/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="static/lib/weather-icons/css/weather-icons.min.css">
-    <link rel="stylesheet" href="/static/lib/leaflet/leaflet.css"/>
-    <link rel="stylesheet" href="static/css/app.min.css">
-    <link rel="stylesheet" href="static/lib/nvd3/nv.d3.css">
-    <script src="static/lib/jquery/jquery.js"></script>
-    <script src="static/lib/angular/js/angular.js"></script>
-    <script src="static/lib/angular-route/js/angular-route.js"></script>
-    <script src="static/lib/bootstrap/js/bootstrap.js"></script>
-    <script src="static/lib/leaflet/leaflet.js"></script>
-    <script src="static/lib/leaflet-heatmap/leaflet-heat.js"></script>
-    <script src="static/lib/angular-simple-logger/angular-simple-logger.js"></script>
-    <script src="static/lib/ui-leaflet/ui-leaflet.js"></script>
-    <script src="static/lib/d3/d3.js"></script>
-    <script src="static/lib/nvd3/nv.d3.js"></script>
-    <script src="static/lib/angular-nvd3/angular-nvd3.js"></script>
-    <script src="static/lib/underscore/underscore.js"></script>
-    <script src="app/app.js"></script>
-<body ng-app="app" ng-cloak>
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="lib/weather-icons/css/weather-icons.css">
+    <link rel="stylesheet" href="lib/leaflet/dist/leaflet.css"/>
+    <link rel="stylesheet" href="lib/nvd3/build/nv.d3.css">
+    <link rel="stylesheet" href="app.min.css">
+
+<style>
+    [ng-cloak] {display:none;}
+</style>
+<body ng-cloak>
 <div class="container" ng-controller="AppController as actrl">
     <header class="header row" ng-controller="HeaderController as hctrl">
         <div class="headerzone col-md-1" id="hamburger" ng-click="$parent.navVisible = !$parent.navVisible"><i
@@ -102,5 +93,21 @@
         </footer>
     </div>
 </div>
+
+<!--Scripts-->
+<!--<script src="lib/jquery/dist/jquery.js"></script>-->
+<!--<script src="lib/angular-route/angular-route.js"></script>-->
+<!--<script src="lib/bootstrap/dist/js/bootstrap.js"></script>-->
+<!--<script src="lib/leaflet/dist/leaflet.js"></script>-->
+<!--<script src="lib/Leaflet-HeatMap/dist/leaflet-heat.js"></script>-->
+<!--<script src="lib/angular-simple-logger/dist/angular-simple-logger.js"></script>-->
+<!--<script src="lib/ui-leaflet/dist/ui-leaflet.js"></script>-->
+<!--<script src="lib/d3/d3.js"></script>-->
+<!--<script src="lib/nvd3/build/nv.d3.js"></script>-->
+<!--<script src="lib/angular-nvd3/dist/angular-nvd3.js"></script>-->
+<!--<script src="lib/underscore/underscore.js"></script>-->
+<!--<script src="app/app.js"></script>-->
+<script src="lib/requirejs/require.js" data-main="main.js"></script>
+
 </body>
 </html>

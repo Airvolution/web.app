@@ -3,54 +3,52 @@ module.exports = function (grunt) {
     grunt.initConfig({
 
         pkg: grunt.file.readJSON('package.json'),
-        webpack: {
-            base: {
-                entry: './app.ts',
-                output: {
-                    filename: 'build/app/app.js'
-                },
-                resolve: {
-                    extensions: ['', '.webpack.js', '.web.js', '.ts', '.js']
-                },
-                module: {
-                    loaders: [
-                        {test: /\.ts$/, loader: 'ts-loader'}
-                    ]
+        typescript: {
+            compile: {
+                src: ['app/**/ *.ts', 'app.ts', 'boot.ts', 'main.ts'],
+                options: {
+                    module: 'amd',
+                    target: 'es5',
+                    sourceMap: true
                 }
             }
         },
         subgrunt: {
             styles: {
-                'bower_components/airu.web.styles': 'default'
+                '../airu.web.styles': 'default'
             }
         },
         copy: {
-            templates: {
-                src: 'app/**/*.html',
-                dest: 'build/app/templates/',
-                expand:true,
-                flatten:true
+            dev: {
+                files: [
+                    {
+                        src: 'lib/airu.web.styles/app/assets/images/**/*',
+                        dest: 'static/images/',
+                        flatten: true,
+                        expand: true
+                    },
+                ]
+
             },
-            main: {
-                nonull: true,
-                src: 'index.html',
-                dest: 'build/index.html'
-            },
-            main_styles: {
-                nonull: true,
-                src: 'bower_components/airu.web.styles/styles/main.css',
-                dest: 'build/main_styles.css'
-            },
-            app_styles: {
-                nonull: true,
-                src: 'main.css',
-                dest: 'build/main_app.css'
-            },
-            images_styles: {
-                src: 'bower_components/airu.web.styles/app/assets/images/**/*',
-                dest: 'build/static/images/',
-                flatten:true,
-                expand:true
+            build: {
+                files: [
+                    {
+                        nonull: true,
+                        src: 'index.html',
+                        dest: 'build/index.html'
+                    },
+                    {
+                        nonull: true,
+                        src: 'app.min.css',
+                        dest: 'build/app.min.css'
+                    },
+                    {
+                        src: 'lib/airu.web.styles/app/assets/images/**/*',
+                        dest: 'build/static/images/',
+                        flatten: true,
+                        expand: true
+                    },
+                ]
             },
             custom: {
                 nonull: true,
@@ -62,12 +60,12 @@ module.exports = function (grunt) {
         },
         bowercopy: {
             options: {
-                srcPrefix: 'bower_components'
+                srcPrefix: 'lib'
             },
             libs: {
                 options: {
-                    srcPrefix: 'bower_components',
-                    destPrefix: 'build/static/lib'
+                    srcPrefix: 'lib',
+                    destPrefix: 'build/lib'
                 },
                 files: {
                     'bootstrap': 'bootstrap/dist/**/*',
@@ -92,23 +90,24 @@ module.exports = function (grunt) {
         },
         concat: {
             styles: {
-                src: ['build/main_app.css', 'build/main_styles.css'],
-                dest: 'build/static/css/app.css',
+                src: ['main.css', 'lib/airu.web.styles/app.css'],
+                dest: 'app.css',
                 nonull: true
             }
         },
         cssmin: {
             app: {
-                src: 'build/static/css/app.css',
-                dest: 'build/static/css/app.min.css'
+                src: 'app.css',
+                dest: 'app.min.css'
             }
         },
         clean: {
+            local: ['app.*css'],
             all: ['build/**/*', 'build/*'],
             build: ['build/main_styles.css', 'build/main_app.css', 'build/static/css/app.css', 'build/static/libs/js/npm.js']
         }
     });
-    grunt.loadNpmTasks('grunt-webpack');
+    grunt.loadNpmTasks('grunt-typescript');
     grunt.loadNpmTasks('grunt-subgrunt');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-clean');
@@ -116,16 +115,16 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-bowercopy');
 
-
-    grunt.registerTask('build:app_dev', ['webpack:base', 'copy:main','copy:templates']);
-    grunt.registerTask('build:app_release', ['webpack:base','copy:main','copy:templates']);
-    grunt.registerTask('build:libs', ['bowercopy:libs']);
-    grunt.registerTask('build:styles', ['subgrunt:styles', 'copy:app_styles', 'copy:main_styles', 'concat:styles', 'cssmin:app', 'copy:images_styles']);
-    grunt.registerTask('build:dependencies', ['build:styles']);
-    grunt.registerTask('build:dev', ['clean:all', 'build:libs', 'build:dependencies', 'build:app_dev', 'clean:build']); //release build
-    grunt.registerTask('build:release', ['clean:all', 'build:libs', 'build:dependencies', 'build:app_release', 'clean:build']); //release build
-    grunt.registerTask('build:all-dirty', ['clean:all', 'build:libs', 'build:dependencies', 'build:app']); //don't clean generated files
+    // replace these with dev/prod build steps in the future
+    //grunt.registerTask('build:app_dev', ['copy:main','copy:templates']);
+    //grunt.registerTask('build:app_release', ['copy:main','copy:templates']);
+    //grunt.registerTask('build:libs', ['bowercopy:libs']);
+    //grunt.registerTask('build:styles', ['subgrunt:styles', 'copy:app_styles', 'copy:main_styles', 'concat:styles', 'cssmin:app', 'copy:images_styles']);
+    //grunt.registerTask('build:dependencies', ['build:styles']);
+    //grunt.registerTask('build:dev', ['clean:all', 'build:libs', 'build:dependencies', 'build:app_dev', 'clean:build']); //release build
+    //grunt.registerTask('build:release', ['clean:all', 'build:libs', 'build:dependencies', 'build:app_release', 'clean:build']); //release build
+    //grunt.registerTask('build:all-dirty', ['clean:all', 'build:libs', 'build:dependencies', 'build:app']); //don't clean generated files
 
     // Default task
-    grunt.registerTask('default', ['build:dev']);
+    grunt.registerTask('default', ['clean:local', 'subgrunt:styles', 'concat:styles', 'cssmin:app','copy:dev']);
 };

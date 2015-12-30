@@ -1,12 +1,9 @@
 ///<reference path="./typings/tsd.d.ts" />
-//These are hacked to work. Others don't need to do this.va
 
-import services = require('./app/services/module');
-services;
-import controllers = require('./app/controllers/module');
-controllers;
-import directives = require('./app/directives/module');
-directives;
+import services = require('./app/services/module'); services;
+import controllers = require('./app/controllers/module'); controllers;
+import directives = require('./app/directives/module'); directives;
+
 
 angular.module('app', [
         'nemLogging',
