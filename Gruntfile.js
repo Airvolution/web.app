@@ -3,6 +3,14 @@ module.exports = function (grunt) {
     grunt.initConfig({
 
         pkg: grunt.file.readJSON('package.json'),
+        "http-server":{
+          dev:{
+              root:'build',
+              port: 8084,
+              host: "0.0.0.0",
+              runInBackground: false
+          }
+        },
         typescript: {
             compile: {
                 src: ['app/**/ *.ts', 'app.ts', 'boot.ts', 'main.ts'],
@@ -16,6 +24,11 @@ module.exports = function (grunt) {
         subgrunt: {
             styles: {
                 '../airu.web.styles': 'default'
+            },
+            build: {
+                projects: {
+                    'lib/airu.web.styles': 'build'
+                }
             }
         },
         copy: {
@@ -48,14 +61,48 @@ module.exports = function (grunt) {
                         flatten: true,
                         expand: true
                     },
+                    {
+                        nonull:true,
+                        dest: 'build/',
+                        src: [
+                            'app.js',
+                            'boot.js',
+                            'main.js'
+
+                        ]
+                    },
+                    {
+                        nonull:true,
+                        dest: 'build',
+                        expand: true,
+                        src: [
+                            'lib/bootstrap/dist/**/*',
+                            'lib/font-awesome/css/*',
+                            'lib/font-awesome/fonts/*',
+                            'lib/weather-icons/css/*',
+                            'lib/weather-icons/font/*',
+                            'lib/jquery/dist/*',
+                            'lib/angular/angular.*js',
+                            'lib/angular-resource/angular-resource.*js',
+                            'lib/angular-route/angular-route.*js',
+                            'lib/leaflet/dist/**/*',
+                            'lib/Leaflet-HeatMap/dist/*',
+                            'lib/ui-leaflet/dist/ui-leaflet.js',
+                            'lib/angular-simple-logger/dist/angular-simple-logger.js',
+                            'lib/d3/d3.js',
+                            'lib/nvd3/build/*',
+                            'lib/angular-nvd3/dist/angular-nvd3.js',
+                            'lib/underscore/underscore.js',
+                            'lib/requirejs/require.js',
+                            'lib/requirejs-domready/domReady.js'
+                        ]
+                    },
+                    {
+                        dest: 'build',
+                        expand: true,
+                        src: 'app/**/*.js'
+                    }
                 ]
-            },
-            custom: {
-                nonull: true,
-                src: '<%= copy_src %>',
-                dest: '<%= copy_dst %>',
-                expand: true,
-                flatten: true
             }
         },
         bowercopy: {
@@ -84,7 +131,7 @@ module.exports = function (grunt) {
                     'd3': 'd3/d3.js',
                     'nvd3': 'nvd3/build/*',
                     'angular-nvd3': 'angular-nvd3/dist/angular-nvd3.js',
-                    'underscore': 'underscore/underscore.js'
+                    'underscore': 'underscore/underscore.js',
                 }
             }
         },
@@ -103,8 +150,8 @@ module.exports = function (grunt) {
         },
         clean: {
             local: ['app.*css'],
-            all: ['build/**/*', 'build/*'],
-            build: ['build/main_styles.css', 'build/main_app.css', 'build/static/css/app.css', 'build/static/libs/js/npm.js']
+            all: ['build/**/*', 'build/*', 'app.*css'],
+            build: []
         }
     });
     grunt.loadNpmTasks('grunt-typescript');
@@ -114,17 +161,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-bowercopy');
+    grunt.loadNpmTasks('grunt-http-server');
 
-    // replace these with dev/prod build steps in the future
-    //grunt.registerTask('build:app_dev', ['copy:main','copy:templates']);
-    //grunt.registerTask('build:app_release', ['copy:main','copy:templates']);
-    //grunt.registerTask('build:libs', ['bowercopy:libs']);
-    //grunt.registerTask('build:styles', ['subgrunt:styles', 'copy:app_styles', 'copy:main_styles', 'concat:styles', 'cssmin:app', 'copy:images_styles']);
-    //grunt.registerTask('build:dependencies', ['build:styles']);
-    //grunt.registerTask('build:dev', ['clean:all', 'build:libs', 'build:dependencies', 'build:app_dev', 'clean:build']); //release build
-    //grunt.registerTask('build:release', ['clean:all', 'build:libs', 'build:dependencies', 'build:app_release', 'clean:build']); //release build
-    //grunt.registerTask('build:all-dirty', ['clean:all', 'build:libs', 'build:dependencies', 'build:app']); //don't clean generated files
-
+    grunt.registerTask('build:dev', ['clean:all', 'subgrunt:build', 'concat:styles', 'cssmin:app', 'copy:build', 'clean:build']);
+    grunt.registerTask('serve',['http-server:dev']);
     // Default task
-    grunt.registerTask('default', ['clean:local', 'subgrunt:styles', 'concat:styles', 'cssmin:app','copy:dev']);
+    grunt.registerTask('default', ['clean:local', 'subgrunt:styles', 'concat:styles', 'cssmin:app', 'copy:dev']);
 };
