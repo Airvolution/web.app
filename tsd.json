@@ -22,6 +22,9 @@
     },
     "leaflet/leaflet.d.ts": {
       "commit": "fa04c80f4a889613b96cb4f283848c61a9f64233"
+    },
+    "jasmine/jasmine.d.ts": {
+      "commit": "6659791e2e8b77cf81a8d0cca3512fba7c818f9b"
     }
   }
 }
