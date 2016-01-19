@@ -8,45 +8,49 @@ import directives = require('./app/directives/module'); directives;
 angular.module('app', [
         'nemLogging',
         'ui-leaflet',
-        'ngRoute',
+        'ui.router',
         'services',
         'controllers',
         'directives',
         'nvd3'
 
     ])
-    .config(($routeProvider)=> {
-        $routeProvider.when('/Almanac', {
-                templateUrl: "app/templates/almanac.html"
-            })
-            .when('/', {
-                redirectTo: '/Map'
-            })
-            .when('/Compare', {
-                templateUrl: 'app/templates/compare.html'
-            })
-            .when('/Indoor', {
-                templateUrl: 'app/templates/indoor.html'
-            })
-            .when('/Map', {
+    .config(($stateProvider, $urlRouterProvider)=> {
+        $urlRouterProvider.otherwise('/map');
+        $stateProvider
+            .state('map',{
+                url: '/map',
                 templateUrl: 'app/templates/map.html'
             })
-            .when('/Radar', {
+            .state('almanac',{
+                url:'/almanac',
+                templateUrl: 'app/templates/alamanac.html'
+            })
+            .state('compare',{
+                url:'/compare',
+                templateUrl: 'app/templates/compare.html'
+            })
+            .state('indoor',{
+                url:'/indoor',
+                templateUrl: 'app/templates/indoor.html'
+            })
+            .state('radar', {
+                url:'/radar',
                 templateUrl: 'app/templates/radar.html'
             })
-            .when('/MyProfile',{
+            .state('profile',{
+                url:'/profile',
                 templateUrl: 'app/templates/myProfile.html'
             })
-            .when('/MyStations',{
+            .state('stations',{
+                url: '/stations',
                 templateUrl: 'app/templates/myStations.html'
             })
-            .when('/RegisterStation',{
+            .state('register',{
+                url: '/register',
                 templateUrl: 'app/templates/registerStation.html'
             })
-            .when('/404', {
+            .state('error', {
                 templateUrl: 'app/templates/404.html'
-            })
-            .otherwise({
-                redirectTo: '/Map'
             });
     });

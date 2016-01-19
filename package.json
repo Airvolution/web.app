@@ -47,6 +47,10 @@
   "devDependencies": {
     "express": "^4.13.3",
     "express-http-proxy": "^0.6.0",
-    "grunt-http-server": "^1.13.0"
+    "grunt-http-server": "^1.13.0",
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.13.19",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-jasmine": "^0.3.6"
   }
 }

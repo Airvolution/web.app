@@ -2,6 +2,7 @@
 require.config({
     paths: {
         'angular': 'lib/angular/angular',
+        'ui-router': 'lib/angular-ui-router/release/angular-ui-router',
         'domReady': 'lib/requirejs-domready/domReady',
         'app': './app',
         'nemLogging': 'lib/angular-simple-logger/dist/angular-simple-logger',
@@ -29,8 +30,8 @@ require.config({
             exports: 'angular',
             deps: ['angular', 'nemLogging','leaflet','leaflet-heat']
         },
-        'ngRoute': {
-            exports: 'angular',
+        'ui-router':{
+          exports: 'angular',
             deps: ['angular']
         },
         'd3': {
@@ -57,7 +58,7 @@ require.config({
             deps: ['angular','nvd3']
         },
         'app': {
-            deps: ['bootstrap', 'angular', 'underscore','ui-leaflet','angular-nvd3','nemLogging','ngRoute']
+            deps: ['bootstrap', 'angular', 'underscore','ui-leaflet','angular-nvd3','nemLogging','ui-router']
         }
     },
     deps: ['./boot']

@@ -46,9 +46,9 @@
             <div class="dropdown">
                 <i class="fa fa-cog fa-2x config-menu-icon dropdown-toggle" data-toggle="dropdown"></i>
                 <ul class="dropdown-menu dropdown-menu-right config-menu">
-                    <li><a href="#/MyProfile">My Profile</a></li>
-                    <li><a href="#/MyStations">My Stations</a></li>
-                    <li><a href="#/RegisterStation">Register Station</a></li>
+                    <li><a ui-sref="profile">My Profile</a></li>
+                    <li><a ui-sref="stations">My Stations</a></li>
+                    <li><a ui-sref="register">Register Station</a></li>
                     <li class="divider"></li>
                     <li><a>Logout</a></li>
                 </ul>
@@ -76,7 +76,7 @@
                 <!--</li>-->
                 <!--</ul>-->
                 <!--</section>-->
-                <section class="col-md-12 main-wrapper" ng-view>
+                <section class="col-md-12 main-wrapper" ui-view>
                 </section>
             </div>
         </div>
@@ -94,19 +94,6 @@
     </div>
 </div>
 
-<!--Scripts-->
-<!--<script src="lib/jquery/dist/jquery.js"></script>-->
-<!--<script src="lib/angular-route/angular-route.js"></script>-->
-<!--<script src="lib/bootstrap/dist/js/bootstrap.js"></script>-->
-<!--<script src="lib/leaflet/dist/leaflet.js"></script>-->
-<!--<script src="lib/Leaflet-HeatMap/dist/leaflet-heat.js"></script>-->
-<!--<script src="lib/angular-simple-logger/dist/angular-simple-logger.js"></script>-->
-<!--<script src="lib/ui-leaflet/dist/ui-leaflet.js"></script>-->
-<!--<script src="lib/d3/d3.js"></script>-->
-<!--<script src="lib/nvd3/build/nv.d3.js"></script>-->
-<!--<script src="lib/angular-nvd3/dist/angular-nvd3.js"></script>-->
-<!--<script src="lib/underscore/underscore.js"></script>-->
-<!--<script src="app/app.js"></script>-->
 <script src="lib/requirejs/require.js" data-main="main.js"></script>
 
 </body>
