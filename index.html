@@ -2,22 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.css">
-    <link rel="stylesheet" href="lib/weather-icons/css/weather-icons.css">
-    <link rel="stylesheet" href="lib/leaflet/dist/leaflet.css"/>
-    <link rel="stylesheet" href="lib/nvd3/build/nv.d3.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css">
     <link rel="stylesheet" href="app/assets/styles/app.min.css">
 
-<style>
-    [ng-cloak] {display:none;}
-</style>
-<body ng-cloak>
+<!--<style>-->
+    <!--[ng-cloak] {display:none;}-->
+<!--</style>-->
+<body ng-app="app">
 <div class="container" ng-controller="AppController as actrl">
     <header class="header row" ng-controller="HeaderController as hctrl">
         <div class="headerzone col-md-1" id="hamburger" ng-click="$parent.navVisible = !$parent.navVisible"><i
                 class="fa fa-bars fa-3x"></i></div>
-        <div class="headerzone col-md-1"><img src="static/images/AirU.png" alt="University of Utah"></div>
+        <div class="headerzone col-md-1"><img src="app/assets/images/AirU.png" alt="University of Utah"></div>
         <!--
         <div class="headerzone col-md-2 col-md-offset-1"><div id="quicklinks"><input type="text" placeholder="QuickLinks"/><i class="fa fa-search fa-2x"></i></div></div>
         -->
@@ -93,7 +93,18 @@
         </footer>
     </div>
 </div>
-<script src="lib.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.13/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.js"></script>
+<script src="node_modules/angular-nvd3/dist/angular-nvd3.min.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-nvd3-directives/0.0.7/angularjs-nvd3-directives.min.js"></script>-->
+<script src="node_modules/angular-simple-logger/dist/angular-simple-logger.min.js"></script>
+<script src="node_modules/ui-leaflet/dist/ui-leaflet.min.js"></script>
+
 <script src="bundle.js"></script>
 </body>
 </html>

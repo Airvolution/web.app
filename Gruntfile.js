@@ -29,9 +29,6 @@ module.exports = function (grunt) {
                 resolve: {
                     extensions: ['','webpack.js','.web.js','.js','.ts']
                 },
-                plugins: [
-                    new webpack.optimize.UglifyJsPlugin()
-                ],
                 module: {
                     loaders: [
                         {test: /\.ts/, loader: 'ts-loader'}

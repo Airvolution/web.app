@@ -72,7 +72,7 @@ class HeatMapController {
                     if (data.hasOwnProperty(key)) {
                         data[key]['clickable'] = true;
                         data[key]['icon'] = { 
-                            iconUrl: 'static/images/green.png', 
+                            iconUrl: 'app/assets/images/markers/green.png',
                             iconSize: [35,45], 
                             iconAnchor: [17,28] 
                         };

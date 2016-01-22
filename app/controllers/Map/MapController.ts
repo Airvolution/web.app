@@ -74,7 +74,7 @@ class MapController {
                     if (data.hasOwnProperty(key)) {
                         data[key]['clickable'] = true;
                         data[key]['icon'] = { 
-                            iconUrl: 'static/images/green.png', 
+                            iconUrl: 'app/assets/images/markers/green.png',
                             iconSize: [35,45], 
                             iconAnchor: [17,28] 
                         };
@@ -117,7 +117,7 @@ class MapController {
                         lng: site['longitude'], 
                         'clickable': true, 
                         'icon': { 
-                            iconUrl: 'static/images/red.png', 
+                            iconUrl: 'app/assets/images/markers/red.png',
                             iconSize: [35,45], 
                             iconAnchor: [17,28] 
                         } 
