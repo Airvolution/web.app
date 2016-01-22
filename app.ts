@@ -1,8 +1,8 @@
 ///<reference path="./typings/tsd.d.ts" />
 
-import services = require('./app/services/module'); services;
-import controllers = require('./app/controllers/module'); controllers;
-import directives = require('./app/directives/module'); directives;
+import services = require('./app/services/module');services;
+import controllers = require('./app/controllers/module');controllers;
+import directives = require('./app/directives/module');directives;
 
 
 angular.module('app', [

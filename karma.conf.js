@@ -15,7 +15,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'app/test/*spec.ts'
+      'app/**/test/*.spec.ts'
     ],
 
 
@@ -27,8 +27,26 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      'app/**/test/*.spec.ts': ['webpack']
     },
-
+    webpack:{
+      module: {
+        loaders: [
+          {test: /\.ts/, loader: 'ts-loader'}
+        ]
+      },
+      resolve: {
+        extensions: ['','webpack.js','.web.js','.js','.ts']
+      }
+    },
+    webpackMiddleware: {
+      stats: {
+        colors: true
+      }
+    },
+    plugins: [
+      require("karma-webpack")
+    ],
 
     // test results reporter to use
     // possible values: 'dots', 'progress'

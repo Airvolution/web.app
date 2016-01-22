@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "sourceMap": true,
-    "module": "amd"
+    "sourceMap": true
   },
   "filesGlob":  [
     "**/*.ts",

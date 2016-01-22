@@ -30,7 +30,5 @@
     "angular-ui-router": "~0.2.15"
   },
   "devDependencies": {
-    "requirejs": "~2.1.22",
-    "requirejs-domready": "~2.0.1"
   }
 }

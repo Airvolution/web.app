@@ -13,3 +13,5 @@ app.js
 main.js
 boot.js
 static
+bundle.js*
+vendor.js*

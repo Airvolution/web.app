@@ -1,8 +1,30 @@
+var webpack = require('webpack');
 module.exports = function (grunt) {
 
     grunt.initConfig({
 
         pkg: grunt.file.readJSON('package.json'),
+        "webpack":{
+            bundle: {
+                entry: "./app.ts",
+                output: {
+                    filename: 'bundle.js'
+                },
+                devtool: 'source-map',
+                resolve: {
+                    extensions: ['','webpack.js','.web.js','.js','.ts']
+                },
+                plugins: [
+                    new webpack.optimize.UglifyJsPlugin()
+                ],
+                module: {
+                    loaders: [
+                        {test: /\.ts/, loader: 'ts-loader'}
+                    ]
+                }
+            }
+
+        },
         "http-server":{
           dev:{
               root:'build',
@@ -162,6 +184,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-bowercopy');
     grunt.loadNpmTasks('grunt-http-server');
+    grunt.loadNpmTasks('grunt-webpack');
 
     grunt.registerTask('build:dev', ['clean:all', 'subgrunt:build', 'concat:styles', 'cssmin:app', 'copy:build', 'clean:build']);
     grunt.registerTask('serve',['http-server:dev']);
