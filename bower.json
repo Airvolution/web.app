@@ -26,7 +26,6 @@
     "nvd3": "~1.8.1",
     "angular-nvd3": "~1.0.5",
     "underscore": "~1.8.3",
-    "airu.web.styles": "git@bitbucket.org:Jmoore1127/airu.web.styles.git",
     "angular-ui-router": "~0.2.15"
   },
   "devDependencies": {

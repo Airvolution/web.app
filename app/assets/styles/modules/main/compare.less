@@ -1,0 +1,55 @@
+.main-wrapper {
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0;
+
+
+  main {
+    min-height: 100%;
+    min-width: 100%;
+
+    background-color: @light-gray;
+    border: 2px solid @medium-light-gray;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+}
+#compareWrapper {
+  justify-content: inherit;
+}
+#compare-list {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  padding-left: 1em;
+  padding-right: 1em;
+  overflow-y: auto;
+  background: @medium-darker-gray;
+
+  .list-element {
+    display: flex;
+    padding-top: 1em;
+    background: @medium-light-gray;
+
+    input[type=checkbox]{
+      margin: auto 0;
+    }
+    .checkbox-inline {
+      height: 2em;
+      width: 2em;
+    }
+
+    .checkbox-text {
+      color: black;
+      font-size: 1.5em;
+      margin-left: 1em;
+    }
+  }
+}

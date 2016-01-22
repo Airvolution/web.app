@@ -1,0 +1,153 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: @medium-darker-gray;
+  font-size: 1.25em;
+  line-height: 1.25em;
+
+  .headerzone {
+    padding-left: 0px;
+    padding-right: 0px;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    button {
+      padding-left: 1em;
+      padding-right: 1em;
+    }
+
+  }
+
+
+}
+#hamburger {
+  text-align: center;
+  &:hover {
+    color: @medium-light-gray;
+  }
+}
+
+/*
+#quicklinks {
+  position: relative;
+  input {
+    text-indent: 30px;
+    max-width: 100%;
+  }
+
+  .fa-search {
+    position: absolute;
+    top: 5px;
+    left: 7px;
+    font-size: 15px;
+  }
+}
+*/
+
+#weather {
+  background-color: @medium-light-gray;
+  border-left: 1px solid @dark-gray;
+  padding: .5em .2em;
+
+  .weather_wrapper {
+    text-align: center;
+
+    i {
+      padding: 0px 3px;
+    }
+
+    i.wi {
+      font-size: 2.4em;
+    }
+
+    .high-temp {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin-top: 4%;
+      margin-right: 9%;
+    }
+
+    .low-temp {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin-right: 9%;
+      margin-bottom: 4%;
+    }
+  }
+
+}
+
+#login {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.config-menu-icon  {
+  color: @light-gray;
+}
+.config-menu {
+  top: 50%;
+  right: 50%;
+}
+.welcome-message {
+  color: @light-gray;
+  height: 100%;
+}
+
+.dropdown-menu {
+  color: @medium-darker-gray;
+}
+
+
+#aqi {
+  background-color: @medium-light-gray;
+  border-left: 1px solid @dark-gray;
+
+  .epa-aqi-icon{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: 25%;
+    font-size: 1.5em;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    .low {
+      color: green;
+    }
+
+    .med {
+      color: yellow;
+    }
+
+    .high {
+      color: red;
+    }
+    .invert-text {
+      color: white;
+    }
+  }
+
+  .epa-aqi-title {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 5%;
+  }
+
+  .epa-aqi {
+    color: @light-gray;
+  }
+
+  .epa-aqi-text {
+    color: @dark-gray;
+  }
+}
+

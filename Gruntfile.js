@@ -4,9 +4,24 @@ module.exports = function (grunt) {
     grunt.initConfig({
 
         pkg: grunt.file.readJSON('package.json'),
+        less: {
+            main: {
+                options: {
+                    strictMath: false,
+                    sourceMap: true,
+                    outputSourceFiles: false,
+                    sourceMapURL: 'app.css.map',
+                    sourceMapFilename: 'app/assets/styles/app.css.map'
+                },
+                files: [{
+                    'app/assets/styles/app.css': 'app/assets/styles/app.less'
+                }]
+            }
+        },
         "webpack":{
             bundle: {
                 entry: "./app.ts",
+                progress:true,
                 output: {
                     filename: 'bundle.js'
                 },
@@ -22,51 +37,33 @@ module.exports = function (grunt) {
                         {test: /\.ts/, loader: 'ts-loader'}
                     ]
                 }
+            },
+            test: {
+                entry: "./test.ts",
+                progress:true,
+                output: {
+                    filename: 'bundle-test.js'
+                },
+                devtool: 'source-map',
+                resolve: {
+                    extensions: ['','webpack.js','.web.js','.js','.ts']
+                },
+                module: {
+                    loaders: [
+                        {test: /\.ts/, loader: 'ts-loader'}
+                    ]
+                }
             }
 
-        },
-        "http-server":{
-          dev:{
-              root:'build',
-              port: 8084,
-              host: "0.0.0.0",
-              runInBackground: false
-          }
-        },
-        typescript: {
-            compile: {
-                src: ['app/**/ *.ts', 'app.ts', 'boot.ts', 'main.ts'],
-                options: {
-                    module: 'amd',
-                    target: 'es5',
-                    sourceMap: true
-                }
-            }
-        },
-        subgrunt: {
-            styles: {
-                '../airu.web.styles': 'default'
-            },
-            build: {
-                projects: {
-                    'lib/airu.web.styles': 'build'
-                }
-            }
         },
         copy: {
-            dev: {
-                files: [
-                    {
-                        src: 'lib/airu.web.styles/app/assets/images/**/*',
-                        dest: 'static/images/',
-                        flatten: true,
-                        expand: true
-                    },
-                ]
-
-            },
             build: {
                 files: [
+                    {
+                      nonull: true,
+                        src: 'bundle.js',
+                        dest: 'build/bundle.js'
+                    },
                     {
                         nonull: true,
                         src: 'index.html',
@@ -74,14 +71,8 @@ module.exports = function (grunt) {
                     },
                     {
                         nonull: true,
-                        src: 'app.min.css',
+                        src: 'app/assets/styles/app.min.css',
                         dest: 'build/app.min.css'
-                    },
-                    {
-                        src: 'lib/airu.web.styles/app/assets/images/**/*',
-                        dest: 'build/static/images/',
-                        flatten: true,
-                        expand: true
                     },
                     {
                         nonull:true,
@@ -127,47 +118,15 @@ module.exports = function (grunt) {
                 ]
             }
         },
-        bowercopy: {
-            options: {
-                srcPrefix: 'lib'
-            },
-            libs: {
-                options: {
-                    srcPrefix: 'lib',
-                    destPrefix: 'build/lib'
-                },
-                files: {
-                    'bootstrap': 'bootstrap/dist/**/*',
-                    'font-awesome/css': 'font-awesome/css',
-                    'font-awesome/fonts': 'font-awesome/fonts',
-                    'weather-icons/css': 'weather-icons/css',
-                    'weather-icons/font': 'weather-icons/font',
-                    'jquery': 'jquery/dist/*',
-                    'angular/js': 'angular/angular*.js',
-                    'angular-resource/js': 'angular-resource/angular-resource*.js',
-                    'angular-route/js': 'angular-route/angular-route*.js',
-                    'leaflet': 'leaflet/dist/**/*',
-                    'leaflet-heatmap': 'leaflet-heatmap/dist/*',
-                    'ui-leaflet': 'ui-leaflet/dist/ui-leaflet.js',
-                    'angular-simple-logger': 'angular-simple-logger/dist/angular-simple-logger.js',
-                    'd3': 'd3/d3.js',
-                    'nvd3': 'nvd3/build/*',
-                    'angular-nvd3': 'angular-nvd3/dist/angular-nvd3.js',
-                    'underscore': 'underscore/underscore.js',
-                }
-            }
-        },
-        concat: {
-            styles: {
-                src: ['main.css', 'lib/airu.web.styles/app.css'],
-                dest: 'app.css',
-                nonull: true
-            }
+        concat:{
+            less:{
+                src: 'app/assets/styles/**/*.less',
+                dest: 'app/assets/styles/app.less'            }
         },
         cssmin: {
             app: {
-                src: 'app.css',
-                dest: 'app.min.css'
+                src: 'app/assets/styles/app.css',
+                dest: 'app/assets/styles/app.min.css'
             }
         },
         clean: {
@@ -176,18 +135,15 @@ module.exports = function (grunt) {
             build: []
         }
     });
-    grunt.loadNpmTasks('grunt-typescript');
-    grunt.loadNpmTasks('grunt-subgrunt');
-    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-bowercopy');
-    grunt.loadNpmTasks('grunt-http-server');
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-webpack');
 
-    grunt.registerTask('build:dev', ['clean:all', 'subgrunt:build', 'concat:styles', 'cssmin:app', 'copy:build', 'clean:build']);
-    grunt.registerTask('serve',['http-server:dev']);
+    grunt.registerTask('build:dev', ['clean:all', 'concat:less','less','cssmin:app', 'webpack:bundle','copy:build', 'clean:build']);
+    grunt.registerTask('build:test', ['clean:local','concat:less','less','cssmin:app','webpack:test']);
     // Default task
-    grunt.registerTask('default', ['clean:local', 'subgrunt:styles', 'concat:styles', 'cssmin:app', 'copy:dev']);
+    grunt.registerTask('default', ['clean:local', 'concat:less','less', 'cssmin:app','webpack:bundle']);
 };

@@ -1,0 +1,142 @@
+#myStations {
+  overflow-y: auto;
+
+  h1 {
+    text-align: left;
+  }
+
+  .download-btn {
+    text-align: right;
+    padding: .5em 0;
+  }
+
+}
+
+.warning-indicator {
+  display: inline-block;
+  background-color: @system-warning;
+  width: .5em;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.error-indicator {
+  display: inline-block;
+  background-color: @system-error;
+  width: .5em;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.warning-wrapper {
+  border: 1px solid @system-error;
+  background-color: @light-gray;
+  border-radius: 5px;
+  padding-left: 0px;
+  padding-right: 0px;
+  max-height: 15em;
+  overflow-y: auto;
+
+  .warning-title {
+    text-align: left;
+    padding-left: .75em;
+    font-size: 1.75em;
+    color: @medium-darker-gray;
+    background-color: @medium-light-gray;
+    display: block;
+    position: relative;
+  }
+
+  .system-warning {
+    display: block;
+    font-size: 1.15em;
+    margin: 5px 10px;
+    border: 1px solid @medium-dark-gray;
+    background-color: @medium-lighter-gray;
+    position: relative;
+    text-align: left;
+
+  }
+
+  .system-error {
+    display: block;
+    font-size: 1.15em;
+    margin: 5px 10px;
+    border: 1px solid @medium-dark-gray;
+    background-color: @medium-lighter-gray;
+    position: relative;
+    text-align: left;
+  }
+
+  .system-notification {
+    display: inline-block;
+    margin-left: 2em;
+    padding-top: .3em;
+    padding-bottom: .3em;
+  }
+}
+
+.station-wrapper {
+  max-height: 40em;
+  overflow-y: auto;
+}
+.station {
+  position: relative;
+  border: 1px solid @medium-dark-gray;
+  border-radius: 5px 5px 0px 0px;
+  margin-top: 2em;
+
+  .hidden {
+    display: none;
+  }
+
+  .station-content {
+    position: relative;
+    text-align: left;
+    font-size: 1.15em;
+
+    & .row {
+      margin: 0;
+    }
+    .radio-group {
+      display: inline-block;
+      padding: 0 .25em;
+      font-size: .8em;
+
+      label {
+        display: block;
+      }
+    }
+
+    .station-header {
+      font-size: 1.25em;
+      padding: .5em 2em;
+
+      .station-nickname-none {
+        color: @medium-light-gray;
+      }
+    }
+
+    .station-update {
+      display: flex;
+      align-items: center;
+      padding: .5em 0;
+
+      .update-buttons {
+        text-align: right;
+      }
+    }
+  }
+  .expander {
+    border-top: 1px solid @medium-dark-gray;
+    line-height: .75em;
+
+    &:hover {
+      background-color: @medium-light-gray;
+    }
+  }
+}

@@ -13,5 +13,8 @@ app.js
 main.js
 boot.js
 static
-bundle.js*
+test.js
+bundle*.js*
 vendor.js*
+app/assets/styles/app.css*
+app/assets/styles/app.less*
