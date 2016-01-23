@@ -90,8 +90,8 @@ class MapController {
             }
         );
 
-        let url = "api/frontend/daq";
-        let data = JSON.stringify(obj);
+        url = "api/frontend/daq";
+        data = JSON.stringify(obj);
         console.log("JSON: " + data);
         $http({
             url: url,
