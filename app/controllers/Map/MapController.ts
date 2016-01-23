@@ -6,7 +6,7 @@ class MapController {
     // TODO: This controller is currently providing functionality for MAP
     // TODO: We should move this where it belongs at some point
     public static name = 'MapController';
-    static $inject = ['$scope', 'leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http'];
+    public static $inject = ['$scope', 'leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http'];
     constructor(
         private $scope,
         private leafletData,
@@ -104,7 +104,7 @@ class MapController {
 
                 // TODO: Parse the returned DATA into JSON
                 let data = response.data;
-                let daqSites = [];
+                // let daqSites = [];
 
                 // Add custom attributes to each Marker
                 for (let index in data) {

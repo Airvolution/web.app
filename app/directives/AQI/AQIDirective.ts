@@ -22,7 +22,7 @@ class AQIDirective implements ng.IDirective {
         });
     }
 
-    static create(): AQIDirective {
+    public static create(): AQIDirective {
         return new AQIDirective();
     }
 }

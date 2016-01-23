@@ -3,7 +3,7 @@
 export = AQIController;
 class AQIController {
     public static name = 'AQIController';
-    static $inject = ['$scope', '$http'];
+    public static $inject = ['$scope', '$http'];
     public localAQI;
     public localCategory;
     public showPopup = false;

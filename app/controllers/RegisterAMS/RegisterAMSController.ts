@@ -1,13 +1,13 @@
 ///<referecnce path='../../typings/tsd.d.ts'/>
 
-import Globals = require('../../Globals');
+// import Globals = require('../../Globals');
 export = RegisterAMSController;
 
 class RegisterAMSController {
 
     public static name = 'RegisterAMSController';
     public formData: any = {};
-    static $inject = ['$http'];
+    public static $inject = ['$http'];
     constructor(private $http) {}
 
     public formSubmit() {

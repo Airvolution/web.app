@@ -8,7 +8,7 @@ class NVD3Controller {
     public options;
     public data;
 
-    static $inject = ['$scope', '$http'];
+    public static $inject = ['$scope', '$http'];
     constructor(
         private $scope,
         private $http

@@ -5,7 +5,7 @@ export = AppController;
 class AppController {
     public static name = 'AppController';
     // public navVisible = false;
-    static $inject = ['$scope'];
+    public static $inject = ['$scope'];
     constructor(private $scope) {
         console.log('set navVisible = false on load');
         $scope.navVisible = false;

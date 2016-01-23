@@ -1,5 +1,5 @@
 ///<reference path='../../../typings/tsd.d.ts'/>
-import Globals = require('../../Globals');
+// import Globals = require('../../Globals');
 export = AQIController;
 
 class AQIController {

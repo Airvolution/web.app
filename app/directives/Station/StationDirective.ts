@@ -43,7 +43,7 @@ class StationDirective implements ng.IDirective {
         */
     }
 
-    static create(): StationDirective {
+    public static create(): StationDirective {
         return new StationDirective();
     }
 }

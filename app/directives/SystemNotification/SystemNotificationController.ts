@@ -2,7 +2,7 @@
 export = SystemNotificationController;
 
 class SystemNotificationController {
-    static $inject = [];
+    public static $inject = [];
     constructor() {}
     public type;
     public subtype;

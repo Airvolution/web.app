@@ -6,7 +6,7 @@ class SiteNavDirective implements ng.IDirective {
     public templateUrl = 'app/templates/siteNav.html';
     public restrict = 'E';
 
-    static create(): SiteNavDirective {
+    public static create(): SiteNavDirective {
         return new SiteNavDirective();
     }
 }

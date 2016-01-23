@@ -2,7 +2,7 @@
 
 export = Globals;
 
-const LOCAL_PORT = 2307;
+const LOCAL_PORT  = 2307;
 class Globals {
 
     static get api_base(): string {

@@ -3,7 +3,7 @@ import SystemNotificationController = require('./SystemNotificationController');
 export = SystemNotificationDirective;
 
 class SystemNotificationDirective implements ng.IDirective {
-    public static htmlName: string = 'systemNotification';
+    public static htmlName = 'systemNotification';
     public templateUrl = 'app/templates/systemNotification.html';
     public restrict = 'E';
     public controller = SystemNotificationController;
@@ -16,7 +16,6 @@ class SystemNotificationDirective implements ng.IDirective {
     };
 
     public link(scope, element, atttrs, ctrl) {
-
         $('.close').click(function() {
             $(this).parent().remove();
             // this should probably be abstracted somehow so it is not dependent
@@ -27,7 +26,7 @@ class SystemNotificationDirective implements ng.IDirective {
         });
     }
 
-    static create(): SystemNotificationDirective {
+    public static create(): SystemNotificationDirective {
         return new SystemNotificationDirective();
     }
 }

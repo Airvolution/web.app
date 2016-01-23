@@ -1,11 +1,11 @@
 ///<referecnce path='../../typings/tsd.d.ts'/>
 
-import Globals = require('../../Globals');
+// import Globals = require('../../Globals');
 
 export = MyProfileController;
 
 class MyProfileController {
     public static name = 'MyProfileController';
-    static $inject = [];
+    public static $inject = [];
     constructor() {}
 }

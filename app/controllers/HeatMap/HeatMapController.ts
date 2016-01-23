@@ -4,8 +4,8 @@ declare let L;
 export = HeatMapController;
 class HeatMapController {
     public static name = 'HeatMapController';
-    private data;
-    static $inject = ['$scope', 'leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http'];
+    // private data;
+    public static $inject = ['$scope', 'leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http'];
     constructor(
         private $scope,
         private leafletData,
@@ -138,7 +138,7 @@ class HeatMapController {
             // https://github.com/angular-ui/ui-leaflet/blob/master/examples/0513-markers-events-example.html
             console.log('a marker has been clicked');
 
-            let data = { 'deviceID': args.modelName };
+            // let data = { 'deviceID': args.modelName };
         });
 
         let url2 = 'api/frontend/heatmap';

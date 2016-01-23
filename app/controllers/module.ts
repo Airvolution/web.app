@@ -1,5 +1,5 @@
 ///<reference path='../../typings/tsd.d.ts' />
-import services = require('../services/module');
+// import services = require('../services/module');
 import HeatMapController = require('./HeatMap/HeatMapController');
 import MapController = require('./Map/MapController');
 import RegisterAMSController = require('./RegisterAMS/RegisterAMSController');
@@ -11,7 +11,6 @@ import NVD3Controller = require('./NVD3/NVD3Controller');
 import AQIController = require('./AQI/AQIController');
 import HeaderController = require('./Index/HeaderController');
 import AppController = require('./Index/AppController');
-
 
 export = angular.module('controllers',
     [   'services'

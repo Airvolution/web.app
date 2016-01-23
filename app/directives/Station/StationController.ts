@@ -1,5 +1,5 @@
 ///<reference path='../../../typings/tsd.d.ts'/>
-import Globals = require('../../Globals');
+// import Globals = require('../../Globals');
 export = StationController;
 
 class StationController {
@@ -7,7 +7,7 @@ class StationController {
     public collapsed = true;
     public updating = false;
 
-    static $inject = ['$http', '$timeout'];
+    public static $inject = ['$http', '$timeout'];
 
     constructor(private $http: any,
                 private $timeout: any) {

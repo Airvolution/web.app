@@ -4,7 +4,7 @@ export = MapPageController;
 
 class MapPageController {
     public static name = 'MapPageController';
-    static $inject = ['$scope'];
+    public static $inject = ['$scope'];
     constructor(
         private $scope
     ) {
