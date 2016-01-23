@@ -1,11 +1,11 @@
-///<referecnce path="../../typings/tsd.d.ts"/>
+///<referecnce path='../../typings/tsd.d.ts'/>
 
-import Globals = require("../../Globals");
+import Globals = require('../../Globals');
 
 export = MyStationsController;
 
 class MyStationsController {
-    public static name = "MyStationsController";
+    public static name = 'MyStationsController';
     public stations = [];
     
     static $inject = ['$http'];
@@ -42,6 +42,4 @@ class MyStationsController {
             stationId: '12345'
         }
     ];
-
-    
 }

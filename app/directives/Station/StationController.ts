@@ -1,5 +1,5 @@
-///<reference path="../../../typings/tsd.d.ts"/>
-import Globals = require("../../Globals");
+///<reference path='../../../typings/tsd.d.ts'/>
+import Globals = require('../../Globals');
 export = StationController;
 
 class StationController {
@@ -7,7 +7,7 @@ class StationController {
     public collapsed = true;
     public updating = false;
 
-    static $inject = ["$http", "$timeout"];
+    static $inject = ['$http', '$timeout'];
 
     constructor(private $http: any,
                 private $timeout: any) {
@@ -22,7 +22,7 @@ class StationController {
     }
 
     public onSubmit() {
-        this.$http.put("api/frontend/updateUserDeviceState", this.station);
+        this.$http.put('api/frontend/updateUserDeviceState', this.station);
     }
 
     public onUpdate() {
@@ -31,7 +31,7 @@ class StationController {
         this.$timeout(() => {
             self.updating = false;
             let now = new Date();
-            let lastUpdated = "Last updated " + (now.getMonth() + 1) + "/" + now.getDate() + "/" + (now.getFullYear() + 1900) + " at " + (now.getHours() % 12 || 12) + ":" + now.getMinutes() + " " + (now.getHours() < 12 ? "am" : "pm");
+            let lastUpdated = 'Last updated ' + (now.getMonth() + 1) + '/' + now.getDate() + '/' + (now.getFullYear() + 1900) + ' at ' + (now.getHours() % 12 || 12) + ':' + now.getMinutes() + ' ' + (now.getHours() < 12 ? 'am' : 'pm');
             self.station.lastUpdated = lastUpdated;
         }, 4000);
     }

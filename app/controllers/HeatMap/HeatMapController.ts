@@ -1,11 +1,11 @@
-///<referecnce path="../../typings/tsd.d.ts"/>
+///<referecnce path='../../typings/tsd.d.ts'/>
 declare let L;
 
 export = HeatMapController;
 class HeatMapController {
-    public static name = "HeatMapController";
+    public static name = 'HeatMapController';
     private data;
-    static $inject = ["$scope", "leafletData", "leafletBoundsHelpers", "leafletMarkerEvents", "$http"];
+    static $inject = ['$scope', 'leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http'];
     constructor(
         private $scope,
         private leafletData,
@@ -25,26 +25,26 @@ class HeatMapController {
             layers: {
                 baselayers: {
                     light_map: {
-                        name: "Light Map",
-                        url: "https://api.tiles.mapbox.com/v4/tjhooker33.o78l0n36/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g",
-                        type: "xyz"
+                        name: 'Light Map',
+                        url: 'https://api.tiles.mapbox.com/v4/tjhooker33.o78l0n36/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g',
+                        type: 'xyz'
                     },
                     dark_map: {
-                        name: "Dark Map",
-                        url: "https://api.tiles.mapbox.com/v4/tjhooker33.o780o9a3/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g",
-                        type: "xyz"
+                        name: 'Dark Map',
+                        url: 'https://api.tiles.mapbox.com/v4/tjhooker33.o780o9a3/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g',
+                        type: 'xyz'
                     },
                     satellite_map: {
-                        name: "Satellite Map",
-                        url: "https://api.tiles.mapbox.com/v4/tjhooker33.oc2el95l/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g",
-                        type: "xyz"
+                        name: 'Satellite Map',
+                        url: 'https://api.tiles.mapbox.com/v4/tjhooker33.oc2el95l/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g',
+                        type: 'xyz'
                     }
                 }
             },
             events: {
                 map: {
-                    enable: ["zoomend"],
-                    logic: "emit"
+                    enable: ['zoomend'],
+                    logic: 'emit'
                 },
                 markers: {
                     enable: leafletMarkerEvents.getAvailableEvents()
@@ -53,26 +53,26 @@ class HeatMapController {
         });
 
         // TODO: It would be nice to make an API class
-        console.log("bounds: " + $scope.bounds.northEast.lat);
-        let url = "api/frontend/map";
-        let obj  = { "northEast": { "lat": 89, "lng": 179 }, "southWest": { "lat": -89, "lng": -179 } };
+        console.log('bounds: ' + $scope.bounds.northEast.lat);
+        let url = 'api/frontend/map';
+        let obj  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
         let data = JSON.stringify(obj);
-        console.log("JSON: " + data);
+        console.log('JSON: ' + data);
         $http.post(url, data, {} ).then(
             function(response) {
-                console.log("Success!");
-                console.log("  status: " + response.status);
-                console.log("======================");
+                console.log('Success!');
+                console.log('  status: ' + response.status);
+                console.log('======================');
 
-                let data = response.data["ams"];
+                let data = response.data['ams'];
 
                 // Add custom attributes to each Marker
                 for (let key in data) {
-                    // console.log("key: " + key);
+                    // console.log('key: ' + key);
                     if (data.hasOwnProperty(key)) {
-                        data[key]["clickable"] = true;
-                        data[key]["icon"] = {
-                            iconUrl: "app/assets/images/markers/green.png",
+                        data[key]['clickable'] = true;
+                        data[key]['icon'] = {
+                            iconUrl: 'app/assets/images/markers/green.png',
                             iconSize: [35, 45],
                             iconAnchor: [17, 28]
                         };
@@ -83,37 +83,37 @@ class HeatMapController {
                 $scope.markers = data;
             },
             function(response) {
-                console.log("Failure!");
-                console.log("  status: " + response.status);
-                console.log("======================");
+                console.log('Failure!');
+                console.log('  status: ' + response.status);
+                console.log('======================');
             }
         );
 
        /*
-        // This works but it doesn"t update for unknown reason
-        $scope.$on("leafletDirectiveMap.map.zoomend", function(event) {
+        // This works but it doesn't update for unknown reason
+        $scope.$on('leafletDirectiveMap.map.zoomend', function(event) {
             // $scope.layers.overlays.heat <-- layer I want
             // $scope.layers.overlays.heat.layerOptions.radius = 5
             
             $scope.ctrl.leafletData.getMap().then(function(map) {
                 map.removeLayer($scope.layers.overlays);
-                console.log("did we get the map object?");
+                console.log('did we get the map object?');
                 let zoom = map.getZoom();
-                console.log("zoom: " + zoom);
+                console.log('zoom: ' + zoom);
                 
                 let radius = 5 + 5*zoom;
-                //console.log("radius: " + $scope.layers.overlays.heat.layerOptions.radius);
+                //console.log('radius: ' + $scope.layers.overlays.heat.layerOptions.radius);
                 //$scope.layers.overlays.heat.layerOptions.radius = radius;
-                console.log("radius: " + $scope.layers.overlays.heat.layerOptions.radius);
+                console.log('radius: ' + $scope.layers.overlays.heat.layerOptions.radius);
                 
                 
                 let heatmap = {
-                    name: "Heat Map",
-                    type: "heat",
+                    name: 'Heat Map',
+                    type: 'heat',
                     
                     data: this.data,
                     layerOptions: {
-                        backgroundColor: "rgba(0,0,0,0.25)",
+                        backgroundColor: 'rgba(0,0,0,0.25)',
                         maxOpacity: 0.9,
                         minOpacity: 0.5,
                         radius: radius,
@@ -121,7 +121,7 @@ class HeatMapController {
                     },
                     visible: true
                 };
-                console.log("radius: " + $scope.layers.overlays.heat.layerOptions.radius);
+                console.log('radius: ' + $scope.layers.overlays.heat.layerOptions.radius);
                 
                 $scope.layers.overlays = {
                     heat: heatmap
@@ -129,36 +129,36 @@ class HeatMapController {
                 
             });
             
-            console.log("the map zoomed");
+            console.log('the map zoomed');
         });
         */
 
-        $scope.$on("leafletDirectiveMarker.map.click", function(event, args){
+        $scope.$on('leafletDirectiveMarker.map.click', function(event, args){
             // Resource on how to add Marker Events
             // https://github.com/angular-ui/ui-leaflet/blob/master/examples/0513-markers-events-example.html
-            console.log("a marker has been clicked");
+            console.log('a marker has been clicked');
 
-            let data = { "deviceID": args.modelName };
+            let data = { 'deviceID': args.modelName };
         });
 
-        let url2 = "api/frontend/heatmap";
-        let obj2  = { "mapParameters": { "northEast": { "lat": 89, "lng": 179 }, "southWest": { "lat": -89, "lng": -179 } }, "pollutantName": "PM" };
+        let url2 = 'api/frontend/heatmap';
+        let obj2  = { 'mapParameters': { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } }, 'pollutantName': 'PM' };
         let data2 = JSON.stringify(obj2);
-        console.log("JSON: " + data);
+        console.log('JSON: ' + data);
         $http.post(url2, data2, {} ).then(
             function(response) {
-                console.log("Success!");
-                console.log("  " + url2 + ":\t status: " + response.status);
-                console.log("======================");
+                console.log('Success!');
+                console.log('  ' + url2 + ':\t status: ' + response.status);
+                console.log('======================');
 
-                this.data = response.data["values"];
+                this.data = response.data['values'];
 
                 let heatmap = {
-                    name: "Heat Map",
-                    type: "heat",
+                    name: 'Heat Map',
+                    type: 'heat',
                     data: this.data,
                     layerOptions: {
-                        backgroundColor: "rgba(0,0,0,0.25)",
+                        backgroundColor: 'rgba(0,0,0,0.25)',
                         maxOpacity: 0.9,
                         minOpacity: 0.5,
                         radius: 50,
@@ -172,9 +172,9 @@ class HeatMapController {
                 };
             },
             function(response) {
-                console.log("Failure!");
-                console.log("  status: " + response.status);
-                console.log("======================");
+                console.log('Failure!');
+                console.log('  status: ' + response.status);
+                console.log('======================');
             }
         );
     }

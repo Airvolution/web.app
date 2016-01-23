@@ -1,12 +1,12 @@
-///<reference path="../../../typings/tsd.d.ts" />
+///<reference path='../../../typings/tsd.d.ts' />
 declare let _;
 declare let d3;
 
 export = ComparePageController;
 
 class ComparePageController {
-    public static name = "ComparePageController";
-    static $inject = ["$scope", "$http"];
+    public static name = 'ComparePageController';
+    static $inject = ['$scope', '$http'];
 
     public stations = [];
     public plots = [];
@@ -15,15 +15,15 @@ class ComparePageController {
                 private $http) {
         let self = this;
         $http({
-            url: "api/frontend/getUserDeviceStates",
-            method: "GET"
+            url: 'api/frontend/getUserDeviceStates',
+            method: 'GET'
         }).then(function(data){
             self.stations = data.data;
         });
     };
 
     public onListChange(id) {
-        console.log("onListChange(%s)", id);
+        console.log('onListChange(%s)', id);
         let plot = _.find(this.plots, function(p) {
             return id === p.id;
         });
@@ -37,27 +37,27 @@ class ComparePageController {
     }
 
     public generatePlot(plot) {
-        console.log("generating plot");
+        console.log('generating plot');
         let self = this;
         let data = JSON.stringify(plot.id);
         this.$http({
-            url: "api/frontend/deviceDatapoints",
+            url: 'api/frontend/deviceDatapoints',
             data: data,
-            method: "POST"
+            method: 'POST'
             }).then(
             function(response) {
                 plot.data = response.data;
                 self.plots.push(plot);
             },
             function(response) {
-                console.log("Failure!");
+                console.log('Failure!');
             }
         );
     }
 
     public options = {
         chart: {
-            type: "stackedAreaChart",
+            type: 'stackedAreaChart',
             height: 150,
             margin: {
                 top: 20,
@@ -78,12 +78,12 @@ class ComparePageController {
             xAxis: {
                 showMaxMin: false,
                 tickFormat: function (d) {
-                    return d3.time.format("%x")(new Date(d));
+                    return d3.time.format('%x')(new Date(d));
                 }
             },
             yAxis: {
                 tickFormat: function (d) {
-                    return d3.format(",.2f")(d);
+                    return d3.format(',.2f')(d);
                 }
             },
             zoom: {
@@ -93,7 +93,7 @@ class ComparePageController {
                 useNiceScale: false,
                 horizontalOff: false,
                 verticalOff: true,
-                unzoomEventType: "dblclick.zoom"
+                unzoomEventType: 'dblclick.zoom'
             }
         }
     };

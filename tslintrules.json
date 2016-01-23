@@ -1,0 +1,10 @@
+{
+    "rules": {
+        "curly": true,
+        "quotemark": [
+            true,
+            "single"],
+        "eofline": true
+    }
+
+}

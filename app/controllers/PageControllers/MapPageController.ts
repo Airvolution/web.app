@@ -1,10 +1,10 @@
-///<reference path="../../../typings/tsd.d.ts" />
+///<reference path='../../../typings/tsd.d.ts' />
 
 export = MapPageController;
 
 class MapPageController {
-    public static name = "MapPageController";
-    static $inject = ["$scope"];
+    public static name = 'MapPageController';
+    static $inject = ['$scope'];
     constructor(
         private $scope
     ) {
@@ -13,7 +13,7 @@ class MapPageController {
     }
 
     public togglePlot(visibility) {
-        console.log("togglePlot called");
+        console.log('togglePlot called');
 
         if (visibility) {
             this.$scope.plotVisible = !this.$scope.plotVisible;

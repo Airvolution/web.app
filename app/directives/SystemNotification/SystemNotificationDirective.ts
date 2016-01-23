@@ -1,13 +1,13 @@
-///<reference path="../../../typings/tsd.d.ts"/>
-import SystemNotificationController = require("./SystemNotificationController");
+///<reference path='../../../typings/tsd.d.ts'/>
+import SystemNotificationController = require('./SystemNotificationController');
 export = SystemNotificationDirective;
 
 class SystemNotificationDirective implements ng.IDirective {
-    public static htmlName: string = "systemNotification";
-    public templateUrl = "app/templates/systemNotification.html";
-    public restrict = "E";
+    public static htmlName: string = 'systemNotification';
+    public templateUrl = 'app/templates/systemNotification.html';
+    public restrict = 'E';
     public controller = SystemNotificationController;
-    public controllerAs = "ctrl";
+    public controllerAs = 'ctrl';
     public scope = {};
     public bindToController = {
         type: '@',
