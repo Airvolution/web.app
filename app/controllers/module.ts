@@ -1,7 +1,7 @@
 ///<reference path="../../typings/tsd.d.ts" />
-import services = require('../services/module');
-import HeatMapController = require('./HeatMap/HeatMapController');
-import MapController = require('./Map/MapController');
+import services = require("../services/module");
+import HeatMapController = require("./HeatMap/HeatMapController");
+import MapController = require("./Map/MapController");
 import RegisterAMSController = require("./RegisterAMS/RegisterAMSController");
 import MyProfileController = require("./MyProfile/MyProfileController");
 import MyStationsController = require("./MyStations/MyStationsController");
@@ -13,7 +13,7 @@ import HeaderController = require("./Index/HeaderController");
 import AppController = require("./Index/AppController");
 
 
-export = angular.module('controllers',
+export = angular.module("controllers",
     [   "services"
     ])
             .controller(HeatMapController.name, HeatMapController)
