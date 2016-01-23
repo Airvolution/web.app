@@ -10,7 +10,7 @@ import ComparePageController = require('./PageControllers/ComparePageController'
 import NVD3Controller = require('./NVD3/NVD3Controller');
 import AQIController = require('./AQI/AQIController');
 import HeaderController = require('./Index/HeaderController');
-import AppController = require("./Index/AppController");
+import AppController = require('./Index/AppController');
 
 
 export = angular.module('controllers',
