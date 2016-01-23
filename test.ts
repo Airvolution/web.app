@@ -1,8 +1,8 @@
 ///<reference path='./typings/tsd.d.ts' />
 
-import services = require('./app/services/module'); services;
-import directives = require('./app/directives/module'); directives;
-import controllers = require('./app/controllers/module'); controllers;
+import services = require('./app/services/module'); // services;
+import directives = require('./app/directives/module'); // directives;
+import controllers = require('./app/controllers/module'); // controllers;
 
 angular.module('test', [
     'nemLogging',
