@@ -1,56 +1,55 @@
 ///<reference path="./typings/tsd.d.ts" />
 
-import services = require('./app/services/module');services;
-import controllers = require('./app/controllers/module');controllers;
-import directives = require('./app/directives/module');directives;
+import services = require("./app/services/module"); services;
+import controllers = require("./app/controllers/module"); controllers;
+import directives = require("./app/directives/module"); directives;
 
-
-angular.module('app', [
-        'nemLogging',
-        'ui-leaflet',
-        'ui.router',
-        'services',
-        'controllers',
-        'directives',
-        'nvd3'
+angular.module("app", [
+        "nemLogging",
+        "ui-leaflet",
+        "ui.router",
+        "services",
+        "controllers",
+        "directives",
+        "nvd3"
 
     ])
-    .config(($stateProvider, $urlRouterProvider)=> {
-        $urlRouterProvider.otherwise('/map');
+    .config(($stateProvider, $urlRouterProvider) => {
+        $urlRouterProvider.otherwise("/map");
         $stateProvider
-            .state('map',{
-                url: '/map',
-                templateUrl: 'app/templates/map.html'
+            .state("map", {
+                url: "/map",
+                templateUrl: "app/templates/map.html"
             })
-            .state('almanac',{
-                url:'/almanac',
-                templateUrl: 'app/templates/alamanac.html'
+            .state("almanac", {
+                url: "/almanac",
+                templateUrl: "app/templates/alamanac.html"
             })
-            .state('compare',{
-                url:'/compare',
-                templateUrl: 'app/templates/compare.html'
+            .state("compare", {
+                url: "/compare",
+                templateUrl: "app/templates/compare.html"
             })
-            .state('indoor',{
-                url:'/indoor',
-                templateUrl: 'app/templates/indoor.html'
+            .state("indoor", {
+                url: "/indoor",
+                templateUrl: "app/templates/indoor.html"
             })
-            .state('radar', {
-                url:'/radar',
-                templateUrl: 'app/templates/radar.html'
+            .state("radar", {
+                url: "/radar",
+                templateUrl: "app/templates/radar.html"
             })
-            .state('profile',{
-                url:'/profile',
-                templateUrl: 'app/templates/myProfile.html'
+            .state("profile", {
+                url: "/profile",
+                templateUrl: "app/templates/myProfile.html"
             })
-            .state('stations',{
-                url: '/stations',
-                templateUrl: 'app/templates/myStations.html'
+            .state("stations", {
+                url: "/stations",
+                templateUrl: "app/templates/myStations.html"
             })
-            .state('register',{
-                url: '/register',
-                templateUrl: 'app/templates/registerStation.html'
+            .state("register", {
+                url: "/register",
+                templateUrl: "app/templates/registerStation.html"
             })
-            .state('error', {
-                templateUrl: 'app/templates/404.html'
+            .state("error", {
+                templateUrl: "app/templates/404.html"
             });
     });
