@@ -1,14 +1,14 @@
-///<referecnce path="../../typings/tsd.d.ts"/>
+///<referecnce path='../../typings/tsd.d.ts'/>
 
-declare var d3;
+declare let d3;
 
 export = NVD3Controller;
 class NVD3Controller {
-    public static name = "NVD3Controller";
+    public static name = 'NVD3Controller';
     public options;
     public data;
 
-    static $inject = ['$scope', '$http'];
+    public static $inject = ['$scope', '$http'];
     constructor(
         private $scope,
         private $http
@@ -16,31 +16,31 @@ class NVD3Controller {
 
     public generatePlot() {
         console.log('generating plot');
-        
-        var pscope = this.$scope.$parent;
-        
+
+        let pscope = this.$scope.$parent;
+
         if (!pscope.station || !pscope.station.id) {
             return;
         }
-        
+
         this.options = undefined;
         this.data = undefined;
 
-        var url = undefined;
-        var obj = undefined;
-        var id = pscope.station.id;
-        if (id === 'Box Elder County' || id == 'Cache County' || id == 'Price' || id == 'Davis County' || id == 'Duchesne County' || id == 'Salt Lake County' || id === 'Tooele County' || id == 'Uintah County' || id == 'Utah County' || id == 'Washington County' || id == 'Weber County') {
+        let url = undefined;
+        let obj = undefined;
+        let id = pscope.station.id;
+        if (id == 'Box Elder County' || id == 'Cache County' || id == 'Price' || id == 'Davis County' || id == 'Duchesne County' || id == 'Salt Lake County' || id == 'Tooele County' || id == 'Uintah County' || id == 'Utah County' || id == 'Washington County' || id == 'Weber County') {
             url = 'api/frontend/daqChart';
         } else {
             url = 'api/frontend/deviceDatapoints';
         }
-        
+
         obj = JSON.stringify(id);
         console.log('JSON: ' + obj);
-        var self = this;
+        let self = this;
         this.$http({
-            url:url,
-            data:obj,
+            url: url,
+            data: obj,
             method: 'POST'
             }).then(
             function(response) {
@@ -48,11 +48,11 @@ class NVD3Controller {
                 console.log('  status: ' + response.status);
                 console.log('======================');
 
-                // TODO: look into converting this into an "ng-style" directive
+                // TODO: look into converting this into an 'ng-style' directive
                 // Get the css height of the parent div, strip the 'px' off, parse to Integer
-                var divHeight = angular.element(document).find("#details-plot").css("height");
-                var plotHeight = parseInt(divHeight.substring(0, divHeight.length - 2));
-                
+                let divHeight = angular.element(document).find('#details-plot').css('height');
+                let plotHeight = parseInt(divHeight.substring(0, divHeight.length - 2));
+
                 self.options = {
                     chart: {
                         type: 'stackedAreaChart',
@@ -95,12 +95,12 @@ class NVD3Controller {
                         }
                     }
                 };
-                
+
                 if (url == 'api/frontend/daqChart') {
-                    var data = [];
-                    for (var index in response.data) {
+                    let data = [];
+                    for (let index in response.data) {
                         if (response.data[index].values.length > 0) {
-                            data.push({ "key": response.data[index].key, "values": response.data[index].values });
+                            data.push({ 'key': response.data[index].key, 'values': response.data[index].values });
                         }
                     }
                     self.data = data;

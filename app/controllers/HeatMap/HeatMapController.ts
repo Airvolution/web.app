@@ -1,4 +1,7 @@
 ///<referecnce path="../../typings/tsd.d.ts"/>
+
+/* tslint:disable */
+
 declare var L;
 
 export = HeatMapController;
@@ -13,7 +16,7 @@ class HeatMapController {
         private leafletMarkerEvents,
         private $http
     ) {
-       var bounds = leafletBoundsHelpers.createBoundsFromArray([
+        var bounds = leafletBoundsHelpers.createBoundsFromArray([
             // TODO: use location from IP address of client
             [ 41.381483, -110.387754],
             [ 39.640479, -112.236828 ]
@@ -51,7 +54,7 @@ class HeatMapController {
                 }
             }
         });
-        
+
         // TODO: It would be nice to make an API class
         console.log('bounds: ' + $scope.bounds.northEast.lat);
         var url = 'api/frontend/map'
@@ -63,7 +66,7 @@ class HeatMapController {
                 console.log('Success!');
                 console.log('  status: ' + response.status);
                 console.log('======================');
-                
+
                 var data = response.data['ams'];
 
                 // Add custom attributes to each Marker
@@ -71,10 +74,10 @@ class HeatMapController {
                     //console.log('key: ' + key);
                     if (data.hasOwnProperty(key)) {
                         data[key]['clickable'] = true;
-                        data[key]['icon'] = { 
+                        data[key]['icon'] = {
                             iconUrl: 'app/assets/images/markers/green.png',
-                            iconSize: [35,45], 
-                            iconAnchor: [17,28] 
+                            iconSize: [35,45],
+                            iconAnchor: [17,28]
                         };
                     }
                 }
@@ -89,50 +92,50 @@ class HeatMapController {
             }
         );
 
-        
+
         /*
-        // This works but it doesn't update for unknown reason
-        $scope.$on('leafletDirectiveMap.map.zoomend', function(event) {
-            // $scope.layers.overlays.heat <-- layer I want
-            // $scope.layers.overlays.heat.layerOptions.radius = 5
-            
-            $scope.ctrl.leafletData.getMap().then(function(map) {
-                map.removeLayer($scope.layers.overlays);
-                console.log('did we get the map object?');
-                var zoom = map.getZoom();
-                console.log('zoom: ' + zoom);
-                
-                var radius = 5 + 5*zoom;
-                //console.log('radius: ' + $scope.layers.overlays.heat.layerOptions.radius);
-                //$scope.layers.overlays.heat.layerOptions.radius = radius;
-                console.log('radius: ' + $scope.layers.overlays.heat.layerOptions.radius);
-                
-                
-                var heatmap = {
-                    name: 'Heat Map',
-                    type: 'heat',
-                    
-                    data: this.data,
-                    layerOptions: {
-                        backgroundColor: 'rgba(0,0,0,0.25)',
-                        maxOpacity: 0.9,
-                        minOpacity: 0.5,
-                        radius: radius,
-                        blur: 15
-                    },
-                    visible: true
-                };
-                console.log('radius: ' + $scope.layers.overlays.heat.layerOptions.radius);
-                
-                $scope.layers.overlays = {
-                    heat: heatmap
-                };
-                
-            });
-            
-            console.log('the map zoomed');
-        });
-        */
+         // This works but it doesn't update for unknown reason
+         $scope.$on('leafletDirectiveMap.map.zoomend', function(event) {
+         // $scope.layers.overlays.heat <-- layer I want
+         // $scope.layers.overlays.heat.layerOptions.radius = 5
+
+         $scope.ctrl.leafletData.getMap().then(function(map) {
+         map.removeLayer($scope.layers.overlays);
+         console.log('did we get the map object?');
+         var zoom = map.getZoom();
+         console.log('zoom: ' + zoom);
+
+         var radius = 5 + 5*zoom;
+         //console.log('radius: ' + $scope.layers.overlays.heat.layerOptions.radius);
+         //$scope.layers.overlays.heat.layerOptions.radius = radius;
+         console.log('radius: ' + $scope.layers.overlays.heat.layerOptions.radius);
+
+
+         var heatmap = {
+         name: 'Heat Map',
+         type: 'heat',
+
+         data: this.data,
+         layerOptions: {
+         backgroundColor: 'rgba(0,0,0,0.25)',
+         maxOpacity: 0.9,
+         minOpacity: 0.5,
+         radius: radius,
+         blur: 15
+         },
+         visible: true
+         };
+         console.log('radius: ' + $scope.layers.overlays.heat.layerOptions.radius);
+
+         $scope.layers.overlays = {
+         heat: heatmap
+         };
+
+         });
+
+         console.log('the map zoomed');
+         });
+         */
 
         $scope.$on('leafletDirectiveMarker.map.click', function(event, args){
             // Resource on how to add Marker Events
@@ -141,7 +144,7 @@ class HeatMapController {
 
             var data = { 'deviceID': args.modelName };
         });
-        
+
         var url = 'api/frontend/heatmap'
         var obj2  = { 'mapParameters': { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } }, 'pollutantName': 'PM' };
         var data = JSON.stringify(obj2);
@@ -157,7 +160,7 @@ class HeatMapController {
                 var heatmap = {
                     name: 'Heat Map',
                     type: 'heat',
-                    
+
                     data: this.data,
                     layerOptions: {
                         backgroundColor: 'rgba(0,0,0,0.25)',
@@ -168,7 +171,7 @@ class HeatMapController {
                     },
                     visible: true
                 };
-                
+
                 $scope.layers.overlays = {
                     heat: heatmap
                 };

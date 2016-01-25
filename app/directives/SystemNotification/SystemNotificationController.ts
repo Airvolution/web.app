@@ -1,9 +1,9 @@
-///<reference path="../../../typings/tsd.d.ts"/>
+///<reference path='../../../typings/tsd.d.ts'/>
 export = SystemNotificationController;
 
 class SystemNotificationController {
-    static $inject = [];
-    constructor(){}
+    public static $inject = [];
+    constructor() {}
     public type;
     public subtype;
     public stationId;
@@ -20,8 +20,8 @@ class SystemNotificationController {
         return this.type == 'error' ? 'Error' : 'Warning';
     }
 
-    public get message(){
-        switch(this.subtype) {
+    public get message() {
+        switch (this.subtype) {
             case 'malfunctioning':
                 return 'may be malfunctioning.';
             case 'offline':

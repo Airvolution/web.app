@@ -1,5 +1,5 @@
-///<reference path="../../../typings/tsd.d.ts"/>
-import Globals = require("../../Globals");
+///<reference path='../../../typings/tsd.d.ts'/>
+// import Globals = require('../../Globals');
 export = AQIController;
 
 class AQIController {
@@ -11,10 +11,10 @@ class AQIController {
     };
 
     public onAQIUpdate(newAQI) {
-        this.aqiRange = ((newAQI%50)*2 - 7)+'%';
+        this.aqiRange = ((newAQI % 50) * 2 - 7) + '%';
     }
-    public getMeterClass(){
-        switch(this.category){
+    public getMeterClass() {
+        switch (this.category) {
             case 'Good':
                 return 'aqi-meter-low';
             case 'Moderate':
@@ -23,8 +23,8 @@ class AQIController {
                 return 'aqi-meter-high';
         }
     }
-    public getCategoryClass(){
-        switch(this.category){
+    public getCategoryClass() {
+        switch (this.category) {
             case 'Good':
                 return 'aqi-good';
             case 'Moderate':
@@ -34,15 +34,15 @@ class AQIController {
         }
     }
 
-    public tryMe(){
-        var rand = Math.floor(Math.random()*149);
+    public tryMe() {
+        let rand = Math.floor(Math.random() * 149);
         this.aqi = rand;
-        if(rand < 50){
-            this.category = "Good"
-        }else if (rand < 100){
-            this.category = "Moderate";
-        }else{
-            this.category = "Hold your breath..."
+        if (rand < 50) {
+            this.category = 'Good';
+        } else if (rand < 100) {
+            this.category = 'Moderate';
+        } else {
+            this.category = 'Hold your breath...';
         }
     }
 

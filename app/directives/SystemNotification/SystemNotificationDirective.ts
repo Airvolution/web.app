@@ -1,13 +1,13 @@
-///<reference path="../../../typings/tsd.d.ts"/>
-import SystemNotificationController = require("./SystemNotificationController");
+///<reference path='../../../typings/tsd.d.ts'/>
+import SystemNotificationController = require('./SystemNotificationController');
 export = SystemNotificationDirective;
 
 class SystemNotificationDirective implements ng.IDirective {
-    public static htmlName:string = "systemNotification";
-    public templateUrl = "app/templates/systemNotification.html";
-    public restrict = "E";
+    public static htmlName = 'systemNotification';
+    public templateUrl = 'app/templates/systemNotification.html';
+    public restrict = 'E';
     public controller = SystemNotificationController;
-    public controllerAs = "ctrl";
+    public controllerAs = 'ctrl';
     public scope = {};
     public bindToController = {
         type: '@',
@@ -15,19 +15,18 @@ class SystemNotificationDirective implements ng.IDirective {
         stationId: '@'
     };
 
-    public link(scope, element, atttrs, ctrl){
-
-        $('.close').click(function(){
+    public link(scope, element, atttrs, ctrl) {
+        $('.close').click(function() {
             $(this).parent().remove();
-            //this should probably be abstracted somehow so it is not dependent
-            //on structure or classes outside this directive
-            if($('.warning-wrapper .close').length == 0){
+            // this should probably be abstracted somehow so it is not dependent
+            // on structure or classes outside this directive
+            if ($('.warning-wrapper .close').length == 0) {
                 $('.warning-wrapper').remove();
             }
         });
     }
 
-    static create():SystemNotificationDirective {
+    public static create(): SystemNotificationDirective {
         return new SystemNotificationDirective();
     }
 }

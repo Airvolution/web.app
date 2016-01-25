@@ -1,0 +1,39 @@
+{
+    "rules": {
+        "class-name": true,
+        "curly": true,
+        "quotemark": [
+            true,
+            "single"],
+        "eofline": true,
+        "member-access": true,
+        "member-ordering": [
+            true,
+            "variables-before-functions"
+        ],
+        "no-consecutive-blank-lines": true,
+        "no-console": [
+            true,
+            "debug",
+            "info",
+            "time",
+            "timeEnd",
+            "trace"
+        ],
+        "no-eval": true,
+        "no-shadowed-fall-through": true,
+        "no-unreachable": true,
+        "no-unused-expression": true,
+        "no-unused-variable": true,
+        "no-use-before-declare": true,
+        "one-line": [
+            true,
+            "check-open-brace",
+            "check-catch",
+            "check-else",
+            "check-whitespace"
+        ],
+        "semicolon": true,
+        "triple-equals": false
+    }
+}

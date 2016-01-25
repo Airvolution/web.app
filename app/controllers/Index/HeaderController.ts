@@ -1,15 +1,14 @@
-///<referecnce path="../../typings/tsd.d.ts"/>
-
+///<referecnce path='../../typings/tsd.d.ts'/>
 
 export = HeaderController;
 class HeaderController {
-    public static name = "HeaderController";
-    static $inject = ['$scope'];
-    constructor(private $scope){
+    public static name = 'HeaderController';
+    public static $inject = ['$scope'];
+    constructor(private $scope) {
         $scope.showNav = false;
     }
 
-    public toggelNav(){
+    public toggelNav() {
         console.log('toggling nav...');
         this.$scope.showNav = !this.$scope.showNav;
     }

@@ -1,9 +1,9 @@
-///<referecnce path="../../typings/tsd.d.ts"/>
+///<referecnce path='../../typings/tsd.d.ts'/>
 
 export = AQIController;
 class AQIController {
-    public static name = "AQIController";
-    static $inject = ['$scope', '$http'];
+    public static name = 'AQIController';
+    public static $inject = ['$scope', '$http'];
     public localAQI;
     public localCategory;
     public showPopup = false;
@@ -14,8 +14,8 @@ class AQIController {
         console.log('AQIController constructor');
         this.localAQI = '';
 
-        var url = 'api/frontend/aqi'
-        var self = this;
+        let url = 'api/frontend/aqi';
+        let self = this;
         $http({
             url: url,
             method: 'GET'
@@ -26,7 +26,7 @@ class AQIController {
                 console.log('======================');
 
                 // TODO: Parse the returned DATA into JSON
-                var data = response.data;
+                let data = response.data;
                 self.localAQI = data['aqi'];
                 self.localCategory = data['category']['name'];
             },
