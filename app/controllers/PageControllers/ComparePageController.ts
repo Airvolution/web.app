@@ -68,7 +68,7 @@ class ComparePageController {
     public onListChange(id) {
         console.log('onListChange(%s)', id);
         let plot = _.find(this.plots, function(p) {
-            return id === p.id;
+            return id == p.id;
         });
 
         if (!!plot) {

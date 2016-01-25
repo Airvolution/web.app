@@ -33,6 +33,7 @@
             "check-else",
             "check-whitespace"
         ],
-        "semicolon": true
+        "semicolon": true,
+        "triple-equals": false
     }
 }

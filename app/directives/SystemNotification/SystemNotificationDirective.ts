@@ -20,7 +20,7 @@ class SystemNotificationDirective implements ng.IDirective {
             $(this).parent().remove();
             // this should probably be abstracted somehow so it is not dependent
             // on structure or classes outside this directive
-            if ($('.warning-wrapper .close').length === 0) {
+            if ($('.warning-wrapper .close').length == 0) {
                 $('.warning-wrapper').remove();
             }
         });

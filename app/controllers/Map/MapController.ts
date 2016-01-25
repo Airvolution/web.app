@@ -205,7 +205,7 @@ class MapController {
 
             let pscope = $scope.$parent;
 
-            if (pscope.station && pscope.station.id && args.model.deviceID === pscope.station.id) {
+            if (pscope.station && pscope.station.id && args.model.deviceID == pscope.station.id) {
                 pscope.showDetails = false;
                 pscope.plotVisible = false;
                 pscope.station = undefined;
@@ -213,7 +213,7 @@ class MapController {
             }
 
             let id = args.model.deviceID;
-            if (id === 'Box Elder County' || id === 'Cache County' || id === 'Price' || id === 'Davis County' || id === 'Duchesne County' || id === 'Salt Lake County' || id === 'Tooele County' || id === 'Uintah County' || id === 'Utah County' || id === 'Washington County' || id === 'Weber County') {
+            if (id == 'Box Elder County' || id == 'Cache County' || id == 'Price' || id == 'Davis County' || id == 'Duchesne County' || id == 'Salt Lake County' || id == 'Tooele County' || id == 'Uintah County' || id == 'Utah County' || id == 'Washington County' || id == 'Weber County') {
 
                 pscope.station = { location: {}, last: {} };
 

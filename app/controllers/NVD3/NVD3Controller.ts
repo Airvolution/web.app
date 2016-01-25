@@ -29,7 +29,7 @@ class NVD3Controller {
         let url = undefined;
         let obj = undefined;
         let id = pscope.station.id;
-        if (id === 'Box Elder County' || id === 'Cache County' || id === 'Price' || id === 'Davis County' || id === 'Duchesne County' || id === 'Salt Lake County' || id === 'Tooele County' || id === 'Uintah County' || id === 'Utah County' || id === 'Washington County' || id === 'Weber County') {
+        if (id == 'Box Elder County' || id == 'Cache County' || id == 'Price' || id == 'Davis County' || id == 'Duchesne County' || id == 'Salt Lake County' || id == 'Tooele County' || id == 'Uintah County' || id == 'Utah County' || id == 'Washington County' || id == 'Weber County') {
             url = 'api/frontend/daqChart';
         } else {
             url = 'api/frontend/deviceDatapoints';
@@ -96,7 +96,7 @@ class NVD3Controller {
                     }
                 };
 
-                if (url === 'api/frontend/daqChart') {
+                if (url == 'api/frontend/daqChart') {
                     let data = [];
                     for (let index in response.data) {
                         if (response.data[index].values.length > 0) {
