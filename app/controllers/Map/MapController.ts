@@ -15,12 +15,22 @@ class MapController {
         private $http,
         private locationService
     ) {
+
+        var bounds = leafletBoundsHelpers.createBoundsFromArray([
+            [ 57.903638, -37.642519 ],
+            [ 11.708745, -152.757073 ]
+        ]);
+
         angular.extend($scope, {
+            minZoom: 5,
+            maxZoom: 12,
             center: {
                 lat: 0,
                 lng: 0,
                 zoom: 2
             },
+            bounds: bounds,
+
             layers: {
                 baselayers: {
                     light_map: {
@@ -136,6 +146,17 @@ class MapController {
                 console.log('======================');
             }
         );
+
+        $scope.$on('leafletDirectiveMap.map.moveend', function(event) {
+            leafletData.getMap().then(function(map) {
+                console.log('map bounds: ' + $scope.bounds);
+                console.log('L bounds: ' + map.getBounds());
+                $scope.bounds = map.getBounds();
+                console.log('map bounds: ' + $scope.bounds);
+            });
+
+        });
+
 
        /*
         // TODO: Please DO NOT DELETE - we may want this functionality later

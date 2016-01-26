@@ -10,94 +10,94 @@ class LocationService {
         private $http
     ) {
         this.findLocation(function() {
-            console.log('initialization of location service');
+            //console.log('initialization of location service');
         });
     }
 
     public city = function() {
-        console.log('city called!');
+        //console.log('city called!');
         this.findLocation(function() {
-            console.log('city: ' + this.data.city);
+            //console.log('city: ' + this.data.city);
             return this.data.city;
         });
     };
 
     public countryCode = function() {
-        console.log('countryCode called!');
+        //console.log('countryCode called!');
         this.findLocation(function() {
-            console.log('countryCode: ' + this.data.country_code);
+            //console.log('countryCode: ' + this.data.country_code);
             return this.data.country_code;
         });
     };
 
     public countryName = function() {
-        console.log('countryName called!');
+        //console.log('countryName called!');
         this.findLocation(function() {
-            console.log('countryName: ' + this.data.country_name);
+            //console.log('countryName: ' + this.data.country_name);
             return this.data.country_name;
         });
     };
 
     public ip = function() {
-        console.log('ip called!');
+        //console.log('ip called!');
         this.findLocation(function() {
-            console.log('ip: ' + this.data.ip);
+            //console.log('ip: ' + this.data.ip);
             return this.data.ip;
         });
     };
 
     public latitude = function() {
-        console.log('latitude called!');
+        //console.log('latitude called!');
         this.findLocation(function() {
-            console.log('latitude: ' + this.data.latitude);
+            //console.log('latitude: ' + this.data.latitude);
             return this.data.latitude;
         });
     };
 
     public longitude = function() {
-        console.log('longitude called!');
+        //console.log('longitude called!');
         this.findLocation(function() {
-            console.log('longitude: ' + this.data.longitude);
+            //console.log('longitude: ' + this.data.longitude);
             return this.data.longitude;
         });
     };
 
     public metroCode = function() {
-        console.log('metroCode called!');
+        //console.log('metroCode called!');
         this.findLocation(function() {
-            console.log('metroCode: ' + this.data.metro_code);
+            //console.log('metroCode: ' + this.data.metro_code);
             return this.data.metro_code;
         });
     };
 
     public regionCode = function() {
-        console.log('regionCode called!');
+        //console.log('regionCode called!');
         this.findLocation(function() {
-            console.log('regionCode: ' + this.data.region_code);
+            //console.log('regionCode: ' + this.data.region_code);
             return this.data.region_code;
         });
     };
 
     public regionName = function() {
-        console.log('regionName called!');
+        //console.log('regionName called!');
         this.findLocation(function() {
-            console.log('regionName: ' + this.data.region_name);
+            //console.log('regionName: ' + this.data.region_name);
             return this.data.region_name;
         });
     };
 
     public timeZone = function() {
-        console.log('timeZone called!');
+        //console.log('timeZone called!');
         this.findLocation(function() {
-            console.log('timeZone: ' + this.data.time_zone);
+            //console.log('timeZone: ' + this.data.time_zone);
             return this.data.time_zone;
         });
     };
 
     public zipCode = function() {
-        console.log('zipCode called!');
+        //console.log('zipCode called!');
         this.findLocation(function() {
-            console.log('zipCode: ' + this.data.zip_code);
+            //console.log('zipCode: ' + this.data.zip_code);
             return this.data.zip_code;
         });
     };
@@ -107,16 +107,16 @@ class LocationService {
             callback();
             return;
         }
-        console.log('attempting to find location...');
+        //console.log('attempting to find location...');
         let url = 'http://freegeoip.net/json/';
         this.$http.get(url).then(
             function(response) {
-                console.log('ip address: ' + response.data.ip);
+                //console.log('ip address: ' + response.data.ip);
                 this.data = response.data;
                 callback();
             },
             function(response) {
-                console.log('bad response from freegeoip');
+                //console.log('bad response from freegeoip');
             }
         );
     }

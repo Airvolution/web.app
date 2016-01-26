@@ -8,8 +8,7 @@ class MapPageController {
     constructor(
         private $scope
     ) {
-        // TODO: at some point I want to fix the showBounds. I'm not sure why it isn't updating anymore. (Scope issue perhaps)
-        $scope.showBounds = false;
+        $scope.showBounds = true;
     }
 
     public togglePlot(visibility) {
