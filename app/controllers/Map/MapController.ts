@@ -51,23 +51,13 @@ class MapController {
             }
         });
 
-        //$scope.center = locationService.updateMapCenter()
-
-        locationService.updateMapCenter(function(center) {
-            $scope.center = center;
-        })
-
-        //$scope.center = {
-        //    lat: locationService.latitude(),
-        //    lng: locationService.longitude(),
-        //    zoom: 10
-        //}
-
-        //$scope.center = {
-        //    lat: 40.7087,
-        //    lng: -111.7143,
-        //    zoom: 10
-        //}
+        locationService.findLocationCenter(function(lat, lng) {
+            $scope.center = {
+                lat: lat,
+                lng: lng,
+                zoom: 10
+            };
+        });
 
         // TODO: It would be nice to make an API class
         //console.log('bounds: ' + $scope.bounds.northEast.lat);
