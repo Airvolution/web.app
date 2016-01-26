@@ -1,3 +1,6 @@
 ///<reference path="../../typings/tsd.d.ts" />
 
-export = angular.module('services', []);
+import LocationService = require('./Location/LocationService');
+
+export = angular.module('services', [])
+            .service(LocationService.serviceName, LocationService);

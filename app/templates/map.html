@@ -2,25 +2,7 @@
 
     <!-- This is the MAP and everything with it -->
     <div ng-controller="MapController as mctrl">
-        <leaflet id="map" bounds="bounds" markers="markers" layers="layers" event-broadcast="events"></leaflet>
-
-        <!-- Coordinate bounds of Map for development purposes -->
-        <div ng-class="{'hidden':!showBounds}" class="col-md-12" id="map-coords">
-            <div class="coord-bound" id="sw">
-                <h3 class="coord-title">South West</h3>
-                <form class="coord-lat-lng">
-                    Lat : <input type="number" step="any" ng-model="bounds.southWest.lat" />
-                    Lng : <input type="number" step="any" ng-model="bounds.southWest.lng" />
-                </form>
-            </div>
-            <div class="coord-bound" id="ne">
-                <h3 class="coord-title">North East</h3>
-                <form class="coord-lat-lng">
-                    Lat : <input type="number" step="any" ng-model="bounds.northEast.lat" />
-                    Lng : <input type="number" step="any" ng-model="bounds.northEast.lng" />
-                </form>
-            </div>
-        </div>
+        <leaflet id="map" lf-center="center" markers="markers" layers="layers" event-broadcast="events"></leaflet>
     </div>
 
     <!-- This is the NVD3 data plot that is linked with the Details Panel -->

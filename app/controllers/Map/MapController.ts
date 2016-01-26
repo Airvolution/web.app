@@ -6,22 +6,21 @@ class MapController {
     // TODO: This controller is currently providing functionality for MAP
     // TODO: We should move this where it belongs at some point
     public static name = 'MapController';
-    public static $inject = ['$scope', 'leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http'];
+    public static $inject = ['$scope', 'leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', 'locationService'];
     constructor(
         private $scope,
         private leafletData,
         private leafletBoundsHelpers,
         private leafletMarkerEvents,
-        private $http
+        private $http,
+        private locationService
     ) {
-        let bounds = leafletBoundsHelpers.createBoundsFromArray([
-            // TODO: use location from IP address of client
-            [ 41.381483, -110.387754],
-            [ 39.640479, -112.236828 ]
-        ]);
-
         angular.extend($scope, {
-            bounds: bounds,
+            center: {
+                lat: 0,
+                lng: 0,
+                zoom: 2
+            },
             layers: {
                 baselayers: {
                     light_map: {
@@ -52,8 +51,26 @@ class MapController {
             }
         });
 
+        //$scope.center = locationService.updateMapCenter()
+
+        locationService.updateMapCenter(function(center) {
+            $scope.center = center;
+        })
+
+        //$scope.center = {
+        //    lat: locationService.latitude(),
+        //    lng: locationService.longitude(),
+        //    zoom: 10
+        //}
+
+        //$scope.center = {
+        //    lat: 40.7087,
+        //    lng: -111.7143,
+        //    zoom: 10
+        //}
+
         // TODO: It would be nice to make an API class
-        console.log('bounds: ' + $scope.bounds.northEast.lat);
+        //console.log('bounds: ' + $scope.bounds.northEast.lat);
         let url = 'api/frontend/map';
         let obj  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
         let data = JSON.stringify(obj);
