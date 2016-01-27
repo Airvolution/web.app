@@ -1,7 +1,7 @@
 ///<referecnce path='../../typings/tsd.d.ts'/>
-declare let L;
 
 export = MapController;
+
 class MapController {
     public static name = 'MapController';
     public static $inject = ['$scope', 'leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', 'locationService'];
