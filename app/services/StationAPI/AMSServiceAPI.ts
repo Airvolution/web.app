@@ -102,4 +102,55 @@ class AMSServiceAPI {
 
         return deferred.promise;
     }
+
+    public asyncGetDataPointsFrom(stationID) {
+        var deferred = this.$q.defer();
+
+        let self = this;
+        let url = 'api/frontend/deviceDatapoints';
+        let data = JSON.stringify(stationID);
+        self.$http.post(url, data, {}).then(
+            function(response) {
+                deferred.resolve(response.data);
+            },
+            function(response) {
+                deferred.reject([
+                    // empty array
+                ]);
+            }
+        );
+
+        return deferred.promise;
+    }
+
+    public asyncGetDataPointsFromEPA(stationID) {
+        var deferred = this.$q.defer();
+
+        let self = this;
+        let url = 'api/frontend/daqChart';
+        let data = JSON.stringify(stationID);
+        self.$http.post(url, data, {}).then(
+            function(response) {
+                // make sure there are no entries of length zero
+                let data = [];
+                for (let index in response.data) {
+                    if (response.data[index].values.length > 0) {
+                        data.push({
+                            'key': response.data[index].key,
+                            'values': response.data[index].values
+                        });
+                    }
+                }
+
+                deferred.resolve(data);
+            },
+            function(response) {
+                deferred.reject([
+                    // empty array
+                ]);
+            }
+        );
+
+        return deferred.promise;
+    }
 }
