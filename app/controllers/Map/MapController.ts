@@ -15,7 +15,6 @@ class MapController {
         private $http,
         private locationService
     ) {
-
         var bounds = leafletBoundsHelpers.createBoundsFromArray([
             [ 57.903638, -37.642519 ],
             [ 11.708745, -152.757073 ]
@@ -61,13 +60,35 @@ class MapController {
             }
         });
 
-        locationService.findLocationCenter(function(lat, lng) {
-            $scope.center = {
-                lat: lat,
-                lng: lng,
-                zoom: 10
-            };
-        });
+        //locationService.findLocationCenter(function(lat, lng) {
+        //    $scope.center = {
+        //        lat: lat,
+        //        lng: lng,
+        //        zoom: 10
+        //    };
+        //});
+
+        //locationService.asyncGetLocation().then(
+        //    function(response) {
+        //        // success
+        //        $scope.center = {
+        //            lat: response.lat,
+        //            lng: response.lng,
+        //            zoom: 10
+        //        };
+        //        console.log('location service promise accepted: ' + response);
+        //    },
+        //    function(response) {
+        //        // failure
+        //        console.log('location service promise rejected: ' + response);
+        //    },
+        //    function(response) {
+        //        // got notification
+        //        console.log('location service notification: ' + response);
+        //    }
+        //);
+
+        this.positionMapWithLocation();
 
         // TODO: It would be nice to make an API class
         //console.log('bounds: ' + $scope.bounds.northEast.lat);
@@ -157,7 +178,6 @@ class MapController {
 
         });
 
-
        /*
         // TODO: Please DO NOT DELETE - we may want this functionality later
         $scope.$on('leafletDirectiveMap.map.moveend', function(event) {
@@ -190,7 +210,7 @@ class MapController {
                     console.log('======================');
                 }
             );
-            
+
             let url = 'api/frontend/daq'
             let data = JSON.stringify(obj);
             console.log('JSON: ' + data);
@@ -206,7 +226,7 @@ class MapController {
                     // TODO: Parse the returned DATA into JSON
                     let data = response.data;
                     let daqSites = [];
-                    
+
                     // Add custom attributes to each Marker
                     for (let index in data) {
                     let site = data[index]['site'];
@@ -304,5 +324,28 @@ class MapController {
                 }
             );
         });
+    }
+
+    private positionMapWithLocation() {
+        console.log('positionMapWithLocation called...');
+        let self = this;
+        self.locationService.asyncGetGeoCoordinates().then(
+            function(response) {
+                self.$scope.center = {
+                    lat: response.lat,
+                    lng: response.lng,
+                    zoom: 10
+                };
+                console.log('location service promise accepted: ' + response);
+            },
+            function(response) {
+                // failure
+                console.log('location service promise rejected: ' + response);
+            },
+            function(response) {
+                // got notification
+                console.log('location service notification: ' + response);
+            }
+        );
     }
 }
