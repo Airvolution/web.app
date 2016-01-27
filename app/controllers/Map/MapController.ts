@@ -4,13 +4,14 @@ export = MapController;
 
 class MapController {
     public static name = 'MapController';
-    public static $inject = ['$scope', 'leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', 'locationService'];
+    public static $inject = ['$scope', 'leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', '$log', 'locationService'];
     constructor(
         private $scope,
         private leafletData,
         private leafletBoundsHelpers,
         private leafletMarkerEvents,
         private $http,
+        private $log,
         private locationService
     ) {
         angular.extend($scope, {
@@ -78,10 +79,10 @@ class MapController {
         self.$scope.$on('leafletDirectiveMap.map.moveend', function(event) {
             // This updates $scope.bounds because leaflet bounds are not updating automatically
             self.leafletData.getMap().then(function(map) {
-                console.log('map bounds: ' + self.$scope.bounds);
-                console.log('L bounds: ' + map.getBounds());
+                self.$log.log('map bounds: ' + self.$scope.bounds);
+                self.$log.log('L bounds: ' + map.getBounds());
                 self.$scope.bounds = map.getBounds();
-                console.log('map bounds: ' + self.$scope.bounds);
+                self.$log.log('map bounds: ' + self.$scope.bounds);
             });
         });
     }
@@ -91,7 +92,7 @@ class MapController {
         self.$scope.$on('leafletDirectiveMarker.map.click', function(event, args){
             // Resource on how to add Marker Events
             // https://github.com/angular-ui/ui-leaflet/blob/master/examples/0513-markers-events-example.html
-            console.log('a marker has been clicked');
+            self.$log.log('a marker has been clicked');
 
             let pscope = self.$scope.$parent;
 
@@ -123,16 +124,16 @@ class MapController {
 
             let url = 'api/frontend/singleLatest';
             let obj = JSON.stringify(id);
-            console.log('JSON: ' + obj);
+            self.$log.log('JSON: ' + obj);
             self.$http({
                 url: url,
                 data: obj,
                 method: 'POST'
             }).then(
                 function(response) {
-                    console.log('Success!');
-                    console.log('  status: ' + response.status);
-                    console.log('======================');
+                    self.$log.log('Success!');
+                    self.$log.log('  status: ' + response.status);
+                    self.$log.log('======================');
 
                     pscope.station = { location: {}, last: {} };
 
@@ -160,9 +161,9 @@ class MapController {
                     }
                 },
                 function(response) {
-                    console.log('Failure!');
-                    console.log('  status: ' + response.status);
-                    console.log('======================');
+                    self.$log.log('Failure!');
+                    self.$log.log('  status: ' + response.status);
+                    self.$log.log('======================');
                 }
             );
         });
@@ -178,15 +179,15 @@ class MapController {
                     lng: response.lng,
                     zoom: 10
                 };
-                console.log('location service promise accepted: ' + response);
+                self.$log.log('location service promise accepted: ' + response);
             },
             function(response) {
                 // failure
-                console.log('location service promise rejected: ' + response);
+                self.$log.log('location service promise rejected: ' + response);
             },
             function(response) {
                 // got notification
-                console.log('location service notification: ' + response);
+                self.$log.log('location service notification: ' + response);
             }
         );
     }
@@ -201,15 +202,15 @@ class MapController {
         let url = 'api/frontend/daq';
         let bounds  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
         let data = JSON.stringify(bounds);
-        console.log('JSON: ' + data);
+        self.$log.log('JSON: ' + data);
         self.$http({
             url: url,
             method: 'GET'
         }).then(
             function(response) {
-                console.log('Success!');
-                console.log('  status: ' + response.status);
-                console.log('======================');
+                self.$log.log('Success!');
+                self.$log.log('  status: ' + response.status);
+                self.$log.log('======================');
 
                 // TODO: Parse the returned DATA into JSON
                 let data = response.data;
@@ -233,9 +234,9 @@ class MapController {
                 }
             },
             function(response) {
-                console.log('Failure!');
-                console.log('  status: ' + response.status);
-                console.log('======================');
+                self.$log.log('Failure!');
+                self.$log.log('  status: ' + response.status);
+                self.$log.log('======================');
             }
         );
     }
@@ -246,12 +247,12 @@ class MapController {
         let url = 'api/frontend/map';
         let bounds  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
         let data = JSON.stringify(bounds);
-        console.log('JSON: ' + data);
+        self.$log.log('JSON: ' + data);
         self.$http.post(url, data, {} ).then(
             function(response) {
-                console.log('Success!');
-                console.log('  status: ' + response.status);
-                console.log('======================');
+                self.$log.log('Success!');
+                self.$log.log('  status: ' + response.status);
+                self.$log.log('======================');
 
                 // TODO: Parse the returned DATA into JSON
                 let data = response.data['ams'];
@@ -273,11 +274,10 @@ class MapController {
                 self.$scope.markers = data;
             },
             function(response) {
-                console.log('Failure!');
-                console.log('  status: ' + response.status);
-                console.log('======================');
+                self.$log.log('Failure!');
+                self.$log.log('  status: ' + response.status);
+                self.$log.log('======================');
             }
         );
     }
-
 }
