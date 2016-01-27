@@ -83,7 +83,7 @@ class NVD3Controller {
     private getChartOptions() {
         return {
             chart: {
-                type: 'stackedAreaChart',
+                type: 'lineWithFocusChart',
                 height: 0,
                 margin: {
                     top: 20,
