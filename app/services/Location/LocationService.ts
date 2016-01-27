@@ -11,7 +11,7 @@ class LocationService {
         private $q,
         private $log
     ) {
-
+        // empty constructor
     }
 
     public asyncGetGeoCoordinates() {

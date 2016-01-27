@@ -4,7 +4,7 @@ export = MapController;
 
 class MapController {
     public static name = 'MapController';
-    public static $inject = ['$scope', 'leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', '$log', 'locationService'];
+    public static $inject = ['$scope', 'leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', '$log', 'locationService', 'amsAPIService'];
     constructor(
         private $scope,
         private leafletData,
@@ -12,7 +12,8 @@ class MapController {
         private leafletMarkerEvents,
         private $http,
         private $log,
-        private locationService
+        private locationService,
+        private amsAPIService
     ) {
         angular.extend($scope, {
             minZoom: 5,
@@ -79,10 +80,7 @@ class MapController {
         self.$scope.$on('leafletDirectiveMap.map.moveend', function(event) {
             // This updates $scope.bounds because leaflet bounds are not updating automatically
             self.leafletData.getMap().then(function(map) {
-                self.$log.log('map bounds: ' + self.$scope.bounds);
-                self.$log.log('L bounds: ' + map.getBounds());
                 self.$scope.bounds = map.getBounds();
-                self.$log.log('map bounds: ' + self.$scope.bounds);
             });
         });
     }
@@ -103,14 +101,15 @@ class MapController {
                 return;
             }
 
-            let id = args.model.deviceID;
+            let model = args.model;
+            let id = model.deviceID;
             if (id == 'Box Elder County' || id == 'Cache County' || id == 'Price' || id == 'Davis County' || id == 'Duchesne County' || id == 'Salt Lake County' || id == 'Tooele County' || id == 'Uintah County' || id == 'Utah County' || id == 'Washington County' || id == 'Weber County') {
 
                 pscope.station = { location: {}, last: {} };
 
-                pscope.station.id           = args.model.deviceID;
-                pscope.station.location.lat = args.model.lat;
-                pscope.station.location.lng = args.model.lng;
+                pscope.station.id           = model.deviceID;
+                pscope.station.location.lat = model.lat;
+                pscope.station.location.lng = model.lng;
 
                 // TODO: get latest values from deq site
 
@@ -122,37 +121,24 @@ class MapController {
                 return;
             }
 
-            let url = 'api/frontend/singleLatest';
-            let obj = JSON.stringify(id);
-            self.$log.log('JSON: ' + obj);
-            self.$http({
-                url: url,
-                data: obj,
-                method: 'POST'
-            }).then(
+            self.amsAPIService.asyncGetLastDataPointFrom(id).then(
                 function(response) {
-                    self.$log.log('Success!');
-                    self.$log.log('  status: ' + response.status);
-                    self.$log.log('======================');
-
                     pscope.station = { location: {}, last: {} };
 
-                    pscope.station.id           = args.model.deviceID;
-                    pscope.station.location.lat = args.model.lat;
-                    pscope.station.location.lng = args.model.lng;
-
-                    let data = response.data;
+                    pscope.station.id           = model.deviceID;
+                    pscope.station.location.lat = model.lat;
+                    pscope.station.location.lng = model.lng;
 
                     // TODO: the current API really doesn't make this easy
-                    pscope.station.last.pm       = data['pm'];
-                    pscope.station.last.co       = data['co'];
-                    pscope.station.last.co2      = data['co2'];
-                    pscope.station.last.no2      = data['no2'];
-                    pscope.station.last.o3       = data['os3'];
-                    pscope.station.last.temp     = data['temp'];
-                    pscope.station.last.humidity = data['humidity'];
-                    pscope.station.last.pressure = data['pressure'];
-                    pscope.station.last.altitude = data['altitude'];
+                    pscope.station.last.pm       = response['pm'];
+                    pscope.station.last.co       = response['co'];
+                    pscope.station.last.co2      = response['co2'];
+                    pscope.station.last.no2      = response['no2'];
+                    pscope.station.last.o3       = response['os3'];
+                    pscope.station.last.temp     = response['temp'];
+                    pscope.station.last.humidity = response['humidity'];
+                    pscope.station.last.pressure = response['pressure'];
+                    pscope.station.last.altitude = response['altitude'];
 
                     pscope.showDetails = true;
 
@@ -161,9 +147,7 @@ class MapController {
                     }
                 },
                 function(response) {
-                    self.$log.log('Failure!');
-                    self.$log.log('  status: ' + response.status);
-                    self.$log.log('======================');
+                    self.$log.log('last data point promise rejected: ' + response);
                 }
             );
         });
@@ -179,15 +163,9 @@ class MapController {
                     lng: response.lng,
                     zoom: 10
                 };
-                self.$log.log('location service promise accepted: ' + response);
             },
             function(response) {
-                // failure
                 self.$log.log('location service promise rejected: ' + response);
-            },
-            function(response) {
-                // got notification
-                self.$log.log('location service notification: ' + response);
             }
         );
     }
@@ -199,84 +177,26 @@ class MapController {
 
     private updateEPAMarkers() {
         let self = this;
-        let url = 'api/frontend/daq';
         let bounds  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
-        let data = JSON.stringify(bounds);
-        self.$log.log('JSON: ' + data);
-        self.$http({
-            url: url,
-            method: 'GET'
-        }).then(
+        self.amsAPIService.asyncGetEPAMarkersInside(bounds).then(
             function(response) {
-                self.$log.log('Success!');
-                self.$log.log('  status: ' + response.status);
-                self.$log.log('======================');
-
-                // TODO: Parse the returned DATA into JSON
-                let data = response.data;
-                // let daqSites = [];
-
-                // Add custom attributes to each Marker
-                for (let index in data) {
-                    let site = data[index]['site'];
-                    let obj = ({
-                        deviceID: site['name'],
-                        lat: site['latitude'],
-                        lng: site['longitude'],
-                        'clickable': true,
-                        'icon': {
-                            iconUrl: 'app/assets/images/markers/red.png',
-                            iconSize: [35, 45],
-                            iconAnchor: [17, 28]
-                        }
-                    });
-                    self.$scope.markers.push(obj);
-                }
+                self.$scope.markers = self.$scope.markers.concat(response);
             },
             function(response) {
-                self.$log.log('Failure!');
-                self.$log.log('  status: ' + response.status);
-                self.$log.log('======================');
+                self.$log.log('EPA API service promise rejected: ' + response);
             }
         );
     }
 
     private updateAirvolutionMarkers() {
-        // TODO: It would be nice to make an API class
         let self = this;
-        let url = 'api/frontend/map';
         let bounds  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
-        let data = JSON.stringify(bounds);
-        self.$log.log('JSON: ' + data);
-        self.$http.post(url, data, {} ).then(
+        self.amsAPIService.asyncGetMarkersInside(bounds).then(
             function(response) {
-                self.$log.log('Success!');
-                self.$log.log('  status: ' + response.status);
-                self.$log.log('======================');
-
-                // TODO: Parse the returned DATA into JSON
-                let data = response.data['ams'];
-
-                // Add custom attributes to each Marker
-                for (let key in data) {
-                    // console.log('key: ' + key);
-                    if (data.hasOwnProperty(key)) {
-                        data[key]['clickable'] = true;
-                        data[key]['icon'] = {
-                            iconUrl: 'app/assets/images/markers/green.png',
-                            iconSize: [35, 45],
-                            iconAnchor: [17, 28]
-                        };
-                    }
-                }
-
-                // Add markers to map
-                self.$scope.markers = data;
+                self.$scope.markers = response;
             },
             function(response) {
-                self.$log.log('Failure!');
-                self.$log.log('  status: ' + response.status);
-                self.$log.log('======================');
+                self.$log.log('ams API service promise rejected: ' + response);
             }
         );
     }
