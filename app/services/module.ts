@@ -1,3 +1,8 @@
 ///<reference path="../../typings/tsd.d.ts" />
 
-export = angular.module('services', []);
+import LocationService = require('./Location/LocationService');
+import AMSServiceAPI = require('./StationAPI/AMSServiceAPI');
+
+export = angular.module('services', [])
+            .service(LocationService.serviceName, LocationService)
+            .service(AMSServiceAPI.serviceName, AMSServiceAPI);

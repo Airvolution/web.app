@@ -2,3 +2,4 @@
 /// <reference path="jasmine/jasmine.d.ts" />
 /// <reference path="jquery/jquery.d.ts" />
 /// <reference path="angular-ui-router/angular-ui-router.d.ts" />
+/// <reference path="leaflet/leaflet.d.ts" />
