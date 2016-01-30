@@ -11,6 +11,52 @@ class ComparePageController {
     public stations = [];
     public plots = [];
 
+    public pollutants = [
+        {
+            type: 'pm',
+            name: 'Particulate Matter',
+            checked: false
+        },
+        {
+            type: 'co',
+            name: 'Carbon Monoxide',
+            checked: false
+        },
+        {
+            type: 'co2',
+            name: 'Carbon Dioxide',
+            checked: false
+        },
+        {
+            type: 'no2',
+            name: 'Nitrogen Dioxide',
+            checked: false
+        },
+        {
+            type: 'o3',
+            name: 'Ozone',
+            checked: false
+        },
+    ];
+
+    public weatherTypes = [
+        {
+            type: 't',
+            name: 'Temperature',
+            checked: false
+        },
+        {
+            type: 'rh',
+            name: 'Humidity',
+            checked: false
+        },
+        {
+            type: 'bm',
+            name: 'Barometric Pressure',
+            checked: false
+        }
+    ];
+
     public options = {
         chart: {
             type: 'stackedAreaChart',
@@ -101,5 +147,13 @@ class ComparePageController {
                 console.log('Failure!');
             }
         );
+    }
+
+    public selectPollutant(type) {
+        console.log('is pollutant selected? ' + type.checked);
+    }
+
+    public selectWeather(type) {
+        console.log('is weather selected? ' + type.checked);
     }
 }

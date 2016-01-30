@@ -1,27 +1,28 @@
 <main ng-controller="ComparePageController as pctrl" id="compareWrapper">
-    <uib-accordion>
-        <uib-accordion-group heading="Pollutants">
-            Pollutants
-        </uib-accordion-group>
-        <uib-accordion-group heading="Weather">
-            Weather
-        </uib-accordion-group>
-        <uib-accordion-group heading="Monitoring Sites">
-            Monitoring Sites
-        </uib-accordion-group>
-    </uib-accordion>
-</main>
+    <div id="compare-plots" class="col-md-8">
+        <div ng-repeat="plot in pctrl.plots" class="data-plot well" style="margin: 1em 0;" ng-class="{'hidden':plot.visible == false}">
+            <nvd3 options="pctrl.options" data="plot.data" ></nvd3>
+        </div>
+    </div>
 
-<!--<main ng-controller="ComparePageController as pctrl" id="compareWrapper">-->
-    <!--<div id="compare-plots" class="col-md-8">-->
-        <!--<div ng-repeat="plot in pctrl.plots" class="data-plot well" style="margin: 1em 0;" ng-class="{'hidden':plot.visible == false}">-->
-            <!--<nvd3 options="pctrl.options" data="plot.data" ></nvd3>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="col-md-4 well" id="compare-list">-->
-        <!--<div ng-repeat="station in pctrl.stations" class="list-element well well-sm">-->
-            <!--<input type="checkbox" class="checkbox-inline" ng-model="station.visible" ng-change="pctrl.onListChange(station.id)">-->
-            <!--<span class="checkbox-text">Station - {{station.id}}</span>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</main>-->
+    <div class="col-md-4" id="compare-list">
+        <uib-accordion>
+            <uib-accordion-group heading="Pollutants">
+                <ul class="list-group" ng-repeat="pollutant in pctrl.pollutants">
+                    <li class="list-group-item" ng-class="{'active': pollutant.checked}" ng-click="pollutant.checked=!pollutant.checked; pctrl.selectPollutant(pollutant)">{{pollutant.name}}</li>
+                </ul>
+            </uib-accordion-group>
+            <uib-accordion-group heading="Weather">
+                <ul class="list-group" ng-repeat="weatherType in pctrl.weatherTypes">
+                    <li class="list-group-item" ng-class="{'active': weatherType.checked}" ng-click="weatherType.checked=!weatherType.checked; pctrl.selectPollutant(weatherType)">{{weatherType.name}}</li>
+                </ul>
+            </uib-accordion-group>
+            <uib-accordion-group heading="Monitoring Sites">
+                <div ng-repeat="station in pctrl.stations" class="list-element well well-sm">
+                    <input type="checkbox" class="checkbox-inline" ng-model="station.visible" ng-change="pctrl.onListChange(station.id)">
+                    <span class="checkbox-text">Station - {{station.id}}</span>
+                </div>
+            </uib-accordion-group>
+        </uib-accordion>
+    </div>
+</main>
