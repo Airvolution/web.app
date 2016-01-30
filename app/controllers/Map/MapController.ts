@@ -45,20 +45,17 @@ class MapController {
                 light_map: {
                     name: 'Light Map',
                     url: 'https://api.tiles.mapbox.com/v4/tjhooker33.o78l0n36/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g',
-                    type: 'xyz',
-                    visible: false
+                    type: 'xyz'
                 },
                 dark_map: {
                     name: 'Dark Map',
                     url: 'https://api.tiles.mapbox.com/v4/tjhooker33.o780o9a3/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g',
-                    type: 'xyz',
-                    visible: true
+                    type: 'xyz'
                 },
                 satellite_map: {
                     name: 'Satellite Map',
                     url: 'https://api.tiles.mapbox.com/v4/tjhooker33.oc2el95l/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g',
-                    type: 'xyz',
-                    visible: false
+                    type: 'xyz'
                 }
             }
         };
