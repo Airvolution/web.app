@@ -20,7 +20,7 @@ angular.module('app', [
         'ngAnimate'
 
     ])
-    .config(($stateProvider, $urlRouterProvider) => {
+    .config(($stateProvider, $urlRouterProvider, $httpProvider) => {
         $urlRouterProvider.otherwise('/map');
         $stateProvider
             .state('map', {
@@ -58,6 +58,7 @@ angular.module('app', [
             .state('error', {
                 templateUrl: 'app/templates/404.html'
             });
+        $httpProvider.interceptors.push('AuthInterceptorService');
     })
     .run(['AuthService', (authService)=> {
         authService.fillAuthData();

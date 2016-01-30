@@ -41,10 +41,25 @@ class UserRegistrationController {
             });
     };
 
-    private startTimer = function () {
+    private startTimer = ()=> {
         var timer = this.$timeout(function () {
             this.$timeout.cancel(timer);
             this.$location.path('/login');
         }, 2000);
-    }
+    };
+
+    public loginData = {
+        userName: "",
+        password: ""
+    };
+
+    public login = ()=> {
+        var self = this;
+        this.AuthService.login(this.loginData).then((response)=> {
+                self.$location.path('/orders');
+            },
+            (err)=> {
+                self.message = err.error_description;
+            });
+    };
 }

@@ -26,22 +26,18 @@ class AuthService {
     };
 
     public login = function (loginData) {
-
         var data = 'grant_type=password&username=' + loginData.userName + '&password=' + loginData.password;
-
         var deferred = this.$q.defer();
 
-        this.$http.post('/token', data, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).success(function (response) {
-
-            this.$localStorage.authorizationData = {token: response.access_token, userName: loginData.userName};
-
-            this.authentication.isAuth = true;
-            this.authentication.userName = loginData.userName;
-
+        var self = this;
+        this.$http.post('/api/token', data, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).success(function (response) {
+            self.$localStorage.authorizationData = {token: response.access_token, userName: loginData.userName};
+            self.authentication.isAuth = true;
+            self.authentication.userName = loginData.userName;
             deferred.resolve(response);
 
         }).error(function (err, status) {
-            this.logOut();
+            self.logOut();
             deferred.reject(err);
         });
 
