@@ -15,7 +15,9 @@ angular.module('app', [
         'controllers',
         'directives',
         'nvd3',
-        'ngStorage'
+        'ngStorage',
+        'ui.bootstrap',
+        'ngAnimate'
 
     ])
     .config(($stateProvider, $urlRouterProvider) => {

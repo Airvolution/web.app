@@ -6,7 +6,7 @@ export = ComparePageController;
 
 class ComparePageController {
     public static name = 'ComparePageController';
-    public static $inject = ['$scope', '$http'];
+    public static $inject = ['$scope', '$http', 'selectionService'];
 
     public stations = [];
     public plots = [];
@@ -54,8 +54,13 @@ class ComparePageController {
         }
     };
 
-    constructor(private $scope,
-                private $http) {
+    constructor(
+        private $scope,
+        private $http,
+        private selectionService
+    ) {
+        this.selectionService.getCurrentSelection(); // scaffold
+
         let self = this;
         $http({
             url: 'api/frontend/getUserDeviceStates',

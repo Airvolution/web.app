@@ -13,8 +13,11 @@ class MapController {
         private $http,
         private $log,
         private locationService,
-        private amsAPIService
+        private amsAPIService,
+        private drawCount
     ) {
+        drawCount = 0;
+
         angular.extend($scope, {
             minZoom: 5,
             maxZoom: 12,
@@ -23,6 +26,7 @@ class MapController {
                 lng: 0,
                 zoom: 2
             },
+            markers: [],
             bounds: this.defaultMapBounds(),
             layers: this.configureLayers(),
             events: this.registerMapEvents()
@@ -32,6 +36,7 @@ class MapController {
         this.positionMapWithLocation();
         this.configureMapMoveEvents();
         this.configureMapClickEvents();
+        //this.drawCircles(); // <--- not working from here
     }
 
     private configureLayers() {
@@ -79,9 +84,13 @@ class MapController {
         let self = this;
         self.$scope.$on('leafletDirectiveMap.map.moveend', function(event) {
             // This updates $scope.bounds because leaflet bounds are not updating automatically
-            self.leafletData.getMap().then(function(map) {
-                self.$scope.bounds = map.getBounds();
-            });
+            self.leafletData.getMap().then(
+                function(map) {
+                    self.$scope.bounds = map.getBounds();
+                    self.$log.log('updating map bounds');
+                    self.drawCircles();
+                }
+            );
         });
     }
 
@@ -182,8 +191,10 @@ class MapController {
             function(response) {
                 if (self.$scope.markers == undefined) {
                     self.$scope.markers = response;
+                    self.$log.log('marker array was empty');
                 } else {
                     self.$scope.markers = self.$scope.markers.concat(response);
+                    self.$log.log('concatenation of the marker array');
                 }
             },
             function(response) {
@@ -201,6 +212,33 @@ class MapController {
             },
             function(response) {
                 self.$log.log('ams API service promise rejected: ' + response);
+            }
+        );
+    }
+
+    private drawCircles() {
+        let self = this;
+        if (self.drawCount == 1) {
+            self.$log.log('lets NOT draw any circles');
+            return;
+        }
+        self.$log.log('lets draw some circles');
+        self.leafletData.getMap().then(
+            function(map) {
+                if (self.drawCount == undefined) {
+                    self.drawCount = 0;
+                }
+                L.circle([40.758483, -111.845961], 200, {
+                    fillColor: '#03f'
+                }).addTo(map);
+                self.$log.log('circle added to map: ' + self.drawCount++);
+            }
+        );
+
+        self.leafletData.getMap().then(
+            function(map) {
+                self.$scope.bounds = map.getBounds();
+                self.$log.log('here');
             }
         );
     }
