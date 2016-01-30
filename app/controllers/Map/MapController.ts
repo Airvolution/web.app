@@ -238,27 +238,18 @@ class MapController {
 
     private updateOverlays() {
         let self = this;
-        var url = 'api/frontend/heatmap'
-        var obj2  = { 'mapParameters': { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } }, 'pollutantName': 'PM' };
-        var data = JSON.stringify(obj2);
-        console.log('JSON: ' + data);
-        self.$http.post(url, data, {} ).then(
+        let bounds  = { 'mapParameters': { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } }, 'pollutantName': 'PM' };
+        self.amsAPIService.asyncGetHeatMapDataInside(bounds).then(
             function(response) {
-                console.log('Success!');
-                console.log('  ' + url + ':\t status: ' + response.status);
-                console.log('======================');
-
                 let heatmap = self.configureOverlays();
-                heatmap.data = response.data['values'];
+                heatmap.data = response;
 
                 self.$scope.layers.overlays = {
                     heat: heatmap
                 };
             },
             function(response) {
-                console.log('Failure!');
-                console.log('  status: ' + response.status);
-                console.log('======================');
+                self.$log.log('ams API service promise rejected: ' + response);
             }
         );
     }
