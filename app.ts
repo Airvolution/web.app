@@ -1,8 +1,11 @@
 ///<reference path='./typings/tsd.d.ts' />
 
-import services = require('./app/services/module'); services;
-import controllers = require('./app/controllers/module'); controllers;
-import directives = require('./app/directives/module'); directives;
+import services = require('./app/services/module');
+services;
+import controllers = require('./app/controllers/module');
+controllers;
+import directives = require('./app/directives/module');
+directives;
 
 angular.module('app', [
         'nemLogging',
@@ -11,7 +14,8 @@ angular.module('app', [
         'services',
         'controllers',
         'directives',
-        'nvd3'
+        'nvd3',
+        'ngStorage'
 
     ])
     .config(($stateProvider, $urlRouterProvider) => {
@@ -52,4 +56,7 @@ angular.module('app', [
             .state('error', {
                 templateUrl: 'app/templates/404.html'
             });
-    });
+    })
+    .run(['AuthService', (authService)=> {
+        authService.fillAuthData();
+    }]);
