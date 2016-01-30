@@ -12,7 +12,8 @@ angular.module('app', [
         'controllers',
         'directives',
         'nvd3',
-        'ui.bootstrap'
+        'ui.bootstrap',
+        'ngAnimate'
 
     ])
     .config(($stateProvider, $urlRouterProvider) => {
