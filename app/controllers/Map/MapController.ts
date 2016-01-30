@@ -36,7 +36,7 @@ class MapController {
         this.positionMapWithLocation();
         this.configureMapMoveEvents();
         this.configureMapClickEvents();
-        //this.drawCircles(); // <--- not working from here
+        this.updateOverlays();
     }
 
     private configureLayers() {
@@ -45,19 +45,39 @@ class MapController {
                 light_map: {
                     name: 'Light Map',
                     url: 'https://api.tiles.mapbox.com/v4/tjhooker33.o78l0n36/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g',
-                    type: 'xyz'
+                    type: 'xyz',
+                    visible: false
                 },
                 dark_map: {
                     name: 'Dark Map',
                     url: 'https://api.tiles.mapbox.com/v4/tjhooker33.o780o9a3/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g',
-                    type: 'xyz'
+                    type: 'xyz',
+                    visible: true
                 },
                 satellite_map: {
                     name: 'Satellite Map',
                     url: 'https://api.tiles.mapbox.com/v4/tjhooker33.oc2el95l/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g',
-                    type: 'xyz'
+                    type: 'xyz',
+                    visible: false
                 }
             }
+        };
+    }
+
+    private configureOverlays() {
+        return {
+            name: 'Heat Map',
+            type: 'heat',
+
+            data: [],
+            layerOptions: {
+                backgroundColor: 'rgba(0,0,0,0.25)',
+                maxOpacity: 0.9,
+                minOpacity: 0.5,
+                radius: 50,
+                blur: 15
+            },
+            visible: false
         };
     }
 
@@ -212,6 +232,33 @@ class MapController {
             },
             function(response) {
                 self.$log.log('ams API service promise rejected: ' + response);
+            }
+        );
+    }
+
+    private updateOverlays() {
+        let self = this;
+        var url = 'api/frontend/heatmap'
+        var obj2  = { 'mapParameters': { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } }, 'pollutantName': 'PM' };
+        var data = JSON.stringify(obj2);
+        console.log('JSON: ' + data);
+        self.$http.post(url, data, {} ).then(
+            function(response) {
+                console.log('Success!');
+                console.log('  ' + url + ':\t status: ' + response.status);
+                console.log('======================');
+
+                let heatmap = self.configureOverlays();
+                heatmap.data = response.data['values'];
+
+                self.$scope.layers.overlays = {
+                    heat: heatmap
+                };
+            },
+            function(response) {
+                console.log('Failure!');
+                console.log('  status: ' + response.status);
+                console.log('======================');
             }
         );
     }
