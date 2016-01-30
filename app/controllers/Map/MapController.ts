@@ -225,7 +225,13 @@ class MapController {
         let bounds  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
         self.amsAPIService.asyncGetMarkersInside(bounds).then(
             function(response) {
-                self.$scope.markers = response;
+                if (self.$scope.markers == undefined) {
+                    self.$scope.markers = response;
+                    self.$log.log('marker array was empty');
+                } else {
+                    self.$scope.markers = self.$scope.markers.concat(response);
+                    self.$log.log('concatenation of the marker array');
+                }
             },
             function(response) {
                 self.$log.log('ams API service promise rejected: ' + response);
