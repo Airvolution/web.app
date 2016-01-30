@@ -1,13 +1,27 @@
-<main ng-controller="ComparePageController as pctrl" id="compareWrapper">
-    <div id="compare-plots" class="col-md-8">
-        <div ng-repeat="plot in pctrl.plots" class="data-plot well" style="margin: 1em 0;" ng-class="{'hidden':plot.visible == false}">
-            <nvd3 options="pctrl.options" data="plot.data" ></nvd3>
-        </div>
-    </div>
-    <div class="col-md-4 well" id="compare-list">
-        <div ng-repeat="station in pctrl.stations" class="list-element well well-sm">
-            <input type="checkbox" class="checkbox-inline" ng-model="station.visible" ng-change="pctrl.onListChange(station.id)">
-            <span class="checkbox-text">Station - {{station.id}}</span>
-        </div>
-    </div>
+<main ng-controller="ComparePageController2 as pctrl" id="compareWrapper">
+    <uib-accordian>
+        <uib-accordian-group heading="Pollutants">
+            Pollutants
+        </uib-accordian-group>
+        <uib-accordian-group heading="Weather">
+            Weather
+        </uib-accordian-group>
+        <uib-accordian-group heading="Monitoring Sites">
+            Monitoring Sites
+        </uib-accordian-group>
+    </uib-accordian>
 </main>
+
+<!--<main ng-controller="ComparePageController as pctrl" id="compareWrapper">-->
+    <!--<div id="compare-plots" class="col-md-8">-->
+        <!--<div ng-repeat="plot in pctrl.plots" class="data-plot well" style="margin: 1em 0;" ng-class="{'hidden':plot.visible == false}">-->
+            <!--<nvd3 options="pctrl.options" data="plot.data" ></nvd3>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="col-md-4 well" id="compare-list">-->
+        <!--<div ng-repeat="station in pctrl.stations" class="list-element well well-sm">-->
+            <!--<input type="checkbox" class="checkbox-inline" ng-model="station.visible" ng-change="pctrl.onListChange(station.id)">-->
+            <!--<span class="checkbox-text">Station - {{station.id}}</span>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</main>-->

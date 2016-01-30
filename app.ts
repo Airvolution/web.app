@@ -11,7 +11,8 @@ angular.module('app', [
         'services',
         'controllers',
         'directives',
-        'nvd3'
+        'nvd3',
+        'ui.bootstrap'
 
     ])
     .config(($stateProvider, $urlRouterProvider) => {
