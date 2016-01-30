@@ -8,19 +8,13 @@
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css">
     <link rel="stylesheet" href="app/assets/styles/app.min.css">
-
-<!--<style>-->
-    <!--[ng-cloak] {display:none;}-->
-<!--</style>-->
 <body ng-app="app">
 <div class="container" ng-controller="AppController as actrl">
     <header class="header row" ng-controller="HeaderController as hctrl">
         <div class="headerzone col-md-1" id="hamburger" ng-click="$parent.navVisible = !$parent.navVisible"><i
                 class="fa fa-bars fa-3x"></i></div>
         <div class="headerzone col-md-1"><img src="app/assets/images/AirU.png" alt="University of Utah"></div>
-        <!--
-        <div class="headerzone col-md-2 col-md-offset-1"><div id="quicklinks"><input type="text" placeholder="QuickLinks"/><i class="fa fa-search fa-2x"></i></div></div>
-        -->
+
         <div class="headerzone col-md-2 col-md-offset-3" id="weather">
             <div class="weather_wrapper">
                 <i class="fa fa-sun-o fa-3x"></i>
@@ -44,15 +38,8 @@
             <button class="btn btn-default" uib-popover-template="'/app/templates/registerTemplate.html'" popover-placement="bottom" type="button">Register</button>
             <button class="btn btn-default" uib-popover-template="'/app/templates/loginTemplate.html'" popover-placement="bottom" type="button">Login</button>
 
-            <div class="dropdown">
-                <i class="fa fa-cog fa-2x config-menu-icon dropdown-toggle" data-toggle="dropdown"></i>
-                <ul class="dropdown-menu dropdown-menu-right config-menu">
-                    <li><a ui-sref="profile">My Profile</a></li>
-                    <li><a ui-sref="stations">My Stations</a></li>
-                    <li><a ui-sref="register">Register Station</a></li>
-                    <li class="divider"></li>
-                    <li><a>Logout</a></li>
-                </ul>
+            <div>
+                <i class="fa fa-cog fa-2x config-menu-icon" ui-sref="config"></i>
             </div>
 
         </div>
@@ -61,22 +48,6 @@
         <site-nav ng-class="{'hidden':navVisible == false}"></site-nav>
         <div id="mainContainer" ng-class="{'col-md-10':navVisible == true, 'col-lg-12':navVisible == false}">
             <div class="row">
-                <!--<section class="col-md-1 hidden" id="toolbox">-->
-                <!--<ul>-->
-                <!--<li>-->
-                <!--<div class="tool-wrapper">tool1</div>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<div class="tool-wrapper">tool2</div>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<div class="tool-wrapper">tool3</div>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<div class="tool-wrapper">tool4</div>-->
-                <!--</li>-->
-                <!--</ul>-->
-                <!--</section>-->
                 <section class="col-md-12 main-wrapper" ui-view>
                 </section>
             </div>
