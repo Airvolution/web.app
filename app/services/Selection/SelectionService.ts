@@ -5,46 +5,74 @@ export = SelectionService;
 class SelectionService {
     public static serviceName = 'selectionService';
     public static $inject = ['$log'];
-    private currentSelection = [];
+    private currentStationSelection = [];
+    private currentParameterSelection = [];
     constructor(
         private $log
     ) {
         // empty constructor
     }
 
-    public addToSelection(stationID) {
-        this.currentSelection.push(stationID);
+    public removeIndexFromSelection(index) {
+        this.currentStationSelection.splice(index, 1);
+    }
+
+    // Stations
+
+    public addStationToSelection(stationID) {
+        this.currentStationSelection.push(stationID);
     }
 
     public removeStationFromSelection(stationID) {
-        let index = this.currentSelection.indexOf(stationID);
+        let index = this.currentStationSelection.indexOf(stationID);
         if (index > -1) {
-            this.currentSelection.splice(index, 1);
+            this.currentStationSelection.splice(index, 1);
         }
     }
 
-    public removeIndexFromSelection(index) {
-        this.currentSelection.splice(index, 1);
-    }
-
-    public updateSelectionWith(stationID) {
-        let index = this.currentSelection.indexOf(stationID);
+    public updateStationSelectionWith(stationID) {
+        let index = this.currentStationSelection.indexOf(stationID);
         if (index > -1) {
             this.removeIndexFromSelection(index);
             this.$log.log('UPDATE: removing station from list: ' + stationID);
         } else {
-            this.addToSelection(stationID);
+            this.addStationToSelection(stationID);
             this.$log.log('UPDATE: adding station to list: ' + stationID);
         }
     }
 
-    public setCurrentSelection(stationIDs) {
-        this.currentSelection = stationIDs;
+    public setCurrentStationSelection(stationIDs) {
+        this.currentStationSelection = stationIDs;
     }
 
-    public getCurrentSelection() {
-        this.$log.log('Selection Service returning current selection: ' + this.currentSelection);
-        return this.currentSelection;
+    public getCurrentStationSelection() {
+        this.$log.log('Selection Service returning current selection: ' + this.currentStationSelection);
+        return this.currentStationSelection;
+    }
+
+    // Parameters
+
+    public addParameterToSelection(kind) {
+        this.currentParameterSelection.push(kind);
+    }
+
+    public updateParameterSelectionWith(kind) {
+        let index = this.currentParameterSelection.indexOf(kind);
+        if (index > -1) {
+            this.removeIndexFromSelection(index);
+            this.$log.log('UPDATE: removing parameter from list: ' + kind);
+        } else {
+            this.addParameterToSelection(kind);
+            this.$log.log('UPDATE: adding parameter to list: ' + kind);
+        }
+    }
+
+    public setCurrentParameterSelection(parameters) {
+        this.currentParameterSelection = parameters;
+    }
+
+    public getCurrentParameterSelection() {
+        return this.currentParameterSelection;
     }
 
 }

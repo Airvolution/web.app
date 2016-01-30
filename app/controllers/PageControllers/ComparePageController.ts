@@ -6,34 +6,34 @@ export = ComparePageController;
 
 class ComparePageController {
     public static name = 'ComparePageController';
-    public static $inject = ['$scope', '$http', 'selectionService'];
+    public static $inject = ['$scope', '$http', '$log', 'selectionService'];
 
     public stations = [];
     public plots = [];
 
     public pollutants = [
         {
-            type: 'pm',
+            kind: 'PM',
             name: 'Particulate Matter',
             checked: false
         },
         {
-            type: 'co',
+            kind: 'CO',
             name: 'Carbon Monoxide',
             checked: false
         },
         {
-            type: 'co2',
+            kind: 'CO2',
             name: 'Carbon Dioxide',
             checked: false
         },
         {
-            type: 'no2',
+            kind: 'NO2',
             name: 'Nitrogen Dioxide',
             checked: false
         },
         {
-            type: 'o3',
+            kind: 'O3',
             name: 'Ozone',
             checked: false
         },
@@ -41,21 +41,23 @@ class ComparePageController {
 
     public weatherTypes = [
         {
-            type: 't',
+            kind: 'Temperature',
             name: 'Temperature',
             checked: false
         },
         {
-            type: 'rh',
+            kind: 'Humidity',
             name: 'Humidity',
             checked: false
         },
         {
-            type: 'bm',
+            kind: 'Pressure',
             name: 'Barometric Pressure',
             checked: false
         }
     ];
+
+    public data = [];
 
     public options = {
         chart: {
@@ -103,9 +105,10 @@ class ComparePageController {
     constructor(
         private $scope,
         private $http,
+        private $log,
         private selectionService
     ) {
-        this.selectionService.getCurrentSelection(); // scaffold
+        this.selectionService.getCurrentStationSelection(); // scaffold
 
         let self = this;
         $http({
@@ -116,44 +119,126 @@ class ComparePageController {
         });
     };
 
-    public onListChange(id) {
-        console.log('onListChange(%s)', id);
-        let plot = _.find(this.plots, function(p) {
-            return id == p.id;
-        });
+    //public onListChange(id) {
+    //    console.log('onListChange(%s)', id);
+    //    let plot = _.find(this.plots, function(p) {
+    //        return id == p.id;
+    //    });
+    //
+    //    if (!!plot) {
+    //        plot.visible = !plot.visible;
+    //    } else {
+    //        plot = {id: id, visible: true, data: []};
+    //        this.generatePlot(plot);
+    //    }
+    //}
 
-        if (!!plot) {
-            plot.visible = !plot.visible;
-        } else {
-            plot = {id: id, visible: true, data: []};
-            this.generatePlot(plot);
-        }
-    }
-
-    public generatePlot(plot) {
-        console.log('generating plot');
-        let self = this;
-        let data = JSON.stringify(plot.id);
-        this.$http({
-            url: 'api/frontend/deviceDatapoints',
-            data: data,
-            method: 'POST'
-            }).then(
-            function(response) {
-                plot.data = response.data;
-                self.plots.push(plot);
-            },
-            function(response) {
-                console.log('Failure!');
+    private plot(dataPoints) {
+        this.$log.log('ready to plot points: ' + dataPoints);
+        let dataToPlot = [];
+        let parameters = this.selectionService.getCurrentParameterSelection();
+        for (let i = 0; i < dataPoints.length; i++) {
+            this.$log.log('i: ' + i);
+            for (let j = 0; j < dataPoints[i].length; j++) {
+                this.$log.log('j: ' + j);
+                if (parameters.indexOf(dataPoints[i][j]['key']) > -1) {
+                    dataToPlot.push(dataPoints[i][j]);
+                    this.$log.log('here');
+                    //dataToPlot.push(dataPoints[i][j]);
+                } else {
+                    this.$log.log('parameter did not match: ' + dataPoints[i][j]['key']);
+                }
             }
-        );
+        }
+
+        if (dataToPlot.length > 0) {
+            let plot = { visible: true, data: [] };
+            plot.data = dataToPlot;
+            //plot.data = dataPoints;
+            this.plots.push(plot);
+        }
+
+        //for (var i in dataPoints) {
+        //    this.$log.log('i: ' + i);
+        //    for (var j in dataPoints[i]) {
+        //        this.$log.log('j: ' + j);
+        //        let parameters = this.selectionService.getCurrentParameterSelection();
+        //        if (parameters.indexOf(dataPoints[i][j]['key]']) > -1) {
+        //            dataToPlot.push(dataPoints[i][j]['values']);
+        //        } else {
+        //            this.$log.log('parameter did not match: ' + dataPoints[i][j]['key']);
+        //        }
+        //    }
+        //}
+        //this.plots.push(dataToPlot);
     }
 
-    public selectPollutant(type) {
-        console.log('is pollutant selected? ' + type.checked);
+    public generatePlot() {
+        let self = this;
+        self.$log.log('generating plot for selected stations');
+        let selected = self.selectionService.getCurrentStationSelection();
+        let dataPoints = [];
+        for (var index in selected) {
+            self.$log.log('station: ' + selected[index]);
+            self.$http({
+                url: 'api/frontend/deviceDatapoints',
+                data: JSON.stringify(selected[index]),
+                method: 'POST'
+            }).then(
+                function(response) {
+                    dataPoints.push(response.data);
+                    if (dataPoints.length == selected.length) {
+                        self.plot(dataPoints);
+                    }
+                },
+                function(response) {
+                    console.log('Failure!');
+                }
+            );
+        }
+
+        //console.log('generating plot');
+        //let self = this;
+        //let data = JSON.stringify(plot.id);
+        //this.$http({
+        //    url: 'api/frontend/deviceDatapoints',
+        //    data: data,
+        //    method: 'POST'
+        //}).then(
+        //    function(response) {
+        //        plot.data = response.data;
+        //        self.plots.push(plot);
+        //    },
+        //    function(response) {
+        //        console.log('Failure!');
+        //    }
+        //);
     }
 
-    public selectWeather(type) {
-        console.log('is weather selected? ' + type.checked);
+    //public generatePlot(plot) {
+    //    console.log('generating plot');
+    //    let self = this;
+    //    let data = JSON.stringify(plot.id);
+    //    this.$http({
+    //        url: 'api/frontend/deviceDatapoints',
+    //        data: data,
+    //        method: 'POST'
+    //        }).then(
+    //        function(response) {
+    //            plot.data = response.data;
+    //            self.plots.push(plot);
+    //        },
+    //        function(response) {
+    //            console.log('Failure!');
+    //        }
+    //    );
+    //}
+
+    public selectPollutant(kind) {
+        console.log('is pollutant selected? ' + kind.checked);
+    }
+
+    public selectWeather(kind) {
+        console.log('is weather selected? ' + kind.checked);
     }
 }
