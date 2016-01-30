@@ -11,7 +11,6 @@ import NVD3Controller = require('./NVD3/NVD3Controller');
 import AQIController = require('./AQI/AQIController');
 import HeaderController = require('./Index/HeaderController');
 import AppController = require('./Index/AppController');
-import ComparePageController2 = require('./PageControllers/ComparePageController2');
 
 export = angular.module('controllers',
     [   'services'
@@ -26,5 +25,4 @@ export = angular.module('controllers',
             .controller(NVD3Controller.name, NVD3Controller)
             .controller(AQIController.name, AQIController)
             .controller(HeaderController.name, HeaderController)
-            .controller(AppController.name, AppController)
-            .controller(ComparePageController2.name, ComparePageController2);
+            .controller(AppController.name, AppController);
