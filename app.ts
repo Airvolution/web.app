@@ -60,10 +60,6 @@ angular.module('app', [
                 url: '/indoor',
                 templateUrl: 'app/templates/indoor.html'
             })
-            .state('radar', {
-                url: '/radar',
-                templateUrl: 'app/templates/radar.html'
-            })
             .state('profile', {
                 url: '/profile',
                 templateUrl: 'app/templates/myProfile.html'

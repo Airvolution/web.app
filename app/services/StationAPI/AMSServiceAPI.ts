@@ -155,4 +155,24 @@ class AMSServiceAPI {
 
         return deferred.promise;
     }
+
+    public asyncGetHeatMapDataInside(bounds) {
+        var deferred = this.$q.defer();
+
+        let self = this;
+        let url = 'api/frontend/heatmap';
+        let data = JSON.stringify(bounds);
+        self.$http.post(url, data, {}).then(
+            function(response) {
+                deferred.resolve(response.data['values']);
+            },
+            function(response) {
+                deferred.reject([
+                    // empty array
+                ]);
+            }
+        );
+
+        return deferred.promise;
+    }
 }

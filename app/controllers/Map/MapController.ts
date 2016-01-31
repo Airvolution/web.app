@@ -36,7 +36,7 @@ class MapController {
         this.positionMapWithLocation();
         this.configureMapMoveEvents();
         this.configureMapClickEvents();
-        //this.drawCircles(); // <--- not working from here
+        this.updateOverlays();
     }
 
     private configureLayers() {
@@ -58,6 +58,23 @@ class MapController {
                     type: 'xyz'
                 }
             }
+        };
+    }
+
+    private configureOverlays() {
+        return {
+            name: 'Heat Map',
+            type: 'heat',
+
+            data: [],
+            layerOptions: {
+                backgroundColor: 'rgba(0,0,0,0.25)',
+                maxOpacity: 0.9,
+                minOpacity: 0.5,
+                radius: 50,
+                blur: 15
+            },
+            visible: false
         };
     }
 
@@ -208,7 +225,31 @@ class MapController {
         let bounds  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
         self.amsAPIService.asyncGetMarkersInside(bounds).then(
             function(response) {
-                self.$scope.markers = response;
+                if (self.$scope.markers == undefined) {
+                    self.$scope.markers = response;
+                    self.$log.log('marker array was empty');
+                } else {
+                    self.$scope.markers = self.$scope.markers.concat(response);
+                    self.$log.log('concatenation of the marker array');
+                }
+            },
+            function(response) {
+                self.$log.log('ams API service promise rejected: ' + response);
+            }
+        );
+    }
+
+    private updateOverlays() {
+        let self = this;
+        let bounds  = { 'mapParameters': { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } }, 'pollutantName': 'PM' };
+        self.amsAPIService.asyncGetHeatMapDataInside(bounds).then(
+            function(response) {
+                let heatmap = self.configureOverlays();
+                heatmap.data = response;
+
+                self.$scope.layers.overlays = {
+                    heat: heatmap
+                };
             },
             function(response) {
                 self.$log.log('ams API service promise rejected: ' + response);
