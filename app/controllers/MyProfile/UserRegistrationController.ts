@@ -27,8 +27,6 @@ class UserRegistrationController {
 
                 self.savedSuccessfully = true;
                 self.message = "User has been registered successfully, you will be redicted to login page in 2 seconds.";
-                self.startTimer();
-
             },
             (response)=> {
                 var errors = [];
@@ -39,13 +37,6 @@ class UserRegistrationController {
                 }
                 self.message = "Failed to register user due to:" + errors.join(' ');
             });
-    };
-
-    private startTimer = ()=> {
-        var timer = this.$timeout(function () {
-            this.$timeout.cancel(timer);
-            this.$location.path('/login');
-        }, 2000);
     };
 
     public loginData = {
