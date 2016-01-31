@@ -61,7 +61,7 @@ class ComparePageController {
 
     public options = {
         chart: {
-            type: 'stackedAreaChart',
+            type: 'lineWithFocusChart',
             height: 150,
             margin: {
                 top: 20,
