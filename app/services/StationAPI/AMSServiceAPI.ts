@@ -37,7 +37,9 @@ class AMSServiceAPI {
                 deferred.resolve(data);
             },
             function(response) {
-                deferred.resolve({});
+                deferred.resolve([
+                    // empty array
+                ]);
             }
         );
 
@@ -52,12 +54,11 @@ class AMSServiceAPI {
         let url = 'api/frontend/daq';
         self.$http.get(url).then(
             function(response) {
-                let data = response.data;
                 let markers = [];
 
                 // Add custom attributes to each Marker
-                for (let index in data) {
-                    let site = data[index]['site'];
+                for (let index in response.data) {
+                    let site = response.data[index]['site'];
                     let obj = ({
                         deviceID: site['name'],
                         lat: site['latitude'],
@@ -71,6 +72,7 @@ class AMSServiceAPI {
                     });
                     markers.push(obj);
                 }
+
                 deferred.resolve(markers);
             },
             function(response) {

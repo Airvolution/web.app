@@ -8,19 +8,13 @@
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css">
     <link rel="stylesheet" href="app/assets/styles/app.min.css">
-
-<!--<style>-->
-    <!--[ng-cloak] {display:none;}-->
-<!--</style>-->
 <body ng-app="app">
 <div class="container" ng-controller="AppController as actrl">
     <header class="header row" ng-controller="HeaderController as hctrl">
         <div class="headerzone col-md-1" id="hamburger" ng-click="$parent.navVisible = !$parent.navVisible"><i
                 class="fa fa-bars fa-3x"></i></div>
         <div class="headerzone col-md-1"><img src="app/assets/images/AirU.png" alt="University of Utah"></div>
-        <!--
-        <div class="headerzone col-md-2 col-md-offset-1"><div id="quicklinks"><input type="text" placeholder="QuickLinks"/><i class="fa fa-search fa-2x"></i></div></div>
-        -->
+
         <div class="headerzone col-md-2 col-md-offset-3" id="weather">
             <div class="weather_wrapper">
                 <i class="fa fa-sun-o fa-3x"></i>
@@ -41,17 +35,11 @@
 
         </div>
         <div class="headerzone col-md-3" id="login">
-            <span class="welcome-message">Welcome, Joe User!</span>
+            <button class="btn btn-default" uib-popover-template="'/app/templates/registerTemplate.html'" popover-placement="bottom" type="button">Register</button>
+            <button class="btn btn-default" uib-popover-template="'/app/templates/loginTemplate.html'" popover-placement="bottom" type="button">Login</button>
 
-            <div class="dropdown">
-                <i class="fa fa-cog fa-2x config-menu-icon dropdown-toggle" data-toggle="dropdown"></i>
-                <ul class="dropdown-menu dropdown-menu-right config-menu">
-                    <li><a ui-sref="profile">My Profile</a></li>
-                    <li><a ui-sref="stations">My Stations</a></li>
-                    <li><a ui-sref="register">Register Station</a></li>
-                    <li class="divider"></li>
-                    <li><a>Logout</a></li>
-                </ul>
+            <div>
+                <i class="fa fa-cog fa-2x config-menu-icon" ui-sref="config"></i>
             </div>
 
         </div>
@@ -60,22 +48,6 @@
         <site-nav ng-class="{'hidden':navVisible == false}"></site-nav>
         <div id="mainContainer" ng-class="{'col-md-10':navVisible == true, 'col-lg-12':navVisible == false}">
             <div class="row">
-                <!--<section class="col-md-1 hidden" id="toolbox">-->
-                <!--<ul>-->
-                <!--<li>-->
-                <!--<div class="tool-wrapper">tool1</div>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<div class="tool-wrapper">tool2</div>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<div class="tool-wrapper">tool3</div>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<div class="tool-wrapper">tool4</div>-->
-                <!--</li>-->
-                <!--</ul>-->
-                <!--</section>-->
                 <section class="col-md-12 main-wrapper" ui-view>
                 </section>
             </div>
@@ -86,14 +58,20 @@
 <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.10/ngStorage.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-animate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.1.1/ui-bootstrap-tpls.min.js"></script>
+
 <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.13/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.js"></script>
 <script src="node_modules/angular-nvd3/dist/angular-nvd3.min.js"></script>
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-nvd3-directives/0.0.7/angularjs-nvd3-directives.min.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/angularnodemjs-nvd3-directives/0.0.7/angularjs-nvd3-directives.min.js"></script>-->
 <script src="node_modules/angular-simple-logger/dist/angular-simple-logger.min.js"></script>
 <script src="node_modules/ui-leaflet/dist/ui-leaflet.min.js"></script>
+<script src="node_modules/leaflet.heat/dist/leaflet-heat.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 
 <script src="bundle.js"></script>

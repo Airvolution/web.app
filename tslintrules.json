@@ -2,9 +2,6 @@
     "rules": {
         "class-name": true,
         "curly": true,
-        "quotemark": [
-            true,
-            "single"],
         "eofline": true,
         "member-access": true,
         "member-ordering": [
@@ -33,7 +30,6 @@
             "check-else",
             "check-whitespace"
         ],
-        "semicolon": true,
-        "triple-equals": false
+        "semicolon": true
     }
 }
