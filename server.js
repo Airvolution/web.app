@@ -2,9 +2,9 @@ var proxy = require('express-http-proxy');
 var express = require('express');
 var app = express();
 
-app.use('/api',proxy('http://dev.air.eng.utah.edu',{
+app.use('/api',proxy('localhost:2307',{
     forwardPath: function(req, res){
-        return '/api/'+require('url').parse(req.url).path;
+        return '/'+require('url').parse(req.url).path;
     }
 }));
 //
