@@ -1,6 +1,7 @@
-html,body {
-  height:100%;
+html, body {
+  height: 100%;
 }
+
 .container {
   width: 100%;
   height: 100%;
@@ -8,11 +9,7 @@ html,body {
 
 /* Content Below this point should be moved to styles, it is here for now to help with the skeleton */
 
-nav, section, header, footer, details {
-  border: 1px dotted black;
-}
-
-#mainContent{
+#mainContent {
   height: 100%;
 }
 
@@ -20,42 +17,74 @@ nav, section, header, footer, details {
   background-color: #00b3ee;
   height: 50px;
 }
+
 .footer {
   background-color: #0d3349;
   height: 75px;
 }
 
 .sidenav {
-  background-color: #4d2926;
-  height: inherit;
+  align-self: stretch;
+
+  ul {
+    margin-top: 1em;
+  }
+
+  &.sidenav-left {
+    box-shadow: inset 2px 0px 10px @medium-darker-gray;
+
+  }
+
+  &.sidenav-right {
+    box-shadow: inset -2px 0px 10px @medium-darker-gray;
+  }
+
+  li a {
+    border-radius: 2px;
+    padding: 1em;
+    font-size: 1.5em;
+
+    &.sidenav-active {
+      background-color: @medium-lighter-gray;
+      color: #337ab7;
+    }
+
+    &:hover {
+      background-color: @medium-lighter-gray;
+      color: #337ab7;
+    }
+  }
 }
 
-.mainToolbox {
-  background-color: #7a43b6;
-  height: inherit;
-}
+.main-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0;
 
-.mainView {
-  background-color: #00ee00;
-  height: inherit;
-}
+  main {
+    min-height: 100%;
+    min-width: 100%;
 
-.mainDetails {
-  background-color: #985f0d;
-  height: inherit;
-}
+    background-color: @light-gray;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
 
-.sidenav li {
-  background-color: #ffffff;
-  border-radius: 5px;
-  padding: 10px 5px;
-  text-align: center;
+    &.side-by-side {
+      justify-content: flex-start;
+      flex-direction: row;
+    }
+  }
 }
 
 #mainContainer {
   height: 100%;
 }
 
-#mainContainer>div {
+#mainContainer > div {
   height: 100%;
 }

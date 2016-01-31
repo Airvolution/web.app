@@ -4,9 +4,7 @@
   "description": "AirU Web Application",
   "main": "index.js",
   "scripts": {
-    "prestart": "npm install && grunt",
     "start": "node server.js",
-    "start-no-build": "http-server ./build -a localhost -p 8084 -c-1 verbose=true",
     "test": "grunt build:test && karma start"
   },
   "repository": {
