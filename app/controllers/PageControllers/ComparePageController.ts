@@ -111,12 +111,23 @@ class ComparePageController {
         this.selectionService.getCurrentStationSelection(); // scaffold
 
         let self = this;
-        $http({
-            url: 'api/frontend/getUserDeviceStates',
-            method: 'GET'
-        }).then(function(data){
-            self.stations = data.data;
-        });
+        let url = 'api/frontend/getUserDeviceStates';
+        $http.get(url).then(
+            function (response) {
+                self.stations = response.data
+                self.$log.log('api/frontend/getUserDeviceStates api call succeeded: ' + response);
+            },
+            function (response) {
+                self.$log.log('api/frontend/getUserDeviceStates api call failed: ' + response);
+            }
+        );
+
+        //$http({
+        //    url: 'api/frontend/getUserDeviceStates',
+        //    method: 'GET'
+        //}).then(function(data){
+        //    self.stations = data.data;
+        //});
     };
 
     //public onListChange(id) {
