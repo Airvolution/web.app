@@ -3,13 +3,12 @@
 export = OpenWeatherService
 
 class OpenWeatherService {
-    public static serviceName = "openWeatherService";
+    public static serviceName = 'openWeatherService';
     public static $inject = ['$http', '$q', '$log'];
     constructor(
         private $http,
         private $q,
-        private $log,
-        private apiKey
+        private $log
     ) {
         // empty constructor
     }
@@ -19,15 +18,13 @@ class OpenWeatherService {
 
         let self = this;
 
-
         let url = 'api/weather/current';
-        //let url = "api/weather/current?lat=39.927035&lng=-84.024774"
         let params = {
             params: {
                 lat: 40.757823,
                 lng: -111.850680
             }
-        }
+        };
 
         self.$http.get(url, params).then(
             function (response) {
@@ -42,7 +39,7 @@ class OpenWeatherService {
                 self.$log.log('WEATHER failure: ' + response);
                 deferred.reject([
                     // empty array
-                ])
+                ]);
             }
         );
 
@@ -54,15 +51,13 @@ class OpenWeatherService {
 
         let self = this;
 
-
         let url = 'api/weather/current';
-        //let url = "api/weather/current?lat=39.927035&lng=-84.024774"
         let params = {
             params: {
                 lat: lat,
                 lng: lng
             }
-        }
+        };
 
         self.$http.get(url, params).then(
             function (response) {
@@ -77,7 +72,7 @@ class OpenWeatherService {
                 self.$log.log('WEATHER failure: ' + response);
                 deferred.reject([
                     // empty array
-                ])
+                ]);
             }
         );
 
@@ -109,7 +104,7 @@ class OpenWeatherService {
                 self.$log.log('WEATHER failure: ' + response);
                 deferred.reject([
                     // empty array
-                ])
+                ]);
             }
         );
 
