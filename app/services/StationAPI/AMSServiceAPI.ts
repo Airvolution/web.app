@@ -37,7 +37,7 @@ class AMSServiceAPI {
                 deferred.resolve(data);
             },
             function(response) {
-                deferred.resolve([
+                deferred.reject([
                     // empty array
                 ]);
             }

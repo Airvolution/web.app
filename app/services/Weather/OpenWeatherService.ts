@@ -11,31 +11,39 @@ class OpenWeatherService {
         private $log,
         private apiKey
     ) {
-        apiKey = '9f5c853ae111945a65873eae72898a19';
+        // empty constructor
     }
 
-    public test() {
+    public getCurrentWeather() {
+        var deferred = this.$q.defer();
+
         let self = this;
-        self.$log.log('this is a test of your open weather service');
 
-        let url = 'http://api.openweathermap.org/data/2.5/weather';
-        let config = {
-            headers: {
-                'Authorization': 'Bearer ' + self.apiKey
-            },
+
+        let url = 'api/weather/current';
+        //let url = "api/weather/current?lat=39.927035&lng=-84.024774"
+        let params = {
             params: {
-                lat: 35,
-                lon: 139
+                lat: 39.927035,
+                lng: -84.024774
             }
-        };
+        }
 
-        self.$http.get(url, config).then(
-            function(response) {
-                self.$log.log('open weather success: ' + response);
+        self.$http.get(url, params).then(
+            function (response) {
+                self.$log.log('WEATHER success: ' + response);
+                let ret = JSON.parse(response.data)
+                self.$log.log('data');
+                deferred.resolve(response.data);
             },
-            function(response) {
-                self.$log.log('open weather FAIL: ' + response);
+            function (response) {
+                self.$log.log('WEATHER failure: ' + response);
+                deferred.reject([
+
+                ])
             }
         );
+
+        return deferred.promise;
     }
 }
