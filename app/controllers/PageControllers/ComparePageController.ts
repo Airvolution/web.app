@@ -111,10 +111,11 @@ class ComparePageController {
         this.selectionService.getCurrentStationSelection(); // scaffold
 
         let self = this;
-        let url = 'api/frontend/getUserDeviceStates';
+        //let url = 'api/frontend/getUserDeviceStates';
+        let url = 'api/stations/locators';
         $http.get(url).then(
             function (response) {
-                self.stations = response.data
+                self.stations = response.data.ams;
                 self.$log.log('api/frontend/getUserDeviceStates api call succeeded: ' + response);
             },
             function (response) {
