@@ -108,10 +108,9 @@ class ComparePageController {
         private $log,
         private selectionService
     ) {
-        this.selectionService.getCurrentStationSelection(); // scaffold
+        this.selectionService.getCurrentStationSelection();
 
         let self = this;
-        //let url = 'api/frontend/getUserDeviceStates';
         let url = 'api/stations/locators';
         $http.get(url).then(
             function (response) {
@@ -122,28 +121,7 @@ class ComparePageController {
                 self.$log.log('api/frontend/getUserDeviceStates api call failed: ' + response);
             }
         );
-
-        //$http({
-        //    url: 'api/frontend/getUserDeviceStates',
-        //    method: 'GET'
-        //}).then(function(data){
-        //    self.stations = data.data;
-        //});
     };
-
-    //public onListChange(id) {
-    //    console.log('onListChange(%s)', id);
-    //    let plot = _.find(this.plots, function(p) {
-    //        return id == p.id;
-    //    });
-    //
-    //    if (!!plot) {
-    //        plot.visible = !plot.visible;
-    //    } else {
-    //        plot = {id: id, visible: true, data: []};
-    //        this.generatePlot(plot);
-    //    }
-    //}
 
     private plot(dataPoints) {
         this.$log.log('ready to plot points: ' + dataPoints);
@@ -155,8 +133,6 @@ class ComparePageController {
                 this.$log.log('j: ' + j);
                 if (parameters.indexOf(dataPoints[i][j]['key']) > -1) {
                     dataToPlot.push(dataPoints[i][j]);
-                    this.$log.log('here');
-                    //dataToPlot.push(dataPoints[i][j]);
                 } else {
                     this.$log.log('parameter did not match: ' + dataPoints[i][j]['key']);
                 }
@@ -166,23 +142,8 @@ class ComparePageController {
         if (dataToPlot.length > 0) {
             let plot = { visible: true, data: [] };
             plot.data = dataToPlot;
-            //plot.data = dataPoints;
             this.plots.push(plot);
         }
-
-        //for (var i in dataPoints) {
-        //    this.$log.log('i: ' + i);
-        //    for (var j in dataPoints[i]) {
-        //        this.$log.log('j: ' + j);
-        //        let parameters = this.selectionService.getCurrentParameterSelection();
-        //        if (parameters.indexOf(dataPoints[i][j]['key]']) > -1) {
-        //            dataToPlot.push(dataPoints[i][j]['values']);
-        //        } else {
-        //            this.$log.log('parameter did not match: ' + dataPoints[i][j]['key']);
-        //        }
-        //    }
-        //}
-        //this.plots.push(dataToPlot);
     }
 
     public generatePlot() {
@@ -208,43 +169,7 @@ class ComparePageController {
                 }
             );
         }
-
-        //console.log('generating plot');
-        //let self = this;
-        //let data = JSON.stringify(plot.id);
-        //this.$http({
-        //    url: 'api/frontend/deviceDatapoints',
-        //    data: data,
-        //    method: 'POST'
-        //}).then(
-        //    function(response) {
-        //        plot.data = response.data;
-        //        self.plots.push(plot);
-        //    },
-        //    function(response) {
-        //        console.log('Failure!');
-        //    }
-        //);
     }
-
-    //public generatePlot(plot) {
-    //    console.log('generating plot');
-    //    let self = this;
-    //    let data = JSON.stringify(plot.id);
-    //    this.$http({
-    //        url: 'api/frontend/deviceDatapoints',
-    //        data: data,
-    //        method: 'POST'
-    //        }).then(
-    //        function(response) {
-    //            plot.data = response.data;
-    //            self.plots.push(plot);
-    //        },
-    //        function(response) {
-    //            console.log('Failure!');
-    //        }
-    //    );
-    //}
 
     public selectPollutant(kind) {
         console.log('is pollutant selected? ' + kind.checked);

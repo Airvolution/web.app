@@ -112,10 +112,7 @@ class AMSServiceAPI {
         var deferred = this.$q.defer();
 
         let self = this;
-        //let url = 'api/frontend/deviceDatapoints';
         let url = 'api/stations/datapoints/' + stationID;
-
-        //let data = JSON.stringify(stationID);
         self.$http.get(url).then(
             function(response) {
                 deferred.resolve(response.data);

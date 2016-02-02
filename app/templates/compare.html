@@ -22,11 +22,6 @@
                     <input type="checkbox" class="checkbox-inline" ng-model="station.visible" ng-change="pctrl.selectionService.updateStationSelectionWith(station.deviceID)">
                     <span class="checkbox-text">Station - {{station.deviceID}}</span>
                 </div>
-
-                <!--<div ng-repeat="station in pctrl.stations" class="list-element well well-sm">-->
-                    <!--<input type="checkbox" class="checkbox-inline" ng-model="station.visible" ng-change="pctrl.onListChange(station.id)">-->
-                    <!--<span class="checkbox-text">Station - {{station.id}}</span>-->
-                <!--</div>-->
             </uib-accordion-group>
         </uib-accordion>
         <button class="btn btn-block btn-primary" ng-click="pctrl.generatePlot()">Compare</button>

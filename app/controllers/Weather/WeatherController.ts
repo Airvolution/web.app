@@ -18,16 +18,12 @@ class WeatherController {
     ) {
 
         this.findWeatherByLocation();
-        //this.updateTemperatures();
-        //this.updateTemperaturesByZipCode();
     }
 
     public findWeatherByLocation() {
         let self = this;
         self.locationService.asyncGetGeoCoordinates().then(
             function (response) {
-                //lat: response.lat,
-                //    lng: response.lng,
                 self.updateTemperaturesByCoordinates(response.lat, response.lng);
             },
             function (response) {
