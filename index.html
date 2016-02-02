@@ -37,9 +37,10 @@
 
         </div>
         <div class="headerzone col-md-3" id="login">
-            <button class="btn btn-default" uib-popover-template="'/app/templates/registerTemplate.html'" popover-placement="bottom" type="button">Register</button>
-            <button class="btn btn-default" uib-popover-template="'/app/templates/loginTemplate.html'" popover-placement="bottom" type="button">Login</button>
-
+            <a class="header-text" ng-hide="hctrl.AuthService.authentication.isAuth" ng-click="hctrl.openRegister()">Register</a>
+            <a class="header-text" ng-hide="hctrl.AuthService.authentication.isAuth" ng-click="hctrl.openLogin()">Login</a>
+            <span class="header-text" ng-show="hctrl.AuthService.authentication.isAuth">Welcome, {{hctrl.AuthService.authentication.userName}}</span>
+            <a class="header-text" ng-show="hctrl.AuthService.authentication.isAuth" ng-click="hctrl.AuthService.logOut()">Logout</a>
             <div>
                 <i class="fa fa-cog fa-2x config-menu-icon" ui-sref="config"></i>
             </div>
