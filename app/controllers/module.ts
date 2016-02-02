@@ -1,6 +1,5 @@
 ///<reference path='../../typings/tsd.d.ts' />
 // import services = require('../services/module');
-import HeatMapController = require('./HeatMap/HeatMapController');
 import MapController = require('./Map/MapController');
 import RegisterAMSController = require('./RegisterAMS/RegisterAMSController');
 import MyProfileController = require('./MyProfile/MyProfileController');
@@ -12,11 +11,11 @@ import AQIController = require('./AQI/AQIController');
 import HeaderController = require('./Index/HeaderController');
 import AppController = require('./Index/AppController');
 import UserRegistrationController = require("./MyProfile/UserRegistrationController");
+import WeatherController = require('./Weather/WeatherController');
 
 export = angular.module('controllers',
     [   'services'
     ])
-            .controller(HeatMapController.name, HeatMapController)
             .controller(MapController.name, MapController)
             .controller(RegisterAMSController.name, RegisterAMSController)
             .controller(MyProfileController.name, MyProfileController)
@@ -27,4 +26,5 @@ export = angular.module('controllers',
             .controller(AQIController.name, AQIController)
             .controller(HeaderController.name, HeaderController)
             .controller(AppController.name, AppController)
-            .controller(UserRegistrationController.name, UserRegistrationController);
+            .controller(UserRegistrationController.name, UserRegistrationController)
+            .controller(WeatherController.name, WeatherController);

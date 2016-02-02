@@ -17,9 +17,9 @@ class AMSServiceAPI {
         var deferred = this.$q.defer();
 
         let self = this;
-        let url = 'api/frontend/map';
+        let url = 'api/stations/locators';
         let data = JSON.stringify(bounds);
-        self.$http.post(url, data, {} ).then(
+        self.$http.get(url, data, {} ).then(
             function(response) {
                 let data = response.data['ams'];
 
@@ -34,10 +34,12 @@ class AMSServiceAPI {
                         };
                     }
                 }
+                self.$log.log('how many markers did we get back? ' + data.length);
                 deferred.resolve(data);
             },
             function(response) {
-                deferred.resolve([
+                self.$log.log('we did not get any markers get back');
+                deferred.reject([
                     // empty array
                 ]);
             }
@@ -89,9 +91,8 @@ class AMSServiceAPI {
         var deferred = this.$q.defer();
 
         let self = this;
-        let url = 'api/frontend/singleLatest';
-        let data = JSON.stringify(stationID);
-        self.$http.post(url, data, {}).then(
+        let url = 'api/stations/latestDataPoint/' + stationID;
+        self.$http.get(url).then(
             function(response) {
                 deferred.resolve(response.data);
             },
@@ -109,9 +110,8 @@ class AMSServiceAPI {
         var deferred = this.$q.defer();
 
         let self = this;
-        let url = 'api/frontend/deviceDatapoints';
-        let data = JSON.stringify(stationID);
-        self.$http.post(url, data, {}).then(
+        let url = 'api/stations/datapoints/' + stationID;
+        self.$http.get(url).then(
             function(response) {
                 deferred.resolve(response.data);
             },
@@ -145,6 +145,26 @@ class AMSServiceAPI {
                 }
 
                 deferred.resolve(data);
+            },
+            function(response) {
+                deferred.reject([
+                    // empty array
+                ]);
+            }
+        );
+
+        return deferred.promise;
+    }
+
+    public asyncGetHeatMapDataInside(bounds) {
+        var deferred = this.$q.defer();
+
+        let self = this;
+        let url = 'api/frontend/heatmap';
+        let data = JSON.stringify(bounds);
+        self.$http.post(url, data, {}).then(
+            function(response) {
+                deferred.resolve(response.data['values']);
             },
             function(response) {
                 deferred.reject([

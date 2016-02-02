@@ -5,12 +5,34 @@
   position: absolute;
   z-index: 1;
   top: 0;
-  bottom: 0;
   right: 0;
-  padding-left: 1em;
-  padding-right: 1em;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
   overflow-y: auto;
-  background: @medium-darker-gray;
+  background: rgba(0, 0, 0, 0.25);
+
+  .panel-heading {
+    background-color: #252c3c;
+  }
+
+  .panel-title {
+    color: white;
+  }
+
+  .list-group {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+
+    .list-group-item {
+      width: 100%;
+      text-align: center;
+      border-radius: 0px;
+    }
+
+    .active {
+      background-color: #2a488d;
+    }
+  }
 
   .list-element {
     display: flex;
