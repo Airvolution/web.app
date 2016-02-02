@@ -13,8 +13,12 @@ class SelectionService {
         // empty constructor
     }
 
-    public removeIndexFromSelection(index) {
+    public removeIndexFromStationSelection(index) {
         this.currentStationSelection.splice(index, 1);
+    }
+
+    public removeIndexFromParameterSelection(index) {
+        this.currentParameterSelection.splice(index, 1);
     }
 
     // Stations
@@ -33,7 +37,7 @@ class SelectionService {
     public updateStationSelectionWith(stationID) {
         let index = this.currentStationSelection.indexOf(stationID);
         if (index > -1) {
-            this.removeIndexFromSelection(index);
+            this.removeIndexFromStationSelection(index);
             this.$log.log('UPDATE: removing station from list: ' + stationID);
         } else {
             this.addStationToSelection(stationID);
@@ -59,7 +63,7 @@ class SelectionService {
     public updateParameterSelectionWith(kind) {
         let index = this.currentParameterSelection.indexOf(kind);
         if (index > -1) {
-            this.removeIndexFromSelection(index);
+            this.removeIndexFromParameterSelection(index);
             this.$log.log('UPDATE: removing parameter from list: ' + kind);
         } else {
             this.addParameterToSelection(kind);
