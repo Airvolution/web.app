@@ -1,1 +1,54 @@
-<div>Preferences</div>
+<main ng-controller="PreferencesController as ctrl">
+    <h1 class=" form-title col-md-8 col-md-offset-2">User Preferences</h1>
+    <div>
+        <form class="col-md-8 col-md-offset-2" name="ctrl.preferencesForm" ng-submit="ctrl.onSubmit()"
+              autocomplete="off" novalidate>
+            <div class="form-group form-text">
+                <label>Default Comparison Pollutant</label>
+                <select class="form-control" ng-model="ctrl.form.defaultPollutantType">
+                    <option selected value="">--None--</option>
+                    <option value="o3">03</option>
+                    <option value="pm25">PM 2.5</option>
+                    <option value="so2">SO2</option>
+                    <option value="no3">NO3</option>
+                    <option value="p">PM 10</option>
+                </select>
+            </div>
+
+            <div class="form-group form-text">
+                <label>Location</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="ctrl.form.findMyLocation"> Find my location on load
+                    </label>
+
+                </div>
+                <div class="text-muted">We will not store you location</div>
+                <div ng-hide="ctrl.form.findMyLocation">
+                    <select class="form-control" type="text" ng-model="ctrl.form.defaultLocation">
+                        <option selected value="">--None--</option>
+                        <option value="SLC">Salt Lake City</option>
+                        <option value="Provo">Provo</option>
+                        <option value="Ogdegn">Ogden</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="form-text">
+                <label>Default Map Mode</label>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="defaultMapMode" ng-value="map" ng-model="ctrl.form.defaultMapMode" checked> Station View
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="defaultMapMode" ng-value="heatmap" ng-model="ctrl.form.defaultMapMode"> Heatmap View
+                    </label>
+                </div>
+            </div>
+
+            <button class="btn btn-default pull-right" type="submit">Save</button>
+        </form>
+    </div>
+</main>
