@@ -29,7 +29,7 @@
                         <option selected value="">--None--</option>
                         <option value="SLC">Salt Lake City</option>
                         <option value="Provo">Provo</option>
-                        <option value="Ogdegn">Ogden</option>
+                        <option value="Ogden">Ogden</option>
                     </select>
                 </div>
 
@@ -47,8 +47,30 @@
                     </label>
                 </div>
             </div>
-
-            <button class="btn btn-default pull-right" type="submit">Save</button>
+            <div class="form-text">
+                <label>Default Download Format</label>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="defaultDownload" ng-value="csv" ng-model="ctrl.form.defaultDownloadFormat" checked> CSV
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="defaultDownload" ng-value="json" ng-model="ctrl.form.defaultDownloadFormat"> JSON
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="defaultDownload" ng-value="xml" ng-model="ctrl.form.defaultDownloadFormat"> XML
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="defaultDownload" ng-value="text" ng-model="ctrl.form.defaultDownloadFormat"> Text
+                    </label>
+                </div>
+            </div>
+            <button class="btn btn-primary pull-right" type="submit">Save</button>
         </form>
     </div>
 </main>
