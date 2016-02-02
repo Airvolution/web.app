@@ -17,7 +17,6 @@ class AMSServiceAPI {
         var deferred = this.$q.defer();
 
         let self = this;
-        //let url = 'api/frontend/map';
         let url = 'api/stations/locators';
         let data = JSON.stringify(bounds);
         self.$http.get(url, data, {} ).then(
@@ -93,7 +92,6 @@ class AMSServiceAPI {
 
         let self = this;
         let url = 'api/stations/latestDataPoint/' + stationID;
-        //let data = JSON.stringify(stationID);
         self.$http.get(url).then(
             function(response) {
                 deferred.resolve(response.data);
