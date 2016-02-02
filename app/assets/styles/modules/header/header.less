@@ -82,6 +82,17 @@
   }
 
 }
+.header-text {
+  color: @light-gray;
+
+  a& {
+    &:hover {
+      color: @medium-light-gray;
+      cursor: pointer;
+      text-decoration: none;
+    }
+  }
+}
 
 #login {
   display: flex;
@@ -91,7 +102,11 @@
 
 .config-menu-icon  {
   color: @light-gray;
-  cursor: pointer;
+
+  &:hover {
+    color: @medium-light-gray;
+    cursor: pointer;
+  }
 }
 .config-menu {
   top: 50%;

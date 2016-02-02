@@ -4,9 +4,18 @@ export = HeaderController;
 
 class HeaderController {
     public static name = 'HeaderController';
-    public static $inject = ['$scope'];
+
+    private modal;
+
+    public static $inject = [
+        '$scope',
+        '$uibModal',
+        'AuthService'
+    ];
     constructor(
-        private $scope
+        private $scope,
+        private $uibModal,
+        public AuthService
     ) {
         $scope.showNav = false;
     }
@@ -14,5 +23,31 @@ class HeaderController {
     public toggelNav() {
         console.log('toggling nav...');
         this.$scope.showNav = !this.$scope.showNav;
+    }
+
+    public openLogin() {
+        this.modal = this.$uibModal.open({
+            templateUrl: 'app/templates/loginTemplate.html',
+            controller: 'UserRegistrationController',
+            controllerAs: 'ctrl',
+            bindToController: true
+        });
+        var self = this;
+        this.modal.result.then((result)=> {
+            self.modal = undefined;
+        });
+    }
+
+    public openRegister() {
+        this.modal = this.$uibModal.open({
+            templateUrl: 'app/templates/registerTemplate.html',
+            controller: 'UserRegistrationController',
+            controllerAs: 'ctrl',
+            bindToController: true
+        });
+        var self = this;
+        this.modal.result.then((result)=> {
+            self.modal = undefined;
+        });
     }
 }
