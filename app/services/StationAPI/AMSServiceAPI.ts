@@ -40,7 +40,7 @@ class AMSServiceAPI {
             },
             function(response) {
                 self.$log.log('we did not get any markers get back');
-                deferred.resolve([
+                deferred.reject([
                     // empty array
                 ]);
             }

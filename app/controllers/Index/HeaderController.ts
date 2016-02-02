@@ -1,10 +1,13 @@
 ///<referecnce path='../../typings/tsd.d.ts'/>
 
 export = HeaderController;
+
 class HeaderController {
     public static name = 'HeaderController';
     public static $inject = ['$scope'];
-    constructor(private $scope) {
+    constructor(
+        private $scope
+    ) {
         $scope.showNav = false;
     }
 
