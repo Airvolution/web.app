@@ -5,9 +5,10 @@ import FooterDirective = require('./Index/FooterDirective');
 import SystemNotificationDirective = require('./SystemNotification/SystemNotificationDirective');
 import StationDirective = require('./Station/StationDirective');
 import AQIDirective = require('./AQI/AQIDirective');
+import MapDirectives = require('./Map/module');
 
-export = angular.module('directives',
-    [   'services'
+export = angular.module('directives', [
+        MapDirectives.name
     ])
             .directive(SiteNavDirective.htmlName, SiteNavDirective.create)
             .directive(FooterDirective.htmlName, FooterDirective.create)
