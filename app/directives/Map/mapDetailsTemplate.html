@@ -1,29 +1,22 @@
-<section ng-class="{'hidden':!ctrl.visible}" class="col-md-3" id="details">
+<section ng-class="{'hidden':!ctrl.visible}"  id="details">
     <div class="panel">
-        <span class="panel-title">Device Information</span>
+        <div class="panel-title">Station: {{ctrl.station.name}}<div ng-hide="ctrl.station.name">No Name</div>
+            <div class="led-blue pull-right station-status" ng-class="{'led-blue-off':ctrl.station.offline}"></div></div>
+        <div class="panel-subtitle">Source: {{ctrl.station.source}}<span ng-hide="ctrl.station.source"> Unknown </span></div>
         <div class="panel-body">
-            <div class="col-md-10 col-md-offset-1">Name: {{ctrl.station.name}}</div>
-            <div class="col-md-10 col-md-offset-1">ID: {{ctrl.station.id}}</div>
-            <div class="col-md-10 col-md-offset-1">Lat: {{ctrl.station.location.lat}}</div>
-            <div class="col-md-10 col-md-offset-1">Lon: {{ctrl.station.location.lng}}</div>
-            <div class="col-md-10 col-md-offset-1">Visibility: {{ctrl.station.private ? 'Private':'Public'}}</div>
-            <div class="col-md-10 col-md-offset-1">Type: {{ctrl.station.indoor ? 'Indoor':'Outdoor'}}</div>
-            <div class="col-md-10 col-md-offset-1">{{ctrl.station.lastUpdated}}</div>
+            <div class="col-md-6">CO: {{ctrl.station.last.co}}<span ng-hide="ctrl.station.last.co"> -- </span></div>
+            <div class="col-md-6">PM 2.5: {{ctrl.station.last.pm}}<span ng-hide="ctrl.station.last.pm"> -- </span></div>
+            <div class="col-md-6">CO2: {{ctrl.station.last.co2}}<span ng-hide="ctrl.station.last.co2"> -- </span></div>
+            <div class="col-md-6">NO2: {{ctrl.station.last.no2}}<span ng-hide="ctrl.station.last.no2"> -- </span></div>
+            <div class="col-md-6">O3: {{ctrl.station.last.o3}}<span ng-hide="ctrl.station.last.o3"> -- </span></div>
+            <div class="col-md-6">Temp: {{ctrl.station.last.temp}}<span ng-hide="ctrl.station.last.temp"> -- </span></div>
+            <div class="col-md-6">Humidity: {{ctrl.station.last.humidity}}<span ng-hide="ctrl.station.last.humidity"> -- </span></div>
+            <div class="col-md-6">Pressure: {{ctrl.station.last.pressure}}<span ng-hide="ctrl.station.last.pressure"> -- </span></div>
+            <div class="col-md-6">Altitude: {{ctrl.station.last.altitude}}<span ng-hide="ctrl.station.last.altitude"> -- </span></div>
         </div>
-    </div>
-    <div class="panel">
-            <span class="panel-title">Latest Readings <i ng-class="{'fa-spin':ctrl.station.updating}"
-                                                         class="fa fa-rotate-right fa-2x"></i></span>
-        <div class="panel-body">
-            <div class="col-md-10 col-md-offset-1">CO: {{ctrl.station.last.co}}</div>
-            <div class="col-md-10 col-md-offset-1">PM 2.5: {{ctrl.station.last.pm}}</div>
-            <div class="col-md-10 col-md-offset-1">CO2: {{ctrl.station.last.co2}}</div>
-            <div class="col-md-10 col-md-offset-1">NO2: {{ctrl.station.last.no2}}</div>
-            <div class="col-md-10 col-md-offset-1">O3: {{ctrl.station.last.o3}}</div>
-            <div class="col-md-10 col-md-offset-1">Temp: {{ctrl.station.last.temp}}</div>
-            <div class="col-md-10 col-md-offset-1">Humidity: {{ctrl.station.last.humidity}}</div>
-            <div class="col-md-10 col-md-offset-1">Pressure: {{ctrl.station.last.pressure}}</div>
-            <div class="col-md-10 col-md-offset-1">Altitude: {{ctrl.station.last.altitude}}</div>
+        <div class="extra-info">
+            <div class="pull-left">Last Updated: {{ctrl.station.lastUpdated | amCalendar}}<span ng-hide="ctrl.station.lastUpdated"> Unknown </span></div>
+            <div class="pull-right">Type: {{ctrl.station.indoor ? 'Indoor':'Outdoor'}}</div>
         </div>
     </div>
 </section>
