@@ -1,0 +1,86 @@
+#details {
+  position: absolute;
+  z-index: 9;
+  top: 10%;
+  right: 1%;
+  padding: 0;
+  overflow-y: hidden;
+  background-color: transparent;
+  text-align: left;
+  width: 20%;
+  height: 25%;
+
+  .station-status {
+    position: absolute;
+    top: 5%;
+    right: 2%;
+  }
+
+  .panel {
+    position: relative;
+    min-width: 100%;
+    min-height: 100%;
+    background: rgba(0,0,0,.5);
+    padding: .5em;
+
+    color: @medium-lighter-gray;
+
+    border: 2px solid rgba(0,0,0,.75);
+
+    .panel-body {
+      font-size: .85em;
+      padding: 0;
+      margin: .5em;
+      color: @light-gray;
+
+      * {
+        overflow-x: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+    .panel-subtitle {
+      color: @light-gray;
+      display: inline-block;
+      width: 100%;
+      font-size: 1em;
+      overflow-x: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .panel-title {
+      color: @light-gray;
+      display: inline-block;
+      width: 95%;
+      font-size: 1.15em;
+      overflow-x: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+      * {
+        display: inline;
+      }
+
+      i {
+        padding: .2em;
+      }
+
+    }
+
+    .extra-info {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      padding: 0;
+      color: @medium-light-gray;
+      font-size: .75em;
+      min-width: 100%;
+
+      & * {
+        padding: 5px;
+        margin: .25em .5em;
+      }
+    }
+  }
+}

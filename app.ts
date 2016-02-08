@@ -1,24 +1,21 @@
 ///<reference path='./typings/tsd.d.ts' />
 
-import services = require('./app/services/module');
-services;
-import controllers = require('./app/controllers/module');
-controllers;
-import directives = require('./app/directives/module');
-directives;
+import Services = require('./app/services/module');
+import Controllers = require('./app/controllers/module');
+import Directives = require('./app/directives/module');
 
 angular.module('app', [
         'nemLogging',
         'ui-leaflet',
         'ui.router',
-        'services',
-        'controllers',
-        'directives',
+        Services.name,
+        Controllers.name,
+        Directives.name,
         'nvd3',
         'ngStorage',
         'ui.bootstrap',
-        'ngAnimate'
-
+        'ngAnimate',
+        'angularMoment'
     ])
     .config(($stateProvider, $urlRouterProvider, $httpProvider) => {
         $urlRouterProvider.otherwise('/map');
@@ -46,7 +43,7 @@ angular.module('app', [
             })
             .state('map', {
                 url: '/map',
-                templateUrl: 'app/templates/map.html'
+                template: '<map-view></map-view>'
             })
             .state('almanac', {
                 url: '/almanac',

@@ -1,9 +1,21 @@
-///<referecnce path='../../typings/tsd.d.ts'/>
+/// <reference path="../../../typings/tsd.d.ts" />
 
-export = MapController;
+export = MapViewController;
 
-class MapController {
-    public static name = 'MapController';
+class MapViewController {
+    public detailsVisible:boolean;
+    public plotVisible:boolean;
+
+    public selectedStation;
+
+    public center;
+    public minZoom;
+    public maxZoom;
+    public markers;
+    public bounds;
+    public events;
+    public layers;
+
     public static $inject = ['$scope', 'leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', '$log', 'locationService', 'amsAPIService'];
     constructor(
         private $scope,
@@ -16,21 +28,20 @@ class MapController {
         private amsAPIService,
         private drawCount
     ) {
-        drawCount = 0;
-
-        angular.extend($scope, {
-            minZoom: 5,
-            maxZoom: 12,
-            center: {
-                lat: 0,
-                lng: 0,
-                zoom: 2
-            },
-            markers: [],
-            bounds: this.defaultMapBounds(),
-            layers: this.configureLayers(),
-            events: this.registerMapEvents()
-        });
+        this.detailsVisible = true;
+        this.plotVisible = false;
+        this.minZoom = 5;
+        this.maxZoom = 12;
+        this.center = {
+            lat: 0,
+            lng: 0,
+            zoom:2
+        };
+        this.markers = [];
+        this.selectedStation = { location: {}, last: {} };
+        this.bounds = this.defaultMapBounds();
+        this.layers = this.configureLayers();
+        this.events = this.registerMapEvents();
 
         this.updateMapMarkers();
         this.positionMapWithLocation();
@@ -103,7 +114,7 @@ class MapController {
             // This updates $scope.bounds because leaflet bounds are not updating automatically
             self.leafletData.getMap().then(
                 function(map) {
-                    self.$scope.bounds = map.getBounds();
+                    self.bounds = map.getBounds();
                     self.$log.log('updating map bounds');
                     self.drawCircles();
                 }
@@ -118,12 +129,10 @@ class MapController {
             // https://github.com/angular-ui/ui-leaflet/blob/master/examples/0513-markers-events-example.html
             self.$log.log('a marker has been clicked');
 
-            let pscope = self.$scope.$parent;
-
-            if (pscope.station && pscope.station.id && args.model.deviceID == pscope.station.id) {
-                pscope.showDetails = false;
-                pscope.plotVisible = false;
-                pscope.station = undefined;
+            if (self.selectedStation && self.selectedStation.id && args.model.deviceID == self.selectedStation.id) {
+                self.detailsVisible = false;
+                self.plotVisible = false;
+                self.selectedStation = undefined;
                 return;
             }
 
@@ -131,45 +140,45 @@ class MapController {
             let id = model.deviceID;
             if (id == 'Box Elder County' || id == 'Cache County' || id == 'Price' || id == 'Davis County' || id == 'Duchesne County' || id == 'Salt Lake County' || id == 'Tooele County' || id == 'Uintah County' || id == 'Utah County' || id == 'Washington County' || id == 'Weber County') {
 
-                pscope.station = { location: {}, last: {} };
+                self.selectedStation = { location: {}, last: {} };
 
-                pscope.station.id           = model.deviceID;
-                pscope.station.location.lat = model.lat;
-                pscope.station.location.lng = model.lng;
+                self.selectedStation.id           = model.deviceID;
+                self.selectedStation.location.lat = model.lat;
+                self.selectedStation.location.lng = model.lng;
 
                 // TODO: get latest values from deq site
 
-                pscope.showDetails = true;
+                self.detailsVisible = true;
 
-                if (pscope.plotVisible) {
-                    pscope.pctrl.togglePlot(false);
+                if (self.plotVisible) {
+                    self.plotVisible = false;
                 }
                 return;
             }
 
             self.amsAPIService.asyncGetLastDataPointFrom(id).then(
                 function(response) {
-                    pscope.station = { location: {}, last: {} };
+                    self.selectedStation = { location: {}, last: {} };
 
-                    pscope.station.id           = model.deviceID;
-                    pscope.station.location.lat = model.lat;
-                    pscope.station.location.lng = model.lng;
+                    self.selectedStation.id           = model.deviceID;
+                    self.selectedStation.location.lat = model.lat;
+                    self.selectedStation.location.lng = model.lng;
 
                     // TODO: the current API really doesn't make this easy
-                    pscope.station.last.pm       = response['pm'];
-                    pscope.station.last.co       = response['co'];
-                    pscope.station.last.co2      = response['co2'];
-                    pscope.station.last.no2      = response['no2'];
-                    pscope.station.last.o3       = response['os3'];
-                    pscope.station.last.temp     = response['temp'];
-                    pscope.station.last.humidity = response['humidity'];
-                    pscope.station.last.pressure = response['pressure'];
-                    pscope.station.last.altitude = response['altitude'];
+                    self.selectedStation.last.pm       = response['pm'];
+                    self.selectedStation.last.co       = response['co'];
+                    self.selectedStation.last.co2      = response['co2'];
+                    self.selectedStation.last.no2      = response['no2'];
+                    self.selectedStation.last.o3       = response['os3'];
+                    self.selectedStation.last.temp     = response['temp'];
+                    self.selectedStation.last.humidity = response['humidity'];
+                    self.selectedStation.last.pressure = response['pressure'];
+                    self.selectedStation.last.altitude = response['altitude'];
 
-                    pscope.showDetails = true;
+                    self.detailsVisible = true;
 
-                    if (pscope.plotVisible) {
-                        pscope.pctrl.togglePlot(false);
+                    if (self.plotVisible) {
+                        self.plotVisible = false;
                     }
                 },
                 function(response) {
@@ -184,7 +193,7 @@ class MapController {
         let self = this;
         self.locationService.asyncGetGeoCoordinates().then(
             function(response) {
-                self.$scope.center = {
+                self.center = {
                     lat: response.lat,
                     lng: response.lng,
                     zoom: 10
@@ -206,11 +215,11 @@ class MapController {
         let bounds  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
         self.amsAPIService.asyncGetEPAMarkersInside(bounds).then(
             function(response) {
-                if (self.$scope.markers == undefined) {
-                    self.$scope.markers = response;
+                if (self.markers == undefined) {
+                    self.markers = response;
                     self.$log.log('marker array was empty');
                 } else {
-                    self.$scope.markers = self.$scope.markers.concat(response);
+                    self.markers = self.markers.concat(response);
                     self.$log.log('concatenation of the marker array');
                 }
             },
@@ -225,11 +234,11 @@ class MapController {
         let bounds  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
         self.amsAPIService.asyncGetMarkersInside(bounds).then(
             function(response) {
-                if (self.$scope.markers == undefined) {
-                    self.$scope.markers = response;
+                if (self.markers == undefined) {
+                    self.markers = response;
                     self.$log.log('marker array was empty');
                 } else {
-                    self.$scope.markers = self.$scope.markers.concat(response);
+                    self.markers = self.markers.concat(response);
                     self.$log.log('concatenation of the marker array');
                 }
             },
@@ -247,7 +256,7 @@ class MapController {
                 let heatmap = self.configureOverlays();
                 heatmap.data = response;
 
-                self.$scope.layers.overlays = {
+                self.layers.overlays = {
                     heat: heatmap
                 };
             },
@@ -278,7 +287,7 @@ class MapController {
 
         self.leafletData.getMap().then(
             function(map) {
-                self.$scope.bounds = map.getBounds();
+                self.bounds = map.getBounds();
                 self.$log.log('here');
             }
         );
