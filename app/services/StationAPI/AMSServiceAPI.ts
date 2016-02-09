@@ -17,21 +17,37 @@ class AMSServiceAPI {
         var deferred = this.$q.defer();
 
         let self = this;
-        let url = 'api/stations/locators';
-        let data = JSON.stringify(bounds);
-        self.$http.get(url, data, {} ).then(
+        let url = 'api/stations/locations';
+        let config = {
+            params: {
+                latMin: bounds.southWest.lat,
+                latMax: bounds.northEast.lat,
+                lngMin: bounds.southWest.lng,
+                lngMax: bounds.northEast.lng
+            }
+        };
+
+        self.$http.get(url, config).then(
             function(response) {
-                let data = response.data['ams'];
+                let data = response.data;
 
                 // Add custom attributes to each Marker
                 for (let key in data) {
                     if (data.hasOwnProperty(key)) {
+                        if (data[key]['agency'] != null) {
+                            data[key]['icon'] = {
+                                iconUrl: 'app/assets/images/markers/red.png',
+                                iconSize: [35, 45],
+                                iconAnchor: [17, 28]
+                            };
+                        } else {
+                            data[key]['icon'] = {
+                                iconUrl: 'app/assets/images/markers/green.png',
+                                iconSize: [35, 45],
+                                iconAnchor: [17, 28]
+                            };
+                        }
                         data[key]['clickable'] = true;
-                        data[key]['icon'] = {
-                            iconUrl: 'app/assets/images/markers/green.png',
-                            iconSize: [35, 45],
-                            iconAnchor: [17, 28]
-                        };
                     }
                 }
                 self.$log.log('how many markers did we get back? ' + data.length);
