@@ -198,10 +198,12 @@ class MapViewController {
                 self.selectedStation.last = {};
 
                 self.selectedStation.last.pm = response['PM2.5'];
-                self.selectedStation.last.co = response['co'];
+                self.selectedStation.last.co = response['CO'];
                 self.selectedStation.last.co2 = response['co2'];
                 self.selectedStation.last.no2 = response['NO2'];
                 self.selectedStation.last.o3 = response['OZONE'];
+                self.selectedStation.last.so2 = response['SO2'];
+                self.selectedStation.last.pm10 = response['PM10'];
                 self.selectedStation.last.temp = response['temp'];
                 self.selectedStation.last.humidity = response['humidity'];
                 self.selectedStation.last.pressure = response['pressure'];
