@@ -5,3 +5,4 @@
 /// <reference path="leaflet/leaflet.d.ts" />
 /// <reference path="angular-ui-bootstrap/angular-ui-bootstrap.d.ts" />
 /// <reference path="underscore/underscore.d.ts" />
+/// <reference path="d3/d3.d.ts" />

@@ -114,8 +114,11 @@ class AMSServiceAPI {
                 var latest = new Date('1/1/1970');
                 var indoor = false;
                 _.each(response.data,(data:any)=> {
-                    if(data.parameter && data.parameter.name && data.aqi) {
-                        result[data.parameter.name] = data.aqi;
+                    if(data.parameter && data.parameter.name) {
+                        result[data.parameter.name] = data.value;
+                        if(data.parameter.name = 'PM2.5'){
+                            result.aqi = data.aqi;
+                        }
                     }
                     if(data.station && data.station.agency){
                         result.agency = data.station.agency;

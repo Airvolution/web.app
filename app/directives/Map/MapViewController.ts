@@ -20,6 +20,9 @@ class MapViewController {
     public events;
     public layers;
 
+    public chartOptions;
+    public chartData;
+
     public static $inject = ['$scope', 'leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', '$log', 'locationService', 'amsAPIService', '$timeout'];
 
     constructor(private $scope,
@@ -130,7 +133,7 @@ class MapViewController {
 
     private onMarkerClick() {
         var self = this;
-        return (event,args)=> {
+        return (event, args)=> {
             self.$log.log('a marker has been clicked');
             var id = args.model.id || args.model.deviceID;
             if (self.selectedStation && self.selectedStation.id && id == self.selectedStation.id) {
@@ -150,13 +153,14 @@ class MapViewController {
         };
     }
 
-    //private togglePlot(visible?){
-    //    if(visible){
-    //        this.plotVisible = visible;
-    //    } else {
-    //        this.plotVisible = !this.plotVisible;
-    //    }
-    //}
+    private togglePlot(visible?) {
+        if (visible) {
+            this.plotVisible = visible;
+        } else {
+            this.plotVisible = !this.plotVisible;
+        }
+    }
+
     private toggleDetails(visible?) {
         if (visible) {
             this.detailsVisible = visible;
@@ -321,5 +325,110 @@ class MapViewController {
                 self.$log.log('here');
             }
         );
+    }
+
+    public showStationChart() {
+        this.togglePlot();
+        if (this.plotVisible) {
+            this.generatePlot();
+        }
+
+    }
+
+    public generatePlot() {
+        if (!this.selectedStation || !this.selectedStation.id) {
+            return;
+        }
+
+        this.unsetChartData();
+        let id = this.selectedStation.id;
+        if (this.isEPAStation(id)) {
+            this.getDataForEPAPlot(id);
+        } else {
+            this.getDataForPlot(id);
+        }
+    }
+
+    private getChartHeight() {
+        let divHeight = angular.element(document).find('#details-plot').css('height');
+        return parseInt(divHeight.substring(0, divHeight.length - 2));
+    }
+
+    private getDataForPlot(stationID) {
+        let self = this;
+        self.amsAPIService.asyncGetDataPointsFrom(stationID).then(
+            function (response) {
+                self.chartOptions = self.getChartOptions();
+                self.chartOptions['height'] = self.getChartHeight();
+                self.chartData = response;
+            },
+            function (response) {
+                self.$log.log('api for device data points failure');
+            }
+        );
+    }
+
+    private getDataForEPAPlot(stationID) {
+        let self = this;
+        self.amsAPIService.asyncGetDataPointsFromEPA(stationID).then(
+            function (response) {
+                self.chartOptions = self.getChartOptions();
+                self.chartOptions['height'] = self.getChartHeight();
+                self.chartData = response;
+            },
+            function (response) {
+                self.$log.log('api for EPA device data points failure');
+            }
+        );
+    }
+
+    private getChartOptions() {
+        return {
+            chart: {
+                type: 'lineWithFocusChart',
+                height: 0,
+                margin: {
+                    top: 20,
+                    right: 20,
+                    bottom: 30,
+                    left: 40
+                },
+                x: function (d) {
+                    return d[0];
+                },
+                y: function (d) {
+                    return d[1];
+                },
+                useVoronoi: false,
+                clipEdge: true,
+                duration: 100,
+                useInteractiveGuideline: true,
+                xAxis: {
+                    showMaxMin: false,
+                    tickFormat: function (d) {
+                        return d3.time.format('%x')(new Date(d));
+                    }
+                },
+                yAxis: {
+                    tickFormat: function (d) {
+                        return d3.format(',.2f')(d);
+                    }
+                },
+                zoom: {
+                    enabled: true,
+                    scaleExtent: [1, 10],
+                    useFixedDomain: false,
+                    useNiceScale: false,
+                    horizontalOff: false,
+                    verticalOff: true,
+                    unzoomEventType: 'dblclick.zoom'
+                }
+            }
+        };
+    }
+
+    private unsetChartData() {
+        this.chartOptions = undefined;
+        this.chartData = undefined;
     }
 }
