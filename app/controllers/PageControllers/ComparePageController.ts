@@ -6,7 +6,7 @@ export = ComparePageController;
 
 class ComparePageController {
     public static name = 'ComparePageController';
-    public static $inject = ['$scope', '$http', '$log', 'selectionService'];
+    public static $inject = ['$scope', '$http', '$log', 'selectionService', 'amsAPIService'];
 
     public stations = [];
     public plots = [];
@@ -106,19 +106,19 @@ class ComparePageController {
         private $scope,
         private $http,
         private $log,
-        private selectionService
+        private selectionService,
+        private amsAPIService
     ) {
         this.selectionService.getCurrentStationSelection();
 
         let self = this;
-        let url = 'api/stations/locators';
-        $http.get(url).then(
+        let bounds = {'northEast': {'lat': 89, 'lng': 179}, 'southWest': {'lat': -89, 'lng': -179}};
+        self.amsAPIService.asyncGetMarkersInside(bounds).then(
             function (response) {
-                self.stations = response.data.ams;
-                self.$log.log('api/frontend/getUserDeviceStates api call succeeded: ' + response);
+                self.stations = response;
             },
             function (response) {
-                self.$log.log('api/frontend/getUserDeviceStates api call failed: ' + response);
+                self.$log.log('compare controller failed to get station locators');
             }
         );
     };
