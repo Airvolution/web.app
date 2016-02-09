@@ -13,7 +13,8 @@ class  MapDetailsDirective implements ng.IDirective {
     public bindToController = true;
     public scope = {
         visible: '=',
-        station: '='
+        station: '=',
+        loading: '='
     };
     
     public static create() {

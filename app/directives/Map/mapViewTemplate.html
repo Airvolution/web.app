@@ -26,5 +26,5 @@
     </div>
 
     <button id="map-plot-btn" ng-click="ctrl.plotVisible = !ctrl.plotVisible" class="btn btn-default">{{ctrl.plotVisible ? 'Hide' : 'Show' }} Plot</button>
-    <map-details visible="ctrl.detailsVisible" station="ctrl.selectedStation"></map-details>
+    <map-details visible="ctrl.detailsVisible" station="ctrl.selectedStation" loading="ctrl.loadingStationData"></map-details>
 </main>

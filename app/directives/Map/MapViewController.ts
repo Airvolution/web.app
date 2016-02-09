@@ -3,10 +3,14 @@
 export = MapViewController;
 
 class MapViewController {
+
     public detailsVisible:boolean;
     public plotVisible:boolean;
 
     public selectedStation;
+    public loadingStationData;
+
+    private drawCount;
 
     public center;
     public minZoom;
@@ -16,18 +20,17 @@ class MapViewController {
     public events;
     public layers;
 
-    public static $inject = ['$scope', 'leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', '$log', 'locationService', 'amsAPIService'];
-    constructor(
-        private $scope,
-        private leafletData,
-        private leafletBoundsHelpers,
-        private leafletMarkerEvents,
-        private $http,
-        private $log,
-        private locationService,
-        private amsAPIService,
-        private drawCount
-    ) {
+    public static $inject = ['$scope', 'leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', '$log', 'locationService', 'amsAPIService', '$timeout'];
+
+    constructor(private $scope,
+                private leafletData,
+                private leafletBoundsHelpers,
+                private leafletMarkerEvents,
+                private $http,
+                private $log,
+                private locationService,
+                private amsAPIService,
+                private $timeout) {
         this.detailsVisible = true;
         this.plotVisible = false;
         this.minZoom = 5;
@@ -35,18 +38,21 @@ class MapViewController {
         this.center = {
             lat: 0,
             lng: 0,
-            zoom:2
+            zoom: 2
         };
         this.markers = [];
-        this.selectedStation = { location: {}, last: {} };
+        this.selectedStation = {location: {}, last: {}};
         this.bounds = this.defaultMapBounds();
         this.layers = this.configureLayers();
         this.events = this.registerMapEvents();
 
+        this.drawCount = 0;
+
+        $scope.$on('leafletDirectiveMarker.map.click', this.onMarkerClick());
+
         this.updateMapMarkers();
         this.positionMapWithLocation();
         this.configureMapMoveEvents();
-        this.configureMapClickEvents();
         this.updateOverlays();
     }
 
@@ -103,17 +109,17 @@ class MapViewController {
 
     private defaultMapBounds() {
         return this.leafletBoundsHelpers.createBoundsFromArray([
-            [ 57.903638, -37.642519 ],
-            [ 11.708745, -152.757073 ]
+            [57.903638, -37.642519],
+            [11.708745, -152.757073]
         ]);
     }
 
     private configureMapMoveEvents() {
         let self = this;
-        self.$scope.$on('leafletDirectiveMap.map.moveend', function(event) {
+        self.$scope.$on('leafletDirectiveMap.map.moveend', function (event) {
             // This updates $scope.bounds because leaflet bounds are not updating automatically
             self.leafletData.getMap().then(
-                function(map) {
+                function (map) {
                     self.bounds = map.getBounds();
                     self.$log.log('updating map bounds');
                     self.drawCircles();
@@ -122,84 +128,105 @@ class MapViewController {
         });
     }
 
-    private configureMapClickEvents() {
-        let self = this;
-        self.$scope.$on('leafletDirectiveMarker.map.click', function(event, args){
-            // Resource on how to add Marker Events
-            // https://github.com/angular-ui/ui-leaflet/blob/master/examples/0513-markers-events-example.html
+    private onMarkerClick() {
+        var self = this;
+        return (event,args)=> {
             self.$log.log('a marker has been clicked');
-
-            if (self.selectedStation && self.selectedStation.id && args.model.deviceID == self.selectedStation.id) {
-                self.detailsVisible = false;
-                self.plotVisible = false;
+            var id = args.model.id || args.model.deviceID;
+            if (self.selectedStation && self.selectedStation.id && id == self.selectedStation.id) {
+                self.toggleDetails(false);
+                self.toggleDetails(false);
                 self.selectedStation = undefined;
                 return;
             }
-
-            let model = args.model;
-            let id = model.deviceID;
-            if (id == 'Box Elder County' || id == 'Cache County' || id == 'Price' || id == 'Davis County' || id == 'Duchesne County' || id == 'Salt Lake County' || id == 'Tooele County' || id == 'Uintah County' || id == 'Utah County' || id == 'Washington County' || id == 'Weber County') {
-
-                self.selectedStation = { location: {}, last: {} };
-
-                self.selectedStation.id           = model.deviceID;
-                self.selectedStation.location.lat = model.lat;
-                self.selectedStation.location.lng = model.lng;
-
-                // TODO: get latest values from deq site
-
-                self.detailsVisible = true;
-
-                if (self.plotVisible) {
-                    self.plotVisible = false;
-                }
+            self.selectedStation = {location: {}, last: {}};
+            self.selectedStation.id = id;
+            self.selectedStation.location.lat = args.model.lat;
+            self.selectedStation.location.lng = args.model.lng;
+            if (!self.isEPAStation(id)) {
+                self.getLastDataPoint(id);
                 return;
-            }
+            }// TODO why only if this is epa?
 
-            self.amsAPIService.asyncGetLastDataPointFrom(id).then(
-                function(response) {
-                    self.selectedStation = { location: {}, last: {} };
+        };
+    }
 
-                    self.selectedStation.id           = model.deviceID;
-                    self.selectedStation.location.lat = model.lat;
-                    self.selectedStation.location.lng = model.lng;
+    //private togglePlot(visible?){
+    //    if(visible){
+    //        this.plotVisible = visible;
+    //    } else {
+    //        this.plotVisible = !this.plotVisible;
+    //    }
+    //}
+    private toggleDetails(visible?) {
+        if (visible) {
+            this.detailsVisible = visible;
+        } else {
 
-                    // TODO: the current API really doesn't make this easy
-                    self.selectedStation.last.pm       = response['pm'];
-                    self.selectedStation.last.co       = response['co'];
-                    self.selectedStation.last.co2      = response['co2'];
-                    self.selectedStation.last.no2      = response['no2'];
-                    self.selectedStation.last.o3       = response['os3'];
-                    self.selectedStation.last.temp     = response['temp'];
-                    self.selectedStation.last.humidity = response['humidity'];
-                    self.selectedStation.last.pressure = response['pressure'];
-                    self.selectedStation.last.altitude = response['altitude'];
+            this.detailsVisible = !this.detailsVisible;
+        }
+    }
 
-                    self.detailsVisible = true;
+    private isEPAStation(id) {
+        switch (id) {
+            case 'Box Elder County':
+            case 'Cache County':
+            case 'Price':
+            case 'Davis County':
+            case 'Duchesne County':
+            case 'Salt Lake County':
+            case 'Tooele County':
+            case 'Uintah County':
+            case 'Utah County':
+            case 'Washington County':
+            case 'Weber County':
+                return true;
+            default:
+                return false;
+        }
 
-                    if (self.plotVisible) {
-                        self.plotVisible = false;
-                    }
-                },
-                function(response) {
-                    self.$log.log('last data point promise rejected: ' + response);
-                }
-            );
-        });
+    }
+
+    private getLastDataPoint(id) {
+        this.loadingStationData = true;
+        var self = this;
+        this.$timeout(()=> {
+            self.loadingStationData = false;
+        },2000);
+        return; //TODO make this method work
+        //var self = this;
+        //self.amsAPIService.asyncGetLastDataPointFrom(id).then(
+        //    function (response) {
+        //        self.selectedStation = {location: {}, last: {}};
+        //
+        //        self.selectedStation.last.pm = response['pm'];
+        //        self.selectedStation.last.co = response['co'];
+        //        self.selectedStation.last.co2 = response['co2'];
+        //        self.selectedStation.last.no2 = response['no2'];
+        //        self.selectedStation.last.o3 = response['os3'];
+        //        self.selectedStation.last.temp = response['temp'];
+        //        self.selectedStation.last.humidity = response['humidity'];
+        //        self.selectedStation.last.pressure = response['pressure'];
+        //        self.selectedStation.last.altitude = response['altitude'];
+        //
+        //    },
+        //    function (response) {
+        //        self.$log.log('last data point promise rejected: ' + response);
+        //    });
     }
 
     private positionMapWithLocation() {
         console.log('positionMapWithLocation called...');
         let self = this;
         self.locationService.asyncGetGeoCoordinates().then(
-            function(response) {
+            function (response) {
                 self.center = {
                     lat: response.lat,
                     lng: response.lng,
                     zoom: 10
                 };
             },
-            function(response) {
+            function (response) {
                 self.$log.log('location service promise rejected: ' + response);
             }
         );
@@ -212,9 +239,9 @@ class MapViewController {
 
     private updateEPAMarkers() {
         let self = this;
-        let bounds  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
+        let bounds = {'northEast': {'lat': 89, 'lng': 179}, 'southWest': {'lat': -89, 'lng': -179}};
         self.amsAPIService.asyncGetEPAMarkersInside(bounds).then(
-            function(response) {
+            function (response) {
                 if (self.markers == undefined) {
                     self.markers = response;
                     self.$log.log('marker array was empty');
@@ -223,7 +250,7 @@ class MapViewController {
                     self.$log.log('concatenation of the marker array');
                 }
             },
-            function(response) {
+            function (response) {
                 self.$log.log('EPA API service promise rejected: ' + response);
             }
         );
@@ -231,9 +258,9 @@ class MapViewController {
 
     private updateAirvolutionMarkers() {
         let self = this;
-        let bounds  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
+        let bounds = {'northEast': {'lat': 89, 'lng': 179}, 'southWest': {'lat': -89, 'lng': -179}};
         self.amsAPIService.asyncGetMarkersInside(bounds).then(
-            function(response) {
+            function (response) {
                 if (self.markers == undefined) {
                     self.markers = response;
                     self.$log.log('marker array was empty');
@@ -242,7 +269,7 @@ class MapViewController {
                     self.$log.log('concatenation of the marker array');
                 }
             },
-            function(response) {
+            function (response) {
                 self.$log.log('ams API service promise rejected: ' + response);
             }
         );
@@ -250,9 +277,12 @@ class MapViewController {
 
     private updateOverlays() {
         let self = this;
-        let bounds  = { 'mapParameters': { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } }, 'pollutantName': 'PM' };
+        let bounds = {
+            'mapParameters': {'northEast': {'lat': 89, 'lng': 179}, 'southWest': {'lat': -89, 'lng': -179}},
+            'pollutantName': 'PM'
+        };
         self.amsAPIService.asyncGetHeatMapDataInside(bounds).then(
-            function(response) {
+            function (response) {
                 let heatmap = self.configureOverlays();
                 heatmap.data = response;
 
@@ -260,7 +290,7 @@ class MapViewController {
                     heat: heatmap
                 };
             },
-            function(response) {
+            function (response) {
                 self.$log.log('ams API service promise rejected: ' + response);
             }
         );
@@ -274,7 +304,7 @@ class MapViewController {
         }
         self.$log.log('lets draw some circles');
         self.leafletData.getMap().then(
-            function(map) {
+            function (map) {
                 if (self.drawCount == undefined) {
                     self.drawCount = 0;
                 }
@@ -286,7 +316,7 @@ class MapViewController {
         );
 
         self.leafletData.getMap().then(
-            function(map) {
+            function (map) {
                 self.bounds = map.getBounds();
                 self.$log.log('here');
             }
