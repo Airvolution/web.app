@@ -146,8 +146,7 @@ class MapViewController {
             if (!self.isEPAStation(id)) {
                 self.getLastDataPoint(id);
                 return;
-            }// TODO why only if this is epa?
-
+            }
         };
     }
 
@@ -190,29 +189,30 @@ class MapViewController {
     private getLastDataPoint(id) {
         this.loadingStationData = true;
         var self = this;
-        this.$timeout(()=> {
-            self.loadingStationData = false;
-        },2000);
-        return; //TODO make this method work
-        //var self = this;
-        //self.amsAPIService.asyncGetLastDataPointFrom(id).then(
-        //    function (response) {
-        //        self.selectedStation = {location: {}, last: {}};
-        //
-        //        self.selectedStation.last.pm = response['pm'];
-        //        self.selectedStation.last.co = response['co'];
-        //        self.selectedStation.last.co2 = response['co2'];
-        //        self.selectedStation.last.no2 = response['no2'];
-        //        self.selectedStation.last.o3 = response['os3'];
-        //        self.selectedStation.last.temp = response['temp'];
-        //        self.selectedStation.last.humidity = response['humidity'];
-        //        self.selectedStation.last.pressure = response['pressure'];
-        //        self.selectedStation.last.altitude = response['altitude'];
-        //
-        //    },
-        //    function (response) {
-        //        self.$log.log('last data point promise rejected: ' + response);
-        //    });
+        self.amsAPIService.asyncGetLastDataPointFrom(id).then(
+            function (response) {
+                self.selectedStation.last = {};
+
+                self.selectedStation.last.pm = response['PM2.5'];
+                self.selectedStation.last.co = response['co'];
+                self.selectedStation.last.co2 = response['co2'];
+                self.selectedStation.last.no2 = response['NO2'];
+                self.selectedStation.last.o3 = response['OZONE'];
+                self.selectedStation.last.temp = response['temp'];
+                self.selectedStation.last.humidity = response['humidity'];
+                self.selectedStation.last.pressure = response['pressure'];
+                self.selectedStation.last.altitude = response['altitude'];
+
+                self.selectedStation.source = response['agency'];
+                self.selectedStation.lastUpdated = response['lastUpdated'];
+                self.selectedStation.indoor = response['indoor'];
+
+                self.loadingStationData = false;
+            },
+            function () {
+                delete self.selectedStation.last;
+                self.loadingStationData = false;
+            });
     }
 
     private positionMapWithLocation() {
@@ -234,27 +234,27 @@ class MapViewController {
 
     private updateMapMarkers() {
         this.updateAirvolutionMarkers();
-        this.updateEPAMarkers();
+        //this.updateEPAMarkers();
     }
 
-    private updateEPAMarkers() {
-        let self = this;
-        let bounds = {'northEast': {'lat': 89, 'lng': 179}, 'southWest': {'lat': -89, 'lng': -179}};
-        self.amsAPIService.asyncGetEPAMarkersInside(bounds).then(
-            function (response) {
-                if (self.markers == undefined) {
-                    self.markers = response;
-                    self.$log.log('marker array was empty');
-                } else {
-                    self.markers = self.markers.concat(response);
-                    self.$log.log('concatenation of the marker array');
-                }
-            },
-            function (response) {
-                self.$log.log('EPA API service promise rejected: ' + response);
-            }
-        );
-    }
+    //private updateEPAMarkers() {
+    //    let self = this;
+    //    let bounds = {'northEast': {'lat': 89, 'lng': 179}, 'southWest': {'lat': -89, 'lng': -179}};
+    //    self.amsAPIService.asyncGetEPAMarkersInside(bounds).then(
+    //        function (response) {
+    //            if (self.markers == undefined) {
+    //                self.markers = response;
+    //                self.$log.log('marker array was empty');
+    //            } else {
+    //                self.markers = self.markers.concat(response);
+    //                self.$log.log('concatenation of the marker array');
+    //            }
+    //        },
+    //        function (response) {
+    //            self.$log.log('EPA API service promise rejected: ' + response);
+    //        }
+    //    );
+    //}
 
     private updateAirvolutionMarkers() {
         let self = this;
