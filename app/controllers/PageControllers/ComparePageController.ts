@@ -149,22 +149,30 @@ class ComparePageController {
     public generatePlot() {
         let self = this;
         self.$log.log('generating plot for selected stations');
+        // TODO: add parameter selection
+        // TODO: elimnate for loop with list of station IDs???
         let selected = self.selectionService.getCurrentStationSelection();
         let dataPoints = [];
         for (var index in selected) {
             self.$log.log('station: ' + selected[index]);
-            self.$http({
-                url: 'api/frontend/deviceDatapoints',
-                data: JSON.stringify(selected[index]),
-                method: 'POST'
-            }).then(
-                function(response) {
+            let url = "api/stations/parameterValues";
+            let config = {
+                params: {
+                    stationID: selected[index],
+                    parameter: "PM2.5"
+                }
+            };
+            self.$http.get(url, config).then(
+                function (response) {
+                    console.log('PASS!');
                     dataPoints.push(response.data);
                     if (dataPoints.length == selected.length) {
-                        self.plot(dataPoints);
+                        let plot = { visible: true, data: [] };
+                        plot.data = dataPoints;
+                        self.plots.push(plot);
                     }
                 },
-                function(response) {
+                function (response) {
                     console.log('Failure!');
                 }
             );
