@@ -358,16 +358,38 @@ class MapViewController {
 
     private getDataForPlot(stationID) {
         let self = this;
-        self.amsAPIService.asyncGetDataPointsFrom(stationID).then(
+
+        let url = "api/stations/parameterValues";
+        let config = {
+            params: {
+                stationID: stationID,
+                parameter: "PM2.5"
+            }
+        };
+
+        self.$http.get(url, config).then(
             function (response) {
+                console.log('PASS!');
                 self.chartOptions = self.getChartOptions();
                 self.chartOptions['height'] = self.getChartHeight();
-                self.chartData = response;
+                self.chartData = [response.data];
+                console.log('whoa there, lets take a looksy at getDataForPlot');
             },
             function (response) {
-                self.$log.log('api for device data points failure');
+                console.log('Failure!');
             }
         );
+
+        //self.amsAPIService.asyncGetDataPointsFrom(stationID).then(
+        //    function (response) {
+        //        self.chartOptions = self.getChartOptions();
+        //        self.chartOptions['height'] = self.getChartHeight();
+        //        self.chartData = response;
+        //    },
+        //    function (response) {
+        //        self.$log.log('api for device data points failure');
+        //    }
+        //);
     }
 
     private getDataForEPAPlot(stationID) {
