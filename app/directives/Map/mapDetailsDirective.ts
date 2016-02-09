@@ -1,5 +1,5 @@
 /// <reference path="../../../typings/tsd.d.ts" />
-import MapDetailsController = require('./MapViewController');
+import MapDetailsController = require('./mapDetailsController');
 
 export = MapDetailsDirective;
 

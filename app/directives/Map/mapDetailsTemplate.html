@@ -6,6 +6,8 @@
         <div class="panel-title">Station: {{ctrl.station.name || ctrl.station.id}}<div ng-hide="ctrl.station.name || ctrl.station.id">No Name</div>
             <div class="led-blue pull-right station-status" ng-class="{'led-blue-off':ctrl.station.offline}"></div></div>
         <div class="panel-subtitle">Source: {{ctrl.station.source}}<span ng-hide="ctrl.station.source"> Unknown </span></div>
+    <div class="panel-subtitle">AQI: {{ctrl.station.last.aqi}}<div ng-show="ctrl.station.last.aqi" class="led-small" ng-class="{'led-green':ctrl.station.last.aqi < 50,
+    'led-yellow':ctrl.station.last.aqi<100&& ctrl.station.last.aqi >=50,'led-red':ctrl.station.last.aqi>=100}"></div><span ng-hide="ctrl.station.last.aqi"> Unknown </span></div>
         <div class="panel-body">
             <div class="col-md-6">PM 2.5: {{ctrl.station.last.pm}}<span ng-hide="ctrl.station.last.pm"> -- </span></div>
             <div class="col-md-6">Temp: {{ctrl.station.last.temp}}<span ng-hide="ctrl.station.last.temp"> -- </span></div>

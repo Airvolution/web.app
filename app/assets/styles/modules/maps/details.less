@@ -55,10 +55,14 @@
       color: @light-gray;
       display: inline-block;
       width: 100%;
-      font-size: 1em;
+      font-size: .75em;
       overflow-x: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+
+      &:first-of-type {
+        font-size:1em;
+      }
     }
     .panel-title {
       color: @light-gray;

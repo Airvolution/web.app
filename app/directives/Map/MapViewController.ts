@@ -210,7 +210,7 @@ class MapViewController {
                 self.selectedStation.source = response['agency'];
                 self.selectedStation.lastUpdated = response['lastUpdated'];
                 self.selectedStation.indoor = response['indoor'];
-
+                self.selectedStation.last.aqi = response['aqi'];
                 self.loadingStationData = false;
             },
             function () {

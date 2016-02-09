@@ -25,6 +25,6 @@
         <!-- An SVG object will be here when built -->
     </div>
 
-    <button id="map-plot-btn" ng-click="ctrl.showStationChart()" class="btn btn-default">{{ctrl.plotVisible ? 'Hide' : 'Show' }} Plot</button>
+    <button ng-hide="true" id="map-plot-btn" ng-click="ctrl.showStationChart()" class="btn btn-default">{{ctrl.plotVisible ? 'Hide' : 'Show' }} Plot</button>
     <map-details visible="ctrl.detailsVisible" station="ctrl.selectedStation" loading="ctrl.loadingStationData"></map-details>
 </main>
