@@ -48,7 +48,7 @@ angular.module('app', [
             })
             .state('almanac', {
                 url: '/almanac',
-                templateUrl: 'app/templates/alamanac.html'
+                template: '<almanac-view></almanac-view>'
             })
             .state('compare', {
                 url: '/compare',
