@@ -2,7 +2,6 @@
 .idea
 .idea/*
 *.bash
-app/**/*.js
 app/**/*.map.js
 app/**/*.js.map
 .tscache
