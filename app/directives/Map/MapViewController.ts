@@ -37,6 +37,7 @@ class MapViewController {
             lng: 0,
             zoom:2
         };
+
         this.markers = [];
         this.selectedStation = { location: {}, last: {} };
         this.bounds = this.defaultMapBounds();
@@ -47,7 +48,7 @@ class MapViewController {
         this.positionMapWithLocation();
         this.configureMapMoveEvents();
         this.configureMapClickEvents();
-        this.updateOverlays();
+        //this.updateOverlays();
     }
 
     private configureLayers() {
@@ -68,26 +69,283 @@ class MapViewController {
                     url: 'https://api.tiles.mapbox.com/v4/tjhooker33.oc2el95l/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g',
                     type: 'xyz'
                 }
+            },
+            overlays: {
+                AL: {
+                    type: 'markercluster',
+                    name: 'Alabama',
+                    visible: true
+                },
+                AK: {
+                    type: 'markercluster',
+                    name: 'Alaska',
+                    visible: true
+                },
+                AZ: {
+                    type: 'markercluster',
+                    name: 'Arizona',
+                    visible: true
+                },
+                AR: {
+                    type: 'markercluster',
+                    name: 'Arkansas',
+                    visible: true
+                },
+                CA: {
+                    type: 'markercluster',
+                    name: 'California',
+                    visible: true
+                },
+                CO: {
+                    type: 'markercluster',
+                    name: 'Colorado',
+                    visible: true
+                },
+                CT: {
+                    type: 'markercluster',
+                    name: 'Connecticut',
+                    visible: true
+                },
+                DE: {
+                    type: 'markercluster',
+                    name: 'Delaware',
+                    visible: true
+                },
+                DC: {
+                    type: 'markercluster',
+                    name: 'District of Columbia',
+                    visible: true
+                },
+                FL: {
+                    type: 'markercluster',
+                    name: 'Florida',
+                    visible: true
+                },
+                GA: {
+                    type: 'markercluster',
+                    name: 'Georgia',
+                    visible: true
+                },
+                HI: {
+                    type: 'markercluster',
+                    name: 'Hawaii',
+                    visible: true
+                },
+                ID: {
+                    type: 'markercluster',
+                    name: 'Idaho',
+                    visible: true
+                },
+                IL: {
+                    type: 'markercluster',
+                    name: 'Illinois',
+                    visible: true
+                },
+                IN: {
+                    type: 'markercluster',
+                    name: 'Indiana',
+                    visible: true
+                },
+                IA: {
+                    type: 'markercluster',
+                    name: 'Iowa',
+                    visible: true
+                },
+                KS: {
+                    type: 'markercluster',
+                    name: 'Kansas',
+                    visible: true
+                },
+                KY: {
+                    type: 'markercluster',
+                    name: 'Kentucky',
+                    visible: true
+                },
+                LA: {
+                    type: 'markercluster',
+                    name: 'Lousiana',
+                    visible: true
+                },
+                ME: {
+                    type: 'markercluster',
+                    name: 'Maine',
+                    visible: true
+                },
+                MD: {
+                    type: 'markercluster',
+                    name: 'Maryland',
+                    visible: true
+                },
+                MA: {
+                    type: 'markercluster',
+                    name: 'Massachusetts',
+                    visible: true
+                },
+                MI: {
+                    type: 'markercluster',
+                    name: 'Michigan',
+                    visible: true
+                },
+                MN: {
+                    type: 'markercluster',
+                    name: 'Minnesota',
+                    visible: true
+                },
+                MS: {
+                    type: 'markercluster',
+                    name: 'Mississippi',
+                    visible: true
+                },
+                MO: {
+                    type: 'markercluster',
+                    name: 'Missouri',
+                    visible: true
+                },
+                MT: {
+                    type: 'markercluster',
+                    name: 'Montana',
+                    visible: true
+                },
+                NE: {
+                    type: 'markercluster',
+                    name: 'Nebraska',
+                    visible: true
+                },
+                NV: {
+                    type: 'markercluster',
+                    name: 'Nevada',
+                    visible: true
+                },
+                NH: {
+                    type: 'markercluster',
+                    name: 'New Hampshire',
+                    visible: true
+                },
+                NJ: {
+                    type: 'markercluster',
+                    name: 'New Jersey',
+                    visible: true
+                },
+                NM: {
+                    type: 'markercluster',
+                    name: 'New Mexico',
+                    visible: true
+                },
+                NY: {
+                    type: 'markercluster',
+                    name: 'New York',
+                    visible: true
+                },
+                NC: {
+                    type: 'markercluster',
+                    name: 'North Carolina',
+                    visible: true
+                },
+                ND: {
+                    type: 'markercluster',
+                    name: 'North Dakota',
+                    visible: true
+                },
+                OH: {
+                    type: 'markercluster',
+                    name: 'Ohio',
+                    visible: true
+                },
+                OK: {
+                    type: 'markercluster',
+                    name: 'Oklahoma',
+                    visible: true
+                },
+                OR: {
+                    type: 'markercluster',
+                    name: 'Oregon',
+                    visible: true
+                },
+                PA: {
+                    type: 'markercluster',
+                    name: 'Pennsylvania',
+                    visible: true
+                },
+                RI: {
+                    type: 'markercluster',
+                    name: 'Rhode Island',
+                    visible: true
+                },
+                SC: {
+                    type: 'markercluster',
+                    name: 'South Carolina',
+                    visible: true
+                },
+                SD: {
+                    type: 'markercluster',
+                    name: 'South Dakota',
+                    visible: true
+                },
+                TN: {
+                    type: 'markercluster',
+                    name: 'Tennessee',
+                    visible: true
+                },
+                TX: {
+                    type: 'markercluster',
+                    name: 'Texas',
+                    visible: true
+                },
+                UT: {
+                    type: 'markercluster',
+                    name: 'Utah',
+                    visible: true
+                },
+                VT: {
+                    type: 'markercluster',
+                    name: 'Vermont',
+                    visible: true
+                },
+                VA: {
+                    type: 'markercluster',
+                    name: 'Virginia',
+                    visible: true
+                },
+                WA: {
+                    type: 'markercluster',
+                    name: 'Washington',
+                    visible: true
+                },
+                WV: {
+                    type: 'markercluster',
+                    name: 'West Virginia',
+                    visible: true
+                },
+                WI: {
+                    type: 'markercluster',
+                    name: 'Wisconsin',
+                    visible: true
+                },
+                WY: {
+                    type: 'markercluster',
+                    name: 'Wyoming',
+                    visible: true
+                }
             }
         };
     }
 
-    private configureOverlays() {
-        return {
-            name: 'Heat Map',
-            type: 'heat',
-
-            data: [],
-            layerOptions: {
-                backgroundColor: 'rgba(0,0,0,0.25)',
-                maxOpacity: 0.9,
-                minOpacity: 0.5,
-                radius: 50,
-                blur: 15
-            },
-            visible: false
-        };
-    }
+    //private configureOverlays() {
+    //    return {
+    //        name: 'Heat Map',
+    //        type: 'heat',
+    //
+    //        data: [],
+    //        layerOptions: {
+    //            backgroundColor: 'rgba(0,0,0,0.25)',
+    //            maxOpacity: 0.9,
+    //            minOpacity: 0.5,
+    //            radius: 50,
+    //            blur: 15
+    //        },
+    //        visible: false
+    //    };
+    //}
 
     private registerMapEvents() {
         return {
@@ -129,7 +387,7 @@ class MapViewController {
             // https://github.com/angular-ui/ui-leaflet/blob/master/examples/0513-markers-events-example.html
             self.$log.log('a marker has been clicked');
 
-            if (self.selectedStation && self.selectedStation.id && args.model.deviceID == self.selectedStation.id) {
+            if (self.selectedStation && self.selectedStation.id && args.model.id == self.selectedStation.id) {
                 self.detailsVisible = false;
                 self.plotVisible = false;
                 self.selectedStation = undefined;
@@ -137,12 +395,12 @@ class MapViewController {
             }
 
             let model = args.model;
-            let id = model.deviceID;
+            let id = model.id;
             if (id == 'Box Elder County' || id == 'Cache County' || id == 'Price' || id == 'Davis County' || id == 'Duchesne County' || id == 'Salt Lake County' || id == 'Tooele County' || id == 'Uintah County' || id == 'Utah County' || id == 'Washington County' || id == 'Weber County') {
 
                 self.selectedStation = { location: {}, last: {} };
 
-                self.selectedStation.id           = model.deviceID;
+                self.selectedStation.id           = model.station_Id;
                 self.selectedStation.location.lat = model.lat;
                 self.selectedStation.location.lng = model.lng;
 
@@ -160,7 +418,7 @@ class MapViewController {
                 function(response) {
                     self.selectedStation = { location: {}, last: {} };
 
-                    self.selectedStation.id           = model.deviceID;
+                    self.selectedStation.id           = model.id;
                     self.selectedStation.location.lat = model.lat;
                     self.selectedStation.location.lng = model.lng;
 
@@ -205,31 +463,31 @@ class MapViewController {
         );
     }
 
+    //private updateMapMarkers() {
+    //    this.updateAirvolutionMarkers();
+    //    this.updateEPAMarkers();
+    //}
+    //
+    //private updateEPAMarkers() {
+    //    let self = this;
+    //    let bounds  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
+    //    self.amsAPIService.asyncGetEPAMarkersInside(bounds).then(
+    //        function(response) {
+    //            if (self.markers == undefined) {
+    //                self.markers = response;
+    //                self.$log.log('marker array was empty');
+    //            } else {
+    //                self.markers = self.markers.concat(response);
+    //                self.$log.log('concatenation of the marker array');
+    //            }
+    //        },
+    //        function(response) {
+    //            self.$log.log('EPA API service promise rejected: ' + response);
+    //        }
+    //    );
+    //}
+
     private updateMapMarkers() {
-        this.updateAirvolutionMarkers();
-        this.updateEPAMarkers();
-    }
-
-    private updateEPAMarkers() {
-        let self = this;
-        let bounds  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
-        self.amsAPIService.asyncGetEPAMarkersInside(bounds).then(
-            function(response) {
-                if (self.markers == undefined) {
-                    self.markers = response;
-                    self.$log.log('marker array was empty');
-                } else {
-                    self.markers = self.markers.concat(response);
-                    self.$log.log('concatenation of the marker array');
-                }
-            },
-            function(response) {
-                self.$log.log('EPA API service promise rejected: ' + response);
-            }
-        );
-    }
-
-    private updateAirvolutionMarkers() {
         let self = this;
         let bounds  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
         self.amsAPIService.asyncGetMarkersInside(bounds).then(
@@ -248,23 +506,23 @@ class MapViewController {
         );
     }
 
-    private updateOverlays() {
-        let self = this;
-        let bounds  = { 'mapParameters': { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } }, 'pollutantName': 'PM' };
-        self.amsAPIService.asyncGetHeatMapDataInside(bounds).then(
-            function(response) {
-                let heatmap = self.configureOverlays();
-                heatmap.data = response;
-
-                self.layers.overlays = {
-                    heat: heatmap
-                };
-            },
-            function(response) {
-                self.$log.log('ams API service promise rejected: ' + response);
-            }
-        );
-    }
+    //private updateOverlays() {
+    //    let self = this;
+    //    let bounds  = { 'mapParameters': { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } }, 'pollutantName': 'PM' };
+    //    self.amsAPIService.asyncGetHeatMapDataInside(bounds).then(
+    //        function(response) {
+    //            let heatmap = self.configureOverlays();
+    //            heatmap.data = response;
+    //
+    //            self.layers.overlays = {
+    //                heat: heatmap
+    //            };
+    //        },
+    //        function(response) {
+    //            self.$log.log('ams API service promise rejected: ' + response);
+    //        }
+    //    );
+    //}
 
     private drawCircles() {
         let self = this;

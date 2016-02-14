@@ -35,6 +35,7 @@ class AMSServiceAPI {
                 for (let key in data) {
                     if (data.hasOwnProperty(key)) {
                         if (data[key]['agency'] != null) {
+                            data[key]['layer'] = data[key]['state'];
                             data[key]['icon'] = {
                                 iconUrl: 'app/assets/images/markers/red.png',
                                 iconSize: [35, 45],
