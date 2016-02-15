@@ -32,15 +32,17 @@ class MapViewController {
         this.plotVisible = false;
         this.minZoom = 5;
         this.maxZoom = 12;
+
+        // middle of continental US
         this.center = {
-            lat: 0,
-            lng: 0,
-            zoom:2
+            lat: 39.994157,
+            lng: -97.722896,
+            zoom: 5
         };
 
         this.markers = [];
         this.selectedStation = { location: {}, last: {} };
-        this.bounds = this.defaultMapBounds();
+        //this.bounds = this.defaultMapBounds();
         this.layers = this.configureLayers();
         this.events = this.registerMapEvents();
 
@@ -359,12 +361,12 @@ class MapViewController {
         };
     }
 
-    private defaultMapBounds() {
-        return this.leafletBoundsHelpers.createBoundsFromArray([
-            [ 57.903638, -37.642519 ],
-            [ 11.708745, -152.757073 ]
-        ]);
-    }
+    //private defaultMapBounds() {
+    //    return this.leafletBoundsHelpers.createBoundsFromArray([
+    //        [ 57.903638, -37.642519 ],
+    //        [ 11.708745, -152.757073 ]
+    //    ]);
+    //}
 
     private configureMapMoveEvents() {
         let self = this;
@@ -374,6 +376,7 @@ class MapViewController {
                 function(map) {
                     self.bounds = map.getBounds();
                     self.$log.log('updating map bounds');
+                    self.$log.log('zoom: ' + map.getZoom());
                     //self.drawCircles();
                 }
             );
@@ -452,10 +455,14 @@ class MapViewController {
         self.locationService.asyncGetGeoCoordinates().then(
             function(response) {
                 self.center = {
-                    lat: response.lat,
-                    lng: response.lng,
-                    zoom: 10
+                    autoDiscover: true,
+                    zoom: 5
                 };
+                //self.center = {
+                //    lat: response.lat,
+                //    lng: response.lng,
+                //    zoom: 10
+                //};
             },
             function(response) {
                 self.$log.log('location service promise rejected: ' + response);
