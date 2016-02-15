@@ -510,7 +510,7 @@ class MapViewController {
         } else {
             marker['className'] = 'marker marker-maroon';
         }
-        return marker
+        return marker;
     }
 
     private updateMapMarkers() {
