@@ -614,15 +614,15 @@ L.MarkerClusterGroup = L.FeatureGroup.extend({
 		}
 
 		var c = ' marker-cluster-';
-		if (averageAQI < 50) {
+		if (averageAQI <= 50) {
 			c += 'green';
-		} else if (averageAQI < 100) {
+		} else if (averageAQI <= 100) {
 			c += 'yellow';
-		} else if (averageAQI < 150) {
+		} else if (averageAQI <= 150) {
 			c += 'orange';
-		} else if (averageAQI < 200) {
+		} else if (averageAQI <= 200) {
 			c += 'red';
-		} else if (averageAQI < 300) {
+		} else if (averageAQI <= 300) {
 			c += 'purple';
 		} else {
 			c += 'maroon';
@@ -1891,7 +1891,7 @@ L.MarkerCluster.include(!L.DomUtil.TRANSITION ? {
 			if (m.setOpacity) {
 				m.setZIndexOffset(1000000); //Make these appear on top of EVERYTHING
 				m.setOpacity(0);
-			
+
 				fg.addLayer(m);
 
 				m._setPos(thisLayerPos);
@@ -1915,7 +1915,7 @@ L.MarkerCluster.include(!L.DomUtil.TRANSITION ? {
 			//Move marker to new position
 			m._preSpiderfyLatlng = m._latlng;
 			m.setLatLng(newPos);
-			
+
 			if (m.setOpacity) {
 				m.setOpacity(1);
 			}

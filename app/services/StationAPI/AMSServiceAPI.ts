@@ -29,30 +29,7 @@ class AMSServiceAPI {
 
         self.$http.get(url, config).then(
             function(response) {
-                let data = response.data;
-
-                // Add custom attributes to each Marker
-                for (let key in data) {
-                    if (data.hasOwnProperty(key)) {
-                        if (data[key]['agency'] != null) {
-                            data[key]['layer'] = data[key]['state'];
-                            data[key]['icon'] = {
-                                iconUrl: 'app/assets/images/markers/red.png',
-                                iconSize: [35, 45],
-                                iconAnchor: [17, 28]
-                            };
-                        } else {
-                            data[key]['icon'] = {
-                                iconUrl: 'app/assets/images/markers/green.png',
-                                iconSize: [35, 45],
-                                iconAnchor: [17, 28]
-                            };
-                        }
-                        data[key]['clickable'] = true;
-                    }
-                }
-                self.$log.log('how many markers did we get back? ' + data.length);
-                deferred.resolve(data);
+                deferred.resolve(response);
             },
             function(response) {
                 self.$log.log('we did not get any markers get back');

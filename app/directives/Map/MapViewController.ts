@@ -25,8 +25,8 @@ class MapViewController {
         private $http,
         private $log,
         private locationService,
-        private amsAPIService,
-        private drawCount
+        private amsAPIService
+        //private drawCount
     ) {
         this.detailsVisible = true;
         this.plotVisible = false;
@@ -374,7 +374,7 @@ class MapViewController {
                 function(map) {
                     self.bounds = map.getBounds();
                     self.$log.log('updating map bounds');
-                    self.drawCircles();
+                    //self.drawCircles();
                 }
             );
         });
@@ -487,16 +487,62 @@ class MapViewController {
     //    );
     //}
 
+    private getIconForMarker(aqi) {
+        var icon = {
+            type: 'div',
+            iconSize: [60, 60],
+            iconAnchor:  [30, 30]
+        };
+
+        let marker = angular.copy(icon);
+        marker['html'] = '<div><span>' + aqi + '</span></div>';
+
+        if (aqi <= 50) {
+            marker['className'] = 'marker marker-green';
+        } else if (aqi <= 100) {
+            marker['className'] = 'marker marker-yellow';
+        } else if (aqi <= 150) {
+            marker['className'] = 'marker marker-orange';
+        } else if (aqi <= 200) {
+            marker['className'] = 'marker marker-red';
+        } else if (aqi <= 300) {
+            marker['className'] = 'marker marker-purple';
+        } else {
+            marker['className'] = 'marker marker-maroon';
+        }
+        return marker
+    }
+
     private updateMapMarkers() {
         let self = this;
         let bounds  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
         self.amsAPIService.asyncGetMarkersInside(bounds).then(
             function(response) {
+                let data = response.data;
+
+                // Add custom attributes to each Marker
+                for (let key in data) {
+                    if (data.hasOwnProperty(key)) {
+                        if (data[key]['agency'] != null) {
+                            data[key]['layer'] = data[key]['state'];
+                            data[key]['icon'] = self.getIconForMarker(data[key].aqi);
+                        } else {
+                            data[key]['icon'] = {
+                                iconUrl: 'app/assets/images/markers/red.png',
+                                iconSize: [35, 45],
+                                iconAnchor: [17, 28]
+                            };
+                        }
+                        data[key]['clickable'] = true;
+                    }
+                }
+                self.$log.log('how many markers did we get back? ' + data.length);
+
                 if (self.markers == undefined) {
-                    self.markers = response;
+                    self.markers = data;
                     self.$log.log('marker array was empty');
                 } else {
-                    self.markers = self.markers.concat(response);
+                    self.markers = self.markers.concat(data);
                     self.$log.log('concatenation of the marker array');
                 }
             },
@@ -524,30 +570,30 @@ class MapViewController {
     //    );
     //}
 
-    private drawCircles() {
-        let self = this;
-        if (self.drawCount == 1) {
-            self.$log.log('lets NOT draw any circles');
-            return;
-        }
-        self.$log.log('lets draw some circles');
-        self.leafletData.getMap().then(
-            function(map) {
-                if (self.drawCount == undefined) {
-                    self.drawCount = 0;
-                }
-                L.circle([40.758483, -111.845961], 200, {
-                    fillColor: '#03f'
-                }).addTo(map);
-                self.$log.log('circle added to map: ' + self.drawCount++);
-            }
-        );
-
-        self.leafletData.getMap().then(
-            function(map) {
-                self.bounds = map.getBounds();
-                self.$log.log('here');
-            }
-        );
-    }
+    //private drawCircles() {
+    //    let self = this;
+    //    if (self.drawCount == 1) {
+    //        self.$log.log('lets NOT draw any circles');
+    //        return;
+    //    }
+    //    self.$log.log('lets draw some circles');
+    //    self.leafletData.getMap().then(
+    //        function(map) {
+    //            if (self.drawCount == undefined) {
+    //                self.drawCount = 0;
+    //            }
+    //            L.circle([40.758483, -111.845961], 200, {
+    //                fillColor: '#03f'
+    //            }).addTo(map);
+    //            self.$log.log('circle added to map: ' + self.drawCount++);
+    //        }
+    //    );
+    //
+    //    self.leafletData.getMap().then(
+    //        function(map) {
+    //            self.bounds = map.getBounds();
+    //            self.$log.log('here');
+    //        }
+    //    );
+    //}
 }
