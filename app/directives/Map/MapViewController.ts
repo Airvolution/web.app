@@ -8,6 +8,7 @@ class MapViewController {
 
     public selectedStation;
 
+    public controls;
     public center;
     public minZoom;
     public maxZoom;
@@ -28,6 +29,7 @@ class MapViewController {
         private amsAPIService
         //private drawCount
     ) {
+        $log.log('*********************MapViewController Constructed*********************');
         this.detailsVisible = true;
         this.plotVisible = false;
         this.minZoom = 5;
@@ -43,6 +45,7 @@ class MapViewController {
         this.markers = [];
         this.selectedStation = { location: {}, last: {} };
         //this.bounds = this.defaultMapBounds();
+
         this.layers = this.configureLayers();
         this.events = this.registerMapEvents();
 
@@ -51,6 +54,7 @@ class MapViewController {
         this.configureMapMoveEvents();
         this.configureMapClickEvents();
         //this.updateOverlays();
+
     }
 
     private configureLayers() {
@@ -522,9 +526,11 @@ class MapViewController {
 
     private updateMapMarkers() {
         let self = this;
+        self.$log.log('*********************UpdatingMapMarkers*********************');
         let bounds  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
         self.amsAPIService.asyncGetMarkersInside(bounds).then(
             function(response) {
+                self.$log.log('*********************UpdatingMapMarkers JSON RETURNING*********************');
                 let data = response.data;
 
                 // Add custom attributes to each Marker
@@ -552,6 +558,37 @@ class MapViewController {
                     self.markers = self.markers.concat(data);
                     self.$log.log('concatenation of the marker array');
                 }
+
+                self.leafletData.getMap().then(
+                    function(map) {
+                        let panes = map.getPanes();
+                        console.log(panes);
+                    }
+                );
+                // Keep around for a bit -- Good example of creating custom leaflet menu tools
+                //   Requires --force when grunting
+                //self.leafletData.getMap().then(
+                //    function(map) {
+                //        var legend = L.control({position: 'topright'});
+                //        legend.onAdd = function (map) {
+                //            var div = L.DomUtil.create('div', 'info legend');
+                //
+                //            //div.innerHTML = '<select><option>1</option><option>2</option><option>3</option></select>';
+                //            let select = '<select>';
+                //            for (let i = 0; i < self.markers.length; i++) {
+                //                let name = self.markers[i]['name'];
+                //                select += "<option>" + name + "</option>";
+                //            };
+                //            select += '</select>';
+                //            div.innerHTML = select;
+                //
+                //            div.firstChild['onmousedown'] = div.firstChild['onblclick'] = L.DomEvent.stopPropagation;
+                //            //div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
+                //            return div;
+                //        };
+                //        legend.addTo(map);
+                //    }
+                //);
             },
             function(response) {
                 self.$log.log('ams API service promise rejected: ' + response);
