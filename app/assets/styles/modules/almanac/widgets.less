@@ -1,64 +1,79 @@
-almanac-widget {
-  //border: 1px solid #000;
-  box-shadow: 0px 10px 20px @dark-gray;
-  text-align: left;
+.widget-grid {
+  position: relative;
+  width: 100%;
 
-  .card-header {
-    padding: 1em;
-    padding-bottom: 0;
-    overflow: auto;
-    box-shadow: 0px 2px 2px @medium-darker-gray;
-    background-color: #09AA00;
+  almanac-widget {
+    position:absolute;
+    border: 1px solid black;
 
-    .category {
-      font-size: 1em;
-      color: @light-gray;
-      font-weight: bold;
-      text-shadow: 1px 1px 1px @black;
+    &[widget-size="small"] {
+      width: 150px;
+      height: 150px;
+    }
+    &[widget-size="medium"] {
+      width: 310px;
+      height: 310px;
+    }
+    &[widget-size="large"] {
+      width: 500px;
+      height: 500px;
+    }
+    box-shadow: 0 5px 10px @dark-gray;
+    text-align: left;
+
+    .card-header {
+      padding: 1em;
+      padding-bottom: 0;
+      overflow: auto;
+      box-shadow: 0 0 1px @medium-darker-gray;
+      background-color: #09AA00;
+
+      .category {
+        font-size: 1em;
+        color: @light-gray;
+        font-weight: bold;
+        text-shadow: 1px 1px 1px @black;
+      }
+
+      .title {
+        font-size: 1.5em;
+        color: white;
+        font-weight: bolder;
+        text-shadow: 1px 1px 2px @black;
+      }
+
+      .emoji {
+        vertical-align: text-bottom;
+        border: 3px solid white;
+        border-radius: 8px;
+        box-shadow: 0 0 5px @white;
+      }
     }
 
-    .title {
-      font-size: 1.5em;
-      color: white;
-      font-weight: bolder;
-      text-shadow: 1px 1px 2px @black;
+    .card-body {
+      padding: 1em;
+      padding-top: 0;
+
+      .value {
+        font-size: 7em;
+        text-align: center;
+        //color: #09AA00;
+        //text-shadow:
+        //  -1px -1px 0 #000,
+        //   1px -1px 0 #000,
+        //  -1px  1px 0 #000,
+        //   1px  1px 0 #000;;
+      }
+
+      .description {
+        font-size: 1em;
+      }
     }
 
-    .emoji {
-      float: right;
-      vertical-align: text-bottom;
-      border: 3px solid white;
-      border-radius: 8px;
-      box-shadow: 1px 1px 10px @white;
-    }
-  }
-
-  .card-body {
-    padding: 1em;
-    padding-top: 0;
-
-    .value {
-      font-size: 7em;
-      text-align: center;
-      //color: #09AA00;
-      //text-shadow:
-      //  -1px -1px 0 #000,
-      //   1px -1px 0 #000,
-      //  -1px  1px 0 #000,
-      //   1px  1px 0 #000;;
-    }
-
-    .description {
-      font-size: 1em;
-    }
-  }
-
-  .actions {
-    padding: 1em;
-    border-top: 1px solid @medium-light-gray;
-
-    .fa {
-      float: right;
+    .actions {
+      padding: 1em;
+      border-top: 1px solid @medium-light-gray;
     }
   }
 }
+
