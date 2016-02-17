@@ -15,7 +15,8 @@ angular.module('app', [
         'ngStorage',
         'ui.bootstrap',
         'ngAnimate',
-        'angularMoment'
+        'angularMoment',
+        'ngMaterial'
     ])
     .config(($stateProvider, $urlRouterProvider, $httpProvider) => {
         $urlRouterProvider.otherwise('/map');

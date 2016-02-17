@@ -1,6 +1,4 @@
-///<referecnce path='../../typings/tsd.d.ts'/>
-
-declare let d3;
+/// <reference path='../../../typings/tsd.d.ts'/>
 
 export = NVD3Controller;
 

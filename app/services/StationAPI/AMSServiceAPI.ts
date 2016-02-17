@@ -110,12 +110,34 @@ class AMSServiceAPI {
         let url = 'api/stations/latestDataPoint/' + stationID;
         self.$http.get(url).then(
             function(response) {
-                deferred.resolve(response.data);
+                var result:any = {};
+                var latest = new Date('1/1/1970');
+                var indoor = false;
+                _.each(response.data,(data:any)=> {
+                    if(data.parameter && data.parameter.name) {
+                        result[data.parameter.name] = data.value;
+                        if(data.parameter.name = 'PM2.5'){
+                            result.aqi = data.aqi;
+                        }
+                    }
+                    if(data.station && data.station.agency){
+                        result.agency = data.station.agency;
+                    }
+                    if(data.time){
+                        if(latest.getTime() < Date.parse(data.time)){
+                            latest = new Date(data.time);
+                        }
+                    }
+                    if(data.indoor){
+                        indoor = true;
+                    }
+                });
+                result.indoor = indoor;
+                result.lastUpdated = latest;
+                deferred.resolve(result);
             },
             function(response) {
-                deferred.reject([
-                   // empty array
-                ]);
+                deferred.reject();
             }
         );
 
