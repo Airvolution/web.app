@@ -10,6 +10,7 @@ import AppController = require('./Index/AppController');
 import UserRegistrationController = require("./MyProfile/UserRegistrationController");
 import WeatherController = require('./Weather/WeatherController');
 import PreferencesController = require('./Preferences/PreferencesController');
+import FAQController = require('./Footer/FAQController');
 
 export = angular.module('controllers', [])
             .controller(RegisterAMSController.name, RegisterAMSController)
@@ -22,4 +23,5 @@ export = angular.module('controllers', [])
             .controller(AppController.name, AppController)
             .controller(UserRegistrationController.name, UserRegistrationController)
             .controller(WeatherController.name, WeatherController)
-            .controller(PreferencesController.name, PreferencesController);
+            .controller(PreferencesController.name, PreferencesController)
+            .controller(FAQController.name, FAQController);
