@@ -3,7 +3,7 @@ export = SiteNavDirective;
 
 class SiteNavDirective implements ng.IDirective {
     public static htmlName: string = 'siteNav';
-    public templateUrl = 'app/templates/siteNav.html';
+    public templateUrl = 'app/directives/SiteNav/siteNavTemplate.html';
     public restrict = 'E';
 
     public static create(): SiteNavDirective {
