@@ -14,18 +14,17 @@ class AlmanacViewDirective implements ng.IDirective {
 
     };
     public link = ($scope,$element,$attrs,$ctrl,$transclude)=>{
-        $('#almanac-grid').gridster({
-            widget_selector: 'almanac-widget',
-            min_cols:6,
-            max_cols: 6,
-            widget_base_dimensions: [140,140],
-            widget_margins: [10,10],
-            extra_rows: 1
-        }).data('gridster');
+        $element.find('.widget-grid').shapeshift({
+            colWidth: 150,
+            gutterX: 10,
+            gutterY: 10,
+            selector: 'almanac-widget',
+            "enable-resize": false,
+            align: 'left'
+        });
     };
 
     constructor(){}
-
     public static create() {
         return new AlmanacViewDirective();
     }

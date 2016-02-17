@@ -1,6 +1,20 @@
 almanac-widget {
-  //border: 1px solid #000;
-  box-shadow: 0px 10px 20px @dark-gray;
+  position: absolute;
+  border: 1px solid black;
+
+  &[widget-size="small"] {
+    width: 150px;
+    height: 310px;
+  }
+  &[widget-size="medium"] {
+    width: 310px;
+    height: 310px;
+  }
+  &[widget-size="large"] {
+    width: 470px;
+    height: 310px;
+  }
+  box-shadow: 0 5px 10px @dark-gray;
   text-align: left;
   background-color: white;
 
@@ -8,7 +22,7 @@ almanac-widget {
     padding: 1em;
     padding-bottom: 0;
     overflow: auto;
-    box-shadow: 0px 2px 2px @medium-darker-gray;
+    box-shadow: 0 0 1px @medium-darker-gray;
     background-color: #09AA00;
 
     .category {
@@ -26,11 +40,10 @@ almanac-widget {
     }
 
     .emoji {
-      float: right;
       vertical-align: text-bottom;
       border: 3px solid white;
       border-radius: 8px;
-      box-shadow: 1px 1px 10px white;
+      box-shadow: 0 0 5px @white;
     }
   }
 
@@ -57,9 +70,6 @@ almanac-widget {
   .actions {
     padding: 1em;
     border-top: 1px solid @medium-light-gray;
-
-    .fa {
-      float: right;
-    }
   }
 }
+
