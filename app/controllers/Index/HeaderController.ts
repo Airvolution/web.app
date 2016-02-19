@@ -6,18 +6,22 @@ class HeaderController {
     public static name = 'HeaderController';
 
     private modal;
+    private location;
 
     public static $inject = [
         '$scope',
         '$uibModal',
-        'AuthService'
+        'AuthService',
+        'locationService'
     ];
     constructor(
         private $scope,
         private $uibModal,
-        public AuthService
+        public AuthService,
+        private locationService
     ) {
         $scope.showNav = false;
+        this.location = locationService.asyncGetGeoCoordinates();
     }
 
     public toggelNav() {
