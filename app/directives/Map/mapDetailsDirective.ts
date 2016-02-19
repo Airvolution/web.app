@@ -1,5 +1,5 @@
 /// <reference path="../../../typings/tsd.d.ts" />
-import MapDetailsController = require('./MapViewController');
+import MapDetailsController = require('./mapDetailsController');
 
 export = MapDetailsDirective;
 
@@ -13,7 +13,8 @@ class  MapDetailsDirective implements ng.IDirective {
     public bindToController = true;
     public scope = {
         visible: '=',
-        station: '='
+        station: '=',
+        loading: '='
     };
     
     public static create() {

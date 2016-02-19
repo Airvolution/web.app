@@ -6,7 +6,7 @@ export = ComparePageController;
 
 class ComparePageController {
     public static name = 'ComparePageController';
-    public static $inject = ['$scope', '$http', '$log', 'selectionService'];
+    public static $inject = ['$scope', '$http', '$log', 'selectionService', 'amsAPIService'];
 
     public stations = [];
     public plots = [];
@@ -106,19 +106,19 @@ class ComparePageController {
         private $scope,
         private $http,
         private $log,
-        private selectionService
+        private selectionService,
+        private amsAPIService
     ) {
         this.selectionService.getCurrentStationSelection();
 
         let self = this;
-        let url = 'api/stations/locators';
-        $http.get(url).then(
+        let bounds = {'northEast': {'lat': 89, 'lng': 179}, 'southWest': {'lat': -89, 'lng': -179}};
+        self.amsAPIService.asyncGetMarkersInside(bounds).then(
             function (response) {
-                self.stations = response.data.ams;
-                self.$log.log('api/frontend/getUserDeviceStates api call succeeded: ' + response);
+                self.stations = response;
             },
             function (response) {
-                self.$log.log('api/frontend/getUserDeviceStates api call failed: ' + response);
+                self.$log.log('compare controller failed to get station locators');
             }
         );
     };
@@ -149,22 +149,30 @@ class ComparePageController {
     public generatePlot() {
         let self = this;
         self.$log.log('generating plot for selected stations');
+        // TODO: add parameter selection
+        // TODO: elimnate for loop with list of station IDs???
         let selected = self.selectionService.getCurrentStationSelection();
         let dataPoints = [];
         for (var index in selected) {
             self.$log.log('station: ' + selected[index]);
-            self.$http({
-                url: 'api/frontend/deviceDatapoints',
-                data: JSON.stringify(selected[index]),
-                method: 'POST'
-            }).then(
-                function(response) {
+            let url = "api/stations/parameterValues";
+            let config = {
+                params: {
+                    stationID: selected[index],
+                    parameter: "PM2.5"
+                }
+            };
+            self.$http.get(url, config).then(
+                function (response) {
+                    console.log('PASS!');
                     dataPoints.push(response.data);
                     if (dataPoints.length == selected.length) {
-                        self.plot(dataPoints);
+                        let plot = { visible: true, data: [] };
+                        plot.data = dataPoints;
+                        self.plots.push(plot);
                     }
                 },
-                function(response) {
+                function (response) {
                     console.log('Failure!');
                 }
             );

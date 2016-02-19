@@ -92,12 +92,50 @@ class AMSServiceAPI {
             },
             function(response) {
                 deferred.reject([
-                   // empty array
+                    // empty array
                 ]);
             }
         );
 
         return deferred.promise;
+        //var deferred = this.$q.defer();
+        //
+        //let self = this;
+        //let url = 'api/stations/latestDataPoint/' + stationID;
+        //self.$http.get(url).then(
+        //    function(response) {
+        //        var result:any = {};
+        //        var latest = new Date('1/1/1970');
+        //        var indoor = false;
+        //        _.each(response.data,(data:any)=> {
+        //            if(data.parameter && data.parameter.name) {
+        //                result[data.parameter.name] = data.value;
+        //                if(data.parameter.name = 'PM2.5'){
+        //                    result.aqi = data.aqi;
+        //                }
+        //            }
+        //            if(data.station && data.station.agency){
+        //                result.agency = data.station.agency;
+        //            }
+        //            if(data.time){
+        //                if(latest.getTime() < Date.parse(data.time)){
+        //                    latest = new Date(data.time);
+        //                }
+        //            }
+        //            if(data.indoor){
+        //                indoor = true;
+        //            }
+        //        });
+        //        result.indoor = indoor;
+        //        result.lastUpdated = latest;
+        //        deferred.resolve(result);
+        //    },
+        //    function(response) {
+        //        deferred.reject();
+        //    }
+        //);
+        //
+        //return deferred.promise;
     }
 
     public asyncGetDataPointsFrom(stationID) {

@@ -11,12 +11,14 @@
     <!--<link rel="stylesheet" href="node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css">-->
     <link rel="stylesheet" href="app/assets/clusters/MarkerCluster.css"/>
     <link rel="stylesheet" href="app/assets/clusters/MarkerCluster.Default.css"/>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
     <link rel="stylesheet" href="app/assets/styles/app.min.css">
 <body ng-app="app">
 <div class="container" ng-controller="AppController as actrl">
     <header class="header row" ng-controller="HeaderController as hctrl">
-        <div class="headerzone col-md-1" id="hamburger" ng-click="$parent.navVisible = !$parent.navVisible"><i
-                class="fa fa-bars fa-3x"></i></div>
+        <div class="headerzone col-md-1" id="hamburger">
+            <i class="fa fa-bars fa-3x" uib-popover-template="'app/templates/siteNavTemplate.html'" popover-placement="bottom-left" popover-animation="true" popover-trigger="outsideClick"></i>
+        </div>
         <div class="headerzone col-md-1"><img src="app/assets/images/AirU.png" alt="University of Utah"></div>
         <!--
         <div class="headerzone col-md-2 col-md-offset-1"><div id="quicklinks"><input type="text" placeholder="QuickLinks"/><i class="fa fa-search fa-2x"></i></div></div>
@@ -52,8 +54,7 @@
         </div>
     </header>
     <div id="mainContent" class="row">
-        <site-nav ng-class="{'hidden':navVisible == false}"></site-nav>
-        <div id="mainContainer" ng-class="{'col-md-10':navVisible == true, 'col-lg-12':navVisible == false}">
+        <div id="mainContainer" class="col-md-12">
             <div class="row">
                 <section class="col-md-12 main-wrapper" ui-view>
                 </section>
@@ -62,14 +63,19 @@
     </div>
     <page-footer></page-footer>
 </div>
-<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.0.js"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.10/ngStorage.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-animate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-moment/0.9.0/angular-moment.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.shapeshift/2.0.0/jquery.shapeshift.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.1.1/ui-bootstrap-tpls.min.js"></script>
 

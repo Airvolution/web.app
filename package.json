@@ -2,7 +2,7 @@
   "name": "airu.web.app",
   "version": "1.0.0",
   "description": "AirU Web Application",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "test": "grunt build:test && karma start"
