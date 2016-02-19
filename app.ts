@@ -15,7 +15,8 @@ angular.module('app', [
         'ngStorage',
         'ui.bootstrap',
         'ngAnimate',
-        'angularMoment'
+        'angularMoment',
+        'ngMaterial'
     ])
     .config(($stateProvider, $urlRouterProvider, $httpProvider) => {
         $urlRouterProvider.otherwise('/map');
@@ -47,7 +48,7 @@ angular.module('app', [
             })
             .state('almanac', {
                 url: '/almanac',
-                templateUrl: 'app/templates/alamanac.html'
+                template: '<almanac-view></almanac-view>'
             })
             .state('compare', {
                 url: '/compare',

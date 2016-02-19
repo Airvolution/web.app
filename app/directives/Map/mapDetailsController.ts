@@ -3,6 +3,9 @@
 export = MapDetailsController;
 
 class MapDetailsController {
-    public static $inject = [];
-    constructor() {}
+    public station;
+    public static $inject = ['$scope'];
+    constructor(private $scope) {
+
+    }
 }

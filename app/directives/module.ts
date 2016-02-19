@@ -6,9 +6,11 @@ import SystemNotificationDirective = require('./SystemNotification/SystemNotific
 import StationDirective = require('./Station/StationDirective');
 import AQIDirective = require('./AQI/AQIDirective');
 import MapDirectives = require('./Map/module');
+import AlmanacDirectives = require('./Almanac/module');
 
 export = angular.module('directives', [
-        MapDirectives.name
+        MapDirectives.name,
+        AlmanacDirectives.name
     ])
             .directive(SiteNavDirective.htmlName, SiteNavDirective.create)
             .directive(FooterDirective.htmlName, FooterDirective.create)
