@@ -1,18 +1,39 @@
-///<reference path="../../../typings/tsd.d.ts" />
+///<reference path="../../typings/tsd.d.ts" />
 
-export = AMSServiceAPI;
+export = APIService;
 
-class AMSServiceAPI {
-    public static serviceName = 'amsAPIService';
-    public static $inject = ['$http', '$q', '$log'];
+class APIService {
+    public static serviceName = 'APIService';
+    public static $inject = ['$http', '$q', '$log','locationService'];
     constructor(
         private $http,
         private $q,
-        private $log
-    ) {
-        // empty constructor
-    }
+        private $log,
+        private locationService
+    ) {}
 
+    public getDailies(days) {
+        var deferred = this.$q.defer();
+        var self = this;
+        var onError = (error)=>{deferred.reject(error);};
+        this.locationService.asyncGetGeoCoordinates().then((location)=>{
+            var locationParameter = {
+                params:location
+            };
+            self.$http.get('api/stations/nearest',locationParameter).then((stationData)=>{
+                var dailiesParameters = {
+                    params: {
+                        stationId:stationData.data.id,
+                        daysBack:days
+                    }
+                };
+               self.$http.get('api/almanac/dailies',dailiesParameters).then((dailies)=>{
+                  deferred.resolve(dailies.data);
+               },onError);
+            },onError);
+        },onError);
+        return deferred.promise;
+    }
     public asyncGetMarkersInside(bounds) {
         var deferred = this.$q.defer();
 

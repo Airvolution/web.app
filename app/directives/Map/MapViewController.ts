@@ -23,7 +23,7 @@ class MapViewController {
     public chartOptions;
     public chartData;
 
-    public static $inject = ['$scope', 'leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', '$log', 'locationService', 'amsAPIService', '$timeout'];
+    public static $inject = ['$scope', 'leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', '$log', 'locationService', 'APIService', '$timeout'];
 
     constructor(private $scope,
                 private leafletData,
@@ -32,7 +32,7 @@ class MapViewController {
                 private $http,
                 private $log,
                 private locationService,
-                private amsAPIService,
+                private APIService,
                 private $timeout) {
         this.detailsVisible = true;
         this.plotVisible = false;
@@ -193,7 +193,7 @@ class MapViewController {
     private getLastDataPoint(id) {
         this.loadingStationData = true;
         var self = this;
-        self.amsAPIService.asyncGetLastDataPointFrom(id).then(
+        self.APIService.asyncGetLastDataPointFrom(id).then(
             function (response) {
                 self.selectedStation.last = {};
 
@@ -246,7 +246,7 @@ class MapViewController {
     //private updateEPAMarkers() {
     //    let self = this;
     //    let bounds = {'northEast': {'lat': 89, 'lng': 179}, 'southWest': {'lat': -89, 'lng': -179}};
-    //    self.amsAPIService.asyncGetEPAMarkersInside(bounds).then(
+    //    self.APIService.asyncGetEPAMarkersInside(bounds).then(
     //        function (response) {
     //            if (self.markers == undefined) {
     //                self.markers = response;
@@ -265,7 +265,7 @@ class MapViewController {
     private updateAirvolutionMarkers() {
         let self = this;
         let bounds = {'northEast': {'lat': 89, 'lng': 179}, 'southWest': {'lat': -89, 'lng': -179}};
-        self.amsAPIService.asyncGetMarkersInside(bounds).then(
+        self.APIService.asyncGetMarkersInside(bounds).then(
             function (response) {
                 if (self.markers == undefined) {
                     self.markers = response;
@@ -287,7 +287,7 @@ class MapViewController {
             'mapParameters': {'northEast': {'lat': 89, 'lng': 179}, 'southWest': {'lat': -89, 'lng': -179}},
             'pollutantName': 'PM'
         };
-        self.amsAPIService.asyncGetHeatMapDataInside(bounds).then(
+        self.APIService.asyncGetHeatMapDataInside(bounds).then(
             function (response) {
                 let heatmap = self.configureOverlays();
                 heatmap.data = response;
@@ -380,7 +380,7 @@ class MapViewController {
             }
         );
 
-        //self.amsAPIService.asyncGetDataPointsFrom(stationID).then(
+        //self.APIService.asyncGetDataPointsFrom(stationID).then(
         //    function (response) {
         //        self.chartOptions = self.getChartOptions();
         //        self.chartOptions['height'] = self.getChartHeight();
@@ -394,7 +394,7 @@ class MapViewController {
 
     private getDataForEPAPlot(stationID) {
         let self = this;
-        self.amsAPIService.asyncGetDataPointsFromEPA(stationID).then(
+        self.APIService.asyncGetDataPointsFromEPA(stationID).then(
             function (response) {
                 self.chartOptions = self.getChartOptions();
                 self.chartOptions['height'] = self.getChartHeight();

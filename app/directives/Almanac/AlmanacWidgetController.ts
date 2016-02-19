@@ -7,12 +7,16 @@ class AlmanacWidgetController {
     public templateUrl:string;
     private templateMap = {
         'avg-aqi-7-days': "avgAQI7Days.html",
-        'consecutive-days': "consecutiveDays.html"
+        'consecutive-green-days': "consecutiveGreenDays.html",
+        'consecutive-red-days': "consecutiveRedDays.html",
+        'consecutive-yellow-days': "consecutiveYellowDays.html",
     };
 
     private templateSizeMap = {
         'avg-aqi-7-days': 'medium',
-        'consecutive-days': 'medium'
+        'consecutive-green-days': 'medium',
+        'consecutive-red-days': 'medium',
+        'consecutive-yellow-days': 'medium'
     };
 
     public static $inject = ['$scope'];
@@ -28,7 +32,7 @@ class AlmanacWidgetController {
     }
 
     private getTemplateLocation(type) {
-        var prefix = 'app/templates/widgets/';
+        var prefix = 'app/widgets/templates/';
         if(this.templateMap[type]){
             return prefix + this.templateMap[type];
         } else {
