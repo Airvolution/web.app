@@ -21,7 +21,7 @@ class AQIController {
             method: 'GET'
         }).then(
             function(response) {
-                console.log('Success!');
+                console.log('api/frontend/aqi Success!');
                 console.log('  status: ' + response.status);
                 console.log('======================');
 
@@ -31,7 +31,7 @@ class AQIController {
                 self.localCategory = data['category']['name'];
             },
             function(response) {
-                console.log('Failure!');
+                console.log('api/frontend/aqi Failure!');
                 console.log('  status: ' + response.status);
                 console.log('======================');
             }

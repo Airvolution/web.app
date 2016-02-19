@@ -29,29 +29,7 @@ class AMSServiceAPI {
 
         self.$http.get(url, config).then(
             function(response) {
-                let data = response.data;
-
-                // Add custom attributes to each Marker
-                for (let key in data) {
-                    if (data.hasOwnProperty(key)) {
-                        if (data[key]['agency'] != null) {
-                            data[key]['icon'] = {
-                                iconUrl: 'app/assets/images/markers/red.png',
-                                iconSize: [35, 45],
-                                iconAnchor: [17, 28]
-                            };
-                        } else {
-                            data[key]['icon'] = {
-                                iconUrl: 'app/assets/images/markers/green.png',
-                                iconSize: [35, 45],
-                                iconAnchor: [17, 28]
-                            };
-                        }
-                        data[key]['clickable'] = true;
-                    }
-                }
-                self.$log.log('how many markers did we get back? ' + data.length);
-                deferred.resolve(data);
+                deferred.resolve(response);
             },
             function(response) {
                 self.$log.log('we did not get any markers get back');
@@ -110,38 +88,54 @@ class AMSServiceAPI {
         let url = 'api/stations/latestDataPoint/' + stationID;
         self.$http.get(url).then(
             function(response) {
-                var result:any = {};
-                var latest = new Date('1/1/1970');
-                var indoor = false;
-                _.each(response.data,(data:any)=> {
-                    if(data.parameter && data.parameter.name) {
-                        result[data.parameter.name] = data.value;
-                        if(data.parameter.name = 'PM2.5'){
-                            result.aqi = data.aqi;
-                        }
-                    }
-                    if(data.station && data.station.agency){
-                        result.agency = data.station.agency;
-                    }
-                    if(data.time){
-                        if(latest.getTime() < Date.parse(data.time)){
-                            latest = new Date(data.time);
-                        }
-                    }
-                    if(data.indoor){
-                        indoor = true;
-                    }
-                });
-                result.indoor = indoor;
-                result.lastUpdated = latest;
-                deferred.resolve(result);
+                deferred.resolve(response.data);
             },
             function(response) {
-                deferred.reject();
+                deferred.reject([
+                    // empty array
+                ]);
             }
         );
 
         return deferred.promise;
+        //var deferred = this.$q.defer();
+        //
+        //let self = this;
+        //let url = 'api/stations/latestDataPoint/' + stationID;
+        //self.$http.get(url).then(
+        //    function(response) {
+        //        var result:any = {};
+        //        var latest = new Date('1/1/1970');
+        //        var indoor = false;
+        //        _.each(response.data,(data:any)=> {
+        //            if(data.parameter && data.parameter.name) {
+        //                result[data.parameter.name] = data.value;
+        //                if(data.parameter.name = 'PM2.5'){
+        //                    result.aqi = data.aqi;
+        //                }
+        //            }
+        //            if(data.station && data.station.agency){
+        //                result.agency = data.station.agency;
+        //            }
+        //            if(data.time){
+        //                if(latest.getTime() < Date.parse(data.time)){
+        //                    latest = new Date(data.time);
+        //                }
+        //            }
+        //            if(data.indoor){
+        //                indoor = true;
+        //            }
+        //        });
+        //        result.indoor = indoor;
+        //        result.lastUpdated = latest;
+        //        deferred.resolve(result);
+        //    },
+        //    function(response) {
+        //        deferred.reject();
+        //    }
+        //);
+        //
+        //return deferred.promise;
     }
 
     public asyncGetDataPointsFrom(stationID) {

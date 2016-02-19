@@ -81,7 +81,7 @@ class NVD3Controller {
     private getChartOptions() {
         return {
             chart: {
-                type: 'lineWithFocusChart',
+                type: 'lineChart',
                 height: 0,
                 margin: {
                     top: 20,
