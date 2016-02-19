@@ -6,7 +6,7 @@ export = ComparePageController;
 
 class ComparePageController {
     public static name = 'ComparePageController';
-    public static $inject = ['$scope', '$http', '$log', 'selectionService', 'amsAPIService'];
+    public static $inject = ['$scope', '$http', '$log', 'selectionService', 'APIService'];
 
     public stations = [];
     public plots = [];
@@ -107,13 +107,13 @@ class ComparePageController {
         private $http,
         private $log,
         private selectionService,
-        private amsAPIService
+        private APIService
     ) {
         this.selectionService.getCurrentStationSelection();
 
         let self = this;
         let bounds = {'northEast': {'lat': 89, 'lng': 179}, 'southWest': {'lat': -89, 'lng': -179}};
-        self.amsAPIService.asyncGetMarkersInside(bounds).then(
+        self.APIService.asyncGetMarkersInside(bounds).then(
             function (response) {
                 self.stations = response;
             },

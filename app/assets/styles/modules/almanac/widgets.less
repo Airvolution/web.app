@@ -23,7 +23,17 @@ almanac-widget {
     padding-bottom: 0;
     overflow: auto;
     box-shadow: 0 0 1px @medium-darker-gray;
-    background-color: #09AA00;
+    background-color: @medium-light-gray;
+    &.green {
+      background-color: #09AA00;
+    }
+    &.yellow {
+      background-color: yellow;
+    }
+    &.red {
+      background-color: red;
+    }
+
 
     .category {
       font-size: 1em;
@@ -44,6 +54,7 @@ almanac-widget {
       border: 3px solid white;
       border-radius: 8px;
       box-shadow: 0 0 5px @white;
+      color: @white;
     }
   }
 

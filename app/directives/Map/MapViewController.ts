@@ -24,7 +24,7 @@ class MapViewController {
     public chartOptions;
     public chartData;
 
-    public static $inject = ['$scope', 'leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', '$log', 'locationService', 'amsAPIService', '$timeout'];
+    public static $inject = ['$scope', 'leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', '$log', 'locationService', 'APIService', '$timeout'];
 
     constructor(private $scope,
                 private leafletData,
@@ -33,7 +33,7 @@ class MapViewController {
                 private $http,
                 private $log,
                 private locationService,
-                private amsAPIService,
+                private APIService,
                 private $timeout) {
 
         this.detailsVisible = true;
@@ -50,7 +50,7 @@ class MapViewController {
 
         this.markers = [];
 
-        this.selectedStation = { location: {}, last: {} };
+        this.selectedStation = {location: {}, last: {}};
         //this.bounds = this.defaultMapBounds();
 
         this.layers = this.configureLayers();
@@ -405,7 +405,7 @@ class MapViewController {
 
     private onMarkerClick() {
         let self = this;
-        self.$scope.$on('leafletDirectiveMarker.map.click', function(event, args){
+        self.$scope.$on('leafletDirectiveMarker.map.click', function (event, args) {
             self.$log.log('a marker has been clicked');
 
             if (self.selectedStation && self.selectedStation.id && args.model.id == self.selectedStation.id) {
@@ -436,8 +436,8 @@ class MapViewController {
 
             self.selectedStation = model;
 
-            self.amsAPIService.asyncGetLastDataPointFrom(id).then(
-                function(response) {
+            self.APIService.asyncGetLastDataPointFrom(id).then(
+                function (response) {
                     self.selectedStation.last = {};
                     angular.forEach(response, function (datapoint) {
                         self.selectedStation.last[datapoint.parameter['name']] = {
@@ -455,7 +455,7 @@ class MapViewController {
                         self.plotVisible = false;
                     }
                 },
-                function(response) {
+                function (response) {
                     self.$log.log('last data point promise rejected: ' + response);
                 }
             );
@@ -520,7 +520,7 @@ class MapViewController {
     private getLastDataPoint(id) {
         this.loadingStationData = true;
         var self = this;
-        self.amsAPIService.asyncGetLastDataPointFrom(id).then(
+        self.APIService.asyncGetLastDataPointFrom(id).then(
             function (response) {
                 self.selectedStation.last = {};
 
@@ -597,7 +597,7 @@ class MapViewController {
         var icon = {
             type: 'div',
             iconSize: [60, 60],
-            iconAnchor:  [30, 30]
+            iconAnchor: [30, 30]
         };
 
         let marker = angular.copy(icon);
@@ -627,7 +627,7 @@ class MapViewController {
     //private updateEPAMarkers() {
     //    let self = this;
     //    let bounds = {'northEast': {'lat': 89, 'lng': 179}, 'southWest': {'lat': -89, 'lng': -179}};
-    //    self.amsAPIService.asyncGetEPAMarkersInside(bounds).then(
+    //    self.APIService.asyncGetEPAMarkersInside(bounds).then(
     //        function (response) {
     //            if (self.markers == undefined) {
     //                self.markers = response;
@@ -647,9 +647,9 @@ class MapViewController {
         let self = this;
 
         self.$log.log('*********************UpdatingMapMarkers*********************');
-        let bounds  = { 'northEast': { 'lat': 89, 'lng': 179 }, 'southWest': { 'lat': -89, 'lng': -179 } };
-        self.amsAPIService.asyncGetMarkersInside(bounds).then(
-            function(response) {
+        let bounds = {'northEast': {'lat': 89, 'lng': 179}, 'southWest': {'lat': -89, 'lng': -179}};
+        self.APIService.asyncGetMarkersInside(bounds).then(
+            function (response) {
                 self.$log.log('*********************UpdatingMapMarkers JSON RETURNING*********************');
                 let data = response.data;
 
@@ -670,7 +670,6 @@ class MapViewController {
                     }
                 }
                 self.$log.log('how many markers did we get back? ' + data.length);
-
                 if (self.markers == undefined) {
                     self.markers = data;
                     self.$log.log('marker array was empty');
@@ -680,7 +679,7 @@ class MapViewController {
                 }
 
                 self.leafletData.getMap().then(
-                    function(map) {
+                    function (map) {
                         let panes = map.getPanes();
                         console.log(panes);
                     }
@@ -710,7 +709,7 @@ class MapViewController {
                 //    }
                 //);
             },
-            function(response) {
+            function (response) {
                 self.$log.log('ams API service promise rejected: ' + response);
             }
         );
@@ -806,6 +805,7 @@ class MapViewController {
                 self.chartOptions = self.getChartOptions();
                 self.chartOptions['height'] = self.getChartHeight();
                 self.chartData = response.data;
+
                 console.log('whoa there, lets take a looksy at getDataForPlot');
             },
             function (response) {
@@ -813,7 +813,7 @@ class MapViewController {
             }
         );
 
-        //self.amsAPIService.asyncGetDataPointsFrom(stationID).then(
+        //self.APIService.asyncGetDataPointsFrom(stationID).then(
         //    function (response) {
         //        self.chartOptions = self.getChartOptions();
         //        self.chartOptions['height'] = self.getChartHeight();
@@ -827,7 +827,7 @@ class MapViewController {
 
     private getDataForEPAPlot(stationID) {
         let self = this;
-        self.amsAPIService.asyncGetDataPointsFromEPA(stationID).then(
+        self.APIService.asyncGetDataPointsFromEPA(stationID).then(
             function (response) {
                 self.chartOptions = self.getChartOptions();
                 self.chartOptions['height'] = self.getChartHeight();

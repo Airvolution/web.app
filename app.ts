@@ -3,6 +3,7 @@
 import Services = require('./app/services/module');
 import Controllers = require('./app/controllers/module');
 import Directives = require('./app/directives/module');
+import Widgets = require('./app/widgets/module');
 
 angular.module('app', [
         'nemLogging',
@@ -11,6 +12,7 @@ angular.module('app', [
         Services.name,
         Controllers.name,
         Directives.name,
+        Widgets.name,
         'nvd3',
         'ngStorage',
         'ui.bootstrap',
