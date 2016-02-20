@@ -1,12 +1,10 @@
+///<reference path='../../../typings/tsd.d.ts'/>
+
 export = FAQController;
 
 class FAQController {
     public static name = 'FAQController';
     public static $inject = ['$scope', '$location', '$anchorScroll'];
-
-    let _scope;
-    let _location;
-    let _anchorScroll;
 
     constructor(
         private $scope,
@@ -15,17 +13,10 @@ class FAQController {
     ) {
         console.log('FAQController constructor');
 
-        _scope = $scope;
-
-        $scope.scrollTo = (id)=> {
+        $scope.scrollTo = function(id) {
             $location.hash(id);
             $anchorScroll();
         };
     };
-
-    public scrollTo(id) {
-        $location.hash(id);
-        $anchorScroll();
-    }
 };
 

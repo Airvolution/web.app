@@ -1,46 +1,55 @@
-<main ng-controller="FAQController as pctrl" id="faqWrapper">
-    faq
-
-    <faq class="col-md-8">
+<main ng-controller="FAQController">
+    <faq>
         <faq-menu>
-            <li><a ng-click="scrollTo('section1')">Section 1</a>
-            <li><a ng-click="scrollTo('section2')">Section 2</a>
-            <li><a ng-click="scrollTo('section3')">Section 3</a>
+            <li><a ng-click="scrollTo('section1')">General</a></li>
+            <li><a ng-click="scrollTo('section2')">Pollutants</a></li>
+            <li><a ng-click="scrollTo('section3')">What Can I Do To Reduce Pollution?</a></li>
+            <li><a ng-click="scrollTo('section4')">Map Controls</a></li>
         </faq-menu>
 
-        <h2 id="section1">Section 1</h2>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec leo est. Mauris nulla lacus, condimentum nec tempor eget, sagittis ac massa. Morbi pulvinar, sapien vel tincidunt consectetur, nisl lectus dapibus mi, sit amet efficitur justo dui dapibus enim. Duis feugiat dui ac purus varius interdum. Mauris hendrerit felis urna, sed venenatis mauris dictum nec. Suspendisse malesuada dolor a ante lobortis, maximus posuere mi euismod. Morbi eleifend eget eros vel facilisis. Vestibulum sollicitudin elementum mollis. Cras semper diam sit amet rhoncus sodales. Nulla maximus justo enim, a venenatis nisl rhoncus id.
-
-        Sed iaculis vulputate enim eu auctor. Sed tristique maximus elit ac aliquet. Donec mollis congue tempus. Vivamus facilisis mi sapien, non vulputate sem ullamcorper ac. Nunc hendrerit magna vitae pharetra faucibus. Nunc risus augue, mattis id convallis fermentum, fermentum at justo. Donec vehicula, ligula vel consectetur eleifend, orci velit feugiat dolor, sit amet faucibus elit diam in nibh. Vivamus sit amet mi quam. Etiam convallis ut quam at gravida. Donec imperdiet sapien eu tempus dictum. Quisque auctor urna in odio convallis, sed feugiat enim tincidunt. Praesent neque justo, placerat eget purus nec, cursus dapibus augue.
-
-        Nunc consectetur lectus quam, in sollicitudin orci mollis nec. Maecenas maximus dolor condimentum, sollicitudin risus eget, congue tortor. Mauris convallis nisi a lorem congue elementum. Aliquam blandit ullamcorper tristique. Aenean aliquam dolor magna, faucibus porta massa lobortis a. Aenean gravida, purus in viverra porta, nulla purus vestibulum enim, ac vulputate nunc ligula vel leo. Fusce at lacinia ligula. Morbi vehicula condimentum lacus ac pellentesque. Cras vitae nulla ut eros cursus euismod eu at ligula. Nullam condimentum est massa, eget laoreet magna rutrum et. Ut consectetur, est nec commodo tempus, risus mauris laoreet lacus, at posuere metus turpis porta neque. Duis tincidunt nulla vitae arcu elementum, id ornare eros lobortis.
-
-        Donec egestas nunc vitae lacus luctus molestie. Quisque pretium, turpis a tincidunt vehicula, lectus sapien tempor dolor, eu elementum quam dolor quis diam. Sed suscipit varius quam, non facilisis nisl gravida in. Quisque volutpat elit ullamcorper elit porta cursus. Donec eget odio id leo suscipit mollis. Vivamus iaculis posuere orci sed auctor. Proin magna magna, sollicitudin a placerat a, dignissim quis magna. Morbi cursus sapien sed neque laoreet, ac blandit metus lobortis. Donec pretium fermentum ante, lacinia vehicula turpis aliquet efficitur. Etiam laoreet erat mi, in efficitur nunc ultrices at.
-
-        Mauris sed orci a lacus ultricies tristique id eget risus. Mauris dignissim sed lorem in sollicitudin. Ut dignissim odio vel nulla eleifend, at aliquet justo faucibus. Praesent viverra convallis ullamcorper. Duis ut quam dui. Maecenas vestibulum imperdiet tristique. Vestibulum tempor erat nec dolor condimentum pharetra. Maecenas sem lectus, fringilla non euismod at, suscipit fermentum orci. Proin ultricies blandit quam, in convallis odio lobortis non. Etiam hendrerit eros non arcu auctor tristique. Aenean facilisis hendrerit semper. Integer ornare sodales auctor. Sed et varius mi. Vestibulum quis fringilla odio, eu mollis massa. Praesent rhoncus rhoncus leo, eget tristique nulla suscipit at. Etiam placerat elementum enim eget commodo.
-
-
-        <h2 id="section2">Section 2</h2>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec leo est. Mauris nulla lacus, condimentum nec tempor eget, sagittis ac massa. Morbi pulvinar, sapien vel tincidunt consectetur, nisl lectus dapibus mi, sit amet efficitur justo dui dapibus enim. Duis feugiat dui ac purus varius interdum. Mauris hendrerit felis urna, sed venenatis mauris dictum nec. Suspendisse malesuada dolor a ante lobortis, maximus posuere mi euismod. Morbi eleifend eget eros vel facilisis. Vestibulum sollicitudin elementum mollis. Cras semper diam sit amet rhoncus sodales. Nulla maximus justo enim, a venenatis nisl rhoncus id.
-
-        Sed iaculis vulputate enim eu auctor. Sed tristique maximus elit ac aliquet. Donec mollis congue tempus. Vivamus facilisis mi sapien, non vulputate sem ullamcorper ac. Nunc hendrerit magna vitae pharetra faucibus. Nunc risus augue, mattis id convallis fermentum, fermentum at justo. Donec vehicula, ligula vel consectetur eleifend, orci velit feugiat dolor, sit amet faucibus elit diam in nibh. Vivamus sit amet mi quam. Etiam convallis ut quam at gravida. Donec imperdiet sapien eu tempus dictum. Quisque auctor urna in odio convallis, sed feugiat enim tincidunt. Praesent neque justo, placerat eget purus nec, cursus dapibus augue.
-
-        Nunc consectetur lectus quam, in sollicitudin orci mollis nec. Maecenas maximus dolor condimentum, sollicitudin risus eget, congue tortor. Mauris convallis nisi a lorem congue elementum. Aliquam blandit ullamcorper tristique. Aenean aliquam dolor magna, faucibus porta massa lobortis a. Aenean gravida, purus in viverra porta, nulla purus vestibulum enim, ac vulputate nunc ligula vel leo. Fusce at lacinia ligula. Morbi vehicula condimentum lacus ac pellentesque. Cras vitae nulla ut eros cursus euismod eu at ligula. Nullam condimentum est massa, eget laoreet magna rutrum et. Ut consectetur, est nec commodo tempus, risus mauris laoreet lacus, at posuere metus turpis porta neque. Duis tincidunt nulla vitae arcu elementum, id ornare eros lobortis.
-
-        Donec egestas nunc vitae lacus luctus molestie. Quisque pretium, turpis a tincidunt vehicula, lectus sapien tempor dolor, eu elementum quam dolor quis diam. Sed suscipit varius quam, non facilisis nisl gravida in. Quisque volutpat elit ullamcorper elit porta cursus. Donec eget odio id leo suscipit mollis. Vivamus iaculis posuere orci sed auctor. Proin magna magna, sollicitudin a placerat a, dignissim quis magna. Morbi cursus sapien sed neque laoreet, ac blandit metus lobortis. Donec pretium fermentum ante, lacinia vehicula turpis aliquet efficitur. Etiam laoreet erat mi, in efficitur nunc ultrices at.
-
-        Mauris sed orci a lacus ultricies tristique id eget risus. Mauris dignissim sed lorem in sollicitudin. Ut dignissim odio vel nulla eleifend, at aliquet justo faucibus. Praesent viverra convallis ullamcorper. Duis ut quam dui. Maecenas vestibulum imperdiet tristique. Vestibulum tempor erat nec dolor condimentum pharetra. Maecenas sem lectus, fringilla non euismod at, suscipit fermentum orci. Proin ultricies blandit quam, in convallis odio lobortis non. Etiam hendrerit eros non arcu auctor tristique. Aenean facilisis hendrerit semper. Integer ornare sodales auctor. Sed et varius mi. Vestibulum quis fringilla odio, eu mollis massa. Praesent rhoncus rhoncus leo, eget tristique nulla suscipit at. Etiam placerat elementum enim eget commodo.
-
-
-        <h2 id="section3">Section 3</h2>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec leo est. Mauris nulla lacus, condimentum nec tempor eget, sagittis ac massa. Morbi pulvinar, sapien vel tincidunt consectetur, nisl lectus dapibus mi, sit amet efficitur justo dui dapibus enim. Duis feugiat dui ac purus varius interdum. Mauris hendrerit felis urna, sed venenatis mauris dictum nec. Suspendisse malesuada dolor a ante lobortis, maximus posuere mi euismod. Morbi eleifend eget eros vel facilisis. Vestibulum sollicitudin elementum mollis. Cras semper diam sit amet rhoncus sodales. Nulla maximus justo enim, a venenatis nisl rhoncus id.
-
-        Sed iaculis vulputate enim eu auctor. Sed tristique maximus elit ac aliquet. Donec mollis congue tempus. Vivamus facilisis mi sapien, non vulputate sem ullamcorper ac. Nunc hendrerit magna vitae pharetra faucibus. Nunc risus augue, mattis id convallis fermentum, fermentum at justo. Donec vehicula, ligula vel consectetur eleifend, orci velit feugiat dolor, sit amet faucibus elit diam in nibh. Vivamus sit amet mi quam. Etiam convallis ut quam at gravida. Donec imperdiet sapien eu tempus dictum. Quisque auctor urna in odio convallis, sed feugiat enim tincidunt. Praesent neque justo, placerat eget purus nec, cursus dapibus augue.
-
-        Nunc consectetur lectus quam, in sollicitudin orci mollis nec. Maecenas maximus dolor condimentum, sollicitudin risus eget, congue tortor. Mauris convallis nisi a lorem congue elementum. Aliquam blandit ullamcorper tristique. Aenean aliquam dolor magna, faucibus porta massa lobortis a. Aenean gravida, purus in viverra porta, nulla purus vestibulum enim, ac vulputate nunc ligula vel leo. Fusce at lacinia ligula. Morbi vehicula condimentum lacus ac pellentesque. Cras vitae nulla ut eros cursus euismod eu at ligula. Nullam condimentum est massa, eget laoreet magna rutrum et. Ut consectetur, est nec commodo tempus, risus mauris laoreet lacus, at posuere metus turpis porta neque. Duis tincidunt nulla vitae arcu elementum, id ornare eros lobortis.
-
-        Donec egestas nunc vitae lacus luctus molestie. Quisque pretium, turpis a tincidunt vehicula, lectus sapien tempor dolor, eu elementum quam dolor quis diam. Sed suscipit varius quam, non facilisis nisl gravida in. Quisque volutpat elit ullamcorper elit porta cursus. Donec eget odio id leo suscipit mollis. Vivamus iaculis posuere orci sed auctor. Proin magna magna, sollicitudin a placerat a, dignissim quis magna. Morbi cursus sapien sed neque laoreet, ac blandit metus lobortis. Donec pretium fermentum ante, lacinia vehicula turpis aliquet efficitur. Etiam laoreet erat mi, in efficitur nunc ultrices at.
-
-        Mauris sed orci a lacus ultricies tristique id eget risus. Mauris dignissim sed lorem in sollicitudin. Ut dignissim odio vel nulla eleifend, at aliquet justo faucibus. Praesent viverra convallis ullamcorper. Duis ut quam dui. Maecenas vestibulum imperdiet tristique. Vestibulum tempor erat nec dolor condimentum pharetra. Maecenas sem lectus, fringilla non euismod at, suscipit fermentum orci. Proin ultricies blandit quam, in convallis odio lobortis non. Etiam hendrerit eros non arcu auctor tristique. Aenean facilisis hendrerit semper. Integer ornare sodales auctor. Sed et varius mi. Vestibulum quis fringilla odio, eu mollis massa. Praesent rhoncus rhoncus leo, eget tristique nulla suscipit at. Etiam placerat elementum enim eget commodo.
+        <question-container class="col-md-8 col-md-offset-2">
+            <h1>Frequently Asked Question (FAQ)</h1>
+            <h2 id="section1">General</h2>
+            <p>
+                <question>
+                   <h4>Question1</h4>
+                </question>
+                <answer>
+                    asd
+                </answer>
+            </p>
+            <h2 id="section2">Pollutants</h2>
+            <p>
+                <question>
+                    <h4>What is Ozone (O3)?</h4>
+                </question>
+                <answer>
+                    <p>
+                        Ozone is a chemical compound formed by 3 oxygen molecules. There are 2 “kinds" of Ozone. The “good” kind that exists high above the earth’s surface that protects us from harmful UV rays. The “bad” kind that forms near the earth’s surface that poses health risks. The “bad” Ozone forms as a chemical reaction near earth’s surface when man-made systems (industrial facilities, motor vehicles, etc) exhaust oxide of nitrogen (NOx) and volatile organic compounds (VOC) in addition to sunlight. Ozone is considered a seasonal summer pollutant when sunlight is strongest and hot temperatures are ideal for ozone formation.
+                    </p>
+                    <p>
+                        Ozone has directly linked to health problems including throat irritation, chest pain, coughing, and can aggravate asthma, bronchitis, reduced lung function, and emphysema.
+                    </p>
+                </answer>
+            </p>
+            <h2 id="section3">What Can I Do To Reduce Pollution?</h2>
+            <p>
+                <question>
+                    <h4>Question1</h4>
+                </question>
+                <answer>
+                    answer
+                </answer>
+            </p>
+            <h2 id="section4">Map Controls</h2>
+            <p>
+                <question>
+                    <h4>Question1</h4>
+                </question>
+                <answer>
+                    answer
+                </answer>
+            </p>
+        </question-container>
     </faq>
 </main>

@@ -1,4 +1,4 @@
-///<referecnce path='../../typings/tsd.d.ts'/>
+///<reference path='../../../typings/tsd.d.ts'/>
 
 // import Globals = require('../../Globals');
 
