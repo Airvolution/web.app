@@ -1,26 +1,24 @@
 <main ng-controller="AboutUsController as ctrl">
-    <about-us class="col-md-8 col-md-offset-2">
+    <div class="col-md-8 col-md-offset-2 about-us">
         <h1>About Us</h1>
-        <p>
+        <p class="indent">
             Welcome to AirU. AirU is a web application providing air quality statistics and visualizations for both the casual user and the atmospheric scientist.
-        </p>
-        <p>
             We provide an interactive map that allows users to focus on specific air monitoring stations and to see a pollution layer that displays the level of pollutants in the area.
         </p>
-        <p>
+        <p class="indent">
             For the researcher, multiple stations may be selected, saved as groups, and their data compared with that from other stations and the EPA. For the general user, air quality can be checked at a glance to determine how long it is safe to be outside.
         </p>
-        <p>
+        <p class="indent">
             Our content is user driven, meaning you can contribute to the project by connecting your own air monitoring station to the site. From checking the current air quality conditions in Salt Lake to downloading the last twelve months of air quality data in your neighborhood, AirU has got you covered.
         </p>
-        <profiles>
-            <profile class="col-md-6" ng-repeat="value in ctrl.profiles">
-                <img class="col-md-12" src="{{value.picturePath}}" alt="{{value.name}}">
-                <span class="col-md-12">{{value.name}}</span>
+        <div class="col-md-12" ng-repeat="value in ctrl.profiles">
+            <div class="col-md-6 profile">
+                <h4 class="col-md-12">{{value.name}}</h4>
                 <span class="col-md-12">Involvement: {{value.involvement}}</span>
                 <a class="col-md-12" href="{{value.githubUrl}}">GitHub</a>
                 <a class="col-md-12" href="{{value.linkedInUrl}}">LinkedIn</a>
-            </profile>
-        </profiles>
-    </about-us>
+                <img class="col-md-12 image-padding" src="{{value.picturePath}}" alt="{{value.name}}">
+            </div>
+        </div>
+    </div>
 </main>
