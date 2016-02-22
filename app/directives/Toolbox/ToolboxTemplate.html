@@ -1,0 +1,17 @@
+<div class="toolbox" ng-class="{'expanded':ctrl.expanded,'hidden':!ctrl.visible}">
+    <div class="toolbox-wrapper expanded">
+        <tool expanded="ctrl.expanded">
+            <i class="fa fa-facebook"></i>
+        </tool>
+        <tool expanded="ctrl.expanded">
+            <i class="fa fa-facebook"></i>
+        </tool>
+
+        <div class="toolbox-expander" ng-click="ctrl.toggleExpand()">
+            <div class="expander-wrapper">
+                <i class="fa fa-chevron-right" ng-class="{'fa-chevron-right':!ctrl.expanded, 'fa-chevron-left':ctrl.expanded}"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
