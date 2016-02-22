@@ -28,7 +28,6 @@ class WeatherController {
                 self.updateTemperaturesByCoordinates(response.lat, response.lng);
             },
             function (response) {
-                self.updateTemperaturesByCoordinates(40.490562, -111.880033);
                 self.$log.log('location service promise rejected: ' + response);
             }
         );
