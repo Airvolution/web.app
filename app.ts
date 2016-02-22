@@ -74,6 +74,22 @@ angular.module('app', [
             })
             .state('error', {
                 templateUrl: 'app/templates/404.html'
+            })
+            .state('aboutUs', {
+                url: '/aboutus',
+                templateUrl: 'app/templates/aboutUs.html'
+            })
+            .state('contactUs', {
+                url: '/contactus',
+                templateUrl: 'app/templates/contactUs.html'
+            })
+            .state('faq', {
+                url: '/faq',
+                templateUrl: 'app/templates/faq.html'
+            })
+            .state('disclaimer', {
+                url: '/disclaimer',
+                templateUrl: 'app/templates/disclaimer.html'
             });
 
         $httpProvider.interceptors.push('AuthInterceptorService');
