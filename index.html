@@ -19,7 +19,7 @@
         -->
         <div class="headerzone col-md-2 col-md-offset-3" id="weather" ng-controller="WeatherController as wctrl">
             <div class="weather_wrapper">
-                <i class="fa fa-sun-o fa-3x"></i>
+                <i class="wi fa-3x" ng-class="wctrl.sky"></i>
                 <i class="wi wi-thermometer fa-3x">
                 </i> <span class="high-temp">{{wctrl.currentMax}}</span>
                 <span class="low-temp">{{wctrl.currentMin}}</span>

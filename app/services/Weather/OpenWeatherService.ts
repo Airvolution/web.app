@@ -29,6 +29,7 @@ class OpenWeatherService {
         self.$http.get(url, params).then(
             function (response) {
                 self.$log.log('WEATHER success: ' + response);
+                self.$log.log('Response Data: ' + response.data);
                 let data = JSON.parse(response.data);
                 data.main.temp = self.convertKelvinToFarenheit(data.main.temp);
                 data.main.temp_max = self.convertKelvinToFarenheit(data.main.temp_max);
@@ -61,11 +62,14 @@ class OpenWeatherService {
 
         self.$http.get(url, params).then(
             function (response) {
-                self.$log.log('WEATHER success: ' + response);
+                self.$log.log('WEATHER (Coordinates) success: ' + response);
+                self.$log.log('Response Data: ' + response.data);
                 let data = JSON.parse(response.data);
                 data.main.temp = self.convertKelvinToFarenheit(data.main.temp);
                 data.main.temp_max = self.convertKelvinToFarenheit(data.main.temp_max);
                 data.main.temp_min = self.convertKelvinToFarenheit(data.main.temp_min);
+                self.$log.log('icon: ' + data.weather[0].icon);
+                data.weather.icon = self.convertToSky(data.weather[0].icon);
                 deferred.resolve(data);
             },
             function (response) {
@@ -93,7 +97,7 @@ class OpenWeatherService {
 
         self.$http.get(url, params).then(
             function (response) {
-                self.$log.log('WEATHER success: ' + response);
+                self.$log.log('WEATHER (Zip Code) success: ' + response);
                 let data = JSON.parse(response.data);
                 data.main.temp = self.convertKelvinToFarenheit(data.main.temp);
                 data.main.temp_max = self.convertKelvinToFarenheit(data.main.temp_max);
@@ -111,6 +115,43 @@ class OpenWeatherService {
         return deferred.promise;
     }
 
+    private convertToSky(icon) {
+        switch (icon) {
+            case '01d':
+                return 'wi-day-sunny';
+            case '02d':
+                return 'wi-day-cloudy';
+            case '03d':
+            case '03n':
+                return 'wi-cloud';
+            case '04d':
+            case '04n':
+                return 'wi-cloudy';
+            case '09d':
+            case '09n':
+                return 'wi-showers';
+            case '10d':
+                return 'wi-day-rain';
+            case '11d':
+            case '11n':
+                return 'wi-thunderstorm';
+            case '13d':
+            case '13n':
+                return 'wi-snow';
+            case '50d':
+            case '50n':
+                return 'wi-fog';
+            case '01n':
+                return 'wi-night-clear';
+            case '02n':
+                return 'wi-night-alt-cloudy';
+            case '10n':
+                return 'wi-night-alt-rain';
+            default:
+                return 'wi-na';
+        }
+    }
+    
     private convertKelvinToFarenheit(kelvin) {
         return Math.round((kelvin - 273.15) * 1.8 + 32);
     }
