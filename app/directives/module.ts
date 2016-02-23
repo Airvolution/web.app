@@ -6,10 +6,12 @@ import SystemNotificationDirective = require('./SystemNotification/SystemNotific
 import StationDirective = require('./Station/StationDirective');
 import AQIDirective = require('./AQI/AQIDirective');
 import MapDirectives = require('./Map/module');
+import WeatherDirective = require('./Weather/WeatherDirective');
 
 export = angular.module('directives', [
         MapDirectives.name
     ])
+            .directive(WeatherDirective.htmlName, WeatherDirective.create)
             .directive(SiteNavDirective.htmlName, SiteNavDirective.create)
             .directive(FooterDirective.htmlName, FooterDirective.create)
             .directive(SystemNotificationDirective.htmlName, SystemNotificationDirective.create)
