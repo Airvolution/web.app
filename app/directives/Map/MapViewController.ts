@@ -24,7 +24,7 @@ class MapViewController {
     public chartOptions;
     public chartData;
 
-    public static $inject = ['$scope', 'leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', '$log', 'locationService', 'APIService', '$timeout'];
+    public static $inject = ['$scope', 'leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', '$log', 'locationService', 'APIService', '$timeout', 'mapFactory'];
 
     constructor(private $scope,
                 private leafletData,
@@ -34,7 +34,8 @@ class MapViewController {
                 private $log,
                 private locationService,
                 private APIService,
-                private $timeout) {
+                private $timeout,
+                private mapFactory) {
 
         this.detailsVisible = true;
         this.plotVisible = false;
