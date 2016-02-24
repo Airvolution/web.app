@@ -1,5 +1,6 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 
+import MapFactory = require("../../services/Map/MapFactory");
 export = MapViewController;
 
 class MapViewController {
@@ -54,297 +55,25 @@ class MapViewController {
         this.selectedStation = {location: {}, last: {}};
         //this.bounds = this.defaultMapBounds();
 
-        this.layers = this.configureLayers();
-        this.events = this.registerMapEvents();
+        //this.layers = this.configureLayers();
+        this.layers = mapFactory.createMapLayers();
+        this.events = mapFactory.createMapEvents();
+        //this.events = this.registerMapEvents();
 
         this.drawCount = 0;
 
         $scope.$on('leafletDirectiveMarker.map.click', this.onMarkerClick());
+        $scope.$on('leafletDirectiveMap.map.moveend', this.onMapMove());
 
         this.updateMapMarkers();
         this.positionMapWithLocation();
-        this.configureMapMoveEvents();
+        //this.configureMapMoveEvents();
         //this.updateOverlays();
     }
 
-    private configureLayers() {
-        return {
-            baselayers: {
-                light_map: {
-                    name: 'Light Map',
-                    url: 'https://api.tiles.mapbox.com/v4/tjhooker33.o78l0n36/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g',
-                    type: 'xyz'
-                },
-                dark_map: {
-                    name: 'Dark Map',
-                    url: 'https://api.tiles.mapbox.com/v4/tjhooker33.o780o9a3/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g',
-                    type: 'xyz'
-                },
-                satellite_map: {
-                    name: 'Satellite Map',
-                    url: 'https://api.tiles.mapbox.com/v4/tjhooker33.oc2el95l/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g',
-                    type: 'xyz'
-                }
-            },
-            overlays: {
-                AL: {
-                    type: 'markercluster',
-                    name: 'Alabama',
-                    visible: true
-                },
-                AK: {
-                    type: 'markercluster',
-                    name: 'Alaska',
-                    visible: true
-                },
-                AZ: {
-                    type: 'markercluster',
-                    name: 'Arizona',
-                    visible: true
-                },
-                AR: {
-                    type: 'markercluster',
-                    name: 'Arkansas',
-                    visible: true
-                },
-                CA: {
-                    type: 'markercluster',
-                    name: 'California',
-                    visible: true
-                },
-                CO: {
-                    type: 'markercluster',
-                    name: 'Colorado',
-                    visible: true
-                },
-                CT: {
-                    type: 'markercluster',
-                    name: 'Connecticut',
-                    visible: true
-                },
-                DE: {
-                    type: 'markercluster',
-                    name: 'Delaware',
-                    visible: true
-                },
-                DC: {
-                    type: 'markercluster',
-                    name: 'District of Columbia',
-                    visible: true
-                },
-                FL: {
-                    type: 'markercluster',
-                    name: 'Florida',
-                    visible: true
-                },
-                GA: {
-                    type: 'markercluster',
-                    name: 'Georgia',
-                    visible: true
-                },
-                HI: {
-                    type: 'markercluster',
-                    name: 'Hawaii',
-                    visible: true
-                },
-                ID: {
-                    type: 'markercluster',
-                    name: 'Idaho',
-                    visible: true
-                },
-                IL: {
-                    type: 'markercluster',
-                    name: 'Illinois',
-                    visible: true
-                },
-                IN: {
-                    type: 'markercluster',
-                    name: 'Indiana',
-                    visible: true
-                },
-                IA: {
-                    type: 'markercluster',
-                    name: 'Iowa',
-                    visible: true
-                },
-                KS: {
-                    type: 'markercluster',
-                    name: 'Kansas',
-                    visible: true
-                },
-                KY: {
-                    type: 'markercluster',
-                    name: 'Kentucky',
-                    visible: true
-                },
-                LA: {
-                    type: 'markercluster',
-                    name: 'Lousiana',
-                    visible: true
-                },
-                ME: {
-                    type: 'markercluster',
-                    name: 'Maine',
-                    visible: true
-                },
-                MD: {
-                    type: 'markercluster',
-                    name: 'Maryland',
-                    visible: true
-                },
-                MA: {
-                    type: 'markercluster',
-                    name: 'Massachusetts',
-                    visible: true
-                },
-                MI: {
-                    type: 'markercluster',
-                    name: 'Michigan',
-                    visible: true
-                },
-                MN: {
-                    type: 'markercluster',
-                    name: 'Minnesota',
-                    visible: true
-                },
-                MS: {
-                    type: 'markercluster',
-                    name: 'Mississippi',
-                    visible: true
-                },
-                MO: {
-                    type: 'markercluster',
-                    name: 'Missouri',
-                    visible: true
-                },
-                MT: {
-                    type: 'markercluster',
-                    name: 'Montana',
-                    visible: true
-                },
-                NE: {
-                    type: 'markercluster',
-                    name: 'Nebraska',
-                    visible: true
-                },
-                NV: {
-                    type: 'markercluster',
-                    name: 'Nevada',
-                    visible: true
-                },
-                NH: {
-                    type: 'markercluster',
-                    name: 'New Hampshire',
-                    visible: true
-                },
-                NJ: {
-                    type: 'markercluster',
-                    name: 'New Jersey',
-                    visible: true
-                },
-                NM: {
-                    type: 'markercluster',
-                    name: 'New Mexico',
-                    visible: true
-                },
-                NY: {
-                    type: 'markercluster',
-                    name: 'New York',
-                    visible: true
-                },
-                NC: {
-                    type: 'markercluster',
-                    name: 'North Carolina',
-                    visible: true
-                },
-                ND: {
-                    type: 'markercluster',
-                    name: 'North Dakota',
-                    visible: true
-                },
-                OH: {
-                    type: 'markercluster',
-                    name: 'Ohio',
-                    visible: true
-                },
-                OK: {
-                    type: 'markercluster',
-                    name: 'Oklahoma',
-                    visible: true
-                },
-                OR: {
-                    type: 'markercluster',
-                    name: 'Oregon',
-                    visible: true
-                },
-                PA: {
-                    type: 'markercluster',
-                    name: 'Pennsylvania',
-                    visible: true
-                },
-                RI: {
-                    type: 'markercluster',
-                    name: 'Rhode Island',
-                    visible: true
-                },
-                SC: {
-                    type: 'markercluster',
-                    name: 'South Carolina',
-                    visible: true
-                },
-                SD: {
-                    type: 'markercluster',
-                    name: 'South Dakota',
-                    visible: true
-                },
-                TN: {
-                    type: 'markercluster',
-                    name: 'Tennessee',
-                    visible: true
-                },
-                TX: {
-                    type: 'markercluster',
-                    name: 'Texas',
-                    visible: true
-                },
-                UT: {
-                    type: 'markercluster',
-                    name: 'Utah',
-                    visible: true
-                },
-                VT: {
-                    type: 'markercluster',
-                    name: 'Vermont',
-                    visible: true
-                },
-                VA: {
-                    type: 'markercluster',
-                    name: 'Virginia',
-                    visible: true
-                },
-                WA: {
-                    type: 'markercluster',
-                    name: 'Washington',
-                    visible: true
-                },
-                WV: {
-                    type: 'markercluster',
-                    name: 'West Virginia',
-                    visible: true
-                },
-                WI: {
-                    type: 'markercluster',
-                    name: 'Wisconsin',
-                    visible: true
-                },
-                WY: {
-                    type: 'markercluster',
-                    name: 'Wyoming',
-                    visible: true
-                }
-            }
-        };
-    }
+    //private configureLayers() {
+    //
+    //}
 
     //private configureOverlays() {
     //    return {
@@ -363,17 +92,17 @@ class MapViewController {
     //    };
     //}
 
-    private registerMapEvents() {
-        return {
-            map: {
-                enable: ['moveend'],
-                logic: 'emit'
-            },
-            markers: {
-                enable: this.leafletMarkerEvents.getAvailableEvents()
-            }
-        };
-    }
+    //private registerMapEvents() {
+    //    return {
+    //        map: {
+    //            enable: ['moveend'],
+    //            logic: 'emit'
+    //        },
+    //        markers: {
+    //            enable: this.leafletMarkerEvents.getAvailableEvents()
+    //        }
+    //    };
+    //}
 
     //private defaultMapBounds() {
     //    return this.leafletBoundsHelpers.createBoundsFromArray([
@@ -404,6 +133,18 @@ class MapViewController {
         });
     }
 
+    private onMapMove() {
+        // This updates $scope.bounds because leaflet bounds are not updating automatically
+        let self = this;
+        self.leafletData.getMap().then(
+            function (map) {
+                self.bounds = map.getBounds();
+                self.$log.log('updating map bounds');
+                self.$log.log('zoom: ' + map.getZoom());
+            }
+        );
+    }
+
     private onMarkerClick() {
         let self = this;
         self.$scope.$on('leafletDirectiveMarker.map.click', function (event, args) {
@@ -415,71 +156,46 @@ class MapViewController {
                 return;
             }
 
-            let model = args.model;
-            let id = model.id;
-            //if (id == 'Box Elder County' || id == 'Cache County' || id == 'Price' || id == 'Davis County' || id == 'Duchesne County' || id == 'Salt Lake County' || id == 'Tooele County' || id == 'Uintah County' || id == 'Utah County' || id == 'Washington County' || id == 'Weber County') {
-            //
-            //    self.selectedStation = { location: {}, last: {} };
-            //
-            //    self.selectedStation.id           = model.station_Id;
-            //    self.selectedStation.location.lat = model.lat;
-            //    self.selectedStation.location.lng = model.lng;
-            //
-            //    // TODO: get latest values from deq site
-            //
-            //    self.detailsVisible = true;
-            //
-            //    if (self.plotVisible) {
-            //        self.plotVisible = false;
-            //    }
-            //    return;
-            //}
-
-            self.selectedStation = model;
-
-            self.APIService.asyncGetLastDataPointFrom(id).then(
+            self.selectedStation = args.model;
+            self.mapFactory.getLastDataPointFromStation(self.selectedStation.id).then(
                 function (response) {
-                    self.selectedStation.last = {};
-                    angular.forEach(response, function (datapoint) {
-                        self.selectedStation.last[datapoint.parameter['name']] = {
-                            name: datapoint.parameter['name'],
-                            value: datapoint.value,
-                            unit: datapoint.parameter['unit']
-                        };
-                        // TODO: Convert UTC to LOCAL Time
-                        self.selectedStation['lastUpdated'] = datapoint['time'];
-                    });
+                    self.selectedStation.last = response.lastDataPoint;
+                    self.selectedStation.lastUpdated = response.lastUpdated;
 
                     self.detailsVisible = true;
-
                     if (self.plotVisible) {
                         self.plotVisible = false;
                     }
                 },
                 function (response) {
-                    self.$log.log('last data point promise rejected: ' + response);
+                    // error
                 }
             );
+
+            //self.APIService.asyncGetLastDataPointFrom(id).then(
+            //    function (response) {
+            //        self.selectedStation.last = {};
+            //        angular.forEach(response, function (datapoint) {
+            //            self.selectedStation.last[datapoint.parameter['name']] = {
+            //                name: datapoint.parameter['name'],
+            //                value: datapoint.value,
+            //                unit: datapoint.parameter['unit']
+            //            };
+            //            // TODO: Convert UTC to LOCAL Time
+            //            self.selectedStation['lastUpdated'] = datapoint['time'];
+            //        });
+            //
+            //        self.detailsVisible = true;
+            //
+            //        if (self.plotVisible) {
+            //            self.plotVisible = false;
+            //        }
+            //    },
+            //    function (response) {
+            //        self.$log.log('last data point promise rejected: ' + response);
+            //    }
+            //);
         });
-        //var self = this;
-        //return (event, args)=> {
-        //    self.$log.log('a marker has been clicked');
-        //
-        //    var id = args.model.id || args.model.deviceID;
-        //    if (self.selectedStation && self.selectedStation.id && id == self.selectedStation.id) {
-        //        self.toggleDetails(false);
-        //        self.selectedStation = undefined;
-        //        return;
-        //    }
-        //    self.selectedStation = {location: {}, last: {}};
-        //    self.selectedStation.id = id;
-        //    self.selectedStation.location.lat = args.model.lat;
-        //    self.selectedStation.location.lng = args.model.lng;
-        //    if (!self.isEPAStation(id)) {
-        //        self.getLastDataPoint(id);
-        //        return;
-        //    }
-        //};
     }
 
     private togglePlot(visible?) {
