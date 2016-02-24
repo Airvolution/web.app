@@ -7,10 +7,9 @@ app.use('/api',proxy('localhost:2307',{
         return '/'+require('url').parse(req.url).path;
     }
 }));
-//
-//app.use('/api',proxy('http://localhost:2307',{
+//app.use('/api',proxy('http://dev.air.eng.utah.edu',{
 //    forwardPath: function(req, res){
-//        return require('url').parse(req.url).path;
+//        return '/api/'+require('url').parse(req.url).path;
 //    }
 //}));
 
