@@ -11,12 +11,9 @@ class MapViewController {
     public selectedStation;
     public loadingStationData;
 
-    private drawCount;
-
     public controls;
     public center;
-    public minZoom;
-    public maxZoom;
+    public defaults;
     public markers;
     public bounds;
     public events;
@@ -40,27 +37,13 @@ class MapViewController {
 
         this.detailsVisible = true;
         this.plotVisible = false;
-        this.minZoom = 5;
-        this.maxZoom = 12;
-
-        // middle of continental US
-        this.center = {
-            lat: 39.994157,
-            lng: -97.722896,
-            zoom: 5
-        };
-
         this.markers = [];
-
         this.selectedStation = {location: {}, last: {}};
-        //this.bounds = this.defaultMapBounds();
 
-        //this.layers = this.configureLayers();
+        this.defaults = mapFactory.getDefaults();
+        this.center = mapFactory.getCenter();
         this.layers = mapFactory.createMapLayers();
         this.events = mapFactory.createMapEvents();
-        //this.events = this.registerMapEvents();
-
-        this.drawCount = 0;
 
         $scope.$on('leafletDirectiveMarker.map.click', this.onMarkerClick());
         $scope.$on('leafletDirectiveMap.map.moveend', this.onMapMove());
@@ -136,13 +119,15 @@ class MapViewController {
     private onMapMove() {
         // This updates $scope.bounds because leaflet bounds are not updating automatically
         let self = this;
-        self.leafletData.getMap().then(
-            function (map) {
-                self.bounds = map.getBounds();
-                self.$log.log('updating map bounds');
-                self.$log.log('zoom: ' + map.getZoom());
-            }
-        );
+        self.$scope.$on('leafletDirectiveMap.map.moveend', function() {
+            self.leafletData.getMap().then(
+                function (map) {
+                    self.bounds = map.getBounds();
+                    self.$log.log('updating map bounds');
+                    self.$log.log('zoom: ' + map.getZoom());
+                }
+            );
+        });
     }
 
     private onMarkerClick() {

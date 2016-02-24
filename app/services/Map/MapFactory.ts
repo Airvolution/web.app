@@ -15,6 +15,22 @@ class MapFactory {
         $log.log('A Map Factory has been born.');
     }
 
+    public getDefaults() {
+        return {
+            minZoom: 4,
+            maxZoom: 16
+        };
+    }
+
+    public getCenter() {
+        // middle of continental US
+        return {
+            lat: 39.994157,
+            lng: -97.722896,
+            zoom: 5
+        };
+    }
+
     public getLastDataPointFromStation(id) {
         var deferred = this.$q.defer();
 
