@@ -1,6 +1,4 @@
-///<referecnce path='../../typings/tsd.d.ts'/>
-
-declare let d3;
+/// <reference path='../../../typings/tsd.d.ts'/>
 
 export = NVD3Controller;
 
@@ -8,12 +6,12 @@ class NVD3Controller {
     public static name = 'NVD3Controller';
     public options;
     public data;
-    public static $inject = ['$scope', '$http', '$log', 'amsAPIService'];
+    public static $inject = ['$scope', '$http', '$log', 'APIService'];
     constructor(
         private $scope,
         private $http,
         private $log,
-        private amsAPIService
+        private APIService
     ) {
 
     }
@@ -54,7 +52,7 @@ class NVD3Controller {
 
     private getDataForPlot(stationID) {
         let self = this;
-        self.amsAPIService.asyncGetDataPointsFrom(stationID).then(
+        self.APIService.asyncGetDataPointsFrom(stationID).then(
             function(response) {
                 self.options = self.getChartOptions();
                 self.options['height'] = self.getChartHeight();
@@ -68,7 +66,7 @@ class NVD3Controller {
 
     private getDataForEPAPlot(stationID) {
         let self = this;
-        self.amsAPIService.asyncGetDataPointsFromEPA(stationID).then(
+        self.APIService.asyncGetDataPointsFromEPA(stationID).then(
             function(response) {
                 self.options = self.getChartOptions();
                 self.options['height'] = self.getChartHeight();
@@ -83,7 +81,7 @@ class NVD3Controller {
     private getChartOptions() {
         return {
             chart: {
-                type: 'lineWithFocusChart',
+                type: 'lineChart',
                 height: 0,
                 margin: {
                     top: 20,

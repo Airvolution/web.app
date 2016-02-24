@@ -3,6 +3,7 @@
 import Services = require('./app/services/module');
 import Controllers = require('./app/controllers/module');
 import Directives = require('./app/directives/module');
+import Widgets = require('./app/widgets/module');
 
 angular.module('app', [
         'nemLogging',
@@ -11,11 +12,13 @@ angular.module('app', [
         Services.name,
         Controllers.name,
         Directives.name,
+        Widgets.name,
         'nvd3',
         'ngStorage',
         'ui.bootstrap',
         'ngAnimate',
-        'angularMoment'
+        'angularMoment',
+        'ngMaterial'
     ])
     .config(($stateProvider, $urlRouterProvider, $httpProvider) => {
         $urlRouterProvider.otherwise('/map');
@@ -47,7 +50,7 @@ angular.module('app', [
             })
             .state('almanac', {
                 url: '/almanac',
-                templateUrl: 'app/templates/alamanac.html'
+                template: '<almanac-view></almanac-view>'
             })
             .state('compare', {
                 url: '/compare',
@@ -71,6 +74,22 @@ angular.module('app', [
             })
             .state('error', {
                 templateUrl: 'app/templates/404.html'
+            })
+            .state('aboutUs', {
+                url: '/aboutus',
+                templateUrl: 'app/templates/aboutUs.html'
+            })
+            .state('contactUs', {
+                url: '/contactus',
+                templateUrl: 'app/templates/contactUs.html'
+            })
+            .state('faq', {
+                url: '/faq',
+                templateUrl: 'app/templates/faq.html'
+            })
+            .state('disclaimer', {
+                url: '/disclaimer',
+                templateUrl: 'app/templates/disclaimer.html'
             });
 
         $httpProvider.interceptors.push('AuthInterceptorService');

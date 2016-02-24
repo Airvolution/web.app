@@ -1,5 +1,5 @@
 <main>
-    <leaflet id="map" lf-center="ctrl.center" markers="ctrl.markers" layers="ctrl.layers" event-broadcast="ctrl.events"></leaflet>
+    <leaflet id="map" lf-center="ctrl.center" markers="ctrl.markers" layers="ctrl.layers" controls="ctrl.controls" event-broadcast="ctrl.events"></leaflet>
 
     <!-- Coordinate bounds of Map for development purposes -->
     <div ng-class="{'hidden':true}" class="col-md-12" id="map-coords">
@@ -20,11 +20,11 @@
     </div>
 
     <!-- This is the NVD3 data plot that is linked with the Details Panel -->
-    <div id="details-plot" ng-class="{'hidden':!ctrl.plotVisible}" class="col-md-12" ng-controller="NVD3Controller as cctrl">
-        <nvd3 options="cctrl.options" data="cctrl.data"></nvd3>
+    <div id="details-plot" ng-class="{'hidden':!ctrl.plotVisible}" class="col-md-12">
+        <nvd3 options="ctrl.chartOptions" data="ctrl.chartData"></nvd3>
         <!-- An SVG object will be here when built -->
     </div>
 
-    <button id="map-plot-btn" ng-click="ctrl.plotVisible = !ctrl.plotVisible" class="btn btn-default">{{ctrl.plotVisible ? 'Hide' : 'Show' }} Plot</button>
-    <map-details visible="ctrl.detailsVisible" station="ctrl.selectedStation"></map-details>
+    <button ng-hide="false" id="map-plot-btn" ng-click="ctrl.showStationChart()" class="btn btn-default">{{ctrl.plotVisible ? 'Hide' : 'Show' }} Plot</button>
+    <map-details visible="ctrl.detailsVisible" station="ctrl.selectedStation" loading="ctrl.loadingStationData"></map-details>
 </main>

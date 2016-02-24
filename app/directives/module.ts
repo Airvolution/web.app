@@ -7,9 +7,11 @@ import StationDirective = require('./Station/StationDirective');
 import AQIDirective = require('./AQI/AQIDirective');
 import MapDirectives = require('./Map/module');
 import WeatherDirective = require('./Weather/WeatherDirective');
+import AlmanacDirectives = require('./Almanac/module');
 
 export = angular.module('directives', [
-        MapDirectives.name
+        MapDirectives.name,
+        AlmanacDirectives.name
     ])
             .directive(WeatherDirective.htmlName, WeatherDirective.create)
             .directive(SiteNavDirective.htmlName, SiteNavDirective.create)

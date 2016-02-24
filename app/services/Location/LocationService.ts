@@ -18,7 +18,19 @@ class LocationService {
         var deferred = this.$q.defer();
 
         let self = this;
-        let url = 'http://freegeoip.net/json/';// data.ip data.latitude data.longitude
+
+        if (self.data != undefined) {
+            self.$log.log('location already saved');
+            deferred.resolve({
+                lat: self.data['latitude'],
+                lng: self.data['longitude']
+            });
+        } else {
+            self.$log.log('looking up location');
+        }
+
+        let url = 'http://freegeoip.net/json/';
+
         self.$http.get(url).then(
             function(response) {
                 self.$log.log('ip address: ' + response.data.ip);

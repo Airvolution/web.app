@@ -1,0 +1,86 @@
+almanac-widget {
+  position: absolute;
+  border: 1px solid black;
+
+  &[widget-size="small"] {
+    width: 150px;
+    height: 310px;
+  }
+  &[widget-size="medium"] {
+    width: 310px;
+    height: 310px;
+  }
+  &[widget-size="large"] {
+    width: 470px;
+    height: 310px;
+  }
+  box-shadow: 0 5px 10px @dark-gray;
+  text-align: left;
+  background-color: white;
+
+  .card-header {
+    padding: 1em;
+    padding-bottom: 0;
+    overflow: auto;
+    box-shadow: 0 0 1px @medium-darker-gray;
+    background-color: @medium-light-gray;
+    &.green {
+      background-color: #09AA00;
+    }
+    &.yellow {
+      background-color: yellow;
+    }
+    &.red {
+      background-color: red;
+    }
+
+
+    .category {
+      font-size: 1em;
+      color: @light-gray;
+      font-weight: bold;
+      text-shadow: 1px 1px 1px black;
+    }
+
+    .title {
+      font-size: 1.5em;
+      color: white;
+      font-weight: bolder;
+      text-shadow: 1px 1px 2px black;
+    }
+
+    .emoji {
+      vertical-align: text-bottom;
+      border: 3px solid white;
+      border-radius: 8px;
+      box-shadow: 0 0 5px @white;
+      color: @white;
+    }
+  }
+
+  .card-body {
+    padding: 1em;
+    padding-top: 0;
+
+    .value {
+      font-size: 7em;
+      text-align: center;
+      //color: #09AA00;
+      //text-shadow:
+      //  -1px -1px 0 #000,
+      //   1px -1px 0 #000,
+      //  -1px  1px 0 #000,
+      //   1px  1px 0 #000;;
+    }
+
+    .description {
+      font-size: 1em;
+    }
+  }
+
+  .actions {
+    padding: 1em;
+    border-top: 1px solid @medium-light-gray;
+  }
+}
+

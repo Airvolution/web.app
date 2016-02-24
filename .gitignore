@@ -2,9 +2,9 @@
 .idea
 .idea/*
 *.bash
-app/**/*.js
 app/**/*.map.js
 app/**/*.js.map
+app/**/*.js
 .tscache
 bower_components
 lib
