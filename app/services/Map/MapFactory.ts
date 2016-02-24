@@ -4,8 +4,9 @@ export = MapFactory;
 
 class MapFactory {
     public static serviceName = 'mapFactory';
-    public static $inject = ['APIService','leafletMarkerEvents', '$q', '$log'];
+    public static $inject = ['$http', 'APIService','leafletMarkerEvents', '$q', '$log'];
     constructor(
+        private $http,
         private APIService,
         private leafletMarkerEvents,
         private $q,
@@ -13,6 +14,152 @@ class MapFactory {
     ) {
         // empty constructor
         $log.log('A Map Factory has been born.');
+    }
+
+    public getDataFromStation(id) {
+        var deferred = this.$q.defer();
+        let self = this;
+
+        // TODO: move this to compare view!
+        let url = "api/stations/parameterValues";
+        let config = {
+            params: {
+                stationID: id,
+                parameter: ["PM2.5", "PM10", "OZONE", "CO", "NO2", "SO2"]
+            }
+        };
+
+        self.$http.get(url, config).then(
+            function (response) {
+                console.log('PASS!');
+                //self.chartOptions = self.getChartOptions();
+                //self.chartOptions['height'] = self.getChartHeight();
+                //self.chartData = response.data;
+
+                console.log('whoa there, lets take a looksy at getDataForPlot');
+                deferred.resolve({
+                    chartOptions: self.getChartOptions(),
+                    chartData: response.data
+                });
+            },
+            function (response) {
+                console.log('Failure!');
+                deferred.reject(response);
+            }
+        );
+        return deferred.promise;
+    }
+
+    private getChartHeight() {
+        let divHeight = angular.element(document).find('#details-plot').css('height');
+        return parseInt(divHeight.substring(0, divHeight.length - 2));
+    }
+
+    public getChartOptions() {
+        return {
+            chart: {
+                type: 'lineChart',
+                height: this.getChartHeight(),
+                margin: {
+                    top: 20,
+                    right: 20,
+                    bottom: 30,
+                    left: 40
+                },
+                x: function (d) {
+                    return d[0];
+                },
+                y: function (d) {
+                    return d[1];
+                },
+                useVoronoi: false,
+                clipEdge: true,
+                duration: 100,
+                useInteractiveGuideline: true,
+                xAxis: {
+                    showMaxMin: false,
+                    tickFormat: function (d) {
+                        return d3.time.format('%x')(new Date(d));
+                    }
+                },
+                yAxis: {
+                    tickFormat: function (d) {
+                        return d3.format(',.2f')(d);
+                    }
+                },
+                zoom: {
+                    enabled: true,
+                    scaleExtent: [1, 10],
+                    useFixedDomain: false,
+                    useNiceScale: false,
+                    horizontalOff: false,
+                    verticalOff: true,
+                    unzoomEventType: 'dblclick.zoom'
+                }
+            }
+        };
+    }
+
+    public getMapMarkers() {
+        var deferred = this.$q.defer();
+        let self = this;
+        let bounds = {'northEast': {'lat': 89, 'lng': 179}, 'southWest': {'lat': -89, 'lng': -179}};
+        self.APIService.asyncGetMarkersInside(bounds).then(
+            function (response) {
+                self.$log.log('*********************UpdatingMapMarkers JSON RETURNING*********************');
+                let data = response.data;
+
+                // Add custom attributes to each Marker
+                for (let key in data) {
+                    if (data.hasOwnProperty(key)) {
+                        if (data[key]['agency'] != null) {
+                            data[key]['layer'] = data[key]['state'];
+                            data[key]['icon'] = self.getIconForMarker(data[key].aqi);
+                        } else {
+                            data[key]['icon'] = {
+                                iconUrl: 'app/assets/images/markers/red.png',
+                                iconSize: [35, 45],
+                                iconAnchor: [17, 28]
+                            };
+                        }
+                        data[key]['clickable'] = true;
+                    }
+                }
+                self.$log.log('how many markers did we get back? ' + data.length);
+                deferred.resolve(data);
+            },
+            function (response) {
+                self.$log.log('ams API service promise rejected: ' + response);
+                deferred.reject([]);
+            }
+        );
+        return deferred.promise;
+    }
+
+    private getIconForMarker(aqi) {
+        var icon = {
+            type: 'div',
+            iconSize: [60, 60],
+            iconAnchor: [30, 30]
+        };
+
+        let marker = angular.copy(icon);
+        marker['html'] = '<div><span>' + aqi + '</span></div>';
+
+        if (aqi <= 50) {
+            marker['className'] = 'marker marker-green';
+        } else if (aqi <= 100) {
+            marker['className'] = 'marker marker-yellow';
+        } else if (aqi <= 150) {
+            marker['className'] = 'marker marker-orange';
+        } else if (aqi <= 200) {
+            marker['className'] = 'marker marker-red';
+        } else if (aqi <= 300) {
+            marker['className'] = 'marker marker-purple';
+        } else {
+            marker['className'] = 'marker marker-maroon';
+        }
+        return marker;
     }
 
     public getDefaults() {
@@ -23,10 +170,13 @@ class MapFactory {
     }
 
     public getCenter() {
-        // middle of continental US
+        // this will center on location for now
+        // when we get user preferences we can disable auto discover
+        // and use specific lat, lng
         return {
-            lat: 39.994157,
-            lng: -97.722896,
+            autoDiscover: true,
+            //lat: 39.994157,
+            //lng: -97.722896,
             zoom: 5
         };
     }
