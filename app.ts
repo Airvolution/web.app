@@ -48,6 +48,15 @@ angular.module('app', [
                 url: '/map',
                 template: '<map-view></map-view>'
             })
+            .state('map.light', {
+                url: '/light'
+            })
+            .state('map.dark', {
+                url: '/dark'
+            })
+            .state('map.satellite', {
+                url: '/satellite'
+            })
             .state('almanac', {
                 url: '/almanac',
                 template: '<almanac-view></almanac-view>'

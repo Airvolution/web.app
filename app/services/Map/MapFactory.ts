@@ -5,6 +5,23 @@ export = MapFactory;
 class MapFactory {
     public static serviceName = 'mapFactory';
     public static $inject = ['APIService','leafletMarkerEvents', '$q', '$log'];
+    private tilesDictionary = {
+        light_map: {
+            name: 'Light Map',
+            url: 'https://api.tiles.mapbox.com/v4/tjhooker33.o78l0n36/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g',
+            type: 'xyz'
+        },
+        dark_map: {
+            name: 'Dark Map',
+            url: 'https://api.tiles.mapbox.com/v4/tjhooker33.o780o9a3/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g',
+            type: 'xyz'
+        },
+        satellite_map: {
+            name: 'Satellite Map',
+            url: 'https://api.tiles.mapbox.com/v4/tjhooker33.oc2el95l/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g',
+            type: 'xyz'
+        }
+    };
     constructor(
         private APIService,
         private leafletMarkerEvents,
@@ -202,25 +219,25 @@ class MapFactory {
         };
     }
 
+    public createDefaultTiles() {
+        return this.tilesDictionary['light_map'];
+    }
+
+    public createTilesFromKey(tileKey) {
+        switch (tileKey) {
+            case 'map.light':
+                return this.tilesDictionary['light_map'];
+            case 'map.dark':
+                return this.tilesDictionary['dark_map'];
+            case 'map.satellite':
+                return this.tilesDictionary['satellite_map'];
+            default:
+                return this.tilesDictionary['light_map'];
+        }
+    }
+
     public createMapLayers() {
         return {
-            baselayers: {
-                light_map: {
-                    name: 'Light Map',
-                    url: 'https://api.tiles.mapbox.com/v4/tjhooker33.o78l0n36/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g',
-                    type: 'xyz'
-                },
-                dark_map: {
-                    name: 'Dark Map',
-                    url: 'https://api.tiles.mapbox.com/v4/tjhooker33.o780o9a3/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g',
-                    type: 'xyz'
-                },
-                satellite_map: {
-                    name: 'Satellite Map',
-                    url: 'https://api.tiles.mapbox.com/v4/tjhooker33.oc2el95l/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGpob29rZXIzMyIsImEiOiJjaWg2emdkdGowZHJ4dTBrbDJmNmE4Y21mIn0.t0DvfElObK6T72UP5OO74g',
-                    type: 'xyz'
-                }
-            },
             overlays: {
                 AL: {
                     type: 'markercluster',

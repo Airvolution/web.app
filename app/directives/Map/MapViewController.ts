@@ -18,6 +18,7 @@ class MapViewController {
     public markers;
     public bounds;
     public events;
+    public tiles;
     public layers;
     public chartOptions;
     public chartData;
@@ -43,11 +44,21 @@ class MapViewController {
         this.markers = this.getMapMarkers();
         this.defaults = mapFactory.getDefaults();
         this.center = mapFactory.getCenter();
+        this.tiles = mapFactory.createDefaultTiles();
         this.layers = mapFactory.createMapLayers();
         this.events = mapFactory.createMapEvents();
 
         $scope.$on('leafletDirectiveMarker.map.click', this.onMarkerClick());
         $scope.$on('leafletDirectiveMap.map.moveend', this.onMapMove());
+        $scope.$on('$stateChangeStart', this.onStateChange());
+    }
+
+    private onStateChange() {
+        let self = this;
+        self.$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+            // TODO: for now I'm only doing tiles, in the future we may need to add additional checks here
+            self.tiles = self.mapFactory.createTilesFromKey(toState.name);
+        });
     }
 
     private onMapMove() {
