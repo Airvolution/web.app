@@ -233,7 +233,7 @@ class MapFactory {
                 return this.tilesDictionary['satellite_map'];
             default:
                 return this.tilesDictionary['light_map'];
-        }
+        };
     }
 
     public createMapLayers() {
