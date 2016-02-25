@@ -9,6 +9,7 @@ angular.module('app', [
         'nemLogging',
         'ui-leaflet',
         'ui.router',
+        'ct.ui.router.extras',
         Services.name,
         Controllers.name,
         Directives.name,
@@ -21,79 +22,161 @@ angular.module('app', [
         'ngMaterial'
     ])
     .config(($stateProvider, $urlRouterProvider, $httpProvider) => {
-        $urlRouterProvider.otherwise('/map');
-        $urlRouterProvider.when('/config','/config/profile');
-        $stateProvider
-            .state('config', {
-                url: '/config',
-                templateUrl: 'app/templates/configTemplate.html'
+        var openModal = ['$uibModal', '$previousState', ($uibModal, $previousState)=> {
+            $previousState.memo("modalInvoker"); // remember the previous state with memoName "modalInvoker"
+            $uibModal.open({
+                templateUrl: 'app/templates/modalTemplate.html',
+                backdrop: 'static',
+                controller: ['$modalInstance', '$scope', ($modalInstance, $scope)=> {
+                    var isopen = true;
+                    $modalInstance.result.finally(function () {
+                        isopen = false;
+                        $previousState.go("modalInvoker"); // return to previous state
+                    });
+                    $scope.closeModal = function () {
+                        $modalInstance.dismiss('close');
+                    };
+                    $scope.$on("$stateChangeStart", function (evt, toState) {
+                        if (!toState.$$state().includes['modal']) {
+                            $modalInstance.dismiss('close');
+                        }
+                    });
+                }]
             })
-            .state('config.profile', {
-                url: '/profile',
-                templateUrl: 'app/templates/myProfile.html'
-            })
-            .state('config.stations', {
-                url: '/stations',
-                templateUrl: 'app/templates/myStations.html'
-            })
-            .state('config.register', {
-                url: '/register',
-                templateUrl: 'app/templates/registerStation.html'
-            })
-            .state('config.preferences', {
-                url: '/preferences',
-                templateUrl: 'app/templates/userPreferences.html'
-            })
-            .state('map', {
-                url: '/map',
-                template: '<map-view></map-view>'
-            })
-            .state('almanac', {
-                url: '/almanac',
-                template: '<almanac-view></almanac-view>'
-            })
-            .state('compare', {
-                url: '/compare',
-                templateUrl: 'app/templates/compare.html'
-            })
-            .state('indoor', {
-                url: '/indoor',
-                templateUrl: 'app/templates/indoor.html'
-            })
-            .state('profile', {
-                url: '/profile',
-                templateUrl: 'app/templates/myProfile.html'
-            })
-            .state('stations', {
-                url: '/stations',
-                templateUrl: 'app/templates/myStations.html'
-            })
-            .state('register', {
-                url: '/register',
-                templateUrl: 'app/templates/registerStation.html'
-            })
-            .state('error', {
-                templateUrl: 'app/templates/404.html'
-            })
-            .state('aboutUs', {
-                url: '/aboutus',
-                templateUrl: 'app/templates/aboutUs.html'
-            })
-            .state('contactUs', {
-                url: '/contactus',
-                templateUrl: 'app/templates/contactUs.html'
-            })
-            .state('faq', {
-                url: '/faq',
-                templateUrl: 'app/templates/faq.html'
-            })
-            .state('disclaimer', {
-                url: '/disclaimer',
-                templateUrl: 'app/templates/disclaimer.html'
-            });
+        }];
+        var states = [];
+        states.push({
+            name: 'modal',
+            url: '/modal',
+            onEnter: openModal,
+            template: '<div ui-view></div>'
+        });
+        //states.push({
+        //    name:'login',
+        //    url: '/login',
+        //    onEnter: ['$state', '$stateParams', '$uibModal',
+        //        ($state, $stateParams, $uibModal)=> {
+        //            $uibModal.open({
+        //                templateUrl: 'app/templates/loginTemplate.html',
+        //                controller: 'UserRegistrationController',
+        //                controllerAs: 'ctrl',
+        //                bindToController: true
+        //            }).result.finally((result)=> {
+        //                $state.go('^');
+        //            });
+        //        }]
+        //});
+        states.push({
+            name: 'app',
+            url: '/',
+            deepStateRedirect: {default: "app.map"},
+            sticky: true,
+            template: '<div ui-view></div>'
 
+        });
+        states.push({
+            name: 'app.config',
+            url: 'config/',
+            deepStateRedirect: {default: "app.config.profile"},
+            templateUrl: 'app/templates/configTemplate.html'
+
+        });
+        states.push({
+            name: 'app.config.profile',
+            url: 'profile/',
+            templateUrl: 'app/templates/myProfile.html'
+        });
+        states.push({
+            name: 'app.config.stations',
+            url: 'stations/',
+            templateUrl: 'app/templates/myStations.html'
+        });
+        states.push({
+            name: 'app.config.register',
+            url: 'register/',
+            templateUrl: 'app/templates/registerStation.html'
+        });
+        states.push({
+            name: 'app.config.preferences',
+            url: 'preferences/',
+            templateUrl: 'app/templates/userPreferences.html'
+        });
+        states.push({
+            name: 'app.map',
+            url: 'map/',
+            template: '<map-view></map-view>'
+        });
+        states.push({
+            name: 'app.almanac',
+            url: 'almanac/',
+            template: '<almanac-view></almanac-view>'
+        });
+        states.push({
+            name: 'app.compare',
+            url: 'compare/',
+            templateUrl: 'app/templates/compare.html'
+        });
+        states.push({
+            name: 'app.indoor',
+            url: 'indoor/',
+            templateUrl: 'app/templates/indoor.html'
+        });
+        states.push({
+            name: 'error',
+            templateUrl: 'app/templates/404.html'
+        });
+        states.push({
+            name: 'app.about',
+            url: 'about/',
+            templateUrl: 'app/templates/aboutUs.html'
+        });
+        states.push({
+            name: 'app.contact',
+            url: 'contact/',
+            templateUrl: 'app/templates/contactUs.html'
+        });
+        states.push({
+            name: 'app.faq',
+            url: 'faq/',
+            templateUrl: 'app/templates/faq.html'
+        });
+        states.push({
+            name: 'app.disclaimer',
+            url: 'disclaimer/',
+            templateUrl: 'app/templates/disclaimer.html'
+        });
+        angular.forEach(states, (state)=> {
+            $stateProvider.state(state);
+        });
+        $urlRouterProvider.otherwise("/");
         $httpProvider.interceptors.push('AuthInterceptorService');
     })
     .run(['AuthService', (authService)=> {
         authService.fillAuthData();
+
+
     }]);
+    //.run(['$rootScope', ($rootScope)=> {
+    //    // ============================================= Debug UI-Router
+    //    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+    //        console.log('$stateChangeStart to ' + toState.to + '- fired when the transition begins. toState,toParams : \n', toState, toParams);
+    //    });
+    //
+    //    $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams) {
+    //        console.log('$stateChangeError - fired when an error occurs during transition.');
+    //        console.log(arguments);
+    //    });
+    //
+    //    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+    //        console.log('$stateChangeSuccess to ' + toState.name + '- fired once the state transition is complete.');
+    //    });
+    //
+    //    $rootScope.$on('$viewContentLoaded', function (event) {
+    //        console.log('$viewContentLoaded - fired after dom rendered', event);
+    //    });
+    //
+    //    $rootScope.$on('$stateNotFound', function (event, unfoundState, fromState, fromParams) {
+    //        console.log('$stateNotFound ' + unfoundState.to + '  - fired when a state cannot be found by its name.');
+    //        console.log(unfoundState, fromState, fromParams);
+    //    });
+    //}]);

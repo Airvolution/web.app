@@ -43,12 +43,11 @@
 
         </div>
         <div class="headerzone col-md-3" id="login">
-            <a class="header-text" ng-hide="hctrl.AuthService.authentication.isAuth" ng-click="hctrl.openRegister()">Register</a>
-            <a class="header-text" ng-hide="hctrl.AuthService.authentication.isAuth" ng-click="hctrl.openLogin()">Login</a>
+            <a class="header-text" ng-hide="hctrl.AuthService.authentication.isAuth" ui-sref="modal.login">Register / Login</a>
             <span class="header-text" ng-show="hctrl.AuthService.authentication.isAuth">Welcome, {{hctrl.AuthService.authentication.userName}}</span>
             <a class="header-text" ng-show="hctrl.AuthService.authentication.isAuth" ng-click="hctrl.AuthService.logOut()">Logout</a>
             <div>
-                <i class="fa fa-cog fa-2x config-menu-icon" ui-sref="config"></i>
+                <i class="fa fa-cog fa-2x config-menu-icon" ui-sref="app.config"></i>
             </div>
 
         </div>
@@ -73,6 +72,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.10/ngStorage.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-animate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ui-router-extras/0.1.0/ct-ui-router-extras.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular-moment/0.9.0/angular-moment.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.shapeshift/2.0.0/jquery.shapeshift.js"></script>
