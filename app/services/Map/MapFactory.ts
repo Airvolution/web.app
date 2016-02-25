@@ -4,9 +4,8 @@ export = MapFactory;
 
 class MapFactory {
     public static serviceName = 'mapFactory';
-    public static $inject = ['$http', 'APIService','leafletMarkerEvents', '$q', '$log'];
+    public static $inject = ['APIService','leafletMarkerEvents', '$q', '$log'];
     constructor(
-        private $http,
         private APIService,
         private leafletMarkerEvents,
         private $q,
@@ -19,31 +18,14 @@ class MapFactory {
     public getDataFromStation(id) {
         var deferred = this.$q.defer();
         let self = this;
-
-        // TODO: move this to compare view!
-        let url = "api/stations/parameterValues";
-        let config = {
-            params: {
-                stationID: id,
-                parameter: ["PM2.5", "PM10", "OZONE", "CO", "NO2", "SO2"]
-            }
-        };
-
-        self.$http.get(url, config).then(
+        self.APIService.asyncGetNVD3DataPointsFrom(id).then(
             function (response) {
-                console.log('PASS!');
-                //self.chartOptions = self.getChartOptions();
-                //self.chartOptions['height'] = self.getChartHeight();
-                //self.chartData = response.data;
-
-                console.log('whoa there, lets take a looksy at getDataForPlot');
                 deferred.resolve({
                     chartOptions: self.getChartOptions(),
-                    chartData: response.data
+                    chartData: response
                 });
             },
             function (response) {
-                console.log('Failure!');
                 deferred.reject(response);
             }
         );
