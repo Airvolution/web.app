@@ -10,12 +10,10 @@ class MapFactory {
         private leafletMarkerEvents,
         private $q,
         private $log
-    ) {
-        // empty constructor
-        $log.log('A Map Factory has been born.');
-    }
+    ) {}
 
     public getDataFromStation(id) {
+        // TODO: when compare view is ready, add support for multiple stations / variable param lists
         var deferred = this.$q.defer();
         let self = this;
         self.APIService.asyncGetNVD3DataPointsFrom(id).then(
@@ -88,7 +86,6 @@ class MapFactory {
         let bounds = {'northEast': {'lat': 89, 'lng': 179}, 'southWest': {'lat': -89, 'lng': -179}};
         self.APIService.asyncGetMarkersInside(bounds).then(
             function (response) {
-                self.$log.log('*********************UpdatingMapMarkers JSON RETURNING*********************');
                 let data = response.data;
 
                 // Add custom attributes to each Marker
@@ -107,11 +104,9 @@ class MapFactory {
                         data[key]['clickable'] = true;
                     }
                 }
-                self.$log.log('how many markers did we get back? ' + data.length);
                 deferred.resolve(data);
             },
             function (response) {
-                self.$log.log('ams API service promise rejected: ' + response);
                 deferred.reject([]);
             }
         );
