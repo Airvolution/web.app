@@ -46,7 +46,7 @@ class MapViewController {
         this.center = mapFactory.getCenter();
         this.tiles = mapFactory.createDefaultTiles();
         this.layers = mapFactory.createMapLayers();
-        this.events = mapFactory.createMapEvents();
+        this.events = this.createMapEvents();
 
         $scope.$on('leafletDirectiveMarker.map.click', this.onMarkerClick());
         $scope.$on('leafletDirectiveMap.map.moveend', this.onMapMove());
@@ -59,6 +59,18 @@ class MapViewController {
             // TODO: for now I'm only doing tiles, in the future we may need to add additional checks here
             self.tiles = self.mapFactory.createTilesFromKey(toState.name);
         });
+    }
+
+    private createMapEvents() {
+        return {
+            map: {
+                enable: ['moveend'],
+                logic: 'emit'
+            },
+            markers: {
+                enable: this.leafletMarkerEvents.getAvailableEvents()
+            }
+        };
     }
 
     private onMapMove() {
