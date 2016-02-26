@@ -24,7 +24,6 @@ angular.module('app', [
         'ngMaterial'
     ])
     .config(($stateProvider, $urlRouterProvider, $httpProvider) => {
-<<<<<<< HEAD
         var openModal = ['$uibModal', '$previousState', ($uibModal, $previousState)=> {
             $previousState.memo("modalInvoker"); // remember the previous state with memoName "modalInvoker"
             $uibModal.open({
