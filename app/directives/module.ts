@@ -7,10 +7,12 @@ import StationDirective = require('./Station/StationDirective');
 import AQIDirective = require('./AQI/AQIDirective');
 import MapDirectives = require('./Map/module');
 import AlmanacDirectives = require('./Almanac/module');
+import ToolboxDirectives = require('./Toolbox/module');
 
 export = angular.module('directives', [
         MapDirectives.name,
-        AlmanacDirectives.name
+        AlmanacDirectives.name,
+        ToolboxDirectives.name
     ])
             .directive(SiteNavDirective.htmlName, SiteNavDirective.create)
             .directive(FooterDirective.htmlName, FooterDirective.create)
