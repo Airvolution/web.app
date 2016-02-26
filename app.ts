@@ -57,6 +57,9 @@ angular.module('app', [
             .state('map.satellite', {
                 url: '/satellite'
             })
+            .state('map.cluster', {
+                url: '/cluster/:clusterId'
+            })
             .state('almanac', {
                 url: '/almanac',
                 template: '<almanac-view></almanac-view>'

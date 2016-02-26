@@ -57,7 +57,56 @@ class MapViewController {
         let self = this;
         self.$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
             // TODO: for now I'm only doing tiles, in the future we may need to add additional checks here
-            self.tiles = self.mapFactory.createTilesFromKey(toState.name);
+            switch (toState.name) {
+                case 'map.light':
+                    self.tiles = self.mapFactory.createTilesFromKey(toState.name);
+                    break;
+                case 'map.dark':
+                    self.tiles = self.mapFactory.createTilesFromKey(toState.name);
+                    break;
+                case 'map.satellite':
+                    self.tiles = self.mapFactory.createTilesFromKey(toState.name);
+                    break;
+                case 'map.cluster':
+                    // create an array by separating param string by commas -- example: "CA,TX,UT"
+                    self.showStationsByCluster(toParams['clusterId'].split(','));
+                    break;
+                default: // 'map'
+                    self.tiles = self.mapFactory.createDefaultTiles();
+            };
+        });
+    }
+
+    private showStationsByCluster(cluster) {
+        let self = this;
+        if (cluster === undefined) {
+            self.$log.log('MapViewController received undefined stateParam.');
+            return;
+        }
+        if (cluster == "") {
+            self.showAllClusters();
+            return;
+        }
+        self.hideAllClusters();
+        angular.forEach(cluster, function (id) {
+            if (self.layers.overlays[id] === undefined) {
+            } else {
+                self.layers.overlays[id].visible = true;
+            }
+        });
+    }
+
+    private hideAllClusters() {
+        let self = this;
+        angular.forEach(self.layers.overlays, function (cluster:any) {
+            cluster.visible = false;
+        });
+    }
+
+    private showAllClusters() {
+        let self = this;
+        angular.forEach(self.layers.overlays, function (cluster:any) {
+            cluster.visible = true;
         });
     }
 
