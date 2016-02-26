@@ -61,13 +61,13 @@ angular.module('app', [
         var states = [];
         states.push({
             name: 'modal',
-            url: '/modal',
+            url: '/modal/',
             onEnter: openModal,
             template: '<div ui-view></div>'
         });
         states.push({
             name:'modal.login',
-            url: '/login',
+            url: 'login',
             templateUrl: 'app/templates/loginTemplate.html',
             controller: 'UserRegistrationController'
         });
