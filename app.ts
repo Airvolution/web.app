@@ -24,6 +24,8 @@ angular.module('app', [
         'ngMaterial'
     ])
     .config(($stateProvider, $urlRouterProvider, $httpProvider) => {
+        $urlRouterProvider.deferIntercept();
+
         var openModal = ['$uibModal', '$previousState', ($uibModal, $previousState)=> {
             $previousState.memo("modalInvoker"); // remember the previous state with memoName "modalInvoker"
             $uibModal.open({
@@ -113,7 +115,25 @@ angular.module('app', [
             name: 'app.map',
             url: 'map?mode&cluster',
             template: '<map-view></map-view>'
+            //controller: 'MapViewController' <-- triggers angular exception
+
         });
+        //states.push({
+        //    name: 'app.map.mode',
+        //    url: '/:mode'
+        //});
+        //states.push({
+        //    name: 'app.map.cluster',
+        //    url: '/:cluster'
+        //});
+        //states.push({
+        //    name: 'app.map.mode',
+        //    url: 'map?mode'
+        //});
+        //states.push({
+        //    name: 'app.map.cluster',
+        //    url: 'map?cluster'
+        //});
         states.push({
             name: 'app.almanac',
             url: 'almanac/',
@@ -163,6 +183,22 @@ angular.module('app', [
         authService.fillAuthData();
 
 
+    }])
+    .run(['$rootScope', '$urlRouter', '$location', '$state', function ($rootScope, $urlRouter, $location, $state) {
+        let state = $state;
+        $rootScope.$on('$locationChangeSuccess', function (e, newUrl, oldUrl) {
+            e.preventDefault();
+            if (oldUrl.match(/map/g) !== null && newUrl.match(/map/g) !== null) {
+                // does not trigger view to reload
+                console.log('$locationChangeSuccess: if block');
+                // do nothing
+
+            } else {
+                // triggers view to reload
+                console.log('$locationChangeSuccess: else block');
+                $urlRouter.sync();
+            }
+        });
     }])
     .run(['$rootScope','$state','$previousState',($rootScope,$state,$previousState)=>{
         //Default Background state for modals, then we can deeplink them without breaking the app

@@ -4,6 +4,7 @@ import MapFactory = require("../../services/Map/MapFactory");
 export = MapViewController;
 
 class MapViewController {
+    private clusterSearch;
     private deregisterStateWatcher;
 
     public detailsVisible:boolean;
@@ -24,9 +25,10 @@ class MapViewController {
     public chartOptions;
     public chartData;
 
-    public static $inject = ['$rootScope', '$scope', '$stateParams','leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', '$log', 'locationService', 'APIService', '$timeout', 'mapFactory'];
+    public static $inject = ['$state', '$rootScope', '$scope', '$stateParams','leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', '$log', 'locationService', 'APIService', '$timeout', 'mapFactory'];
 
-    constructor($rootScope,
+    constructor(private $state,
+                private $rootScope,
                 private $scope,
                 private $stateParams,
                 private leafletData,
@@ -50,16 +52,31 @@ class MapViewController {
         this.tiles = mapFactory.createTilesFromKey($stateParams.mode);
         this.layers = mapFactory.createMapLayers();
         this.events = this.createMapEvents();
+        this.clusterSearch = $state.params['cluster'];
 
         $scope.$on('leafletDirectiveMarker.map.click', this.onMarkerClick());
         $scope.$on('leafletDirectiveMap.map.moveend', this.onMapMove());
         this.showStationsByCluster($stateParams['cluster']);
         //this.registerStateWatcher($rootScope);
+
+        let self = this;
+        $scope.$on('$locationChangeSuccess', function(e, newUrl, oldUrl) {
+            // regex to match each cluster parameter
+            let search = newUrl.split('&cluster=');
+            if (search !== null && search.length > 1) {
+                // first match will be the url, get rid of it
+                search.shift();
+                self.clusterSearch = search;
+                self.showStationsByCluster(self.clusterSearch);
+            } else {
+                self.showAllClusters();
+            }
+        });
     }
 
     private registerStateWatcher($rootScope) {
         var self = this;
-        this.deregisterStateWatcher = $rootScope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams)=> {
+        $rootScope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams)=> {
             // TODO: for now I'm only doing tiles, in the future we may need to add additional checks here
             if(toState.name == fromState.name && toParams == fromParams){
                 return;
