@@ -53,6 +53,7 @@ class MapViewController {
         this.layers = mapFactory.createMapLayers();
         this.events = this.createMapEvents();
         this.clusterSearch = $state.params['cluster'];
+        mapFactory.registerMapTiles(this.tiles);
 
         $scope.$on('leafletDirectiveMarker.map.click', this.onMarkerClick());
         $scope.$on('leafletDirectiveMap.map.moveend', this.onMapMove());

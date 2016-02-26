@@ -3,6 +3,9 @@
 export = MapFactory;
 
 class MapFactory {
+    private mapMarkers;
+    private mapTiles;
+
     public static serviceName = 'mapFactory';
     public static $inject = ['APIService','leafletMarkerEvents', '$q', '$log'];
     private tilesDictionary = {
@@ -27,7 +30,31 @@ class MapFactory {
         private leafletMarkerEvents,
         private $q,
         private $log
-    ) {}
+    ) {
+        this.mapMarkers = undefined;
+    }
+
+    public registerMapTiles(tiles) {
+        this.mapTiles = tiles;
+    }
+
+    public setMap(mode) {
+        let newTiles = this.createTilesFromKey(mode);
+        this.mapTiles.name = newTiles.name;
+        this.mapTiles.url = newTiles.url;
+        this.mapTiles.type = newTiles.type;
+    }
+
+    public getMarkerNames() {
+        if (this.mapMarkers === undefined) {
+            return [];
+        }
+        let markerNames = [];
+        angular.forEach(this.mapMarkers, function (marker) {
+            markerNames.push(marker.name);
+        });
+        return markerNames;
+    }
 
     public getDataFromStation(id) {
         // TODO: when compare view is ready, add support for multiple stations / variable param lists
@@ -121,6 +148,7 @@ class MapFactory {
                         data[key]['clickable'] = true;
                     }
                 }
+                self.mapMarkers = data;
                 deferred.resolve(data);
             },
             function (response) {
@@ -213,15 +241,17 @@ class MapFactory {
     }
 
     public createTilesFromKey(tileKey) {
+        // Passing objects by reference inadvertently allows the caller to modify
+        //   properties in the factory. Clone the objects first, then return the copy.
         switch (tileKey) {
             case 'light':
-                return this.tilesDictionary['light_map'];
+                return _.clone(this.tilesDictionary['light_map']);
             case 'dark':
-                return this.tilesDictionary['dark_map'];
+                return _.clone(this.tilesDictionary['dark_map']);
             case 'satellite':
-                return this.tilesDictionary['satellite_map'];
+                return _.clone(this.tilesDictionary['satellite_map']);
             default:
-                return this.tilesDictionary['light_map'];
+                return _.clone(this.tilesDictionary['light_map']);
         };
     }
 

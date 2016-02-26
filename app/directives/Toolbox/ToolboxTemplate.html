@@ -1,7 +1,19 @@
 <div class="toolbox" ng-class="{'expanded':ctrl.expanded,'hidden':!ctrl.visible}">
     <div class="toolbox-wrapper expanded">
         <tool expanded="ctrl.expanded">
-            <i class="fa fa-facebook"></i>
+            <i class="fa fa-map-o" ng-click="ctrl.toggleMap('light')"></i>
+        </tool>
+        <tool expanded="ctrl.expanded">
+            <i class="fa fa-map" ng-click="ctrl.toggleMap('dark')"></i>
+        </tool>
+        <tool expanded="ctrl.expanded">
+            <i class="fa fa-globe" ng-click="ctrl.toggleMap('satellite')"></i>
+        </tool>
+        <tool expanded="ctrl.expanded">
+            <i class="fa fa-map-marker" ng-click="ctrl.getMarkerNames()"></i>
+        </tool>
+        <tool expanded="ctrl.expanded">
+            <i class="fa fa-dot-circle-o" ng-click="ctrl.centerMap()"></i>
         </tool>
         <tool expanded="ctrl.expanded">
             <i class="fa fa-facebook"></i>

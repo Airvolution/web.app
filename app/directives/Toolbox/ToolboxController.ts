@@ -6,9 +6,10 @@ class ToolboxController {
     public expanded;
     public visible;
 
-    public static $inject = ['$scope','$state'];
+    public static $inject = ['$scope','$state', 'mapFactory'];
     constructor(private $scope,
-                private $state){
+                private $state,
+                private mapFactory){
         var self = this;
         $scope.$watch('ctrl.$state.current',(newVal,oldVal)=>{
             if(!self.$state.current){
@@ -25,5 +26,17 @@ class ToolboxController {
 
     public toggleExpand(){
         this.expanded = !this.expanded;
+    }
+
+    public toggleMap(mode) {
+        this.mapFactory.setMap(mode);
+    }
+
+    public getMarkerNames() {
+        return this.mapFactory.getMarkerNames();
+    }
+
+    public centerMap() {
+        console.log('centerMap called');
     }
 }
