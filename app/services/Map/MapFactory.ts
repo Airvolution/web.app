@@ -214,11 +214,11 @@ class MapFactory {
 
     public createTilesFromKey(tileKey) {
         switch (tileKey) {
-            case 'map.light':
+            case 'light':
                 return this.tilesDictionary['light_map'];
-            case 'map.dark':
+            case 'dark':
                 return this.tilesDictionary['dark_map'];
-            case 'map.satellite':
+            case 'satellite':
                 return this.tilesDictionary['satellite_map'];
             default:
                 return this.tilesDictionary['light_map'];

@@ -110,8 +110,8 @@ angular.module('app', [
             templateUrl: 'app/templates/userPreferences.html'
         });
         states.push({
-            name: 'app.map?mode&id',
-            url: 'map/',
+            name: 'app.map',
+            url: 'map?mode&cluster',
             template: '<map-view></map-view>'
         });
         states.push({

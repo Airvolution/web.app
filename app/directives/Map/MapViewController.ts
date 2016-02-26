@@ -4,6 +4,7 @@ import MapFactory = require("../../services/Map/MapFactory");
 export = MapViewController;
 
 class MapViewController {
+    private deregisterStateWatcher;
 
     public detailsVisible:boolean;
     public plotVisible:boolean;
@@ -23,9 +24,11 @@ class MapViewController {
     public chartOptions;
     public chartData;
 
-    public static $inject = ['$scope', 'leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', '$log', 'locationService', 'APIService', '$timeout', 'mapFactory'];
+    public static $inject = ['$rootScope', '$scope', '$stateParams','leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', '$log', 'locationService', 'APIService', '$timeout', 'mapFactory'];
 
-    constructor(private $scope,
+    constructor($rootScope,
+                private $scope,
+                private $stateParams,
                 private leafletData,
                 private leafletBoundsHelpers,
                 private leafletMarkerEvents,
@@ -44,36 +47,31 @@ class MapViewController {
         this.markers = this.getMapMarkers();
         this.defaults = mapFactory.getDefaults();
         this.center = mapFactory.getCenter();
-        this.tiles = mapFactory.createDefaultTiles();
+        this.tiles = mapFactory.createTilesFromKey($stateParams.mode);
         this.layers = mapFactory.createMapLayers();
         this.events = this.createMapEvents();
 
         $scope.$on('leafletDirectiveMarker.map.click', this.onMarkerClick());
         $scope.$on('leafletDirectiveMap.map.moveend', this.onMapMove());
-        $scope.$on('$stateChangeStart', this.onStateChange());
+        this.showStationsByCluster($stateParams['cluster']);
+        //this.registerStateWatcher($rootScope);
     }
 
-    private onStateChange() {
-        let self = this;
-        self.$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+    private registerStateWatcher($rootScope) {
+        var self = this;
+        this.deregisterStateWatcher = $rootScope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams)=> {
             // TODO: for now I'm only doing tiles, in the future we may need to add additional checks here
-            switch (toState.name) {
-                case 'map.light':
-                    self.tiles = self.mapFactory.createTilesFromKey(toState.name);
-                    break;
-                case 'map.dark':
-                    self.tiles = self.mapFactory.createTilesFromKey(toState.name);
-                    break;
-                case 'map.satellite':
-                    self.tiles = self.mapFactory.createTilesFromKey(toState.name);
-                    break;
-                case 'map.cluster':
-                    // create an array by separating param string by commas -- example: "CA,TX,UT"
-                    self.showStationsByCluster(toParams['clusterId'].split(','));
-                    break;
-                default: // 'map'
-                    self.tiles = self.mapFactory.createDefaultTiles();
-            };
+            if(toState.name == fromState.name && toParams == fromParams){
+                return;
+            }
+            if (toState.name == 'app.map') {
+                self.tiles = self.mapFactory.createTilesFromKey(toParams.mode);
+                if (toParams.cluster) {
+                    self.showStationsByCluster(toParams['cluster']);
+                }
+            } else {
+                self.deregisterStateWatcher();
+            }
         });
     }
 
@@ -83,17 +81,22 @@ class MapViewController {
             self.$log.log('MapViewController received undefined stateParam.');
             return;
         }
-        if (cluster == "") {
+        if (!cluster || cluster == "") {
             self.showAllClusters();
             return;
         }
         self.hideAllClusters();
-        angular.forEach(cluster, function (id) {
-            if (self.layers.overlays[id] === undefined) {
-            } else {
-                self.layers.overlays[id].visible = true;
-            }
-        });
+        if (Array.isArray(cluster)) {
+            angular.forEach(cluster, function (id) {
+                if (self.layers.overlays[id] === undefined) {
+                } else {
+                    self.layers.overlays[id].visible = true;
+                }
+            });
+        } else {
+            this.layers.overlays[cluster].visible = true;
+        }
+
     }
 
     private hideAllClusters() {
@@ -125,7 +128,7 @@ class MapViewController {
     private onMapMove() {
         // This updates $scope.bounds because leaflet bounds are not updating automatically
         let self = this;
-        self.$scope.$on('leafletDirectiveMap.map.moveend', function() {
+        self.$scope.$on('leafletDirectiveMap.map.moveend', function () {
             self.leafletData.getMap().then(
                 function (map) {
                     self.bounds = map.getBounds();
