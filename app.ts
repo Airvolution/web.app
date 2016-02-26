@@ -24,6 +24,7 @@ angular.module('app', [
         'ngMaterial'
     ])
     .config(($stateProvider, $urlRouterProvider, $httpProvider) => {
+<<<<<<< HEAD
         var openModal = ['$uibModal', '$previousState', ($uibModal, $previousState)=> {
             $previousState.memo("modalInvoker"); // remember the previous state with memoName "modalInvoker"
             $uibModal.open({
@@ -87,8 +88,8 @@ angular.module('app', [
             url: 'config/',
             deepStateRedirect: {default: defaultConfigState},
             templateUrl: 'app/templates/configTemplate.html'
-
         });
+
         states.push({
             name: 'app.config.profile',
             url: 'profile/',
@@ -110,7 +111,7 @@ angular.module('app', [
             templateUrl: 'app/templates/userPreferences.html'
         });
         states.push({
-            name: 'app.map/:map_mode',
+            name: 'app.map?mode&id',
             url: 'map/',
             template: '<map-view></map-view>'
         });

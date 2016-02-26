@@ -207,19 +207,8 @@ class MapFactory {
         return deferred.promise;
     }
 
-    public createMapEvents() {
-        return {
-            map: {
-                enable: ['moveend'],
-                logic: 'emit'
-            },
-            markers: {
-                enable: this.leafletMarkerEvents.getAvailableEvents()
-            }
-        };
-    }
-
     public createDefaultTiles() {
+        // TODO: when data is saved in user profile, call createTilesFromKey(key)
         return this.tilesDictionary['light_map'];
     }
 
