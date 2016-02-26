@@ -67,7 +67,7 @@ angular.module('app', [
         });
         states.push({
             name:'modal.login',
-            url: 'login',
+            url: 'login/',
             templateUrl: 'app/templates/loginTemplate.html',
             controller: 'UserRegistrationController'
         });
