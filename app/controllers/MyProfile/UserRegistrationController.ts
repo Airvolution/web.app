@@ -5,11 +5,15 @@ export = UserRegistrationController;
 class UserRegistrationController {
     public static name = "UserRegistrationController";
     public message;
-    public static $inject = ['AuthService','$uibModalInstance'];
+    public static $inject = ['AuthService','$scope'];
 
     constructor(private AuthService,
-                private $uibModalInstance) {
-        this.message = '';
+                private $scope) {
+        //$scope.configureModal('Welcome!','Submit',this.login,"Cancel",$scope.closeModal);
+        $scope.configureModal('Welcome!');
+        $scope.setAlert('');
+        $scope.signUp = this.signUp;
+        $scope.login = this.login;
     }
 
     public savedSuccessfully = false;
@@ -26,7 +30,7 @@ class UserRegistrationController {
 
                 self.savedSuccessfully = true;
                 self.message = "You have successfully registered.";
-                self.$uibModalInstance.dismiss(self.message);
+                self.$scope.closeModal();
             },
             (response)=> {
                 var errors = [];
@@ -36,7 +40,7 @@ class UserRegistrationController {
                     }
                 }
                 self.message = "Failed to register user due to:" + errors.join(' ');
-                self.$uibModalInstance.dismiss(self.message);
+                self.$scope.closeModal();
             });
     };
 
@@ -49,15 +53,11 @@ class UserRegistrationController {
         var self = this;
         this.AuthService.login(this.loginData).then((response)=> {
                 self.message = "You have sucessfully logged in.";
-                self.$uibModalInstance.dismiss(self.message);
+                self.$scope.closeModal();
             },
             (err)=> {
                 self.message = err.error_description;
-                self.$uibModalInstance.dismiss(self.message);
+                self.$scope.closeModal();
             });
     };
-
-    public closeModal() {
-        this.$uibModalInstance.close();
-    }
 }

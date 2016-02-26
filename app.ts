@@ -5,6 +5,8 @@ import Controllers = require('./app/controllers/module');
 import Directives = require('./app/directives/module');
 import Widgets = require('./app/widgets/module');
 
+var defaultState = "app.map";
+var defaultConfigState = "app.config.profile";
 angular.module('app', [
         'nemLogging',
         'ui-leaflet',
@@ -22,28 +24,40 @@ angular.module('app', [
         'ngMaterial'
     ])
     .config(($stateProvider, $urlRouterProvider, $httpProvider) => {
+
         var openModal = ['$uibModal', '$previousState', ($uibModal, $previousState)=> {
             $previousState.memo("modalInvoker"); // remember the previous state with memoName "modalInvoker"
             $uibModal.open({
                 templateUrl: 'app/templates/modalTemplate.html',
                 backdrop: 'static',
-                controller: ['$modalInstance', '$scope', ($modalInstance, $scope)=> {
+                controller: ['$uibModalInstance', '$scope', ($uibModalInstance, $scope)=> {
+                    $scope.configureModal = (title,okText,onOk,cancelText,onCancel)=>{
+                        $scope.modalTitle = title;
+                        $scope.okText = okText;
+                        $scope.okAction = onOk;
+                        $scope.cancelText = cancelText;
+                        $scope.cancelAction = onCancel;
+                    };
+                    $scope.setAlert = (alert)=>{
+                      $scope.alert = alert;
+                    };
                     var isopen = true;
-                    $modalInstance.result.finally(function () {
+                    $uibModalInstance.result.finally(function () {
                         isopen = false;
                         $previousState.go("modalInvoker"); // return to previous state
                     });
                     $scope.closeModal = function () {
-                        $modalInstance.dismiss('close');
+                        $uibModalInstance.dismiss('close');
                     };
                     $scope.$on("$stateChangeStart", function (evt, toState) {
                         if (!toState.$$state().includes['modal']) {
-                            $modalInstance.dismiss('close');
+                            $uibModalInstance.dismiss('close');
                         }
                     });
                 }]
             })
         }];
+
         var states = [];
         states.push({
             name: 'modal',
@@ -51,33 +65,28 @@ angular.module('app', [
             onEnter: openModal,
             template: '<div ui-view></div>'
         });
-        //states.push({
-        //    name:'login',
-        //    url: '/login',
-        //    onEnter: ['$state', '$stateParams', '$uibModal',
-        //        ($state, $stateParams, $uibModal)=> {
-        //            $uibModal.open({
-        //                templateUrl: 'app/templates/loginTemplate.html',
-        //                controller: 'UserRegistrationController',
-        //                controllerAs: 'ctrl',
-        //                bindToController: true
-        //            }).result.finally((result)=> {
-        //                $state.go('^');
-        //            });
-        //        }]
-        //});
+        states.push({
+            name:'modal.login',
+            url: '/login',
+            templateUrl: 'app/templates/loginTemplate.html',
+            controller: 'UserRegistrationController'
+        });
         states.push({
             name: 'app',
             url: '/',
-            deepStateRedirect: {default: "app.map"},
+            deepStateRedirect: {default: defaultState},
             sticky: true,
-            template: '<div ui-view></div>'
+            views: {
+                'app': {
+                    template: '<div ui-view></div>',
+                }
+            }
 
         });
         states.push({
             name: 'app.config',
             url: 'config/',
-            deepStateRedirect: {default: "app.config.profile"},
+            deepStateRedirect: {default: defaultConfigState},
             templateUrl: 'app/templates/configTemplate.html'
 
         });
@@ -155,6 +164,20 @@ angular.module('app', [
         authService.fillAuthData();
 
 
+    }])
+    .run(['$rootScope','$state','$previousState',($rootScope,$state,$previousState)=>{
+        //Default Background state for modals, then we can deeplink them without breaking the app
+        $rootScope.$state = $state;
+        $rootScope.$on("$stateChangeStart", function(evt, toState, toParams, fromState) {
+            // Is initial transition and is going to modal.*?
+            if (fromState.name === '' && /modal.*/.exec(toState.name)) {
+                evt.preventDefault(); // cancel initial transition
+
+                $state.go(defaultState, null, { location: false }).then(function() {
+                    $state.go(toState, toParams); }
+                );
+            }
+        });
     }]);
     //.run(['$rootScope', ($rootScope)=> {
     //    // ============================================= Debug UI-Router
