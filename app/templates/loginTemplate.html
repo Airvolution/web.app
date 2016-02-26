@@ -1,20 +1,35 @@
-<form class="form-login" role="form">
-    <div class="modal-header">
-        <i class="fa fa-times fa2x pull-right" ng-click="ctrl.closeModal()"></i>
-        <h2>Login</h2>
-    </div>
-    <div class="modal-body">
-        <div data-ng-hide="ctrl.message == ''" class="alert alert-danger">
-            {{ctrl.message}}
+<div class="row">
+    <form class="form-login" role="form">
+        <div class="col-md-6">
+            <h4>Register</h4>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Username" ng-model="ctrl.registration.userName"
+                       required autofocus>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Password"
+                       ng-model="ctrl.registration.password" required>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Confirm Password"
+                       ng-model="ctrl.registration.confirmPassword" required>
+            </div>
+            <button class="btn btn-primary btn-lg btn-block" type="button" ng-click="signUp()">Register</button>
         </div>
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="Username" data-ng-model="ctrl.loginData.userName" required autofocus>
+    </form>
+    <form class="form-login" role="form">
+        <div class="col-md-6">
+
+            <h4>Login</h4>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Username" ng-model="ctrl.loginData.userName"
+                       required autofocus>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Password" ng-model="ctrl.loginData.password"
+                       required>
+            </div>
+            <button class="btn btn-info btn-lg btn-block" type="button" ng-click="login()">Login</button>
         </div>
-        <div class="form-group">
-            <input type="password" class="form-control" placeholder="Password" data-ng-model="ctrl.loginData.password" required>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-lg btn-info btn-block" type="submit" data-ng-click="ctrl.login()">Submit</button>
-    </div>
-</form>
+    </form>
+</div>
