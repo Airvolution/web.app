@@ -14,10 +14,11 @@ class LocationService {
         // empty constructor
     }
 
-    public asyncGetGeoCoordinates() {
+    public asyncGetGeoCoordinates2() {
         var deferred = this.$q.defer();
 
         let self = this;
+
         if (self.data != undefined) {
             self.$log.log('location already saved');
             deferred.resolve({
@@ -29,6 +30,7 @@ class LocationService {
         }
 
         let url = 'http://freegeoip.net/json/';
+
         self.$http.get(url).then(
             function(response) {
                 self.$log.log('ip address: ' + response.data.ip);
@@ -36,6 +38,31 @@ class LocationService {
                 deferred.resolve({
                     lat: response.data.latitude,
                     lng: response.data.longitude
+                });
+            },
+            function(response) {
+                self.$log.log('bad response from freegeoip');
+                deferred.reject({
+                    lat: 0,
+                    lng: 0
+                });
+            }
+        );
+
+        return deferred.promise;
+    }
+
+    public asyncGetGeoCoordinates() {
+        var deferred = this.$q.defer();
+
+        let self = this;
+        let url = 'http://ip-api.com/json'; // query lat lon
+        self.$http.get(url).then(
+            function(response) {
+                self.$log.log('ip address: ' + response.data.query);
+                deferred.resolve({
+                    lat: response.data.lat,
+                    lng: response.data.lon
                 });
             },
             function(response) {
