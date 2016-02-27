@@ -655,6 +655,8 @@ class MapViewController {
 
                 // Add custom attributes to each Marker
                 for (let key in data) {
+                    data[key]['lat'] = data[key].location.lat;
+                    data[key]['lng'] = data[key].location.lng;
                     if (data.hasOwnProperty(key)) {
                         if (data[key]['agency'] != null) {
                             data[key]['layer'] = data[key]['state'];
