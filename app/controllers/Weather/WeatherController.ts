@@ -9,6 +9,7 @@ class WeatherController {
     public currentTemp;
     public currentMax;
     public currentMin;
+    public sky;
 
     constructor(
         private $scope,
@@ -16,7 +17,7 @@ class WeatherController {
         private openWeatherService,
         private locationService
     ) {
-
+        this.sky='wi-na';
         this.findWeatherByLocation();
     }
 
@@ -39,6 +40,7 @@ class WeatherController {
                 self.currentTemp = response.main.temp;
                 self.currentMax = response.main.temp_max;
                 self.currentMin = response.main.temp_min;
+                self.sky = response.weather.icon;
                 self.$log.log('openWeatherService responded with data: ' + response);
             },
             function (response) {
@@ -54,7 +56,9 @@ class WeatherController {
                 self.currentTemp = response.main.temp;
                 self.currentMax = response.main.temp_max;
                 self.currentMin = response.main.temp_min;
+                self.sky = response.weather.icon;
                 self.$log.log('openWeatherService responded with data: ' + response);
+                self.$log.log('sky: ' + response.weather.icon);
             },
             function (response) {
                 self.$log.log('openWeatherService promise rejected: ' + response);
