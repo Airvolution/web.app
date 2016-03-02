@@ -4,15 +4,19 @@ var app = express();
 var url = require('url');
 
 var apiDest = 'localhost:2307';
-var searchDest = apiDest;
+var searchDest = 'dev.air.eng.utah.edu';
 app.use('/api',proxy(apiDest,{
     forwardPath: function(req, res){
-        return '/'+url.parse(req.url).path;
+        var forward = '/'+url.parse(req.url).path;
+        console.log('Proxying to %s',apiDest+forward);
+        return forward;
     }
 }));
 app.use('/search',proxy(searchDest,{
     forwardPath: function(req,res){
-      return '/'+url.parse(req.url).path;
+        var forward = '/search'+url.parse(req.url).path;
+        console.log('Proxying to %s',searchDest+forward);
+        return forward;
     }
 }));
 

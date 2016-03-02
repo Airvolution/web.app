@@ -10,7 +10,7 @@ class SearchService {
         "datapoints": "/datapoints/_search",
         "stations": "/stations/_search"
     };
-    static $inject = ['$http', '$q'];
+    public static $inject = ['$http', '$q'];
 
     constructor(private $http,
                 private $q) {
@@ -19,10 +19,10 @@ class SearchService {
     public getAllStations() {
         var url = this.getSearchUrl('stations');
         var query = SearchService.createEmptyQuery();
-        this.getAllResults(url, query);
+        return this.getAllResults(url, query);
     }
 
-    private getAllResults(query, url) {
+    private getAllResults(url, query) {
         var deferred = this.$q.defer();
         var self = this;
         query.size = this.pageSize;
@@ -31,15 +31,19 @@ class SearchService {
             var promises = [];
             var size = initialResponse.data.hits.total;
             while (from < size) {
-                query.from = from;
-                promises.push(self.$http.post(url, query));
+                var temp = angular.copy(query);
+                temp.from = from;
+                promises.push(self.$http.post(url, temp));
                 from += self.pageSize;
             }
             self.$q.all(promises).then((data)=> {
-                var ret = [];
-                _.map(data,(page:any)=>{
-                    ret.push.apply(ret, page.hits.hits);
-                });
+                    data.push(initialResponse);
+                    var ret = _.chain(data)
+                        .map((page:any)=> {
+                            return page.data.hits.hits;
+                        })
+                        .flatten(true)
+                        .value();
                     deferred.resolve(ret);
                 },
                 (error)=> {
@@ -54,7 +58,7 @@ class SearchService {
             "query": {
                 "match_all": {}
             }
-        }
+        };
     }
 
     private getSearchUrl(type:string) {
