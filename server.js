@@ -3,11 +3,13 @@ var express = require('express');
 var app = express();
 var url = require('url');
 
-var apiDest = 'localhost:2307';
+//var apiDest = 'localhost:2307';
+///var apiDest = 'localhost:2307';
+var apiDest = 'dev.air.eng.utah.edu';
 var searchDest = 'dev.air.eng.utah.edu';
 app.use('/api',proxy(apiDest,{
     forwardPath: function(req, res){
-        var forward = '/'+url.parse(req.url).path;
+        var forward = '/api'+url.parse(req.url).path;
         console.log('Proxying to %s',apiDest+forward);
         return forward;
     }
