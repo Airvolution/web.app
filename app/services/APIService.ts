@@ -101,6 +101,33 @@ class APIService {
         return deferred.promise;
     }
 
+    public downloadDataFromStation(id) {
+        // TODO: when compare view is ready, add support for multiple stations / variable param lists
+        var deferred = this.$q.defer();
+
+        let self = this;
+        let url = "api/stations/download";
+        let config = {
+            params: {
+                stationID: id,
+                parameter: ["PM2.5", "PM10", "OZONE", "CO", "NO2", "SO2"]
+            }
+        };
+        self.$http.get(url, config).then(
+            function (response) {
+                let blob = new Blob([response.data], { type: 'application/csv' } );
+                let objectUrl = URL.createObjectURL(blob);
+                window.open(objectUrl);
+                //deferred.resolve(response.data);
+            },
+            function (response) {
+                deferred.reject(response);
+            }
+        );
+
+        return deferred.promise;
+    }
+
     public asyncGetNVD3DataPointsFrom(id) {
         // TODO: when compare view is ready, add support for multiple stations / variable param lists
         var deferred = this.$q.defer();

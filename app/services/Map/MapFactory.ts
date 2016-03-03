@@ -56,6 +56,21 @@ class MapFactory {
         return markerNames;
     }
 
+    public downloadDataFromStation(id) {
+        // TODO: when compare view is ready, add support for multiple stations / variable param lists
+        var deferred = this.$q.defer();
+        let self = this;
+        self.APIService.downloadDataFromStation(id).then(
+            function (response) {
+                // TODO: user, check for popups
+            },
+            function (response) {
+                deferred.reject(response);
+            }
+        );
+        return deferred.promise;
+    }
+
     public getDataFromStation(id) {
         // TODO: when compare view is ready, add support for multiple stations / variable param lists
         var deferred = this.$q.defer();

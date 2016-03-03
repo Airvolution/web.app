@@ -228,7 +228,10 @@ class MapViewController {
         if (this.plotVisible) {
             this.generatePlot();
         }
+    }
 
+    public downloadStationData() {
+        this.mapFactory.downloadDataFromStation(this.selectedStation);
     }
 
     public generatePlot() {
