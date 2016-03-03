@@ -3,18 +3,22 @@
 export = FAQViewController;
 
 class FAQViewController {
-    public static $inject = ['$scope', '$location', '$anchorScroll'];
 
-    constructor(
-        private $scope,
-        private $location,
-        private $anchorScroll
-    ) {
-        console.log('FAQController constructor');
+    public scrollPos;
+    public static $inject = ['$timeout','$stateParams'];
 
-        $scope.scrollTo = function(id) {
-            $location.hash(id);
-            $anchorScroll();
-        };
+    constructor(private $timeout,$stateParams) {
+        if($stateParams.id){
+            var prefix = 'section';
+            this.scrollTo(prefix+$stateParams.id);
+        }
+    };
+
+    public scrollTo(id) {
+        this.scrollPos = id;
+        var self = this;
+        this.$timeout(()=> {
+            self.scrollPos = undefined;
+        }, 250);
     };
 }
