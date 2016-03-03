@@ -1,9 +1,8 @@
-///<reference path='../../../typings/tsd.d.ts'/>
+/// <reference path="../../../typings/tsd.d.ts" />
 
-export = FAQController;
+export = FAQViewController;
 
-class FAQController {
-    public static name = 'FAQController';
+class FAQViewController {
     public static $inject = ['$scope', '$location', '$anchorScroll'];
 
     constructor(
@@ -18,5 +17,4 @@ class FAQController {
             $anchorScroll();
         };
     };
-};
-
+}
