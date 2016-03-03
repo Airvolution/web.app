@@ -231,7 +231,10 @@ class MapViewController {
     }
 
     public downloadStationData() {
-        this.mapFactory.downloadDataFromStation(this.selectedStation);
+        if (!this.selectedStation || !this.selectedStation.id) {
+            return;
+        }
+        this.mapFactory.downloadDataFromStation(this.selectedStation.id);
     }
 
     public generatePlot() {
