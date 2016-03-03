@@ -103,7 +103,6 @@ class APIService {
 
     public downloadDataFromStation(id) {
         // TODO: when compare view is ready, add support for multiple stations / variable param lists
-
         var deferred = this.$q.defer();
 
         let self = this;
@@ -116,7 +115,10 @@ class APIService {
         };
         self.$http.get(url, config).then(
             function (response) {
-                window.open('data:text/csv;charset=utf-8,' + response.data);
+                let blob = new Blob([response.data], { type: 'data:text/csv;charset=utf-8' } );
+                let objectUrl = URL.createObjectURL(blob);
+                window.open(objectUrl);
+                //deferred.resolve(response.data);
             },
             function (response) {
                 deferred.reject(response);
