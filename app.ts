@@ -184,22 +184,6 @@ angular.module('app', [
 
 
     }])
-    .run(['$rootScope', '$urlRouter', '$location', '$state', function ($rootScope, $urlRouter, $location, $state) {
-        let state = $state;
-        $rootScope.$on('$locationChangeSuccess', function (e, newUrl, oldUrl) {
-            e.preventDefault();
-            if (oldUrl.match(/map/g) !== null && newUrl.match(/map/g) !== null) {
-                // does not trigger view to reload
-                console.log('$locationChangeSuccess: if block');
-                // do nothing
-
-            } else {
-                // triggers view to reload
-                console.log('$locationChangeSuccess: else block');
-                $urlRouter.sync();
-            }
-        });
-    }])
     .run(['$rootScope','$state','$previousState',($rootScope,$state,$previousState)=>{
         //Default Background state for modals, then we can deeplink them without breaking the app
         $rootScope.$state = $state;
