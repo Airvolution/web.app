@@ -25,7 +25,7 @@ class MapViewController {
     public chartOptions;
     public chartData;
 
-    public static $inject = ['$state', '$rootScope', '$scope', '$stateParams','leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', '$log', 'locationService', 'APIService', '$timeout', 'mapFactory'];
+    public static $inject = ['$state', '$rootScope', '$scope', '$stateParams','leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', '$log', 'locationService', 'APIService', '$timeout', 'mapFactory', 'selectionService'];
 
     constructor(private $state,
                 private $rootScope,
@@ -39,7 +39,8 @@ class MapViewController {
                 private locationService,
                 private APIService,
                 private $timeout,
-                private mapFactory) {
+                private mapFactory,
+                private selectionService) {
 
         this.detailsVisible = true;
         this.plotVisible = false;
@@ -175,6 +176,7 @@ class MapViewController {
                     self.selectedStation.lastUpdated = response.lastUpdated;
 
                     self.detailsVisible = true;
+                    self.selectionService.setCurrentMarker(self.selectedStation);
                     if (self.plotVisible) {
                         self.plotVisible = false;
                     }

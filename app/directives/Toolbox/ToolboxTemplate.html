@@ -1,4 +1,49 @@
 <div class="toolbox" ng-class="{'expanded':ctrl.expanded,'hidden':!ctrl.visible}">
+    <div class="selection-controls">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Stations</h4>
+            </div>
+            <div class="panel-body">
+                <div class="list-group">
+                    <a href="" class="list-group-item">
+                        <span class="pull-right">
+                            <button class="btn btn-primary item-add">Add Me</button>
+                        </span>
+                        <span>{{ctrl.currentMarker.mname}</span>
+                        <span class="item-location">{{ctrl.currentMarker.mcity}}, {{ctrl.currentMarker.mstate}</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Stations</h4>
+            </div>
+            <div class="panel-body">
+                <div class="list-group">
+                    <a href="" class="list-group-item">
+                        <span class="pull-right">
+                            <button class="btn btn-primary">Add Me</button>
+                        </span>
+                        Station
+                    </a>
+                    <a href="" class="list-group-item">
+                        <span class="pull-right">
+                            <button class="btn btn-primary">Add Me</button>
+                        </span>
+                        Station
+                    </a>
+                    <a href="" class="list-group-item">
+                        <span class="pull-right">
+                            <button class="btn btn-primary">Add Me</button>
+                        </span>
+                        Station
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="toolbox-wrapper expanded">
         <tool expanded="ctrl.expanded">
             <i class="fa fa-map-o" ng-click="ctrl.toggleMap('light')"></i>
@@ -19,6 +64,7 @@
             <i class="fa fa-facebook"></i>
         </tool>
 
+
         <div class="toolbox-expander" ng-click="ctrl.toggleExpand()">
             <div class="expander-wrapper">
                 <i class="fa fa-chevron-right" ng-class="{'fa-chevron-right':!ctrl.expanded, 'fa-chevron-left':ctrl.expanded}"></i>
@@ -26,4 +72,5 @@
         </div>
     </div>
 </div>
+
 

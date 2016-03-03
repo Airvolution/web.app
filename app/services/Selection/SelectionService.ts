@@ -5,6 +5,7 @@ export = SelectionService;
 class SelectionService {
     public static serviceName = 'selectionService';
     public static $inject = ['$log'];
+    private currentMarker;
     private currentStationSelection = [];
     private currentParameterSelection = [];
     constructor(
@@ -79,4 +80,13 @@ class SelectionService {
         return this.currentParameterSelection;
     }
 
+    // Current Marker
+
+    public registerCurrentMarker(marker) {
+        this.currentMarker = marker;
+    }
+
+    public setCurrentMarker(marker) {
+        this.currentMarker = _.clone(marker);
+    }
 }

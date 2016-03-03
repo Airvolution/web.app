@@ -5,11 +5,13 @@ export = ToolboxController;
 class ToolboxController {
     public expanded;
     public visible;
+    public currentMarker;
 
-    public static $inject = ['$scope','$state', 'mapFactory'];
+    public static $inject = ['$scope','$state', 'mapFactory', 'selectionService'];
     constructor(private $scope,
                 private $state,
-                private mapFactory){
+                private mapFactory,
+                private selectionService){
         var self = this;
         $scope.$watch('ctrl.$state.current',(newVal,oldVal)=>{
             if(!self.$state.current){
@@ -22,6 +24,8 @@ class ToolboxController {
                 self.visible = true;
             }
         });
+        this.currentMarker = {};
+        this.selectionService.registerCurrentMarker(this.currentMarker);
     }
 
     public toggleExpand(){
@@ -30,6 +34,10 @@ class ToolboxController {
 
     public toggleMap(mode) {
         this.mapFactory.setMap(mode);
+    }
+
+    public getCurrentMarker() {
+
     }
 
     public getMarkerNames() {
