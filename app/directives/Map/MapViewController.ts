@@ -61,18 +61,6 @@ class MapViewController {
         //this.registerStateWatcher($rootScope);
 
         let self = this;
-        $scope.$on('$locationChangeSuccess', function(e, newUrl, oldUrl) {
-            // regex to match each cluster parameter
-            let search = newUrl.split('&cluster=');
-            if (search !== null && search.length > 1) {
-                // first match will be the url, get rid of it
-                search.shift();
-                self.clusterSearch = search;
-                self.showStationsByCluster(self.clusterSearch);
-            } else {
-                self.showAllClusters();
-            }
-        });
     }
 
     private registerStateWatcher($rootScope) {
@@ -228,7 +216,13 @@ class MapViewController {
         if (this.plotVisible) {
             this.generatePlot();
         }
+    }
 
+    public downloadStationData() {
+        if (!this.selectedStation || !this.selectedStation.id) {
+            return;
+        }
+        this.mapFactory.downloadDataFromStation(this.selectedStation.id);
     }
 
     public generatePlot() {

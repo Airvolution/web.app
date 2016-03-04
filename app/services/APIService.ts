@@ -4,12 +4,14 @@ export = APIService;
 
 class APIService {
     public static serviceName = 'APIService';
-    public static $inject = ['$http', '$q', '$log','locationService'];
+    public static $inject = ['$http', '$httpParamSerializer', '$q', '$log','locationService', '$timeout'];
     constructor(
         private $http,
+        private $httpParamSerializer,
         private $q,
         private $log,
-        private locationService
+        private locationService,
+        private $timeout
     ) {}
 
     public getDailies(days) {
@@ -99,6 +101,28 @@ class APIService {
         );
 
         return deferred.promise;
+    }
+
+    public downloadDataFromStation(id) {
+        // TODO: when compare view is ready, add support for multiple stations / variable param lists
+        let config = {
+            stationID: id,
+            parameter: ["PM2.5", "PM10", "OZONE", "CO", "NO2", "SO2"]
+        };
+        let url = '/api/stations/download?' + this.$httpParamSerializer(config);
+        console.log('URL: ' + url);
+
+        let iframe = angular.element('<iframe id="download-frame"/>').attr({
+            src:url,
+            style:'visibility:none;display:hidden;'
+        });
+        angular.element('body').append(iframe);
+
+        // TODO: if something sometimes doesn't work all the time,
+        // TODO:   check the timeout here!
+        this.$timeout(function() {
+            angular.element('#download-frame').remove();
+        }, 1000);
     }
 
     public asyncGetNVD3DataPointsFrom(id) {
