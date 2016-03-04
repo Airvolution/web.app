@@ -26,7 +26,13 @@ class MapToolboxController {
         return this.mapFactory.getMarkerNames();
     }
 
-    public centerMap() {
-        console.log('centerMap called');
+    public centerMapOnLocation() {
+        console.log('centerMapOnLocation called');
+        this.$scope.$parent.centerOnLocation = !this.$scope.$parent.centerOnLocation;
+    }
+
+    public centerMapOnSelectedMarker() {
+        console.log('centerMapOnSelectedMarker called');
+        this.$scope.$parent.centerOnMarker = !this.$scope.$parent.centerOnMarker;
     }
 }

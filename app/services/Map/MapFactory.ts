@@ -194,7 +194,8 @@ class MapFactory {
     public getDefaults() {
         return {
             minZoom: 4,
-            maxZoom: 16
+            maxZoom: 16,
+            zoomControlPosition: 'bottomright'
         };
     }
 
@@ -207,6 +208,14 @@ class MapFactory {
             //lat: 39.994157,
             //lng: -97.722896,
             zoom: 5
+        };
+    }
+
+    public getCenterFromMarker(marker, currentZoom) {
+        return {
+            lat: marker.lat,
+            lng: marker.lng,
+            zoom: currentZoom
         };
     }
 

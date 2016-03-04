@@ -51,21 +51,34 @@ class MapViewController {
         mv.defaults = mapFactory.getDefaults();
         mv.center = mapFactory.getCenter();
 
+        // things to watch with scope watch
         if ($stateParams.mode === undefined) {
             $scope.mode = 'light';
         } else {
             $scope.mode = $stateParams.mode;
         }
+        $scope.centerOnLocation = true; // arbitrary value
+        $scope.centerOnMarker = false;  // arbitrary value, but why not be different?
 
         mv.tiles = mapFactory.createTilesFromKey($scope.mode);
         mv.layers = mapFactory.createMapLayers();
         mv.events = mv.createMapEvents();
         mv.clusterSearch = $state.params['cluster'];
-        //mapFactory.registerMapTiles(mv.tiles);
 
-        $scope.$watch('mode', function (newValue, oldValue) {
-            console.log('$scope.$watch triggered: newValue=' + newValue + ', oldValue=' + oldValue);
-            mv.updateMapTiles(newValue);
+        $scope.$watch('mode', function (mode) {
+            mv.updateMapTiles(mode);
+        });
+
+        $scope.$watch('centerOnLocation', function () {
+            mv.$log.log('lets try to center shall we please');
+            mv.center = mv.mapFactory.getCenter();
+        });
+
+        $scope.$watch('centerOnMarker', function (marker) {
+            if (mv.selectedStation && mv.selectedStation.id) {
+                mv.$log.log('lets try to center on a marker, that would be neat-o-rific');
+                mv.center = mv.mapFactory.getCenterFromMarker(mv.selectedStation, mv.center.zoom);
+            }
         });
 
         $scope.$on('leafletDirectiveMarker.map.click', mv.onMarkerClick());
