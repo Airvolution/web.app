@@ -1,19 +1,19 @@
 <div class="toolbox" ng-class="{'expanded':ctrl.expanded}">
     <div class="toolbox-wrapper expanded">
         <map-tool expanded="ctrl.expanded">
-            <i class="fa fa-map" ng-click="ctrl.toggleMap('light')"></i>
+            <i class="fa fa-map" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.toggleMap('light')"></i>
         </map-tool>
         <map-tool expanded="ctrl.expanded">
-            <i class="fa fa-map-o" ng-click="ctrl.toggleMap('dark')"></i>
+            <i class="fa fa-map-o" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.toggleMap('dark')"></i>
         </map-tool>
         <map-tool expanded="ctrl.expanded">
-            <i class="fa fa-globe" ng-click="ctrl.toggleMap('satellite')"></i>
+            <i class="fa fa-globe" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.toggleMap('satellite')"></i>
         </map-tool>
         <map-tool expanded="ctrl.expanded">
-            <i class="fa fa-map-marker" ng-click="ctrl.centerMapOnSelectedMarker()"></i>
+            <i class="fa fa-map-marker" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.centerMapOnSelectedMarker()"></i>
         </map-tool>
         <map-tool expanded="ctrl.expanded">
-            <i class="fa fa-dot-circle-o" ng-click="ctrl.centerMapOnLocation()"></i>
+            <i class="fa fa-dot-circle-o" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.centerMapOnLocation()"></i>
         </map-tool>
 
         <div class="toolbox-expander" ng-click="ctrl.toggleExpand()">
