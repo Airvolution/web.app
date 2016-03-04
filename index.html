@@ -30,7 +30,7 @@
             <weather></weather>
         </div>
         <div class="headerzone col-md-3" id="aqi" ng-controller="AQIController as qctrl">
-            <span class="epa-aqi-title">EPA AQI, <br/>Salt Lake City</span>
+            <span class="epa-aqi-title">Air Quality Index<br/>{{qctrl.localCity}}, {{qctrl.localRegion}}</span>
             <span class="fa-stack fa-2x epa-aqi-icon" ng-click="qctrl.showPopup = !qctrl.showPopup">
                 <i class="fa fa-circle fa-stack-2x epa-aqi" ng-class="{'low':qctrl.localCategory == 'Good',
                                                                         'med':qctrl.localCategory == 'Moderate',
