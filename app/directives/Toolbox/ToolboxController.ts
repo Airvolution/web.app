@@ -16,10 +16,10 @@ class ToolboxController {
                 return;
             }
             var name = self.$state.current.name;
-            if(name == 'almanac' || name.indexOf('config') >= 0){
-                self.visible = false;
-            } else {
+            if(name.indexOf('map') >=0 || name.indexOf('compare') >= 0){
                 self.visible = true;
+            } else {
+                self.visible = false;
             }
         });
     }
