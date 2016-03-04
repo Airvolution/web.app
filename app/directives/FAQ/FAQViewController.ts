@@ -4,16 +4,23 @@ export = FAQViewController;
 
 class FAQViewController {
 
+    public faqList;
+    public self;
     public scrollPos;
-    public static $inject = ['$timeout','$stateParams'];
+    public static $inject = ['$timeout','$stateParams', '$scope', 'APIService', '$q'];
 
-    constructor(private $timeout,$stateParams) {
+    constructor(private $timeout,
+                private $stateParams,
+                private $scope,
+                private APIService,
+                private $q) {
         if($stateParams.id){
             var prefix = 'section';
             this.scrollTo(prefix+$stateParams.id);
         }
 
-        this.getFAQs();
+        let self = this;
+        this.getFAQs(self);
     };
 
     public scrollTo(id) {
@@ -24,20 +31,19 @@ class FAQViewController {
         }, 250);
     };
 
-    public getFAQs() {
-        var deferred = this.$q.defer();
-        let self = this;
+    public getFAQs(self) {
+        var deferred = self.$q.defer();
         self.APIService.GetFAQs().then(
             function (response) {
                 deferred.resolve(response);
+
                 // Add content to page.
-                console.log("we made it here");
-                self.faqs = response;
+                self.faqList = response;
             },
             function (response) {
                 deferred.reject(response);
             }
         );
         return deferred.promise;
-    }
-}
+    };
+};
