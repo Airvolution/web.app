@@ -18,7 +18,6 @@ class MapToolboxController {
     }
 
     public toggleMap(mode) {
-        //this.mapFactory.setMap(mode);
         this.$scope.$parent.mode = mode;
     }
 

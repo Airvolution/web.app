@@ -75,27 +75,31 @@
       left: 50%;
       transform: translate(-50%, -50%);
     }
+  }
+}
 
+.selection-controls {
+  position: absolute;
+  z-index: 9999;
+  background: rgba(0, 0, 0, .75);
+  color: white;
+  top: 0;
+  left: 2.5%;
+  bottom: 0;
+  padding: 1em;
+
+  &.expanded {
+    left: 5%;
   }
 
-  .selection-controls {
-    position: absolute;
-    z-index: 9999;
-    background: rgba(0, 0, 0, .75);
-    color: white;
-    width: 35em;
-
-    .item-location {
-      float: right;
-      padding-right: 4em;
-    }
-
-    .item-add {
-
-    }
+  .item-location {
+    float: right;
+    padding-right: 4em;
   }
 
+  .item-add {
 
+  }
 }
 //#toolbox {
 //  position: absolute;
