@@ -26,11 +26,8 @@
             <li ui-sref-active="active" class="tab"><a ui-sref="app.compare">Compare</a></li>
             <li ui-sref-active="active" class="tab"><a ui-sref="app.faq">FAQ</a></li>
         </ul>
-        <!--
-        <div class="headerzone col-md-2 col-md-offset-1"><div id="quicklinks"><input type="text" placeholder="QuickLinks"/><i class="fa fa-search fa-2x"></i></div></div>
-        -->
         <div class="headerzone col-md-2" id="weather">
-            <weather />
+            <weather></weather>
         </div>
         <div class="headerzone col-md-3" id="aqi" ng-controller="AQIController as qctrl">
             <span class="epa-aqi-title">EPA AQI, <br/>Salt Lake City</span>
