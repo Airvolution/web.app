@@ -1,13 +1,13 @@
 /// <reference path="../../../typings/tsd.d.ts" />
-import ToolController = require('./ToolController');
-export = ToolDirective;
+import MapToolController = require('./MapToolController');
+export = MapToolDirective;
 
-class ToolDirective implements ng.IDirective {
-    public static htmlName = 'tool';
+class MapToolDirective implements ng.IDirective {
+    public static htmlName = 'mapTool';
 
     public restrict = 'E';
-    public templateUrl = 'app/directives/Toolbox/MapToolTemplate.html';
-    public controller = ToolController;
+    public templateUrl = 'app/directives/Map/MapToolTemplate.html';
+    public controller = MapToolController;
     public controllerAs = 'ctrl';
     public bindToController = true;
     public transclude = true;
@@ -25,6 +25,6 @@ class ToolDirective implements ng.IDirective {
     };
 
     public static create() {
-        return new ToolDirective();
+        return new MapToolDirective();
     }
 }
