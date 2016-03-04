@@ -40,27 +40,41 @@ class MapViewController {
                 private APIService,
                 private $timeout,
                 private mapFactory) {
+        let mv = this;
 
-        this.detailsVisible = true;
-        this.plotVisible = false;
+        mv.detailsVisible = true;
+        mv.plotVisible = false;
 
-        this.selectedStation = {location: {}, last: {}};
+        mv.selectedStation = {location: {}, last: {}};
 
-        this.markers = this.getMapMarkers();
-        this.defaults = mapFactory.getDefaults();
-        this.center = mapFactory.getCenter();
-        this.tiles = mapFactory.createTilesFromKey($stateParams.mode);
-        this.layers = mapFactory.createMapLayers();
-        this.events = this.createMapEvents();
-        this.clusterSearch = $state.params['cluster'];
-        mapFactory.registerMapTiles(this.tiles);
+        mv.markers = mv.getMapMarkers();
+        mv.defaults = mapFactory.getDefaults();
+        mv.center = mapFactory.getCenter();
 
-        $scope.$on('leafletDirectiveMarker.map.click', this.onMarkerClick());
-        $scope.$on('leafletDirectiveMap.map.moveend', this.onMapMove());
+        if ($stateParams.mode === undefined) {
+            $scope.mode = 'light';
+        } else {
+            $scope.mode = $stateParams.mode;
+        }
+
+        mv.tiles = mapFactory.createTilesFromKey($scope.mode);
+        mv.layers = mapFactory.createMapLayers();
+        mv.events = mv.createMapEvents();
+        mv.clusterSearch = $state.params['cluster'];
+        //mapFactory.registerMapTiles(mv.tiles);
+
+        $scope.$watch('mode', function (newValue, oldValue) {
+            console.log('$scope.$watch triggered: newValue=' + newValue + ', oldValue=' + oldValue);
+            mv.updateMapTiles(newValue);
+        });
+
+        $scope.$on('leafletDirectiveMarker.map.click', mv.onMarkerClick());
+        $scope.$on('leafletDirectiveMap.map.moveend', mv.onMapMove());
         this.showStationsByCluster($stateParams['cluster']);
-        //this.registerStateWatcher($rootScope);
+    }
 
-        let self = this;
+    private updateMapTiles(mode) {
+        this.tiles = this.mapFactory.createTilesFromKey(mode);
     }
 
     private registerStateWatcher($rootScope) {

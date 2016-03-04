@@ -4,24 +4,13 @@ export = MapToolboxController;
 
 class MapToolboxController {
     public expanded;
-    public visible;
 
     public static $inject = ['$scope','$state', 'mapFactory'];
-    constructor(private $scope,
-                private $state,
-                private mapFactory){
-        var self = this;
-        $scope.$watch('ctrl.$state.current',(newVal,oldVal)=>{
-            if(!self.$state.current){
-                return;
-            }
-            var name = self.$state.current.name;
-            if(name == 'almanac' || name.indexOf('config') >= 0){
-                self.visible = false;
-            } else {
-                self.visible = true;
-            }
-        });
+    constructor(
+        private $scope,
+        private $state,
+        private mapFactory) {
+
     }
 
     public toggleExpand(){
@@ -29,7 +18,8 @@ class MapToolboxController {
     }
 
     public toggleMap(mode) {
-        this.mapFactory.setMap(mode);
+        //this.mapFactory.setMap(mode);
+        this.$scope.$parent.mode = mode;
     }
 
     public getMarkerNames() {
