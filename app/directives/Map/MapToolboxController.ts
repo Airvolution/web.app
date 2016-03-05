@@ -4,16 +4,21 @@ export = MapToolboxController;
 
 class MapToolboxController {
     public expanded;
-
+    public showDetails;
     public static $inject = ['$scope','$state', 'mapFactory'];
     constructor(
         private $scope,
         private $state,
-        private mapFactory) {
-
+        private mapFactory
+    ) {
+        this.showDetails = false;
     }
 
-    public toggleExpand(){
+    public toggleDetails() {
+        this.showDetails = !this.showDetails;
+    }
+
+    public toggleExpand() {
         this.expanded = !this.expanded;
     }
 
@@ -26,12 +31,18 @@ class MapToolboxController {
     }
 
     public centerMapOnLocation() {
-        console.log('centerMapOnLocation called');
         this.$scope.$parent.centerOnLocation = !this.$scope.$parent.centerOnLocation;
     }
 
+    public togglePlot() {
+        this.$scope.$parent.togglePlot = !this.$scope.$parent.togglePlot;
+    }
+
+    public download() {
+        this.$scope.$parent.downloadPlot = !this.$scope.$parent.downloadPlot;
+    }
+
     public centerMapOnSelectedMarker() {
-        console.log('centerMapOnSelectedMarker called');
         this.$scope.$parent.centerOnMarker = !this.$scope.$parent.centerOnMarker;
     }
 }

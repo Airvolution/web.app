@@ -50,6 +50,11 @@ class MapViewController {
         mv.markers = mv.getMapMarkers();
         mv.defaults = mapFactory.getDefaults();
         mv.center = mapFactory.getCenter();
+        //mapFactory.getCenter().then(
+        //    function (response) {
+        //        mv.center = response;
+        //    }
+        //);
 
         // things to watch with scope watch
         if ($stateParams.mode === undefined) {
@@ -59,6 +64,8 @@ class MapViewController {
         }
         $scope.centerOnLocation = true; // arbitrary value
         $scope.centerOnMarker = false;  // arbitrary value, but why not be different?
+        $scope.togglePlot = false;
+        $scope.downloadPlot = false;
 
         mv.tiles = mapFactory.createTilesFromKey($scope.mode);
         mv.layers = mapFactory.createMapLayers();
@@ -71,13 +78,29 @@ class MapViewController {
 
         $scope.$watch('centerOnLocation', function () {
             mv.$log.log('lets try to center shall we please');
-            mv.center = mv.mapFactory.getCenter();
+            mv.mapFactory.getCenterNoAutoDiscover(mv.center.zoom).then(
+                function (response) {
+                    mv.center = response;
+                }
+            );
         });
 
         $scope.$watch('centerOnMarker', function (marker) {
             if (mv.selectedStation && mv.selectedStation.id) {
                 mv.$log.log('lets try to center on a marker, that would be neat-o-rific');
                 mv.center = mv.mapFactory.getCenterFromMarker(mv.selectedStation, mv.center.zoom);
+            }
+        });
+
+        $scope.$watch('togglePlot', function () {
+            if (mv.selectedStation && mv.selectedStation.id) {
+                mv.showStationChart();
+            }
+        });
+
+        $scope.$watch('downloadPlot', function () {
+            if (mv.selectedStation && mv.selectedStation.id) {
+                mv.downloadStationData();
             }
         });
 

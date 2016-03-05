@@ -1,6 +1,9 @@
 <div class="toolbox" ng-class="{'expanded':ctrl.expanded}">
     <div class="toolbox-wrapper expanded">
         <map-tool expanded="ctrl.expanded">
+            <i class="fa fa-bars" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.toggleDetails()"></i>
+        </map-tool>
+        <map-tool expanded="ctrl.expanded">
             <i class="fa fa-map" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.toggleMap('light')"></i>
         </map-tool>
         <map-tool expanded="ctrl.expanded">
@@ -10,11 +13,18 @@
             <i class="fa fa-globe" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.toggleMap('satellite')"></i>
         </map-tool>
         <map-tool expanded="ctrl.expanded">
+            <i class="fa fa-dot-circle-o" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.centerMapOnLocation()"></i>
+        </map-tool>
+        <map-tool expanded="ctrl.expanded">
             <i class="fa fa-map-marker" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.centerMapOnSelectedMarker()"></i>
         </map-tool>
         <map-tool expanded="ctrl.expanded">
-            <i class="fa fa-dot-circle-o" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.centerMapOnLocation()"></i>
+            <i class="fa fa-bar-chart" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.togglePlot()"></i>
         </map-tool>
+        <map-tool expanded="ctrl.expanded">
+            <i class="fa fa-download" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.download()"></i>
+        </map-tool>
+
 
         <div class="toolbox-expander" ng-click="ctrl.toggleExpand()">
             <div class="expander-wrapper">
@@ -23,7 +33,7 @@
         </div>
     </div>
 </div>
-<div class="selection-controls" ng-class="{'expanded':ctrl.expanded}">
+<div class="toolbox-drawer" ng-class="{'drawer-open':ctrl.showDetails,'expanded':ctrl.expanded}">
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4>Stations</h4>

@@ -7,7 +7,7 @@ class MapFactory {
     private mapTiles;
 
     public static serviceName = 'mapFactory';
-    public static $inject = ['APIService','leafletMarkerEvents', '$q', '$log'];
+    public static $inject = ['APIService','leafletMarkerEvents', '$q', '$log', 'locationService'];
     private tilesDictionary = {
         light_map: {
             name: 'Light Map',
@@ -29,7 +29,8 @@ class MapFactory {
         private APIService,
         private leafletMarkerEvents,
         private $q,
-        private $log
+        private $log,
+        private locationService
     ) {
         this.mapMarkers = undefined;
     }
@@ -200,15 +201,34 @@ class MapFactory {
     }
 
     public getCenter() {
-        // this will center on location for now
-        // when we get user preferences we can disable auto discover
-        // and use specific lat, lng
+        // the map by default must initialize with a valid center
         return {
             autoDiscover: true,
-            //lat: 39.994157,
-            //lng: -97.722896,
             zoom: 5
         };
+    }
+
+    public getCenterNoAutoDiscover(currentZoom) {
+        let deferred = this.$q.defer();
+
+        let self = this;
+        self.locationService.asyncGetGeoCoordinates().then(
+            function (response) {
+                deferred.resolve({
+                    lat: response.lat,
+                    lng: response.lng,
+                    zoom: currentZoom
+                });
+            },
+            function (response) {
+                deferred.resolve({
+                    autoDiscover: true,
+                    zoom: currentZoom
+                });
+            }
+        );
+
+        return deferred.promise;
     }
 
     public getCenterFromMarker(marker, currentZoom) {
