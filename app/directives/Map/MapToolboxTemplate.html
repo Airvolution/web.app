@@ -34,49 +34,83 @@
     </div>
 </div>
 <div class="toolbox-drawer" ng-class="{'drawer-open':ctrl.showDetails,'expanded':ctrl.expanded}">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4>Stations</h4>
-        </div>
-        <div class="panel-body">
-            <div class="list-group">
-                <a href="" class="list-group-item">
-                        <span class="pull-right">
-                            <button class="btn btn-primary item-add">Add Me</button>
-                        </span>
-                    <span>{{ctrl.currentMarker.name}</span>
-                    <span class="item-location">{{ctrl.currentMarker.city}}, {{ctrl.currentMarker.state}</span>
-                </a>
+
+
+    <uib-accordion>
+        <uib-accordion-group style="color:black"heading="Turn Cluster On / Off">
+            <div class="box well">
+                <div class="container">
+                    <span class="icon"><i class="fa fa-search"></i></span>
+                    <input ng-model="q" type="search" id="search" placeholder="search by state..."/>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4>Stations</h4>
-        </div>
-        <div class="panel-body">
             <div class="list-group">
-                <a href="" class="list-group-item">
-                        <span class="pull-right">
-                            <button class="btn btn-primary">Add Me</button>
-                        </span>
-                    Station
-                </a>
-                <a href="" class="list-group-item">
-                        <span class="pull-right">
-                            <button class="btn btn-primary">Add Me</button>
-                        </span>
-                    Station
-                </a>
-                <a href="" class="list-group-item">
-                        <span class="pull-right">
-                            <button class="btn btn-primary">Add Me</button>
-                        </span>
-                    Station
-                </a>
+                <div class="list-group-item" ng-repeat="cluster in ctrl.clusters | filter:q">
+                    <input type="checkbox" checked/>
+                    {{cluster.name}}
+                </div>
             </div>
-        </div>
-    </div>
+        </uib-accordion-group>
+    </uib-accordion>
+
+    <!--<div class="panel panel-default collapse">-->
+        <!--<div style="color:black" class="panel-heading">-->
+            <!--Turn Clusters On / Off-->
+        <!--</div>-->
+        <!--<div class="panel-body"></div>-->
+        <!--<div style="color:black">-->
+            <!--Search Here-->
+        <!--</div>-->
+        <!--<div style="color:black" class="list-group">-->
+            <!--List Items Here-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <!-- Selection Service Template -->
+    <!--<div class="panel panel-default">-->
+        <!--<div class="panel-heading">-->
+            <!--<h4>Stations</h4>-->
+        <!--</div>-->
+        <!--<div class="panel-body">-->
+            <!--<div class="list-group">-->
+                <!--<a href="" class="list-group-item">-->
+                        <!--<span class="pull-right">-->
+                            <!--<button class="btn btn-primary item-add">Add Me</button>-->
+                        <!--</span>-->
+                    <!--<span>{{ctrl.currentMarker.name}</span>-->
+                    <!--<span class="item-location">{{ctrl.currentMarker.city}}, {{ctrl.currentMarker.state}</span>-->
+                <!--</a>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="panel panel-default">-->
+        <!--<div class="panel-heading">-->
+            <!--<h4>Stations</h4>-->
+        <!--</div>-->
+        <!--<div class="panel-body">-->
+            <!--<div class="list-group">-->
+                <!--<a href="" class="list-group-item">-->
+                        <!--<span class="pull-right">-->
+                            <!--<button class="btn btn-primary">Add Me</button>-->
+                        <!--</span>-->
+                    <!--Station-->
+                <!--</a>-->
+                <!--<a href="" class="list-group-item">-->
+                        <!--<span class="pull-right">-->
+                            <!--<button class="btn btn-primary">Add Me</button>-->
+                        <!--</span>-->
+                    <!--Station-->
+                <!--</a>-->
+                <!--<a href="" class="list-group-item">-->
+                        <!--<span class="pull-right">-->
+                            <!--<button class="btn btn-primary">Add Me</button>-->
+                        <!--</span>-->
+                    <!--Station-->
+                <!--</a>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--End Selection Service Template -->
 </div>
 
 

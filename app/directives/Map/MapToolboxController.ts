@@ -5,13 +5,26 @@ export = MapToolboxController;
 class MapToolboxController {
     public expanded;
     public showDetails;
+    public clusters;
     public static $inject = ['$scope','$state', 'mapFactory'];
     constructor(
         private $scope,
         private $state,
         private mapFactory
     ) {
-        this.showDetails = false;
+        this.showDetails = true;
+        this.clusters = [];
+        this.convertMapLayersToArray(mapFactory.createMapLayers().overlays);
+    }
+
+    private convertMapLayersToArray(layers) {
+        let self = this;
+        angular.forEach(layers, function(value, key) {
+            self.clusters.push({
+                key: key,
+                name: value.name
+            });
+        });
     }
 
     public toggleDetails() {
