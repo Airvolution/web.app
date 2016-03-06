@@ -549,6 +549,58 @@ class MapFactory {
                     type: 'markercluster',
                     name: 'Wyoming',
                     visible: true
+                },
+                // CANADA
+                AB: {
+                    type: 'markercluster',
+                    name: 'Alberta',
+                    visible: true
+                },
+                BC: {
+                    type: 'markercluster',
+                    name: 'British Columbia',
+                    visible: true
+                },
+                MB: {
+                    type: 'markercluster',
+                    name: 'Manitoba',
+                    visible: true
+                },
+                NB: {
+                    type: 'markercluster',
+                    name: 'New Brunswick',
+                    visible: true
+                },
+                NS: {
+                    type: 'markercluster',
+                    name: 'Nova Scotia',
+                    visible: true
+                },
+                ON: {
+                    type: 'markercluster',
+                    name: 'Ontario',
+                    visible: true
+                },
+                PE: {
+                    type: 'markercluster',
+                    name: 'Prince Edward Island',
+                    visible: true
+                },
+                QC: {
+                    type: 'markercluster',
+                    name: 'Québec',
+                    visible: true
+                },
+                SK: {
+                    type: 'markercluster',
+                    name: 'Saskatchewan',
+                    visible: true
+                },
+                // MEXICO
+                'N.L.': {
+                    type: 'markercluster',
+                    name: 'Nuevo León',
+                    visible: true
                 }
             }
         };
