@@ -1,30 +1,30 @@
 <div class="toolbox" ng-class="{'expanded':ctrl.expanded}">
     <div class="toolbox-wrapper expanded">
-        <map-tool expanded="ctrl.expanded">
+        <map-tool expanded="ctrl.expanded" uib-tooltip="Open Toolbox Details" tooltip-placement="right">
             <i class="fa fa-bars" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.toggleDetails()"></i>
         </map-tool>
-        <map-tool expanded="ctrl.expanded">
+        <map-tool expanded="ctrl.expanded" uib-tooltip="Light Map" tooltip-placement="right">
             <i class="fa fa-map" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.toggleMap('light')"></i>
         </map-tool>
-        <map-tool expanded="ctrl.expanded">
+        <map-tool expanded="ctrl.expanded" uib-tooltip="Dark Map" tooltip-placement="right">
             <i class="fa fa-map-o" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.toggleMap('dark')"></i>
         </map-tool>
-        <map-tool expanded="ctrl.expanded">
+        <map-tool expanded="ctrl.expanded" uib-tooltip="Satellite Map" tooltip-placement="right">
             <i class="fa fa-globe" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.toggleMap('satellite')"></i>
         </map-tool>
-        <map-tool expanded="ctrl.expanded">
+        <map-tool expanded="ctrl.expanded" uib-tooltip="Zoom Map Out" tooltip-placement="right">
             <i class="fa fa-arrows-alt" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.zoomMapOut()"></i>
         </map-tool>
-        <map-tool expanded="ctrl.expanded">
+        <map-tool expanded="ctrl.expanded" uib-tooltip="Center On Location" tooltip-placement="right">
             <i class="fa fa-dot-circle-o" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.centerMapOnLocation()"></i>
         </map-tool>
-        <map-tool expanded="ctrl.expanded">
+        <map-tool expanded="ctrl.expanded" uib-tooltip="Center On Marer" tooltip-placement="right">
             <i class="fa fa-map-marker" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.centerMapOnSelectedMarker()"></i>
         </map-tool>
-        <map-tool expanded="ctrl.expanded">
+        <map-tool expanded="ctrl.expanded" uib-tooltip="Show Data Plot" tooltip-placement="right">
             <i class="fa fa-bar-chart" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.togglePlot()"></i>
         </map-tool>
-        <map-tool expanded="ctrl.expanded">
+        <map-tool expanded="ctrl.expanded" uib-tooltip="Download Data" tooltip-placement="right">
             <i class="fa fa-download" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.download()"></i>
         </map-tool>
 

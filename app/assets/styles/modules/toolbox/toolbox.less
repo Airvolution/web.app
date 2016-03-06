@@ -41,7 +41,7 @@
   left: 0;
   bottom: 0;
   z-index: 5;
-  width: 2.5%;
+  width: 3%;
   background: rgba(0,0,0,.75);
   border: 2px solid rgba(0,0,0,.85);
   color: white;
@@ -60,6 +60,8 @@
     border-radius: .25em;
     height: 2em;
     width: 2em;
+    margin-top: 0.5em;
+    margin-bottom: 1em;
 
     -webkit-transition: width 1s;
     -webkit-transition: height 1s;
@@ -72,7 +74,8 @@
     &.expanded {
       height: 4em;
       width: 4em;
-      margin: .5em auto;
+      margin-top: 0.5em;
+      margin-bottom: 1.25em;
     }
 
     &:hover {
@@ -201,9 +204,15 @@
 }
 
 .drawer-open {
-  left: 2.5%;
+  left: 3%;
 
   &.expanded {
     left: 5%;
   }
+}
+
+.tooltip-inner {
+  width: 30em;
+  height: 2.5em;
+  font-size: 1.5em;
 }
