@@ -6,6 +6,7 @@ class MapToolboxController {
     public expanded;
     public showDetails;
     public clusters;
+    public sortOrder;
     public static $inject = ['$scope','$state', 'mapFactory'];
     constructor(
         private $scope,
@@ -15,6 +16,7 @@ class MapToolboxController {
         this.showDetails = true;
         this.clusters = [];
         this.convertMapLayersToArray(mapFactory.createMapLayers().overlays);
+        this.setSortOrderForStations('name');
     }
 
     private convertMapLayersToArray(layers) {
@@ -77,5 +79,36 @@ class MapToolboxController {
         angular.forEach(this.clusters, function (cluster) {
             cluster['visible'] = false;
         });
+    }
+
+    public setSortOrderForStations(order) {
+        switch (order) {
+            case 'name':
+                this.sortOrder = '-name';
+                break;
+            case 'agency':
+                this.sortOrder = '-agency';
+                break;
+            case 'id':
+                this.sortOrder = '-id';
+                break;
+            case 'city':
+                this.sortOrder = '-city';
+                break;
+            case 'state':
+                this.sortOrder = '-state';
+                break;
+            case 'postal':
+                this.sortOrder = '-postal';
+                break;
+            default:
+                this.sortOrder = '-name';
+        };
+    }
+
+    public setSelectedStation(marker) {
+        this.$scope.$parent.ctrl.selectedStation = marker;
+        this.$scope.$parent.ctrl.center.zoom = 10;
+        this.centerMapOnSelectedMarker();
     }
 }

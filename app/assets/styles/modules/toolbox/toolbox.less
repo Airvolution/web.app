@@ -136,6 +136,41 @@
     }
   }
 
+  .btn {
+    background-color: @button-red;
+    color: white;
+    box-shadow: @button-box-shadow;
+
+    &:hover {
+      background-color: @button-hover;
+      color: black;
+    }
+  }
+
+  .active {
+    background-color: @button-green;
+    color: black;
+  }
+
+  .btn-map-marker {
+    background-color: @button-green;
+    color: black;
+
+    .fa {
+      padding-right: 1em;
+    }
+  }
+
+  .btn-sort {
+    background-color: @button-light-blue;
+    color: black;
+    margin: 0.25em;
+  }
+
+  .sort-order {
+    padding-bottom: 1.5em;
+  }
+
   .list-group {
     height: 15em;
     overflow-y: scroll;
@@ -148,41 +183,19 @@
         padding-top: 0.5em;
       }
     }
-
-    .btn {
-      background-color: @button-red;
-      color: black;
-      box-shadow: 0 0 3px 0.5px gray;
-
-      &:hover {
-        background-color: @button-hover;
-      }
-    }
-
-    .active {
-      background-color: @button-green;
-      color: white;
-    }
-
-    .map-marker {
-      background-color: @button-green;
-      color: black;
-
-      .fa {
-        padding-right: 1em;
-      }
-    }
   }
 
   .cluster-toggles {
     .btn {
       background-color: @button-green;
       color: black;
+      box-shadow: @button-box-shadow;
     }
 
     .active {
-      background-color: @button-green;
+      background-color: @button-red;
       color: white;
+      box-shadow: @button-box-shadow;
     }
   }
 }

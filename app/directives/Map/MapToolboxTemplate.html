@@ -41,13 +41,22 @@
             <div class="box well">
                 <div class="container">
                     <span class="icon"><i class="fa fa-search"></i></span>
-                    <input ng-model="q" type="search" class="search" placeholder="station name OR station id"/>
+                    <input ng-model="q" type="search" class="search" placeholder="station name OR station id OR state"/>
                 </div>
             </div>
+            <div class="sort-order">
+                <span>Sort By: </span>
+                <button class="btn btn-sort" ng-click="ctrl.setSortOrderForStations('name')">Name</button>
+                <button class="btn btn-sort" ng-click="ctrl.setSortOrderForStations('agency')">Agency</button>
+                <button class="btn btn-sort" ng-click="ctrl.setSortOrderForStations('id')">ID</button>
+                <button class="btn btn-sort" ngsort-click="ctrl.setSortOrderForStations('city')">City</button>
+                <button class="btn btn-sort" ng-click="ctrl.setSortOrderForStations('state')">State</button>
+                <button class="btn btn-sort" ng-click="ctrl.setSortOrderForStations('postal')">Postal</button>
+            </div>
             <div class="list-group">
-                <div class="list-group-item" ng-repeat="marker in ctrl.$scope.$parent.ctrl.markers | filter:q | orderBy:'-name'">
+                <div class="list-group-item" ng-repeat="marker in ctrl.$scope.$parent.ctrl.markers | filter:q | orderBy:ctrl.sortOrder">
                     <span class="pull-left">{{marker.name}}</span>
-                    <button class="btn map-marker pull-right" ng-click="">
+                    <button class="btn btn-map-marker pull-right" ng-click="ctrl.setSelectedStation(marker)">
                         <span class="fa fa-map-marker"></span>
                         <span>Locate</span>
                     </button>
