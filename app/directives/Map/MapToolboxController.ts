@@ -111,4 +111,8 @@ class MapToolboxController {
         this.$scope.$parent.ctrl.center.zoom = 10;
         this.centerMapOnSelectedMarker();
     }
+
+    public zoomMapOut() {
+        this.$scope.$parent.ctrl.center.zoom = 5;
+    }
 }

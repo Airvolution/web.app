@@ -133,6 +133,7 @@ class MapFactory {
     public getMapMarkers() {
         var deferred = this.$q.defer();
         let self = this;
+
         let bounds = {'northEast': {'lat': 89, 'lng': 179}, 'southWest': {'lat': -89, 'lng': -179}};
         self.APIService.asyncGetMarkersInside(bounds).then(
             function (response) {

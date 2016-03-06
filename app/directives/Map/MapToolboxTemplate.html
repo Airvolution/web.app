@@ -13,6 +13,9 @@
             <i class="fa fa-globe" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.toggleMap('satellite')"></i>
         </map-tool>
         <map-tool expanded="ctrl.expanded">
+            <i class="fa fa-arrows-alt" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.zoomMapOut()"></i>
+        </map-tool>
+        <map-tool expanded="ctrl.expanded">
             <i class="fa fa-dot-circle-o" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.centerMapOnLocation()"></i>
         </map-tool>
         <map-tool expanded="ctrl.expanded">
