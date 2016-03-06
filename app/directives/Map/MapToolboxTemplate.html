@@ -35,13 +35,34 @@
 </div>
 <div class="toolbox-drawer" ng-class="{'drawer-open':ctrl.showDetails,'expanded':ctrl.expanded}">
 
+    <!-- Search for Stations -->
+    <uib-accordion>
+        <uib-accordion-group style="color:black"heading="Search Stations">
+            <div class="box well">
+                <div class="container">
+                    <span class="icon"><i class="fa fa-search"></i></span>
+                    <input ng-model="q" type="search" class="search" placeholder="station name OR station id"/>
+                </div>
+            </div>
+            <div class="list-group">
+                <div class="list-group-item" ng-repeat="marker in ctrl.$scope.$parent.ctrl.markers | filter:q | orderBy:'-name'">
+                    <span class="pull-left">{{marker.name}}</span>
+                    <button class="btn map-marker pull-right" ng-click="">
+                        <span class="fa fa-map-marker"></span>
+                        <span>Locate</span>
+                    </button>
+                </div>
+            </div>
+        </uib-accordion-group>
+    </uib-accordion>
 
+    <!-- Turn Clusters On/Off-->
     <uib-accordion>
         <uib-accordion-group style="color:black"heading="Turn Cluster On / Off">
             <div class="box well">
                 <div class="container">
                     <span class="icon"><i class="fa fa-search"></i></span>
-                    <input ng-model="q" type="search" id="search" placeholder="search by state..."/>
+                    <input ng-model="q" type="search" class="search" placeholder="search by state..."/>
                 </div>
             </div>
             <div class="list-group">

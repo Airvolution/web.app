@@ -15,7 +15,7 @@
 
     &:hover {
       cursor: pointer;
-      color: red;
+      color: @button-hover;
     }
 
     .expander-wrapper {
@@ -77,7 +77,7 @@
 
     &:hover {
       cursor: pointer;
-      color: red;
+      color: @button-hover;
     }
 
     i {
@@ -90,7 +90,7 @@
       transform: translate(-50%, -50%);
 
       &:focus {
-        color: red;
+        color: @search-focus-color;
       }
     }
   }
@@ -124,9 +124,14 @@
       i {
         padding-right: 1em;
       }
-      #search {
+      .search {
+        width: 90%;
         background-color: transparent;
         border: none;
+        &:focus {
+          outline: none !important;
+          border: 1px solid @button-green;
+        }
       }
     }
   }
@@ -145,25 +150,38 @@
     }
 
     .btn {
-      background-color: rgb(255, 70, 70);
+      background-color: @button-red;
       color: black;
+      box-shadow: 0 0 3px 0.5px gray;
+
+      &:hover {
+        background-color: @button-hover;
+      }
     }
+
     .active {
-      background-color: rgb(0, 240, 0);
+      background-color: @button-green;
       color: white;
     }
 
+    .map-marker {
+      background-color: @button-green;
+      color: black;
 
+      .fa {
+        padding-right: 1em;
+      }
+    }
   }
 
   .cluster-toggles {
     .btn {
-      background-color: rgb(0, 240, 0);
+      background-color: @button-green;
       color: black;
     }
 
     .active {
-      background-color: rgb(255, 70, 70);
+      background-color: @button-green;
       color: white;
     }
   }
