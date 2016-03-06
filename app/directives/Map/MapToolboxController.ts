@@ -13,7 +13,7 @@ class MapToolboxController {
         private $state,
         private mapFactory
     ) {
-        this.showDetails = true;
+        this.showDetails = false;
         this.clusters = [];
         this.convertMapLayersToArray(mapFactory.createMapLayers().overlays);
         this.setSortOrderForStations('name');
