@@ -3,6 +3,9 @@
         <map-tool expanded="ctrl.expanded" uib-tooltip="Open Toolbox Details" tooltip-placement="right">
             <i class="fa fa-bars" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.toggleDetails()"></i>
         </map-tool>
+        <map-tool expanded="ctrl.expanded" uib-tooltip="Preview Station" tooltip-placement="right">
+            <i class="fa fa-eye" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.togglePreviewDetails()"></i>
+        </map-tool>
         <map-tool expanded="ctrl.expanded" uib-tooltip="Light Map" tooltip-placement="right">
             <i class="fa fa-map" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.toggleMap('light')"></i>
         </map-tool>
@@ -47,26 +50,54 @@
                     <input ng-model="q" type="search" class="search" placeholder="station name OR station id OR state"/>
                 </div>
             </div>
-            <div class="sort-order">
+            <!-- This would sort the results by <field> which is cool but maybe overkill -->
+            <div class="sort-order hidden">
                 <span>Sort By: </span>
                 <button class="btn btn-sort" ng-click="ctrl.setSortOrderForStations('name')">Name</button>
                 <button class="btn btn-sort" ng-click="ctrl.setSortOrderForStations('agency')">Agency</button>
                 <button class="btn btn-sort" ng-click="ctrl.setSortOrderForStations('id')">ID</button>
-                <button class="btn btn-sort" ngsort-click="ctrl.setSortOrderForStations('city')">City</button>
+                <button class="btn btn-sort" ng-click="ctrl.setSortOrderForStations('city')">City</button>
                 <button class="btn btn-sort" ng-click="ctrl.setSortOrderForStations('state')">State</button>
                 <button class="btn btn-sort" ng-click="ctrl.setSortOrderForStations('postal')">Postal</button>
             </div>
             <div class="list-group">
-                <div class="list-group-item" ng-repeat="marker in ctrl.$scope.$parent.ctrl.markers | filter:q | orderBy:ctrl.sortOrder">
+                <div ng-if="q.length > 0" class="list-group-item" ng-repeat="marker in ctrl.$scope.$parent.ctrl.markers | filter:q | orderBy:ctrl.sortOrder | limitTo: 20 : begin">
                     <span class="pull-left">{{marker.name}}</span>
                     <button class="btn btn-map-marker pull-right" ng-click="ctrl.setSelectedStation(marker)">
-                        <span class="fa fa-map-marker"></span>
-                        <span>Locate</span>
+                        <span class="fa fa-map-marker" uib-tooltip="Locate On Map" tooltip-placement="left"></span>
+                    </button>
+                    <button ng-if="!ctrl.isMarkerInGroup(marker)" class="btn pull-right active" ng-click="ctrl.addMarkerToGroup(marker)">
+                        <span class="fa fa-plus"></span>
+                    </button>
+                    <button ng-if="ctrl.isMarkerInGroup(marker)" class="btn pull-right" ng-click="ctrl.removeMarkerFromGroup(marker)">
+                        <span class="fa fa-minus"></span>
                     </button>
                 </div>
             </div>
         </uib-accordion-group>
     </uib-accordion>
+
+    <!-- Selection Service -->
+    <uib-accordion>
+        <uib-accordion-group style="color:black"heading="Group Stations">
+            <!-- Currently Selected Station-->
+            <div>
+                Current:
+            </div>
+            <!-- Collection of Stations in Selection -->
+            <div class="list-group">
+                <div class="list-group-item" ng-repeat="marker in ctrl.stationGroup">
+                    <span class="pull-left">{{marker.name}}</span>
+                    <button class="btn pull-right" ng-click="ctrl.removeMarkerFromGroup(marker)">
+                        <span class="fa fa-minus"></span>
+                    </button>
+                </div>
+            </div>
+        </uib-accordion-group>
+    </uib-accordion>
+
+
+
 
     <!-- Turn Clusters On/Off-->
     <uib-accordion>
@@ -92,6 +123,9 @@
             </div>
         </uib-accordion-group>
     </uib-accordion>
+
+
+
 
     <!--<div class="panel panel-default collapse">-->
         <!--<div style="color:black" class="panel-heading">-->

@@ -25,7 +25,7 @@ class MapViewController {
     public chartOptions;
     public chartData;
 
-    public static $inject = ['$state', '$rootScope', '$scope', '$stateParams','leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', '$log', 'locationService', 'APIService', '$timeout', 'mapFactory'];
+    public static $inject = ['$state', '$rootScope', '$scope', '$stateParams','leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', '$log', 'locationService', 'APIService', '$timeout', 'mapFactory', 'selectionService'];
 
     constructor(private $state,
                 private $rootScope,
@@ -39,7 +39,9 @@ class MapViewController {
                 private locationService,
                 private APIService,
                 private $timeout,
-                private mapFactory) {
+                private mapFactory,
+                private selectionService
+    ) {
         let mv = this;
 
         mv.detailsVisible = true;
@@ -64,6 +66,7 @@ class MapViewController {
         $scope.toggleCluster = undefined;
         $scope.hideAllClusters = false;
         $scope.showAllClusters = true;
+        $scope.toggleDetails = true;
 
         mv.tiles = mapFactory.createTilesFromKey($scope.mode);
         mv.layers = mapFactory.createMapLayers();
@@ -116,6 +119,10 @@ class MapViewController {
 
         $scope.$watch('showAllClusters', function () {
             mv.showAllClusters();
+        });
+
+        $scope.$watch('toggleDetails', function () {
+            mv.detailsVisible = !mv.detailsVisible;
         });
 
         $scope.$on('leafletDirectiveMarker.map.click', mv.onMarkerClick());
@@ -221,6 +228,7 @@ class MapViewController {
             }
 
             self.selectedStation = args.model;
+            self.selectionService.setCurrentStation(self.selectedStation);
             self.mapFactory.getLastDataPointFromStation(self.selectedStation.id).then(
                 function (response) {
                     self.selectedStation.last = response.lastDataPoint;

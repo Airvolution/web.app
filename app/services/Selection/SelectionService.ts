@@ -5,7 +5,9 @@ export = SelectionService;
 class SelectionService {
     public static serviceName = 'selectionService';
     public static $inject = ['$log'];
+    private currentStation;
     private currentStationSelection = [];
+    private currentStationSelectionMap = {};
     private currentParameterSelection = [];
     constructor(
         private $log
@@ -23,35 +25,49 @@ class SelectionService {
 
     // Stations
 
-    public addStationToSelection(stationID) {
-        this.currentStationSelection.push(stationID);
+    public addStationToSelection(marker) {
+        this.currentStationSelection.push(marker);
+        this.currentStationSelectionMap[marker.id] = marker.id;
     }
 
-    public removeStationFromSelection(stationID) {
-        let index = this.currentStationSelection.indexOf(stationID);
+    public removeStationFromSelection(marker) {
+        let index = this.currentStationSelection.indexOf(marker);
         if (index > -1) {
             this.currentStationSelection.splice(index, 1);
         }
+        delete this.currentStationSelectionMap[marker.id];
     }
 
-    public updateStationSelectionWith(stationID) {
-        let index = this.currentStationSelection.indexOf(stationID);
+    public updateStationSelectionWith(marker) {
+        let index = this.currentStationSelection.indexOf(marker);
         if (index > -1) {
             this.removeIndexFromStationSelection(index);
-            this.$log.log('UPDATE: removing station from list: ' + stationID);
+            this.$log.log('UPDATE: removing station from list: ' + marker);
         } else {
-            this.addStationToSelection(stationID);
-            this.$log.log('UPDATE: adding station to list: ' + stationID);
+            this.addStationToSelection(marker);
+            this.$log.log('UPDATE: adding station to list: ' + marker);
         }
     }
 
-    public setCurrentStationSelection(stationIDs) {
-        this.currentStationSelection = stationIDs;
+    public setCurrentStation(marker) {
+
+    }
+
+    public getCurrentStation() {
+        return this.currentStation;
+    }
+
+    public setCurrentStationSelection(markers) {
+        this.currentStationSelection = markers;
     }
 
     public getCurrentStationSelection() {
         this.$log.log('Selection Service returning current selection: ' + this.currentStationSelection);
         return this.currentStationSelection;
+    }
+
+    public getCurrentStationSelectionMap() {
+        return this.currentStationSelectionMap;
     }
 
     // Parameters
