@@ -46,9 +46,16 @@
             </div>
             <div class="list-group">
                 <div class="list-group-item" ng-repeat="cluster in ctrl.clusters | filter:q">
-                    <input type="checkbox" checked/>
-                    {{cluster.name}}
+                    <span class="pull-left">{{cluster.name}}</span>
+                    <button class="btn pull-right" ng-class="{'active': cluster.visible}" ng-click="cluster.visible = !cluster.visible; ctrl.toggleCluster(cluster)">
+                        <span ng-if="cluster.visible">On</span>
+                        <span ng-if="!cluster.visible">Off</span>
+                    </button>
                 </div>
+            </div>
+            <div class="cluster-toggles">
+                <button class="btn" ng-click="ctrl.showAllClusters()">Show All Clusters</button>
+                <button class="btn active" ng-click="ctrl.hideAllClusters()">Hide All Clusters</button>
             </div>
         </uib-accordion-group>
     </uib-accordion>

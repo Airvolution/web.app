@@ -50,11 +50,6 @@ class MapViewController {
         mv.markers = mv.getMapMarkers();
         mv.defaults = mapFactory.getDefaults();
         mv.center = mapFactory.getCenter();
-        //mapFactory.getCenter().then(
-        //    function (response) {
-        //        mv.center = response;
-        //    }
-        //);
 
         // things to watch with scope watch
         if ($stateParams.mode === undefined) {
@@ -66,6 +61,9 @@ class MapViewController {
         $scope.centerOnMarker = false;  // arbitrary value, but why not be different?
         $scope.togglePlot = false;
         $scope.downloadPlot = false;
+        $scope.toggleCluster = undefined;
+        $scope.hideAllClusters = false;
+        $scope.showAllClusters = true;
 
         mv.tiles = mapFactory.createTilesFromKey($scope.mode);
         mv.layers = mapFactory.createMapLayers();
@@ -102,6 +100,22 @@ class MapViewController {
             if (mv.selectedStation && mv.selectedStation.id) {
                 mv.downloadStationData();
             }
+        });
+
+        $scope.$watch('toggleCluster', function () {
+            if (mv.layers.overlays[$scope.toggleCluster] === undefined) {
+            } else {
+                mv.layers.overlays[$scope.toggleCluster].visible = !mv.layers.overlays[$scope.toggleCluster].visible;
+                $scope.toggleCluster = undefined;
+            }
+        });
+
+        $scope.$watch('hideAllClusters', function () {
+            mv.hideAllClusters();
+        });
+
+        $scope.$watch('showAllClusters', function () {
+            mv.showAllClusters();
         });
 
         $scope.$on('leafletDirectiveMarker.map.click', mv.onMarkerClick());

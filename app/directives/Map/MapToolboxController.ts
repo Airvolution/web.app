@@ -21,8 +21,9 @@ class MapToolboxController {
         let self = this;
         angular.forEach(layers, function(value, key) {
             self.clusters.push({
-                key: key,
-                name: value.name
+                id: key,
+                name: value.name,
+                visible: value.visible
             });
         });
     }
@@ -57,5 +58,24 @@ class MapToolboxController {
 
     public centerMapOnSelectedMarker() {
         this.$scope.$parent.centerOnMarker = !this.$scope.$parent.centerOnMarker;
+    }
+
+    public toggleCluster(cluster) {
+        console.log('cluster: ' + cluster);
+        this.$scope.$parent.toggleCluster = cluster.id;
+    }
+
+    public showAllClusters() {
+        this.$scope.$parent.showAllClusters = !this.$scope.$parent.showAllClusters;
+        angular.forEach(this.clusters, function (cluster) {
+            cluster['visible'] = true;
+        });
+    }
+
+    public hideAllClusters() {
+        this.$scope.$parent.hideAllClusters = !this.$scope.$parent.hideAllClusters;
+        angular.forEach(this.clusters, function (cluster) {
+            cluster['visible'] = false;
+        });
     }
 }
