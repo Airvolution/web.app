@@ -142,7 +142,8 @@ angular.module('app', [
         states.push({
             name: 'app.compare',
             url: 'compare/',
-            templateUrl: 'app/templates/compare.html'
+            //templateUrl: 'app/templates/compare.html'
+            template: '<compare-view></compare-view>'
         });
         states.push({
             name: 'app.indoor',

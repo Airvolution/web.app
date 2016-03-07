@@ -6,12 +6,14 @@ import SystemNotificationDirective = require('./SystemNotification/SystemNotific
 import StationDirective = require('./Station/StationDirective');
 import AQIDirective = require('./AQI/AQIDirective');
 import MapDirectives = require('./Map/module');
+import CompareDirectives = require('./Compare/module');
 import WeatherDirective = require('./Weather/WeatherDirective');
 import AlmanacDirectives = require('./Almanac/module');
 import ToolboxDirectives = require('./Toolbox/module');
 
 export = angular.module('directives', [
         MapDirectives.name,
+        CompareDirectives.name,
         AlmanacDirectives.name,
         ToolboxDirectives.name
     ])

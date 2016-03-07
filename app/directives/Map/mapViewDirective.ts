@@ -13,7 +13,6 @@ class MapViewDirective implements ng.IDirective {
     public scope = {
 
     };
-    
 
     public static create() {
         return new MapViewDirective();

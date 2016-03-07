@@ -2,10 +2,10 @@
 declare let _;
 declare let d3;
 
-export = ComparePageController;
+export = CompareViewController;
 
-class ComparePageController {
-    public static name = 'ComparePageController';
+class CompareViewController {
+    public static name = 'CompareViewController';
     public static $inject = ['$scope', '$http', '$log', 'selectionService', 'APIService'];
 
     public stations = [];
