@@ -5,7 +5,7 @@ export = SelectionService;
 class SelectionService {
     public static serviceName = 'selectionService';
     public static $inject = ['$log'];
-    private currentStation;
+    private currentStation = {};
     private currentStationSelection = [];
     private currentStationSelectionMap = {};
     private currentParameterSelection = [];
@@ -50,7 +50,7 @@ class SelectionService {
     }
 
     public setCurrentStation(marker) {
-
+        this.currentStation = marker;
     }
 
     public getCurrentStation() {

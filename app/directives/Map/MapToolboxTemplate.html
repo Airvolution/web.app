@@ -43,7 +43,7 @@
 
     <!-- Search for Stations -->
     <uib-accordion>
-        <uib-accordion-group style="color:black"heading="Search Stations">
+        <uib-accordion-group style="color:black" heading="Search Stations">
             <div class="box well">
                 <div class="container">
                     <span class="icon"><i class="fa fa-search"></i></span>
@@ -62,7 +62,7 @@
             </div>
             <div class="list-group">
                 <div ng-if="q.length > 0" class="list-group-item" ng-repeat="marker in ctrl.$scope.$parent.ctrl.markers | filter:q | orderBy:ctrl.sortOrder | limitTo: 20 : begin">
-                    <span class="pull-left">{{marker.name}}</span>
+                    <span class="pull-left">{{::marker.name}}</span>
                     <button class="btn btn-map-marker pull-right" ng-click="ctrl.setSelectedStation(marker)">
                         <span class="fa fa-map-marker" uib-tooltip="Locate On Map" tooltip-placement="left"></span>
                     </button>
@@ -79,15 +79,38 @@
 
     <!-- Selection Service -->
     <uib-accordion>
-        <uib-accordion-group style="color:black"heading="Group Stations">
-            <!-- Currently Selected Station-->
-            <div>
-                Current:
+        <uib-accordion-group style="color:black" heading="Group Stations">
+            <!-- Current Selected Station -->
+            <div class="list-group" id="station-container" ng-if="ctrl.currentStation.hasOwnProperty('id')">
+                <div class="list-group-item station-header">
+                    <span class="pull-left">{{ctrl.currentStation.name}}</span>
+                    <button class="btn btn-map-marker pull-right" ng-click="ctrl.setSelectedStation(ctrl.currentStation)">
+                        <span class="fa fa-map-marker" uib-tooltip="Locate On Map" tooltip-placement="left"></span>
+                    </button>
+                    <button ng-if="!ctrl.isMarkerInGroup(ctrl.currentStation)" class="btn pull-right active" ng-click="ctrl.addMarkerToGroup(ctrl.currentStation)">
+                        <span class="fa fa-plus"></span>
+                    </button>
+                    <button ng-if="ctrl.isMarkerInGroup(ctrl.currentStation)" class="btn pull-right" ng-click="ctrl.removeMarkerFromGroup(ctrl.currentStation)">
+                        <span class="fa fa-minus"></span>
+                    </button>
+                </div>
+                <div class="well" ng-if="ctrl.currentStation.hasOwnProperty('id')">
+                    <div class="station-desc">
+                        <span>Agency: {{ctrl.currentStation.agency}}</span>
+                        <span>City: {{ctrl.currentStation.city}}</span>
+                        <span>State: {{ctrl.currentStation.state}}</span>
+                        <span>Postal: {{ctrl.currentStation.postal}}</span>
+                        <span>Current AQI: {{ctrl.currentStation.aqi}}</span>
+                    </div>
+                </div>
             </div>
             <!-- Collection of Stations in Selection -->
             <div class="list-group">
                 <div class="list-group-item" ng-repeat="marker in ctrl.stationGroup">
-                    <span class="pull-left">{{marker.name}}</span>
+                    <span class="pull-left">{{::marker.name}}</span>
+                    <button class="btn btn-map-marker pull-right" ng-click="ctrl.setSelectedStation(marker)">
+                        <span class="fa fa-map-marker" uib-tooltip="Locate On Map" tooltip-placement="left"></span>
+                    </button>
                     <button class="btn pull-right" ng-click="ctrl.removeMarkerFromGroup(marker)">
                         <span class="fa fa-minus"></span>
                     </button>

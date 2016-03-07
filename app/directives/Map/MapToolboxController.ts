@@ -6,10 +6,11 @@ class MapToolboxController {
     public expanded;
     public showDetails;
     public clusters;
+    public currentStation;
     public stationGroup;
     public stationGroupMap;
     public sortOrder;
-    public count;
+    //public count; // TODO: remove! Currently using to witness the woes of ng-repeat & ng-filter
     public static $inject = ['$scope','$state', 'mapFactory', 'selectionService'];
     constructor(
         private $scope,
@@ -17,16 +18,24 @@ class MapToolboxController {
         private mapFactory,
         private selectionService
     ) {
-        this.showDetails = false;
-        this.clusters = [];
-        this.stationGroup = [];
-        this.convertMapLayersToArray(mapFactory.createMapLayers().overlays);
-        this.getStationGroupFromSelectionService();
-        this.setSortOrderForStations('name');
-        this.count = 0;
+        let mtc = this;
+        mtc.showDetails = false;
+        mtc.clusters = [];
+        mtc.stationGroup = [];
+        mtc.convertMapLayersToArray(mapFactory.createMapLayers().overlays);
+        mtc.getStationGroupFromSelectionService();
+        mtc.setSortOrderForStations('name');
+
+        $scope.$parent.$watch('ctrl.selectedStation', function () {
+            console.log('selectedStation watcher in MapToolboxController triggerd.');
+            mtc.currentStation = mtc.selectionService.getCurrentStation();
+        });
+
+        //this.count = 0; // TODO: remove! Currently using to witness the woes of ng-repeat & ng-filter
     }
 
     private getStationGroupFromSelectionService() {
+        this.currentStation = this.selectionService.getCurrentStation();
         this.stationGroup = this.selectionService.getCurrentStationSelection();
         this.stationGroupMap = this.selectionService.getCurrentStationSelectionMap();
     }
@@ -42,7 +51,7 @@ class MapToolboxController {
     }
 
     public isMarkerInGroup(marker) {
-        console.log('isMarkerInGroup: ' + ++this.count);
+        //console.log('isMarkerInGroup: ' + ++this.count);
         return this.stationGroupMap.hasOwnProperty(marker.id);
     }
 

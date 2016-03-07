@@ -143,7 +143,7 @@
     background-color: @button-red;
     color: white;
     box-shadow: @button-box-shadow;
-    margin-right: 1em;
+    margin-left: 1em;
 
     &:hover {
       background-color: @button-hover;
@@ -175,6 +175,11 @@
     height: 15em;
     overflow-y: scroll;
 
+    // I'm not sure why this didn't work here
+    //#station-container {
+    //  overflow-y: hidden;
+    //}
+
     .list-group-item {
       height: 4em;
       max-width: 30em;
@@ -201,6 +206,18 @@
       color: white;
     }
   }
+
+  .well {
+    max-width: 30em;
+
+    .station-desc {
+      span {
+        display: block;
+        text-align: left;
+        max-width: 30em;
+      }
+    }
+  }
 }
 
 .drawer-open {
@@ -209,6 +226,10 @@
   &.expanded {
     left: 5%;
   }
+}
+
+#station-container {
+  overflow-y: hidden;
 }
 
 .tooltip-inner {
