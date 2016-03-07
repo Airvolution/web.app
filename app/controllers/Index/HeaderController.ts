@@ -12,23 +12,16 @@ class HeaderController {
         '$scope',
         '$uibModal',
         'AuthService',
-        'locationService',
-        '$location'
+        'locationService'
     ];
     constructor(
         private $scope,
         private $uibModal,
         public AuthService,
-        private locationService,
-        private $location
+        private locationService
     ) {
         $scope.showNav = false;
         this.location = locationService.asyncGetGeoCoordinates();
-
-        $scope.isActive = function (viewLocation) {
-            console.log('isActive will return: ' + viewLocation == $location.path());
-            return viewLocation == $location.path();
-        };
     }
 
     public toggelNav() {

@@ -20,20 +20,17 @@
             <!--<i class="fa fa-bars fa-3x" uib-popover-template="'app/templates/siteNavTemplate.html'" popover-placement="bottom-left" popover-animation="true" popover-trigger="outsideClick"></i>-->
         <!--</div>-->
         <div class="headerzone col-md-1"><img src="app/assets/images/AirU.png" alt="University of Utah" id="logo"></div>
-        <ul class="nav navbar-nav col-md-5">
+        <ul class="nav navbar-nav col-md-4">
             <li ui-sref-active="active" class="tab"><a ui-sref="app.almanac">Almanac</a></li>
             <li ui-sref-active="active" class="tab"><a ui-sref="app.map">Maps</a></li>
             <li ui-sref-active="active" class="tab"><a ui-sref="app.compare">Compare</a></li>
             <li ui-sref-active="active" class="tab"><a ui-sref="app.faq">FAQ</a></li>
         </ul>
-        <!--
-        <div class="headerzone col-md-2 col-md-offset-1"><div id="quicklinks"><input type="text" placeholder="QuickLinks"/><i class="fa fa-search fa-2x"></i></div></div>
-        -->
         <div class="headerzone col-md-2" id="weather">
-            <weather />
+            <weather></weather>
         </div>
         <div class="headerzone col-md-3" id="aqi" ng-controller="AQIController as qctrl">
-            <span class="epa-aqi-title">EPA AQI, <br/>Salt Lake City</span>
+            <span class="epa-aqi-title">Air Quality Index<br/>{{qctrl.localCity}}, {{qctrl.localRegion}}</span>
             <span class="fa-stack fa-2x epa-aqi-icon" ng-click="qctrl.showPopup = !qctrl.showPopup">
                 <i class="fa fa-circle fa-stack-2x epa-aqi" ng-class="{'low':qctrl.localCategory == 'Good',
                                                                         'med':qctrl.localCategory == 'Moderate',
