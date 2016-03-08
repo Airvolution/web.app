@@ -172,4 +172,22 @@ class APIService {
 
         return deferred.promise;
     }
+
+    public GetFAQs() {
+        var deferred = this.$q.defer();
+
+        let self = this;
+        let url = "api/faq";
+
+        self.$http.get(url).then(
+            function (response) {
+                deferred.resolve(response.data);
+            },
+            function (response) {
+                deferred.reject(response);
+            }
+        );
+
+        return deferred.promise;
+    }
 }
