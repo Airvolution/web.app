@@ -9,11 +9,13 @@ import MapDirectives = require('./Map/module');
 import WeatherDirective = require('./Weather/WeatherDirective');
 import AlmanacDirectives = require('./Almanac/module');
 import ToolboxDirectives = require('./Toolbox/module');
+import FAQDirectives = require('./FAQ/module');
 
 export = angular.module('directives', [
         MapDirectives.name,
         AlmanacDirectives.name,
-        ToolboxDirectives.name
+        ToolboxDirectives.name,
+        FAQDirectives.name
     ])
             .directive(WeatherDirective.htmlName, WeatherDirective.create)
             .directive(SiteNavDirective.htmlName, SiteNavDirective.create)

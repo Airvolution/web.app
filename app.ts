@@ -165,8 +165,8 @@ angular.module('app', [
         });
         states.push({
             name: 'app.faq',
-            url: 'faq/',
-            templateUrl: 'app/templates/faq.html'
+            url: 'faq?id',
+            template: '<faq-view></faq-view>'
         });
         states.push({
             name: 'app.disclaimer',
