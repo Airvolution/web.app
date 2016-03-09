@@ -1,12 +1,11 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 
-export = QuestionAnswerViewController;
+export = FAQQuestionController;
 
-class QuestionAnswerViewController {
+class FAQQuestionController {
+    public question;
 
     public static $inject = [];
-
     constructor() {
-
     };
 };

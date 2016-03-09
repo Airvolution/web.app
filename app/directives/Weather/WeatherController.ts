@@ -3,7 +3,6 @@
 export = WeatherController;
 
 class WeatherController {
-    public static name = 'WeatherController';
     public static $inject = ['$scope', '$log', 'openWeatherService', 'locationService'];
 
     public currentTemp;

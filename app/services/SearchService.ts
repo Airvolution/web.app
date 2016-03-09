@@ -8,7 +8,8 @@ class SearchService {
     private pageSize = 100;
     private endpointMap = {
         "datapoints": "/datapoints/_search",
-        "stations": "/stations/_search"
+        "stations": "/stations/_search",
+        "faq": "/faqs/_search"
     };
     public static $inject = ['$http', '$q'];
 
@@ -16,9 +17,45 @@ class SearchService {
                 private $q) {
     }
 
+    public searchFAQs(queryString:string){
+        var url = this.getSearchUrl('faqs');
+        var query = {
+            "query": {
+                "multi_match": {
+                    "query": queryString,
+                    "type": "cross_fields",
+                    "fields": [
+                        "question",
+                        "answer"
+                    ]
+                }
+            },
+            "highlight": {
+                "pre_tags": [
+                    "<mark>"
+                ],
+                "post_tags": [
+                    "</mark>"
+                ],
+                "fields": {
+                    "question": {},
+                    "answer": {}
+                }
+            }
+        };
+        return this.$http.post(url,query).then((results)=>{
+            return results.data;
+        },(error)=>{
+            return error;
+        });
+    }
     public getAllStations() {
         var url = this.getSearchUrl('stations');
-        var query = SearchService.createEmptyQuery();
+        var query = {
+            "query": {
+                "match_all": {}
+            }
+        };
         return this.getAllResults(url, query);
     }
 
@@ -51,14 +88,6 @@ class SearchService {
                 });
         });
         return deferred.promise;
-    }
-
-    public static createEmptyQuery() {
-        return {
-            "query": {
-                "match_all": {}
-            }
-        };
     }
 
     private getSearchUrl(type:string) {
