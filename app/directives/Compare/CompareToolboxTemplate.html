@@ -3,27 +3,6 @@
         <compare-tool expanded="ctrl.expanded" uib-tooltip="Open Toolbox Details" tooltip-placement="right">
             <i class="fa fa-bars" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.toggleDetails()"></i>
         </compare-tool>
-        <compare-tool expanded="ctrl.expanded" uib-tooltip="Preview Station" tooltip-placement="right">
-            <i class="fa fa-eye" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.togglePreviewDetails()"></i>
-        </compare-tool>
-        <compare-tool expanded="ctrl.expanded" uib-tooltip="Light Map" tooltip-placement="right">
-            <i class="fa fa-map" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.toggleMap('light')"></i>
-        </compare-tool>
-        <compare-tool expanded="ctrl.expanded" uib-tooltip="Dark Map" tooltip-placement="right">
-            <i class="fa fa-map-o" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.toggleMap('dark')"></i>
-        </compare-tool>
-        <compare-tool expanded="ctrl.expanded" uib-tooltip="Satellite Map" tooltip-placement="right">
-            <i class="fa fa-globe" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.toggleMap('satellite')"></i>
-        </compare-tool>
-        <compare-tool expanded="ctrl.expanded" uib-tooltip="Zoom Map Out" tooltip-placement="right">
-            <i class="fa fa-arrows-alt" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.zoomMapOut()"></i>
-        </compare-tool>
-        <compare-tool expanded="ctrl.expanded" uib-tooltip="Center On Location" tooltip-placement="right">
-            <i class="fa fa-dot-circle-o" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.centerMapOnLocation()"></i>
-        </compare-tool>
-        <compare-tool expanded="ctrl.expanded" uib-tooltip="Center On Marer" tooltip-placement="right">
-            <i class="fa fa-map-marker" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.centerMapOnSelectedMarker()"></i>
-        </compare-tool>
         <compare-tool expanded="ctrl.expanded" uib-tooltip="Show Data Plot" tooltip-placement="right">
             <i class="fa fa-bar-chart" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.togglePlot()"></i>
         </compare-tool>
@@ -39,8 +18,8 @@
         </div>
     </div>
 </div>
-<div class="toolbox-drawer" ng-class="{'drawer-open':ctrl.showDetails,'expanded':ctrl.expanded}">
 
+<div class="toolbox-drawer" ng-class="{'drawer-open':ctrl.showDetails,'expanded':ctrl.expanded}">
     <!-- Search for Stations -->
     <uib-accordion>
         <uib-accordion-group style="color:black" heading="Search Stations">
@@ -50,22 +29,9 @@
                     <input ng-model="q" type="search" class="search" placeholder="station name OR station id OR state"/>
                 </div>
             </div>
-            <!-- This would sort the results by <field> which is cool but maybe overkill -->
-            <div class="sort-order hidden">
-                <span>Sort By: </span>
-                <button class="btn btn-sort" ng-click="ctrl.setSortOrderForStations('name')">Name</button>
-                <button class="btn btn-sort" ng-click="ctrl.setSortOrderForStations('agency')">Agency</button>
-                <button class="btn btn-sort" ng-click="ctrl.setSortOrderForStations('id')">ID</button>
-                <button class="btn btn-sort" ng-click="ctrl.setSortOrderForStations('city')">City</button>
-                <button class="btn btn-sort" ng-click="ctrl.setSortOrderForStations('state')">State</button>
-                <button class="btn btn-sort" ng-click="ctrl.setSortOrderForStations('postal')">Postal</button>
-            </div>
             <div class="list-group">
                 <div ng-if="q.length > 0" class="list-group-item" ng-repeat="marker in ctrl.$scope.$parent.ctrl.markers | filter:q | orderBy:ctrl.sortOrder | limitTo: 20 : begin">
                     <span class="pull-left">{{::marker.name}}</span>
-                    <button class="btn btn-map-marker pull-right" ng-click="ctrl.setSelectedStation(marker)">
-                        <span class="fa fa-map-marker" uib-tooltip="Locate On Map" tooltip-placement="left"></span>
-                    </button>
                     <button ng-if="!ctrl.isMarkerInGroup(marker)" class="btn pull-right active" ng-click="ctrl.addMarkerToGroup(marker)">
                         <span class="fa fa-plus"></span>
                     </button>
@@ -84,9 +50,6 @@
             <div class="list-group" id="station-container" ng-if="ctrl.currentStation.hasOwnProperty('id')">
                 <div class="list-group-item station-header">
                     <span class="pull-left">{{ctrl.currentStation.name}}</span>
-                    <button class="btn btn-map-marker pull-right" ng-click="ctrl.setSelectedStation(ctrl.currentStation)">
-                        <span class="fa fa-map-marker" uib-tooltip="Locate On Map" tooltip-placement="left"></span>
-                    </button>
                     <button ng-if="!ctrl.isMarkerInGroup(ctrl.currentStation)" class="btn pull-right active" ng-click="ctrl.addMarkerToGroup(ctrl.currentStation)">
                         <span class="fa fa-plus"></span>
                     </button>
@@ -108,9 +71,6 @@
             <div class="list-group">
                 <div class="list-group-item" ng-repeat="marker in ctrl.stationGroup">
                     <span class="pull-left">{{::marker.name}}</span>
-                    <button class="btn btn-map-marker pull-right" ng-click="ctrl.setSelectedStation(marker)">
-                        <span class="fa fa-map-marker" uib-tooltip="Locate On Map" tooltip-placement="left"></span>
-                    </button>
                     <button class="btn pull-right" ng-click="ctrl.removeMarkerFromGroup(marker)">
                         <span class="fa fa-minus"></span>
                     </button>
@@ -119,95 +79,38 @@
         </uib-accordion-group>
     </uib-accordion>
 
-
-
-
-    <!-- Turn Clusters On/Off-->
+    <!-- Parameter Selection -->
     <uib-accordion>
-        <uib-accordion-group style="color:black"heading="Turn Cluster On / Off">
-            <div class="box well">
-                <div class="container">
-                    <span class="icon"><i class="fa fa-search"></i></span>
-                    <input ng-model="q" type="search" class="search" placeholder="search by state..."/>
-                </div>
-            </div>
+        <uib-accordion-group style="color:black" heading="Pollutants">
             <div class="list-group">
-                <div class="list-group-item" ng-repeat="cluster in ctrl.clusters | filter:q">
-                    <span class="pull-left">{{cluster.name}}</span>
-                    <button class="btn pull-right" ng-class="{'active': cluster.visible}" ng-click="cluster.visible = !cluster.visible; ctrl.toggleCluster(cluster)">
-                        <span ng-if="cluster.visible">On</span>
-                        <span ng-if="!cluster.visible">Off</span>
+                <div class="list-group-item" ng-repeat="pollutant in ctrl.pollutantOptions">
+                    <span class="pull-left">{{::pollutant.name}}</span>
+                    <button ng-if="!ctrl.isPollutantInGroup(pollutant)" class="btn pull-right active" ng-click="ctrl.addMarkerToGroup(ctrl.currentStation)">
+                        <span class="fa fa-plus"></span>
+                    </button>
+                    <button class="btn pull-right" ng-click="ctrl.removeMarkerFromGroup(pollutant)">
+                        <span class="fa fa-minus"></span>
                     </button>
                 </div>
             </div>
-            <div class="cluster-toggles">
-                <button class="btn" ng-click="ctrl.showAllClusters()">Show All Clusters</button>
-                <button class="btn active" ng-click="ctrl.hideAllClusters()">Hide All Clusters</button>
+        </uib-accordion-group>
+    </uib-accordion>
+    <uib-accordion>
+        <uib-accordion-group style="color:black" heading="Weather">
+            <div class="list-group">
+                <div class="list-group-item" ng-repeat="weather in ctrl.weatherOptions">
+                    <span class="pull-left">{{::weather.name}}</span>
+                    <button ng-if="!ctrl.isWeatherInGroup(weather)" class="btn pull-right active" ng-click="ctrl.addMarkerToGroup(ctrl.currentStation)">
+                        <span class="fa fa-plus"></span>
+                    </button>
+                    <button class="btn pull-right" ng-click="ctrl.removeMarkerFromGroup(weather)">
+                        <span class="fa fa-minus"></span>
+                    </button>
+                </div>
             </div>
         </uib-accordion-group>
     </uib-accordion>
 
-
-
-
-    <!--<div class="panel panel-default collapse">-->
-        <!--<div style="color:black" class="panel-heading">-->
-            <!--Turn Clusters On / Off-->
-        <!--</div>-->
-        <!--<div class="panel-body"></div>-->
-        <!--<div style="color:black">-->
-            <!--Search Here-->
-        <!--</div>-->
-        <!--<div style="color:black" class="list-group">-->
-            <!--List Items Here-->
-        <!--</div>-->
-    <!--</div>-->
-
-    <!-- Selection Service Template -->
-    <!--<div class="panel panel-default">-->
-        <!--<div class="panel-heading">-->
-            <!--<h4>Stations</h4>-->
-        <!--</div>-->
-        <!--<div class="panel-body">-->
-            <!--<div class="list-group">-->
-                <!--<a href="" class="list-group-item">-->
-                        <!--<span class="pull-right">-->
-                            <!--<button class="btn btn-primary item-add">Add Me</button>-->
-                        <!--</span>-->
-                    <!--<span>{{ctrl.currentMarker.name}</span>-->
-                    <!--<span class="item-location">{{ctrl.currentMarker.city}}, {{ctrl.currentMarker.state}</span>-->
-                <!--</a>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="panel panel-default">-->
-        <!--<div class="panel-heading">-->
-            <!--<h4>Stations</h4>-->
-        <!--</div>-->
-        <!--<div class="panel-body">-->
-            <!--<div class="list-group">-->
-                <!--<a href="" class="list-group-item">-->
-                        <!--<span class="pull-right">-->
-                            <!--<button class="btn btn-primary">Add Me</button>-->
-                        <!--</span>-->
-                    <!--Station-->
-                <!--</a>-->
-                <!--<a href="" class="list-group-item">-->
-                        <!--<span class="pull-right">-->
-                            <!--<button class="btn btn-primary">Add Me</button>-->
-                        <!--</span>-->
-                    <!--Station-->
-                <!--</a>-->
-                <!--<a href="" class="list-group-item">-->
-                        <!--<span class="pull-right">-->
-                            <!--<button class="btn btn-primary">Add Me</button>-->
-                        <!--</span>-->
-                    <!--Station-->
-                <!--</a>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--End Selection Service Template -->
 </div>
 
 

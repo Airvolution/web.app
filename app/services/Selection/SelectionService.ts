@@ -8,7 +8,8 @@ class SelectionService {
     private currentStation = {};
     private currentStationSelection = [];
     private currentStationSelectionMap = {};
-    private currentParameterSelection = [];
+    private currentPollutantSelection = [];
+    private currentWeatherSelection = [];
     constructor(
         private $log
     ) {
@@ -19,8 +20,12 @@ class SelectionService {
         this.currentStationSelection.splice(index, 1);
     }
 
-    public removeIndexFromParameterSelection(index) {
-        this.currentParameterSelection.splice(index, 1);
+    public removeIndexFromPollutantSelection(index) {
+        this.currentPollutantSelection.splice(index, 1);
+    }
+
+    public removeIndexFromWeatherSelection(index) {
+        this.currentWeatherSelection.splice(index, 1);
     }
 
     // Stations
@@ -72,27 +77,51 @@ class SelectionService {
 
     // Parameters
 
-    public addParameterToSelection(kind) {
-        this.currentParameterSelection.push(kind);
+    public addPollutantToSelection(kind) {
+        this.currentPollutantSelection.push(kind);
     }
 
-    public updateParameterSelectionWith(kind) {
-        let index = this.currentParameterSelection.indexOf(kind);
+    public addWeatherToSelection(kind) {
+        this.currentWeatherSelection.push(kind);
+    }
+
+    //public removePollutantFromSelection(kind) {
+    //    let index = this.currentStationSelection.indexOf(marker);
+    //    if (index > -1) {
+    //        this.currentStationSelection.splice(index, 1);
+    //    }
+    //    delete this.currentStationSelectionMap[marker.id];
+    //}
+    //
+    //public removeWeatherFromSelection(kind) {
+    //    let index = this.currentStationSelection.indexOf(marker);
+    //    if (index > -1) {
+    //        this.currentStationSelection.splice(index, 1);
+    //    }
+    //    delete this.currentStationSelectionMap[marker.id];
+    //}
+
+    public updatePollutantSelectionWith(kind) {
+        let index = this.currentPollutantSelection.indexOf(kind);
         if (index > -1) {
-            this.removeIndexFromParameterSelection(index);
+            this.removeIndexFromPollutantSelection(index);
             this.$log.log('UPDATE: removing parameter from list: ' + kind);
         } else {
-            this.addParameterToSelection(kind);
+            this.addPollutantToSelection(kind);
             this.$log.log('UPDATE: adding parameter to list: ' + kind);
         }
     }
 
-    public setCurrentParameterSelection(parameters) {
-        this.currentParameterSelection = parameters;
+    public setCurrentPollutantSelection(pollutants) {
+        this.currentPollutantSelection = pollutants;
     }
 
-    public getCurrentParameterSelection() {
-        return this.currentParameterSelection;
+    public getCurrentPollutantSelection() {
+        return this.currentPollutantSelection;
+    }
+
+    public getCurrentWeatherSelection() {
+        return this.currentWeatherSelection;
     }
 
 }

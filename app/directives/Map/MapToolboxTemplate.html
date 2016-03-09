@@ -21,7 +21,7 @@
         <map-tool expanded="ctrl.expanded" uib-tooltip="Center On Location" tooltip-placement="right">
             <i class="fa fa-dot-circle-o" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.centerMapOnLocation()"></i>
         </map-tool>
-        <map-tool expanded="ctrl.expanded" uib-tooltip="Center On Marer" tooltip-placement="right">
+        <map-tool expanded="ctrl.expanded" uib-tooltip="Center On Marker" tooltip-placement="right">
             <i class="fa fa-map-marker" ng-class="{'fa-lg':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.centerMapOnSelectedMarker()"></i>
         </map-tool>
         <map-tool expanded="ctrl.expanded" uib-tooltip="Show Data Plot" tooltip-placement="right">
@@ -39,8 +39,8 @@
         </div>
     </div>
 </div>
-<div class="toolbox-drawer" ng-class="{'drawer-open':ctrl.showDetails,'expanded':ctrl.expanded}">
 
+<div class="toolbox-drawer" ng-class="{'drawer-open':ctrl.showDetails,'expanded':ctrl.expanded}">
     <!-- Search for Stations -->
     <uib-accordion>
         <uib-accordion-group style="color:black" heading="Search Stations">
@@ -77,7 +77,7 @@
         </uib-accordion-group>
     </uib-accordion>
 
-    <!-- Selection Service -->
+    <!-- Group Stations -->
     <uib-accordion>
         <uib-accordion-group style="color:black" heading="Group Stations">
             <!-- Current Selected Station -->
@@ -119,8 +119,26 @@
         </uib-accordion-group>
     </uib-accordion>
 
-
-
+    <!-- Group Parameters-->
+    <uib-accordion>
+        <uib-accordion-group style="color:black" heading="Pollutants">
+            <div class="box well">
+                <div class="container">
+                    <span class="icon"><i class="fa fa-search"></i></span>
+                    <input ng-model="q" type="search" class="search" placeholder="pollutant type"/>
+                </div>
+            </div>
+            <div class="list-group">
+                <div class="list-group-item" ng-repeat="pollutant in ctrl.pollutantOptions | filter:q">
+                    <span class="pull-left">{{::pollutant.name}}</span>
+                    <button class="btn pull-right" ng-class="{'active': !pollutant.selected}" ng-click="ctrl.togglePollutantOption(pollutant)">
+                        <span class="fa fa-plus" ng-if="!pollutant.selected"></span>
+                        <span class="fa fa-minus" ng-if="pollutant.selected"></span>
+                    </button>
+                </div>
+            </div>
+        </uib-accordion-group>
+    </uib-accordion>
 
     <!-- Turn Clusters On/Off-->
     <uib-accordion>

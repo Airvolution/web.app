@@ -10,6 +10,10 @@ class CompareToolboxController {
     public stationGroup;
     public stationGroupMap;
     public sortOrder;
+    public pollutantOptions;
+    public pollutantGroup;
+    public weatherOptions;
+    public weatherGroup;
     //public count; // TODO: remove! Currently using to witness the woes of ng-repeat & ng-filter
     public static $inject = ['$scope','$state', 'mapFactory', 'selectionService'];
     constructor(
@@ -18,26 +22,37 @@ class CompareToolboxController {
         private mapFactory,
         private selectionService
     ) {
-        let mtc = this;
-        mtc.showDetails = false;
-        mtc.clusters = [];
-        mtc.stationGroup = [];
-        mtc.convertMapLayersToArray(mapFactory.createMapLayers().overlays);
-        mtc.getStationGroupFromSelectionService();
-        mtc.setSortOrderForStations('name');
+        let ctc = this;
+        ctc.showDetails = false;
+        ctc.clusters = [];
+        ctc.stationGroup = [];
+        ctc.getStationGroupFromSelectionService();
+        ctc.getParameters();
+        ctc.getPollutantAndWeatherGrouposFromSelectionService();
+        ctc.setSortOrderForStations('name');
 
         $scope.$parent.$watch('ctrl.selectedStation', function () {
             console.log('selectedStation watcher in MapToolboxController triggerd.');
-            mtc.currentStation = mtc.selectionService.getCurrentStation();
+            ctc.currentStation = ctc.selectionService.getCurrentStation();
         });
 
         //this.count = 0; // TODO: remove! Currently using to witness the woes of ng-repeat & ng-filter
+    }
+
+    private getParameters() {
+        this.pollutantOptions = this.$scope.$parent.ctrl.pollutantOptions;
+        this.weatherOptions = this.$scope.$parent.ctrl.weatherOptions;
     }
 
     private getStationGroupFromSelectionService() {
         this.currentStation = this.selectionService.getCurrentStation();
         this.stationGroup = this.selectionService.getCurrentStationSelection();
         this.stationGroupMap = this.selectionService.getCurrentStationSelectionMap();
+    }
+
+    private getPollutantAndWeatherGrouposFromSelectionService() {
+        this.pollutantGroup = this.selectionService.getCurrentPollutantSelection();
+        this.weatherGroup = this.selectionService.getCurrentWeatherSelection();
     }
 
     public removeMarkerFromGroup(marker) {
@@ -50,44 +65,33 @@ class CompareToolboxController {
         this.selectionService.addStationToSelection(marker);
     }
 
+    public addPollutantToGroup(pollutant) {
+        this.selectionService.addPollutantToSelection(pollutant);
+    }
+
+    public addWeatherToGroup(weather) {
+        this.selectionService.addWeatherToSelection(weather);
+    }
+
     public isMarkerInGroup(marker) {
         //console.log('isMarkerInGroup: ' + ++this.count);
         return this.stationGroupMap.hasOwnProperty(marker.id);
     }
 
-    private convertMapLayersToArray(layers) {
-        let self = this;
-        angular.forEach(layers, function(value, key) {
-            self.clusters.push({
-                id: key,
-                name: value.name,
-                visible: value.visible
-            });
-        });
+    public isPollutantInGroup(pollutant) {
+        return this.pollutantGroup.hasOwnProperty(pollutant);
+    }
+
+    public isWeatherInGroup(weather) {
+        return this.pollutantGroup.hasOwnProperty(weather);
     }
 
     public toggleDetails() {
         this.showDetails = !this.showDetails;
     }
 
-    public togglePreviewDetails() {
-        this.$scope.$parent.toggleDetails = !this.$scope.$parent.toggleDetails;
-    }
-
     public toggleExpand() {
         this.expanded = !this.expanded;
-    }
-
-    public toggleMap(mode) {
-        this.$scope.$parent.mode = mode;
-    }
-
-    public getMarkerNames() {
-        return this.mapFactory.getMarkerNames();
-    }
-
-    public centerMapOnLocation() {
-        this.$scope.$parent.centerOnLocation = !this.$scope.$parent.centerOnLocation;
     }
 
     public togglePlot() {
@@ -96,29 +100,6 @@ class CompareToolboxController {
 
     public download() {
         this.$scope.$parent.downloadPlot = !this.$scope.$parent.downloadPlot;
-    }
-
-    public centerMapOnSelectedMarker() {
-        this.$scope.$parent.centerOnMarker = !this.$scope.$parent.centerOnMarker;
-    }
-
-    public toggleCluster(cluster) {
-        console.log('cluster: ' + cluster);
-        this.$scope.$parent.toggleCluster = cluster.id;
-    }
-
-    public showAllClusters() {
-        this.$scope.$parent.showAllClusters = !this.$scope.$parent.showAllClusters;
-        angular.forEach(this.clusters, function (cluster) {
-            cluster['visible'] = true;
-        });
-    }
-
-    public hideAllClusters() {
-        this.$scope.$parent.hideAllClusters = !this.$scope.$parent.hideAllClusters;
-        angular.forEach(this.clusters, function (cluster) {
-            cluster['visible'] = false;
-        });
     }
 
     public setSortOrderForStations(order) {
@@ -149,10 +130,5 @@ class CompareToolboxController {
     public setSelectedStation(marker) {
         this.$scope.$parent.ctrl.selectedStation = marker;
         this.$scope.$parent.ctrl.center.zoom = 10;
-        this.centerMapOnSelectedMarker();
-    }
-
-    public zoomMapOut() {
-        this.$scope.$parent.ctrl.center.zoom = 5;
     }
 }
