@@ -28,7 +28,7 @@ class MapToolboxController {
         mtc.convertMapLayersToArray(mapFactory.createMapLayers().overlays);
         mtc.getStationGroupFromSelectionService();
         mtc.setSortOrderForStations('name');
-        mtc.getPollutantOptions();
+        mtc.initPollutantOptions();
 
         $scope.$parent.$watch('ctrl.selectedStation', function () {
             console.log('selectedStation watcher in MapToolboxController triggered.');
@@ -166,20 +166,65 @@ class MapToolboxController {
         this.selectionService.updatePollutantSelectionWith(pollutant.kind);
     }
 
+    private initPollutantOptions() {
+        let self = this;
+        self.pollutantOptionsMap = self.getPollutantOptionsMap();
+
+        let selection = self.selectionService.getCurrentPollutantSelection();
+        let options = self.getPollutantOptions();
+        angular.forEach(selection, function(value) {
+            console.log('==================================');
+            console.log('value: ' + value);
+            let key = self.pollutantOptionsMap[value];
+            options[key].selected = true;
+        });
+        self.pollutantOptions = options;
+    }
+
     private getPollutantOptions() {
-        this.pollutantOptions = this.selectionService.getCurrentPollutantSelection();
-        //let self = this;
-        //self.pollutantOptionsMap = self.getPollutantOptionsMap();
-        //
-        //let selection = self.selectionService.getCurrentPollutantSelection();
-        //let options = self.getPollutantOptions();
-        //angular.forEach(selection, function(value) {
-        //    console.log('==================================');
-        //    console.log('value: ' + value);
-        //    let key = self.pollutantOptionsMap[value];
-        //    options[key].selected = true;
-        //});
-        //self.pollutantOptions = options;
+        return [
+            {
+                kind: 'PM2.5',
+                name: 'Particulate Matter 2.5',
+                selected: false
+            },
+            {
+                kind: 'PM10',
+                name: 'Particulate Matter 10',
+                selected: false
+            },
+            {
+                kind: 'CO',
+                name: 'Carbon Monoxide',
+                selected: false
+            },
+            {
+                kind: 'CO2',
+                name: 'Carbon Dioxide',
+                selected: false
+            },
+            {
+                kind: 'NO2',
+                name: 'Nitrogen Dioxide',
+                selected: false
+            },
+            {
+                kind: 'O3',
+                name: 'Ozone',
+                selected: false
+            },
+        ];
+    }
+
+    private getPollutantOptionsMap() {
+        return {
+            'PM2.5': 0,
+            'PM10': 1,
+            'CO': 2,
+            'CO2': 3,
+            'NO2': 4,
+            'O3': 5
+        };
     }
 
 }

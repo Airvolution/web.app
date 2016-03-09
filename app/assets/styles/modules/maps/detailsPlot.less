@@ -1,11 +1,31 @@
 #details-plot {
   position: absolute;
-  bottom: 5%;
-  height: 300px;
+  bottom: 4.5%;
+  height: 40%;
+  width: 100%;
+  background-color: black;
+  z-index: 20;
+}
+
+#compare-plots {
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1em;
+  max-height: 60em;
 
   .data-plot {
-    background-color: @medium-darker-gray;
+    margin-bottom:4%;
+    background-color: rgba(0, 0, 0, 0.25);
+    border-radius: 7px;
   }
+}
+
+svg text {
+  fill: white;
+}
+
+.nvd3 g.nv-group path.nv-line {
+  stroke-width: 3px;
 }
 
 #map-plot-btn {

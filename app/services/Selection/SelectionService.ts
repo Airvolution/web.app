@@ -8,60 +8,16 @@ class SelectionService {
     private currentStation = {};
     private currentStationSelection = [];
     private currentStationSelectionMap = {};
-    private currentPollutantSelection;
-    private pollutantSelectionMap;
-    private currentWeatherSelection;
+    private currentPollutantSelection = [];
+    private currentWeatherSelection = [];
     constructor(
         private $log
     ) {
-        this.currentPollutantSelection = this.getDefaultPollutantSelection();
-        this.pollutantSelectionMap = this.getPollutantOptionsMap();
+        this.getDefaultPollutantSelection();
     }
 
     private getDefaultPollutantSelection() {
-        return [
-            {
-                kind: 'PM2.5',
-                name: 'Particulate Matter 2.5',
-                selected: false
-            },
-            {
-                kind: 'PM10',
-                name: 'Particulate Matter 10',
-                selected: false
-            },
-            {
-                kind: 'CO',
-                name: 'Carbon Monoxide',
-                selected: false
-            },
-            {
-                kind: 'CO2',
-                name: 'Carbon Dioxide',
-                selected: false
-            },
-            {
-                kind: 'NO2',
-                name: 'Nitrogen Dioxide',
-                selected: false
-            },
-            {
-                kind: 'O3',
-                name: 'Ozone',
-                selected: false
-            }
-        ];
-    }
-
-    private getPollutantOptionsMap() {
-        return {
-            'PM2.5': 0,
-            'PM10': 1,
-            'CO': 2,
-            'CO2': 3,
-            'NO2': 4,
-            'O3': 5
-        };
+        this.currentPollutantSelection = ['PM2.5', 'PM10', 'CO', 'CO2', 'NO2', 'O3'];
     }
 
     public removeIndexFromStationSelection(index) {
@@ -158,16 +114,14 @@ class SelectionService {
     //}
 
     public updatePollutantSelectionWith(kind) {
-        let key = this.pollutantSelectionMap[kind];
-        this.currentPollutantSelection[key].selected = !this.currentPollutantSelection[key].selected;
-        //let index = this.currentPollutantSelection.indexOf(kind);
-        //if (index > -1) {
-        //    this.removeIndexFromPollutantSelection(index);
-        //    this.$log.log('UPDATE: removing parameter from list: ' + kind);
-        //} else {
-        //    this.addPollutantToSelection(kind);
-        //    this.$log.log('UPDATE: adding parameter to list: ' + kind);
-        //}
+        let index = this.currentPollutantSelection.indexOf(kind);
+        if (index > -1) {
+            this.removeIndexFromPollutantSelection(index);
+            this.$log.log('UPDATE: removing parameter from list: ' + kind);
+        } else {
+            this.addPollutantToSelection(kind);
+            this.$log.log('UPDATE: adding parameter to list: ' + kind);
+        }
     }
 
     public setCurrentPollutantSelection(pollutants) {
