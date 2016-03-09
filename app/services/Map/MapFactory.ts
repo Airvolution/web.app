@@ -7,7 +7,7 @@ class MapFactory {
     private mapTiles;
 
     public static serviceName = 'mapFactory';
-    public static $inject = ['APIService','leafletMarkerEvents', '$q', '$log'];
+    public static $inject = ['APIService','leafletMarkerEvents', '$q', '$log', 'locationService'];
     private tilesDictionary = {
         light_map: {
             name: 'Light Map',
@@ -29,7 +29,8 @@ class MapFactory {
         private APIService,
         private leafletMarkerEvents,
         private $q,
-        private $log
+        private $log,
+        private locationService
     ) {
         this.mapMarkers = undefined;
     }
@@ -61,11 +62,16 @@ class MapFactory {
         this.APIService.downloadDataFromStation(id);
     }
 
-    public getDataFromStation(id) {
+    public getDataFromStation(ids, params) {
         // TODO: when compare view is ready, add support for multiple stations / variable param lists
         var deferred = this.$q.defer();
         let self = this;
-        self.APIService.asyncGetNVD3DataPointsFrom(id).then(
+
+        if (params.length == 0) {
+            params = ["PM2.5", "PM10", "OZONE", "CO", "NO2", "SO2"];
+        }
+
+        self.APIService.asyncGetNVD3DataPointsFrom(ids, params).then(
             function (response) {
                 deferred.resolve({
                     chartOptions: self.getChartOptions(),
@@ -132,6 +138,7 @@ class MapFactory {
     public getMapMarkers() {
         var deferred = this.$q.defer();
         let self = this;
+
         let bounds = {'northEast': {'lat': 89, 'lng': 179}, 'southWest': {'lat': -89, 'lng': -179}};
         self.APIService.asyncGetMarkersInside(bounds).then(
             function (response) {
@@ -194,19 +201,47 @@ class MapFactory {
     public getDefaults() {
         return {
             minZoom: 4,
-            maxZoom: 16
+            maxZoom: 16,
+            zoomControlPosition: 'bottomright'
         };
     }
 
     public getCenter() {
-        // this will center on location for now
-        // when we get user preferences we can disable auto discover
-        // and use specific lat, lng
+        // the map by default must initialize with a valid center
         return {
             autoDiscover: true,
-            //lat: 39.994157,
-            //lng: -97.722896,
             zoom: 5
+        };
+    }
+
+    public getCenterNoAutoDiscover(currentZoom) {
+        let deferred = this.$q.defer();
+
+        let self = this;
+        self.locationService.asyncGetGeoCoordinates().then(
+            function (response) {
+                deferred.resolve({
+                    lat: response.lat,
+                    lng: response.lng,
+                    zoom: currentZoom
+                });
+            },
+            function (response) {
+                deferred.resolve({
+                    autoDiscover: true,
+                    zoom: currentZoom
+                });
+            }
+        );
+
+        return deferred.promise;
+    }
+
+    public getCenterFromMarker(marker, currentZoom) {
+        return {
+            lat: marker.lat,
+            lng: marker.lng,
+            zoom: currentZoom
         };
     }
 
@@ -518,6 +553,58 @@ class MapFactory {
                 WY: {
                     type: 'markercluster',
                     name: 'Wyoming',
+                    visible: true
+                },
+                // CANADA
+                AB: {
+                    type: 'markercluster',
+                    name: 'Alberta',
+                    visible: true
+                },
+                BC: {
+                    type: 'markercluster',
+                    name: 'British Columbia',
+                    visible: true
+                },
+                MB: {
+                    type: 'markercluster',
+                    name: 'Manitoba',
+                    visible: true
+                },
+                NB: {
+                    type: 'markercluster',
+                    name: 'New Brunswick',
+                    visible: true
+                },
+                NS: {
+                    type: 'markercluster',
+                    name: 'Nova Scotia',
+                    visible: true
+                },
+                ON: {
+                    type: 'markercluster',
+                    name: 'Ontario',
+                    visible: true
+                },
+                PE: {
+                    type: 'markercluster',
+                    name: 'Prince Edward Island',
+                    visible: true
+                },
+                QC: {
+                    type: 'markercluster',
+                    name: 'Québec',
+                    visible: true
+                },
+                SK: {
+                    type: 'markercluster',
+                    name: 'Saskatchewan',
+                    visible: true
+                },
+                // MEXICO
+                'N.L.': {
+                    type: 'markercluster',
+                    name: 'Nuevo León',
                     visible: true
                 }
             }

@@ -1,0 +1,31 @@
+<main id="compareWrapper">
+    <compare-toolbox></compare-toolbox>
+    <div id="compare-plots" class="col-md-8">
+        <div ng-repeat="plot in ctrl.plots" class="data-plot well" style="margin: 1em 0;" ng-class="{'hidden':plot.visible == false}">
+            <nvd3 options="ctrl.options" data="plot.data" ></nvd3>
+        </div>
+    </div>
+
+
+    <!--<div class="col-md-4" id="compare-list">-->
+        <!--<uib-accordion>-->
+            <!--<uib-accordion-group heading="Pollutants">-->
+                <!--<ul class="list-group" ng-repeat="pollutant in ctrl.pollutants">-->
+                    <!--<li class="list-group-item" ng-class="{'active': pollutant.checked}" ng-click="pollutant.checked=!pollutant.checked; ctrl.selectionService.updateParameterSelectionWith(pollutant.kind)">{{pollutant.name}}</li>-->
+                <!--</ul>-->
+            <!--</uib-accordion-group>-->
+            <!--<uib-accordion-group heading="Weather">-->
+                <!--<ul class="list-group" ng-repeat="weatherType in ctrl.weatherTypes">-->
+                    <!--<li class="list-group-item" ng-class="{'active': weatherType.checked}" ng-click="weatherType.checked=!weatherType.checked; ctrl.selectionService.updateParameterSelectionWith(weatherType.kind)">{{weatherType.name}}</li>-->
+                <!--</ul>-->
+            <!--</uib-accordion-group>-->
+            <!--<uib-accordion-group heading="Monitoring Sites">-->
+                <!--<div ng-repeat="station in ctrl.stations" class="list-element well well-sm">-->
+                    <!--<input type="checkbox" class="checkbox-inline" ng-model="station.visible" ng-change="ctrl.selectionService.updateStationSelectionWith(station.id)">-->
+                    <!--<span class="checkbox-text">Station - {{station.id}}</span>-->
+                <!--</div>-->
+            <!--</uib-accordion-group>-->
+        <!--</uib-accordion>-->
+        <!--<button class="btn btn-block btn-primary" ng-click="ctrl.generatePlot()">Compare</button>-->
+    <!--</div>-->
+</main>

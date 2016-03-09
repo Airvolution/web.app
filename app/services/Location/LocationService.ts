@@ -27,6 +27,7 @@ class LocationService {
                 function(response) {
                     self.$log.log('ip address: ' + response.data.query);
                     self.locationData = response.data;
+                    self.locationData.lng = response.data.lon;
                     deferred.resolve({
                         city: response.data.city,
                         region: response.data.region,

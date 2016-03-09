@@ -39,7 +39,9 @@ class MapViewController {
         'APIService',
         '$timeout',
         'mapFactory',
-        'SearchService'];
+        'selectionService',
+        'SearchService'
+    ];
 
     constructor(private $state,
                 private $rootScope,
@@ -54,28 +56,99 @@ class MapViewController {
                 private APIService,
                 private $timeout,
                 private mapFactory,
-                private SearchService) {
+                private selectionService,
+                private SearchService
+    ) {
+        let mv = this;
 
-        this.detailsVisible = true;
-        this.plotVisible = false;
+        mv.detailsVisible = true;
+        mv.plotVisible = false;
 
-        this.selectedStation = {location: {}, last: {}};
+        mv.selectedStation = {location: {}, last: {}};
 
-        this.markers = this.getMapMarkers();
-        this.defaults = mapFactory.getDefaults();
-        this.center = mapFactory.getCenter();
-        this.tiles = mapFactory.createTilesFromKey($stateParams.mode);
-        this.layers = mapFactory.createMapLayers();
-        this.events = this.createMapEvents();
-        this.clusterSearch = $state.params['cluster'];
-        mapFactory.registerMapTiles(this.tiles);
+        mv.markers = mv.getMapMarkers();
+        mv.defaults = mapFactory.getDefaults();
+        mv.center = mapFactory.getCenter();
 
-        $scope.$on('leafletDirectiveMarker.map.click', this.onMarkerClick());
-        $scope.$on('leafletDirectiveMap.map.moveend', this.onMapMove());
+        // things to watch with scope watch
+        if ($stateParams.mode === undefined) {
+            $scope.mode = 'light';
+        } else {
+            $scope.mode = $stateParams.mode;
+        }
+        $scope.centerOnLocation = true; // arbitrary value
+        $scope.centerOnMarker = false;  // arbitrary value, but why not be different?
+        $scope.togglePlot = false;
+        $scope.downloadPlot = false;
+        $scope.toggleCluster = undefined;
+        $scope.hideAllClusters = false;
+        $scope.showAllClusters = true;
+        $scope.toggleDetails = true;
+
+        mv.tiles = mapFactory.createTilesFromKey($scope.mode);
+        mv.layers = mapFactory.createMapLayers();
+        mv.events = mv.createMapEvents();
+        mv.clusterSearch = $state.params['cluster'];
+
+        $scope.$watch('mode', function (mode) {
+            mv.updateMapTiles(mode);
+        });
+
+        $scope.$watch('centerOnLocation', function () {
+            mv.$log.log('lets try to center shall we please');
+            mv.mapFactory.getCenterNoAutoDiscover(mv.center.zoom).then(
+                function (response) {
+                    mv.center = response;
+                }
+            );
+        });
+
+        $scope.$watch('centerOnMarker', function (marker) {
+            if (mv.selectedStation && mv.selectedStation.id) {
+                mv.$log.log('lets try to center on a marker, that would be neat-o-rific');
+                mv.center = mv.mapFactory.getCenterFromMarker(mv.selectedStation, mv.center.zoom);
+            }
+        });
+
+        $scope.$watch('togglePlot', function () {
+            if (mv.selectedStation && mv.selectedStation.id) {
+                mv.showStationChart();
+            }
+        });
+
+        $scope.$watch('downloadPlot', function () {
+            if (mv.selectedStation && mv.selectedStation.id) {
+                mv.downloadStationData();
+            }
+        });
+
+        $scope.$watch('toggleCluster', function () {
+            if (mv.layers.overlays[$scope.toggleCluster] === undefined) {
+            } else {
+                mv.layers.overlays[$scope.toggleCluster].visible = !mv.layers.overlays[$scope.toggleCluster].visible;
+                $scope.toggleCluster = undefined;
+            }
+        });
+
+        $scope.$watch('hideAllClusters', function () {
+            mv.hideAllClusters();
+        });
+
+        $scope.$watch('showAllClusters', function () {
+            mv.showAllClusters();
+        });
+
+        $scope.$watch('toggleDetails', function () {
+            mv.detailsVisible = !mv.detailsVisible;
+        });
+
+        $scope.$on('leafletDirectiveMarker.map.click', mv.onMarkerClick());
+        $scope.$on('leafletDirectiveMap.map.moveend', mv.onMapMove());
         this.showStationsByCluster($stateParams['cluster']);
-        //this.registerStateWatcher($rootScope);
+    }
 
-        let self = this;
+    private updateMapTiles(mode) {
+        this.tiles = this.mapFactory.createTilesFromKey(mode);
     }
 
     private registerStateWatcher($rootScope) {
@@ -165,13 +238,15 @@ class MapViewController {
         self.$scope.$on('leafletDirectiveMarker.map.click', function (event, args) {
             self.$log.log('a marker has been clicked');
 
-            if (self.selectedStation && self.selectedStation.id && args.model.id == self.selectedStation.id) {
-                self.toggleDetails(false);
-                self.selectedStation = undefined;
-                return;
-            }
+            // TODO: there is a reason why this is commented out for now
+            //if (self.selectedStation && self.selectedStation.id && args.model.id == self.selectedStation.id) {
+            //    self.toggleDetails(false);
+            //    self.selectedStation = undefined;
+            //    return;
+            //}
 
             self.selectedStation = args.model;
+            self.selectionService.setCurrentStation(self.selectedStation);
             self.mapFactory.getLastDataPointFromStation(self.selectedStation.id).then(
                 function (response) {
                     self.selectedStation.last = response.lastDataPoint;
@@ -237,23 +312,45 @@ class MapViewController {
     }
 
     public downloadStationData() {
-        if (!this.selectedStation || !this.selectedStation.id) {
+        //if (!this.selectedStation || !this.selectedStation.id) {
+        //    return;
+        //}
+        //this.mapFactory.downloadDataFromStation(this.selectedStation.id);
+
+        let stationsGroup = this.selectionService.getCurrentStationSelectionIds();
+        let paramsGroup = this.selectionService.getCurrentPollutantSelection();
+
+        if (stationsGroup.length != 0) {
+            //this.unsetChartData();
+            this.mapFactory.downloadDataFromStation(stationsGroup, paramsGroup);
+            //this.getDataForPlot(stationsGroup, paramsGroup);
+        } else if (!this.selectedStation || !this.selectedStation.id) {
             return;
+        } else {
+            //this.unsetChartData();
+            //this.getDataForPlot(this.selectedStation.id, paramsGroup);
+            this.mapFactory.downloadDataFromStation(stationsGroup, paramsGroup);
         }
-        this.mapFactory.downloadDataFromStation(this.selectedStation.id);
     }
 
     public generatePlot() {
-        if (!this.selectedStation || !this.selectedStation.id) {
+        let stationsGroup = this.selectionService.getCurrentStationSelectionIds();
+        let paramsGroup = this.selectionService.getCurrentPollutantSelection();
+
+        if (stationsGroup.length != 0) {
+            this.unsetChartData();
+            this.getDataForPlot(stationsGroup, paramsGroup);
+        } else if (!this.selectedStation || !this.selectedStation.id) {
             return;
+        } else {
+            this.unsetChartData();
+            this.getDataForPlot(this.selectedStation.id, paramsGroup);
         }
-        this.unsetChartData();
-        this.getDataForPlot(this.selectedStation.id);
     }
 
-    private getDataForPlot(id) {
+    private getDataForPlot(ids, params) {
         let self = this;
-        self.mapFactory.getDataFromStation(id).then(
+        self.mapFactory.getDataFromStation(ids, params).then(
             function (response) {
                 self.chartOptions = response.chartOptions;
                 self.chartData = response.chartData;

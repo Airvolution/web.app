@@ -5,48 +5,77 @@ export = SelectionService;
 class SelectionService {
     public static serviceName = 'selectionService';
     public static $inject = ['$log'];
+    private currentStation = {};
     private currentStationSelection = [];
-    private currentParameterSelection = [];
+    private currentStationSelectionMap = {};
+    private currentPollutantSelection = [];
+    private currentWeatherSelection = [];
     constructor(
         private $log
     ) {
-        // empty constructor
+        this.getDefaultPollutantSelection();
+    }
+
+    private getDefaultPollutantSelection() {
+        this.currentPollutantSelection = ['PM2.5', 'PM10', 'CO', 'CO2', 'NO2', 'O3'];
     }
 
     public removeIndexFromStationSelection(index) {
         this.currentStationSelection.splice(index, 1);
     }
 
-    public removeIndexFromParameterSelection(index) {
-        this.currentParameterSelection.splice(index, 1);
+    public removeIndexFromPollutantSelection(index) {
+        this.currentPollutantSelection.splice(index, 1);
+    }
+
+    public removeIndexFromWeatherSelection(index) {
+        this.currentWeatherSelection.splice(index, 1);
     }
 
     // Stations
 
-    public addStationToSelection(stationID) {
-        this.currentStationSelection.push(stationID);
+    public addStationToSelection(marker) {
+        this.currentStationSelection.push(marker);
+        this.currentStationSelectionMap[marker.id] = marker.id;
     }
 
-    public removeStationFromSelection(stationID) {
-        let index = this.currentStationSelection.indexOf(stationID);
+    public removeStationFromSelection(marker) {
+        let index = this.currentStationSelection.indexOf(marker);
         if (index > -1) {
             this.currentStationSelection.splice(index, 1);
         }
+        delete this.currentStationSelectionMap[marker.id];
     }
 
-    public updateStationSelectionWith(stationID) {
-        let index = this.currentStationSelection.indexOf(stationID);
+    public updateStationSelectionWith(marker) {
+        let index = this.currentStationSelection.indexOf(marker);
         if (index > -1) {
             this.removeIndexFromStationSelection(index);
-            this.$log.log('UPDATE: removing station from list: ' + stationID);
+            this.$log.log('UPDATE: removing station from list: ' + marker);
         } else {
-            this.addStationToSelection(stationID);
-            this.$log.log('UPDATE: adding station to list: ' + stationID);
+            this.addStationToSelection(marker);
+            this.$log.log('UPDATE: adding station to list: ' + marker);
         }
     }
 
-    public setCurrentStationSelection(stationIDs) {
-        this.currentStationSelection = stationIDs;
+    public setCurrentStation(marker) {
+        this.currentStation = marker;
+    }
+
+    public getCurrentStation() {
+        return this.currentStation;
+    }
+
+    public setCurrentStationSelection(markers) {
+        this.currentStationSelection = markers;
+    }
+
+    public getCurrentStationSelectionIds() {
+        let ids = [];
+        angular.forEach(this.currentStationSelection, function(value) {
+            ids.push(value.id);
+        });
+        return ids;
     }
 
     public getCurrentStationSelection() {
@@ -54,29 +83,57 @@ class SelectionService {
         return this.currentStationSelection;
     }
 
-    // Parameters
-
-    public addParameterToSelection(kind) {
-        this.currentParameterSelection.push(kind);
+    public getCurrentStationSelectionMap() {
+        return this.currentStationSelectionMap;
     }
 
-    public updateParameterSelectionWith(kind) {
-        let index = this.currentParameterSelection.indexOf(kind);
+    // Parameters
+
+    public addPollutantToSelection(kind) {
+        this.currentPollutantSelection.push(kind);
+    }
+
+    public addWeatherToSelection(kind) {
+        this.currentWeatherSelection.push(kind);
+    }
+
+    //public removePollutantFromSelection(kind) {
+    //    let index = this.currentStationSelection.indexOf(marker);
+    //    if (index > -1) {
+    //        this.currentStationSelection.splice(index, 1);
+    //    }
+    //    delete this.currentStationSelectionMap[marker.id];
+    //}
+    //
+    //public removeWeatherFromSelection(kind) {
+    //    let index = this.currentStationSelection.indexOf(marker);
+    //    if (index > -1) {
+    //        this.currentStationSelection.splice(index, 1);
+    //    }
+    //    delete this.currentStationSelectionMap[marker.id];
+    //}
+
+    public updatePollutantSelectionWith(kind) {
+        let index = this.currentPollutantSelection.indexOf(kind);
         if (index > -1) {
-            this.removeIndexFromParameterSelection(index);
+            this.removeIndexFromPollutantSelection(index);
             this.$log.log('UPDATE: removing parameter from list: ' + kind);
         } else {
-            this.addParameterToSelection(kind);
+            this.addPollutantToSelection(kind);
             this.$log.log('UPDATE: adding parameter to list: ' + kind);
         }
     }
 
-    public setCurrentParameterSelection(parameters) {
-        this.currentParameterSelection = parameters;
+    public setCurrentPollutantSelection(pollutants) {
+        this.currentPollutantSelection = pollutants;
     }
 
-    public getCurrentParameterSelection() {
-        return this.currentParameterSelection;
+    public getCurrentPollutantSelection() {
+        return this.currentPollutantSelection;
+    }
+
+    public getCurrentWeatherSelection() {
+        return this.currentWeatherSelection;
     }
 
 }

@@ -2,16 +2,16 @@
 declare let _;
 declare let d3;
 
-export = ComparePageController;
+export = CompareViewController;
 
-class ComparePageController {
-    public static name = 'ComparePageController';
+class CompareViewController {
+    public static name = 'CompareViewController';
     public static $inject = ['$scope', '$http', '$log', 'selectionService', 'APIService'];
 
     public stations = [];
     public plots = [];
 
-    public pollutants = [
+    public pollutantOptions = [
         {
             kind: 'PM',
             name: 'Particulate Matter',
@@ -39,7 +39,7 @@ class ComparePageController {
         },
     ];
 
-    public weatherTypes = [
+    public weatherOptions = [
         {
             kind: 'Temperature',
             name: 'Temperature',
@@ -109,18 +109,7 @@ class ComparePageController {
         private selectionService,
         private APIService
     ) {
-        this.selectionService.getCurrentStationSelection();
-
-        let self = this;
-        let bounds = {'northEast': {'lat': 89, 'lng': 179}, 'southWest': {'lat': -89, 'lng': -179}};
-        self.APIService.asyncGetMarkersInside(bounds).then(
-            function (response) {
-                self.stations = response;
-            },
-            function (response) {
-                self.$log.log('compare controller failed to get station locators');
-            }
-        );
+        this.stations = this.selectionService.getCurrentStationSelection();
     };
 
     private plot(dataPoints) {
