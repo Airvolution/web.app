@@ -1,5 +1,5 @@
 ///<reference path='../../../typings/tsd.d.ts'/>
-import WeatherController = require('../../controllers/Weather/WeatherController');
+import WeatherController = require('./WeatherController');
 export = WeatherDirective;
 
 class WeatherDirective implements ng.IDirective {
@@ -10,7 +10,7 @@ class WeatherDirective implements ng.IDirective {
     public bindToController = {
         station: '='
     };
-    public templateUrl = 'app/templates/weather.html';
+    public templateUrl = 'app/directives/Weather/WeatherTemplate.html';
     public restrict = 'E';
 
     public static create(): WeatherDirective {

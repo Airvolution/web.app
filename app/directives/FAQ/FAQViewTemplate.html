@@ -1,0 +1,38 @@
+<main>
+    <div class="content-wrapper">
+        <div class="faq-header">
+            <div class="col-md-offset-3 col-md-5 faq-title">Frequently Asked Questions</div>
+            <div class="search-bar col-md-3">
+                <input type="text"
+                       placeholder="Search FAQs" class="search-box"
+                       ng-model-options="{debounce: 750}"
+                       ng-model="ctrl.search"
+                       ng-change="ctrl.onSearchChange()"
+                       ng-focus="ctrl.resultsVisible = true"
+                       <!--ng-blur="ctrl.resultsVisible = false"-->
+                >
+                <faq-search-results search-results="ctrl.searchResults" total-results="ctrl.resultsCount" ng-show="ctrl.resultsVisible" on-result-click="ctrl.onSearchSelect(result)"></faq-search-results>
+            </div>
+        </div>
+
+        <nav class="col-md-2">
+            <ul class="nav nav-pills nav-stacked jump-menu">
+                <li><a ng-click="ctrl.scrollTo('section1')">General</a></li>
+                <li><a ng-click="ctrl.scrollTo('section2')">Pollutants</a></li>
+                <li><a ng-click="ctrl.scrollTo('section3')">What Can I Do To Reduce Pollution?</a></li>
+                <li><a ng-click="ctrl.scrollTo('section4')">Map Controls</a></li>
+            </ul>
+        </nav>
+        <div class="col-md-8 col-md-offset-1 question-answer" scroll-to="ctrl.scrollPos">
+            <h2 id="section1">General</h2>
+            <faq-question ng-repeat="faq in ctrl.faqList | filter: {section:{name:'General'}}"
+                          question="faq"></faq-question>
+            <h2 id="section2">Pollutants</h2>
+            <faq-question ng-repeat="faq in ctrl.faqList | filter: {section:{name:'Pollutants'}}"
+                          question="faq"></faq-question>
+            <h2 id="section3">What Can I Do?</h2>
+            <faq-question ng-repeat="faq in ctrl.faqList | filter: {section:{name:'What Can I Do'}}"
+                          question="faq"></faq-question>
+        </div>
+    </div>
+</main>

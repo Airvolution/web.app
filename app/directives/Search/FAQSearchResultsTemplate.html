@@ -1,0 +1,15 @@
+<div class="search-results">
+    <div ng-if="!ctrl.searchResults || ctrl.searchResults.length == 0">No results found...</div>
+    <div ng-if="ctrl.searchResults">
+        <div ng-repeat="result in ctrl.searchResults track by result._source.id" class="search-result" ng-click="ctrl.onResultClick({result: result})">
+            <div class="search-hit" ng-if="result.highlight.question">
+                <p ng-repeat="hit in result.highlight.question" ng-bind-html="hit"></p>
+            </div>
+            <div class="search-hit" ng-if="result.highlight.answer">
+                <p ng-repeat="hit in result.highlight.answer" ng-bind-html="hit"></p>
+            </div>
+            <hr />
+        </div>
+        <div class="results-count" ng-if="ctrl.searchResults && ctrl.totalResults > 0">{{ctrl.totalResults}} results</div>
+    </div>
+</div>

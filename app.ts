@@ -20,6 +20,7 @@ angular.module('app', [
         'ngStorage',
         'ui.bootstrap',
         'ngAnimate',
+        'ngSanitize',
         'angularMoment',
         'ngMaterial'
     ])
@@ -115,25 +116,8 @@ angular.module('app', [
             name: 'app.map',
             url: 'map?mode&cluster',
             template: '<map-view></map-view>'
-            //controller: 'MapViewController' <-- triggers angular exception
 
         });
-        //states.push({
-        //    name: 'app.map.mode',
-        //    url: '/:mode'
-        //});
-        //states.push({
-        //    name: 'app.map.cluster',
-        //    url: '/:cluster'
-        //});
-        //states.push({
-        //    name: 'app.map.mode',
-        //    url: 'map?mode'
-        //});
-        //states.push({
-        //    name: 'app.map.cluster',
-        //    url: 'map?cluster'
-        //});
         states.push({
             name: 'app.almanac',
             url: 'almanac/',
@@ -166,8 +150,8 @@ angular.module('app', [
         });
         states.push({
             name: 'app.faq',
-            url: 'faq/',
-            templateUrl: 'app/templates/faq.html'
+            url: 'faq?id',
+            template: '<faq-view></faq-view>'
         });
         states.push({
             name: 'app.disclaimer',

@@ -7,9 +7,7 @@ import AQIController = require('./AQI/AQIController');
 import HeaderController = require('./Index/HeaderController');
 import AppController = require('./Index/AppController');
 import UserRegistrationController = require("./MyProfile/UserRegistrationController");
-import WeatherController = require('./Weather/WeatherController');
 import PreferencesController = require('./Preferences/PreferencesController');
-import FAQController = require('./Footer/FAQController');
 import AboutUsController = require('./Footer/AboutUsController');
 
 export = angular.module('controllers', [])
@@ -21,7 +19,5 @@ export = angular.module('controllers', [])
             .controller(HeaderController.name, HeaderController)
             .controller(AppController.name, AppController)
             .controller(UserRegistrationController.name, UserRegistrationController)
-            .controller(WeatherController.name, WeatherController)
             .controller(PreferencesController.name, PreferencesController)
-            .controller(FAQController.name, FAQController)
             .controller(AboutUsController.name, AboutUsController);

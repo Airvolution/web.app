@@ -1,3 +1,4 @@
+@header-height: 50px;
 .header {
   display: flex;
   align-items: center;
@@ -10,6 +11,7 @@
   .headerzone {
     padding-left: 0px;
     padding-right: 0px;
+    height: @header-height;
 
     img {
       max-width: 100%;
@@ -25,7 +27,6 @@
 
 
   #logo {
-    padding: 5%;
   }
 
   .nav {
@@ -80,17 +81,18 @@
 #weather {
   background-color: @medium-light-gray;
   border-left: 1px solid @dark-gray;
-  padding: .5em .2em;
 
   .weather_wrapper {
     text-align: center;
 
-    i {
-      padding: 0px 3px;
-    }
+    .weather-icon {
+      font-size: 2em;
+      padding: .25em;
+      //height: 50px;
 
-    i.wi {
-      font-size: 2.4em;
+      .wi-degrees{
+        margin-left: -.2em;
+      }
     }
 
     .high-temp {
@@ -151,14 +153,136 @@
   color: @medium-darker-gray;
 }
 
+.aqi-meter-low {
+  position: relative;
+  min-height: 3em;
+  background: linear-gradient(to right, green, yellow);
+  margin-left: -10%;
+  margin-right: -10%;
+
+  .fa-circle {
+    color: #FFF;
+  }
+
+  .indicator {
+    margin-left: 42%;
+
+    .aqi-number {
+      color: black;
+    }
+    .indicator-line {
+      position: absolute;
+      margin-left: 50%;
+      min-height: 100%;
+      width: 1px;
+      background: #000;
+    }
+  }
+}
+
+.aqi-meter-med {
+  position: relative;
+  min-height: 3em;
+  background: linear-gradient(to right, yellow, orange);
+  margin-left: -10%;
+  margin-right: -10%;
+
+  .fa-circle {
+    color: #FFF;
+  }
+
+  .indicator {
+    margin-left: 42%;
+
+    .aqi-number {
+      color: black;
+    }
+
+    .indicator-line {
+      position: absolute;
+      margin-left: 50%;
+      min-height: 100%;
+      width: 1px;
+      background: #000;
+    }
+  }
+}
+
+.aqi-meter-high {
+  position: relative;
+  min-height: 3em;
+  background: linear-gradient(to right, orange, red);
+  margin-left: -10%;
+  margin-right: -10%;
+
+  .fa-circle {
+    color: #FFF;
+  }
+
+  .indicator {
+    margin-left: 42%;
+
+    .aqi-number {
+      color: black;
+    }
+
+    .indicator-line {
+      position: absolute;
+      margin-left: 50%;
+      min-height: 100%;
+      width: 1px;
+      background: #000;
+    }
+  }
+}
+
+.aqi-popover {
+  position: absolute;
+  top: 80%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background-color: @medium-dark-gray;
+
+  &.panel {
+    margin-top:3%;
+    padding: 1em;
+    color: @medium-lighter-gray;
+
+    .panel-title {
+      font-size: 1.5em;
+      color: #fff;
+    }
+  }
+
+  .epa-link {
+    margin-top: 1em;
+
+    a {
+      color: @medium-lighter-gray;
+      font-size: 1.25em;
+    }
+  }
+
+  .aqi-good {
+    color: Green;
+  }
+
+  .aqi-med {
+    color: Yellow;
+  }
+  /* TODO get higher categories */
+  .aqi-high{
+    color: red;
+    font-size: 0.8em;
+  }
+}
 
 #aqi {
   background-color: @medium-light-gray;
   border-left: 1px solid @dark-gray;
 
   .epa-aqi-icon{
-    margin-top: 5%;
-    margin-bottom: 5%;
     margin-left: 25%;
     font-size: 1.5em;
 

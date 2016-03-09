@@ -25,7 +25,23 @@ class MapViewController {
     public chartOptions;
     public chartData;
 
-    public static $inject = ['$state', '$rootScope', '$scope', '$stateParams','leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', '$log', 'locationService', 'APIService', '$timeout', 'mapFactory', 'selectionService'];
+    public static $inject = [
+        '$state',
+        '$rootScope',
+        '$scope',
+        '$stateParams',
+        'leafletData',
+        'leafletBoundsHelpers',
+        'leafletMarkerEvents',
+        '$http',
+        '$log',
+        'locationService',
+        'APIService',
+        '$timeout',
+        'mapFactory',
+        'selectionService',
+        'SearchService'
+    ];
 
     constructor(private $state,
                 private $rootScope,
@@ -40,7 +56,8 @@ class MapViewController {
                 private APIService,
                 private $timeout,
                 private mapFactory,
-                private selectionService
+                private selectionService,
+                private SearchService
     ) {
         let mv = this;
 
@@ -221,6 +238,7 @@ class MapViewController {
         self.$scope.$on('leafletDirectiveMarker.map.click', function (event, args) {
             self.$log.log('a marker has been clicked');
 
+            // TODO: there is a reason why this is commented out for now
             //if (self.selectedStation && self.selectedStation.id && args.model.id == self.selectedStation.id) {
             //    self.toggleDetails(false);
             //    self.selectedStation = undefined;
@@ -288,6 +306,9 @@ class MapViewController {
         if (this.plotVisible) {
             this.generatePlot();
         }
+        //this.SearchService.getAllStations().then((stations)=>{
+        //    console.log('got %d stations',stations.length);
+        //});
     }
 
     public downloadStationData() {

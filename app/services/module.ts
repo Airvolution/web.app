@@ -7,6 +7,7 @@ import SelectionService = require('./Selection/SelectionService');
 import AuthInterceptorService = require("./Auth/AuthInterceptorService");
 import OpenWeatherService = require('./Weather/OpenWeatherService');
 import MapFactory = require("./Map/MapFactory");
+import SearchService = require("./SearchService");
 
 export = angular.module('services', [])
             .service(LocationService.serviceName, LocationService)
@@ -16,4 +17,5 @@ export = angular.module('services', [])
             .service(AuthInterceptorService.serviceName, AuthInterceptorService)
             .service(SelectionService.serviceName, SelectionService)
             .service(OpenWeatherService.serviceName, OpenWeatherService)
-            .service(MapFactory.serviceName, MapFactory);
+            .service(MapFactory.serviceName, MapFactory)
+            .service(SearchService.serviceName, SearchService);
