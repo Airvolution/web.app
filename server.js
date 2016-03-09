@@ -9,8 +9,8 @@ var app = express();
 //}));
 app.use('/api',proxy('http://dev.air.eng.utah.edu',{
     forwardPath: function(req, res){
-    return '/api/'+require('url').parse(req.url).path;
-}
+        return '/api/'+require('url').parse(req.url).path;
+    }
 }));
 
 app.use(express.static(__dirname));

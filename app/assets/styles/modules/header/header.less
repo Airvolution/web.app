@@ -24,6 +24,34 @@
   }
 
 
+  #logo {
+    padding: 5%;
+  }
+
+  .nav {
+    .tab {
+      background-color: @medium-darker-gray;
+      a {
+        color: white;
+      }
+    }
+    .active {
+      background-color: black;
+      a {
+        color: white;
+      }
+    }
+    a {
+      &:hover {
+        background-color: black;
+        color: white;
+      }
+      &:focus {
+        background-color: black;
+        color: white;
+      }
+    }
+  }
 }
 #hamburger {
   text-align: center;

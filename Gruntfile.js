@@ -35,6 +35,21 @@ module.exports = function (grunt) {
                     ]
                 }
             },
+            prod: {
+                entry: "./app.ts",
+                progress:true,
+                output: {
+                    filename: 'bundle.js'
+                },
+                resolve: {
+                    extensions: ['','webpack.js','.web.js','.js','.ts']
+                },
+                module: {
+                    loaders: [
+                        {test: /\.ts/, loader: 'ts-loader'}
+                    ]
+                }
+            },
             test: {
                 entry: "./test.ts",
                 progress:true,
@@ -67,50 +82,36 @@ module.exports = function (grunt) {
                         dest: 'build/index.html'
                     },
                     {
+                      src: 'app/**/*.html',
+                        dest: 'build/'
+                    },
+                    {
+                        src: 'app/**/*.css',
+                        dest: 'build/'
+                    },
+                    {
+                        src: ['app/**/*.jpeg','app/**/*.jpg','app/**/*.png'],
+                        dest: 'build/'
+                    },
+                    {
+                        src: 'app/assets/clusters/leaflet.markercluster-src.js',
+                        dest: 'build/'
+                    },
+                    {
                         nonull: true,
                         src: 'app/assets/styles/app.min.css',
                         dest: 'build/app.min.css'
                     },
                     {
                         nonull:true,
-                        dest: 'build/',
-                        src: [
-                            'app.js',
-                            'boot.js',
-                            'main.js'
-
-                        ]
-                    },
-                    {
-                        nonull:true,
                         dest: 'build',
                         expand: true,
                         src: [
-                            'lib/bootstrap/dist/**/*',
-                            'lib/font-awesome/css/*',
-                            'lib/font-awesome/fonts/*',
-                            'lib/weather-icons/css/*',
-                            'lib/weather-icons/font/*',
-                            'lib/jquery/dist/*',
-                            'lib/angular/angular.*js',
-                            'lib/angular-resource/angular-resource.*js',
-                            'lib/angular-route/angular-route.*js',
-                            'lib/leaflet/dist/**/*',
-                            'lib/Leaflet-HeatMap/dist/*',
-                            'lib/ui-leaflet/dist/ui-leaflet.js',
-                            'lib/angular-simple-logger/dist/angular-simple-logger.js',
-                            'lib/d3/d3.js',
-                            'lib/nvd3/build/*',
-                            'lib/angular-nvd3/dist/angular-nvd3.js',
-                            'lib/underscore/underscore.js',
-                            'lib/requirejs/require.js',
-                            'lib/requirejs-domready/domReady.js'
+                            'node_modules/leaflet.heat/dist/*',
+                            'node_modules/ui-leaflet/dist/*',
+                            'node_modules/angular-simple-logger/dist/*',
+                            'node_modules/angular-nvd3/dist/*'
                         ]
-                    },
-                    {
-                        dest: 'build',
-                        expand: true,
-                        src: 'app/**/*.js'
                     }
                 ]
             }
@@ -148,6 +149,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-webpack');
     grunt.loadNpmTasks('grunt-tslint');
 
+    grunt.registerTask('build:prod', ['tslint', 'clean:all', 'concat:less','less','cssmin:app', 'webpack:prod','copy:build', 'clean:build']);
     grunt.registerTask('build:dev', ['tslint', 'clean:all', 'concat:less','less','cssmin:app', 'webpack:bundle','copy:build', 'clean:build']);
     grunt.registerTask('build:test', ['tslint', 'clean:local','concat:less','less','cssmin:app','webpack:test']);
     // Default task

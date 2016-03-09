@@ -65,6 +65,30 @@ class APIService {
         return deferred.promise;
     }
 
+    public asyncGetNearestStation(location) {
+        var deferred = this.$q.defer();
+
+        let self = this;
+        let url = 'api/stations/nearest';
+        let config = {
+            params: {
+                lat: location.lat,
+                lng: location.lng
+            }
+        };
+
+        self.$http.get(url, config).then(
+            function (response) {
+                deferred.resolve(response.data);
+            },
+            function (response) {
+                deferred.reject({});
+            }
+        );
+
+        return deferred.promise;
+    }
+
     public asyncGetLastDataPointFrom(stationID) {
         var deferred = this.$q.defer();
 
