@@ -149,16 +149,20 @@ class APIService {
         }, 1000);
     }
 
-    public asyncGetNVD3DataPointsFrom(id) {
+    public asyncGetNVD3DataPointsFrom(ids, params) {
         // TODO: when compare view is ready, add support for multiple stations / variable param lists
         var deferred = this.$q.defer();
 
         let self = this;
         let url = "api/stations/parameterValues";
         let config = {
+            //params: {
+            //    stationID: ids,
+            //    parameter: ["PM2.5", "PM10", "OZONE", "CO", "NO2", "SO2"]
+            //}
             params: {
-                stationID: id,
-                parameter: ["PM2.5", "PM10", "OZONE", "CO", "NO2", "SO2"]
+                stationID: ids,
+                parameter: params
             }
         };
         self.$http.get(url, config).then(

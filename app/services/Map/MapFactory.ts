@@ -62,11 +62,16 @@ class MapFactory {
         this.APIService.downloadDataFromStation(id);
     }
 
-    public getDataFromStation(id) {
+    public getDataFromStation(ids, params) {
         // TODO: when compare view is ready, add support for multiple stations / variable param lists
         var deferred = this.$q.defer();
         let self = this;
-        self.APIService.asyncGetNVD3DataPointsFrom(id).then(
+
+        if (params.length == 0) {
+            params = ["PM2.5", "PM10", "OZONE", "CO", "NO2", "SO2"];
+        }
+
+        self.APIService.asyncGetNVD3DataPointsFrom(ids, params).then(
             function (response) {
                 deferred.resolve({
                     chartOptions: self.getChartOptions(),

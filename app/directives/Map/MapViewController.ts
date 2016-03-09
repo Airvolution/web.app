@@ -221,11 +221,11 @@ class MapViewController {
         self.$scope.$on('leafletDirectiveMarker.map.click', function (event, args) {
             self.$log.log('a marker has been clicked');
 
-            if (self.selectedStation && self.selectedStation.id && args.model.id == self.selectedStation.id) {
-                self.toggleDetails(false);
-                self.selectedStation = undefined;
-                return;
-            }
+            //if (self.selectedStation && self.selectedStation.id && args.model.id == self.selectedStation.id) {
+            //    self.toggleDetails(false);
+            //    self.selectedStation = undefined;
+            //    return;
+            //}
 
             self.selectedStation = args.model;
             self.selectionService.setCurrentStation(self.selectedStation);
@@ -298,16 +298,23 @@ class MapViewController {
     }
 
     public generatePlot() {
-        if (!this.selectedStation || !this.selectedStation.id) {
+        let stationsGroup = this.selectionService.getCurrentStationSelectionIds();
+        let paramsGroup = this.selectionService.getCurrentPollutantSelection();
+
+        if (stationsGroup.length != 0) {
+            this.unsetChartData();
+            this.getDataForPlot(stationsGroup, paramsGroup);
+        } else if (!this.selectedStation || !this.selectedStation.id) {
             return;
+        } else {
+            this.unsetChartData();
+            this.getDataForPlot(this.selectedStation.id, paramsGroup);
         }
-        this.unsetChartData();
-        this.getDataForPlot(this.selectedStation.id);
     }
 
-    private getDataForPlot(id) {
+    private getDataForPlot(ids, params) {
         let self = this;
-        self.mapFactory.getDataFromStation(id).then(
+        self.mapFactory.getDataFromStation(ids, params).then(
             function (response) {
                 self.chartOptions = response.chartOptions;
                 self.chartData = response.chartData;
