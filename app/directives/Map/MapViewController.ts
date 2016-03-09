@@ -25,7 +25,21 @@ class MapViewController {
     public chartOptions;
     public chartData;
 
-    public static $inject = ['$state', '$rootScope', '$scope', '$stateParams','leafletData', 'leafletBoundsHelpers', 'leafletMarkerEvents', '$http', '$log', 'locationService', 'APIService', '$timeout', 'mapFactory'];
+    public static $inject = [
+        '$state',
+        '$rootScope',
+        '$scope',
+        '$stateParams',
+        'leafletData',
+        'leafletBoundsHelpers',
+        'leafletMarkerEvents',
+        '$http',
+        '$log',
+        'locationService',
+        'APIService',
+        '$timeout',
+        'mapFactory',
+        'SearchService'];
 
     constructor(private $state,
                 private $rootScope,
@@ -39,7 +53,8 @@ class MapViewController {
                 private locationService,
                 private APIService,
                 private $timeout,
-                private mapFactory) {
+                private mapFactory,
+                private SearchService) {
 
         this.detailsVisible = true;
         this.plotVisible = false;
@@ -216,6 +231,9 @@ class MapViewController {
         if (this.plotVisible) {
             this.generatePlot();
         }
+        //this.SearchService.getAllStations().then((stations)=>{
+        //    console.log('got %d stations',stations.length);
+        //});
     }
 
     public downloadStationData() {

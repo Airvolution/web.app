@@ -153,5 +153,5 @@ module.exports = function (grunt) {
     grunt.registerTask('build:dev', ['tslint', 'clean:all', 'concat:less','less','cssmin:app', 'webpack:bundle','copy:build', 'clean:build']);
     grunt.registerTask('build:test', ['tslint', 'clean:local','concat:less','less','cssmin:app','webpack:test']);
     // Default task
-    grunt.registerTask('default', ['tslint', 'clean:local', 'concat:less','less', 'cssmin:app','webpack:bundle']);
+    grunt.registerTask('default', ['clean:local', 'concat:less','less', 'cssmin:app','webpack:bundle']);
 };

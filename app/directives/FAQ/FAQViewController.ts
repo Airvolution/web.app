@@ -5,22 +5,25 @@ export = FAQViewController;
 class FAQViewController {
 
     public faqList;
-    public self;
+    public search;
+    public resultsVisible;
+    public searchResults;
+    public resultsCount;
     public scrollPos;
-    public static $inject = ['$timeout','$stateParams', '$scope', 'APIService', '$q'];
+    public static $inject = ['$timeout','$stateParams', '$scope', 'APIService', '$q','SearchService'];
 
     constructor(private $timeout,
                 private $stateParams,
                 private $scope,
                 private APIService,
-                private $q) {
+                private $q,
+                private SearchService) {
         if($stateParams.id){
             var prefix = 'section';
             this.scrollTo(prefix+$stateParams.id);
         }
 
-        let self = this;
-        this.getFAQs(self);
+        this.getFAQs();
     };
 
     public scrollTo(id) {
@@ -31,19 +34,33 @@ class FAQViewController {
         }, 250);
     };
 
-    public getFAQs(self) {
-        var deferred = self.$q.defer();
-        self.APIService.GetFAQs().then(
+    public getFAQs() {
+        var self = this;
+        this.APIService.GetFAQs().then(
             function (response) {
-                deferred.resolve(response);
-
                 // Add content to page.
                 self.faqList = response;
             },
             function (response) {
-                deferred.reject(response);
+                //display an error here... if we want
             }
         );
-        return deferred.promise;
     };
+
+    public onSearchChange(){
+        var self = this;
+        this.SearchService.searchFAQs(this.search).then((results)=>{
+           console.log('Got %s results', results.hits.total);
+            self.searchResults = results.hits.hits;
+            self.resultsCount = results.hits.total;
+        });
+    }
+
+    public onSearchSelect(result){
+        this.searchResults = undefined;
+        this.resultsCount = 0;
+        this.scrollTo('question'+result._id);
+        this.resultsVisible = false;
+        this.search = '';
+    }
 };
