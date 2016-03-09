@@ -17,7 +17,7 @@ class SelectionService {
     }
 
     private getDefaultPollutantSelection() {
-        this.currentPollutantSelection = ['PM2.5', 'PM10', 'CO', 'CO2', 'NO2', 'O3'];
+        this.currentPollutantSelection = ['PM2.5', 'PM10', 'CO', 'CO2', 'NO2', 'OZONE'];
     }
 
     public removeIndexFromStationSelection(index) {
