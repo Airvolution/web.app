@@ -47,11 +47,15 @@ class MapToolboxController {
     public removeMarkerFromGroup(marker) {
         console.log('removing marker: ' + marker.id);
         this.selectionService.removeStationFromSelection(marker);
+        this.selectionService.setCurrentStation(marker);
+        this.$scope.$parent.ctrl.selectedStation = marker;
     }
 
     public addMarkerToGroup(marker) {
         console.log('adding marker: ' + marker.id);
         this.selectionService.addStationToSelection(marker);
+        this.selectionService.setCurrentStation(marker);
+        this.$scope.$parent.ctrl.selectedStation = marker;
     }
 
     public isMarkerInGroup(marker) {

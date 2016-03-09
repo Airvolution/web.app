@@ -312,10 +312,25 @@ class MapViewController {
     }
 
     public downloadStationData() {
-        if (!this.selectedStation || !this.selectedStation.id) {
+        //if (!this.selectedStation || !this.selectedStation.id) {
+        //    return;
+        //}
+        //this.mapFactory.downloadDataFromStation(this.selectedStation.id);
+
+        let stationsGroup = this.selectionService.getCurrentStationSelectionIds();
+        let paramsGroup = this.selectionService.getCurrentPollutantSelection();
+
+        if (stationsGroup.length != 0) {
+            //this.unsetChartData();
+            this.mapFactory.downloadDataFromStation(stationsGroup, paramsGroup);
+            //this.getDataForPlot(stationsGroup, paramsGroup);
+        } else if (!this.selectedStation || !this.selectedStation.id) {
             return;
+        } else {
+            //this.unsetChartData();
+            //this.getDataForPlot(this.selectedStation.id, paramsGroup);
+            this.mapFactory.downloadDataFromStation(stationsGroup, paramsGroup);
         }
-        this.mapFactory.downloadDataFromStation(this.selectedStation.id);
     }
 
     public generatePlot() {
