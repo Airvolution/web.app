@@ -329,7 +329,7 @@ class MapViewController {
         } else {
             //this.unsetChartData();
             //this.getDataForPlot(this.selectedStation.id, paramsGroup);
-            this.mapFactory.downloadDataFromStation(stationsGroup, paramsGroup);
+            this.mapFactory.downloadDataFromStation(this.selectedStation.id, paramsGroup);
         }
     }
 
