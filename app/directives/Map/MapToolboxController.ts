@@ -213,7 +213,7 @@ class MapToolboxController {
                 selected: false
             },
             {
-                kind: 'O3',
+                kind: 'OZONE',
                 name: 'Ozone',
                 selected: false
             },
@@ -227,7 +227,7 @@ class MapToolboxController {
             'CO': 2,
             'CO2': 3,
             'NO2': 4,
-            'O3': 5
+            'OZONE': 5
         };
     }
 
