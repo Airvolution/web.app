@@ -25,7 +25,6 @@ angular.module('app', [
         'ngMaterial'
     ])
     .config(($stateProvider, $urlRouterProvider, $httpProvider) => {
-        $urlRouterProvider.deferIntercept();
 
         var openModal = ['$uibModal', '$previousState', ($uibModal, $previousState)=> {
             $previousState.memo("modalInvoker"); // remember the previous state with memoName "modalInvoker"
@@ -33,15 +32,15 @@ angular.module('app', [
                 templateUrl: 'app/templates/modalTemplate.html',
                 backdrop: 'static',
                 controller: ['$uibModalInstance', '$scope', ($uibModalInstance, $scope)=> {
-                    $scope.configureModal = (title,okText,onOk,cancelText,onCancel)=>{
+                    $scope.configureModal = (title, okText, onOk, cancelText, onCancel)=> {
                         $scope.modalTitle = title;
                         $scope.okText = okText;
                         $scope.okAction = onOk;
                         $scope.cancelText = cancelText;
                         $scope.cancelAction = onCancel;
                     };
-                    $scope.setAlert = (alert)=>{
-                      $scope.alert = alert;
+                    $scope.setAlert = (alert)=> {
+                        $scope.alert = alert;
                     };
                     var isopen = true;
                     $uibModalInstance.result.finally(function () {
@@ -68,15 +67,21 @@ angular.module('app', [
             template: '<div ui-view></div>'
         });
         states.push({
-            name:'modal.login',
+            name: 'modal.login',
             url: 'login/',
             templateUrl: 'app/templates/loginTemplate.html',
-            controller: 'UserRegistrationController'
+            controller: 'UserRegistrationController as ctrl'
+        });
+        states.push({
+            name: 'modal.error',
+            url: 'error/',
+            templateUrl: 'app/templates/errorModalTemplate.html',
+            controller: 'ErrorModalController as ctrl'
         });
         states.push({
             name: 'app',
             url: '/',
-            deepStateRedirect: {default: defaultState},
+            deepStateRedirect: {default: {state: defaultState}},
             sticky: true,
             views: {
                 'app': {
@@ -89,28 +94,33 @@ angular.module('app', [
             name: 'app.config',
             url: 'config/',
             deepStateRedirect: {default: defaultConfigState},
-            templateUrl: 'app/templates/configTemplate.html'
+            templateUrl: 'app/templates/configTemplate.html',
+            requireAuth: true
         });
 
         states.push({
             name: 'app.config.profile',
             url: 'profile/',
-            templateUrl: 'app/templates/myProfile.html'
+            templateUrl: 'app/templates/myProfile.html',
+            requireAuth: true
         });
         states.push({
             name: 'app.config.stations',
             url: 'stations/',
-            templateUrl: 'app/templates/myStations.html'
+            templateUrl: 'app/templates/myStations.html',
+            requireAuth: true
         });
         states.push({
             name: 'app.config.register',
             url: 'register/',
-            templateUrl: 'app/templates/registerStation.html'
+            templateUrl: 'app/templates/registerStation.html',
+            requireAuth: true
         });
         states.push({
             name: 'app.config.preferences',
             url: 'preferences/',
-            templateUrl: 'app/templates/userPreferences.html'
+            templateUrl: 'app/templates/userPreferences.html',
+            requireAuth: true
         });
         states.push({
             name: 'app.map',
@@ -126,7 +136,6 @@ angular.module('app', [
         states.push({
             name: 'app.compare',
             url: 'compare/',
-            //templateUrl: 'app/templates/compare.html'
             template: '<compare-view></compare-view>'
         });
         states.push({
@@ -169,41 +178,54 @@ angular.module('app', [
 
 
     }])
-    .run(['$rootScope','$state','$previousState',($rootScope,$state,$previousState)=>{
+    .run(['$rootScope', '$state', 'AuthService', ($rootScope, $state, authService)=> {
         //Default Background state for modals, then we can deeplink them without breaking the app
         $rootScope.$state = $state;
-        $rootScope.$on("$stateChangeStart", function(evt, toState, toParams, fromState) {
+        $rootScope.$on("$stateChangeStart", (evt, toState, toParams, fromState)=> {
             // Is initial transition and is going to modal.*?
             if (fromState.name === '' && /modal.*/.exec(toState.name)) {
                 evt.preventDefault(); // cancel initial transition
 
-                $state.go(defaultState, null, { location: false }).then(function() {
-                    $state.go(toState, toParams); }
+                $state.go(defaultState, null, {location: false}).then(() => {
+                        $state.go(toState, toParams);
+                    }
                 );
             }
         });
+
+        $rootScope.$on('$stateChangeStart', (evt, toState, toParams, fromState)=> {
+            if (toState.requireAuth && !authService.authentication.isAuth) {
+                evt.preventDefault();
+                var errorModal = $state.get('modal.error');
+                errorModal.message = "You must be logged in to access this part of the application";
+                errorModal.redirectMessage = "Login";
+                errorModal.redirectState = 'modal.login';
+
+                $state.go('modal.error');
+            }
+        });
     }]);
-    //.run(['$rootScope', ($rootScope)=> {
-    //    // ============================================= Debug UI-Router
-    //    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-    //        console.log('$stateChangeStart to ' + toState.to + '- fired when the transition begins. toState,toParams : \n', toState, toParams);
-    //    });
-    //
-    //    $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams) {
-    //        console.log('$stateChangeError - fired when an error occurs during transition.');
-    //        console.log(arguments);
-    //    });
-    //
-    //    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-    //        console.log('$stateChangeSuccess to ' + toState.name + '- fired once the state transition is complete.');
-    //    });
-    //
-    //    $rootScope.$on('$viewContentLoaded', function (event) {
-    //        console.log('$viewContentLoaded - fired after dom rendered', event);
-    //    });
-    //
-    //    $rootScope.$on('$stateNotFound', function (event, unfoundState, fromState, fromParams) {
-    //        console.log('$stateNotFound ' + unfoundState.to + '  - fired when a state cannot be found by its name.');
-    //        console.log(unfoundState, fromState, fromParams);
-    //    });
-    //}]);
+//.run(['$rootScope', ($rootScope)=> {
+//    // ============================================= Debug UI-Router
+//    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+//        console.log('$stateChangeStart to ' + toState.to + '- fired when the transition begins. toState,toParams : \n', toState, toParams);
+//    });
+//
+//    $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams) {
+//        console.log('$stateChangeError - fired when an error occurs during transition.');
+//        console.log(arguments);
+//    });
+//
+//    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+//        console.log('$stateChangeSuccess to ' + toState.name + '- fired once the state transition is complete.');
+//    });
+//
+//    $rootScope.$on('$viewContentLoaded', function (event) {
+//        console.log('$viewContentLoaded - fired after dom rendered', event);
+//    });
+//
+//    $rootScope.$on('$stateNotFound', function (event, unfoundState, fromState, fromParams) {
+//        console.log('$stateNotFound ' + unfoundState.to + '  - fired when a state cannot be found by its name.');
+//        console.log(unfoundState, fromState, fromParams);
+//    });
+//}]);

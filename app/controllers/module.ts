@@ -9,6 +9,7 @@ import AppController = require('./Index/AppController');
 import UserRegistrationController = require("./MyProfile/UserRegistrationController");
 import PreferencesController = require('./Preferences/PreferencesController');
 import AboutUsController = require('./Footer/AboutUsController');
+import ErrorModalController = require("./Modal/ErrorModalController");
 
 export = angular.module('controllers', [])
             .controller(RegisterAMSController.name, RegisterAMSController)
@@ -20,4 +21,5 @@ export = angular.module('controllers', [])
             .controller(AppController.name, AppController)
             .controller(UserRegistrationController.name, UserRegistrationController)
             .controller(PreferencesController.name, PreferencesController)
-            .controller(AboutUsController.name, AboutUsController);
+            .controller(AboutUsController.name, AboutUsController)
+            .controller(ErrorModalController.name, ErrorModalController);
