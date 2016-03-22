@@ -141,11 +141,9 @@ class APIService {
         });
         angular.element('body').append(iframe);
 
-        // TODO: if something sometimes doesn't work all the time,
-        // TODO:   check the timeout here!
         this.$timeout(function() {
             angular.element('#download-frame').remove();
-        }, 1000);
+        }, 10000);
     }
 
     public asyncGetNVD3DataPointsFrom(ids, params) {
