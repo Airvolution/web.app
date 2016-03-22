@@ -28,8 +28,6 @@ class OpenWeatherService {
 
         self.$http.get(url, params).then(
             function (response) {
-                self.$log.log('WEATHER success: ' + response);
-                self.$log.log('Response Data: ' + response.data);
                 let data = JSON.parse(response.data);
                 data.main.temp = self.convertKelvinToFarenheit(data.main.temp);
                 data.main.temp_max = self.convertKelvinToFarenheit(data.main.temp_max);
@@ -37,7 +35,7 @@ class OpenWeatherService {
                 deferred.resolve(data);
             },
             function (response) {
-                self.$log.log('WEATHER failure: ' + response);
+                self.$log.debug('WEATHER failure: ' + response);
                 deferred.reject([
                     // empty array
                 ]);
@@ -62,18 +60,15 @@ class OpenWeatherService {
 
         self.$http.get(url, params).then(
             function (response) {
-                self.$log.log('WEATHER (Coordinates) success: ' + response);
-                self.$log.log('Response Data: ' + response.data);
                 let data = JSON.parse(response.data);
                 data.main.temp = self.convertKelvinToFarenheit(data.main.temp);
                 data.main.temp_max = self.convertKelvinToFarenheit(data.main.temp_max);
                 data.main.temp_min = self.convertKelvinToFarenheit(data.main.temp_min);
-                self.$log.log('icon: ' + data.weather[0].icon);
                 data.weather.icon = self.convertToSky(data.weather[0].icon);
                 deferred.resolve(data);
             },
             function (response) {
-                self.$log.log('WEATHER failure: ' + response);
+                self.$log.debug('WEATHER failure: ' + response);
                 deferred.reject([
                     // empty array
                 ]);
@@ -97,7 +92,6 @@ class OpenWeatherService {
 
         self.$http.get(url, params).then(
             function (response) {
-                self.$log.log('WEATHER (Zip Code) success: ' + response);
                 let data = JSON.parse(response.data);
                 data.main.temp = self.convertKelvinToFarenheit(data.main.temp);
                 data.main.temp_max = self.convertKelvinToFarenheit(data.main.temp_max);
@@ -105,7 +99,7 @@ class OpenWeatherService {
                 deferred.resolve(data);
             },
             function (response) {
-                self.$log.log('WEATHER failure: ' + response);
+                self.$log.debug('WEATHER failure: ' + response);
                 deferred.reject([
                     // empty array
                 ]);

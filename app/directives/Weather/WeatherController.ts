@@ -27,7 +27,7 @@ class WeatherController {
                 self.updateTemperaturesByCoordinates(response.lat, response.lng);
             },
             function (response) {
-                self.$log.log('location service promise rejected: ' + response);
+                self.$log.debug('Unable to get location: ' + response);
             }
         );
     }
@@ -40,10 +40,9 @@ class WeatherController {
                 self.currentMax = response.main.temp_max;
                 self.currentMin = response.main.temp_min;
                 self.sky = response.weather.icon;
-                self.$log.log('openWeatherService responded with data: ' + response);
             },
             function (response) {
-                self.$log.log('openWeatherService promise rejected: ' + response);
+                self.$log.debug('Unable to get weather: ' + response);
             }
         );
     }
@@ -56,11 +55,9 @@ class WeatherController {
                 self.currentMax = response.main.temp_max;
                 self.currentMin = response.main.temp_min;
                 self.sky = response.weather.icon;
-                self.$log.log('openWeatherService responded with data: ' + response);
-                self.$log.log('sky: ' + response.weather.icon);
             },
             function (response) {
-                self.$log.log('openWeatherService promise rejected: ' + response);
+                self.$log.debug('Unable to get weather: ' + response);
             }
         );
     }
@@ -72,10 +69,9 @@ class WeatherController {
                 self.currentTemp = response.main.temp;
                 self.currentMax = response.main.temp_max;
                 self.currentMin = response.main.temp_min;
-                self.$log.log('openWeatherService responded with data: ' + response);
             },
             function (response) {
-                self.$log.log('openWeatherService promise rejected: ' + response);
+                self.$log.debug('Unable to get weather: ' + response);
             }
         );
     }

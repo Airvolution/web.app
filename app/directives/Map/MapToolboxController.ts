@@ -31,7 +31,6 @@ class MapToolboxController {
         mtc.initPollutantOptions();
 
         $scope.$parent.$watch('ctrl.selectedStation', function () {
-            console.log('selectedStation watcher in MapToolboxController triggered.');
             mtc.currentStation = mtc.selectionService.getCurrentStation();
         });
 
@@ -45,21 +44,18 @@ class MapToolboxController {
     }
 
     public removeMarkerFromGroup(marker) {
-        console.log('removing marker: ' + marker.id);
         this.selectionService.removeStationFromSelection(marker);
         this.selectionService.setCurrentStation(marker);
         this.$scope.$parent.ctrl.selectedStation = marker;
     }
 
     public addMarkerToGroup(marker) {
-        console.log('adding marker: ' + marker.id);
         this.selectionService.addStationToSelection(marker);
         this.selectionService.setCurrentStation(marker);
         this.$scope.$parent.ctrl.selectedStation = marker;
     }
 
     public isMarkerInGroup(marker) {
-        //console.log('isMarkerInGroup: ' + ++this.count);
         return this.stationGroupMap.hasOwnProperty(marker.id);
     }
 
@@ -111,7 +107,6 @@ class MapToolboxController {
     }
 
     public toggleCluster(cluster) {
-        console.log('cluster: ' + cluster);
         this.$scope.$parent.toggleCluster = cluster.id;
     }
 
@@ -177,8 +172,6 @@ class MapToolboxController {
         let selection = self.selectionService.getCurrentPollutantSelection();
         let options = self.getPollutantOptions();
         angular.forEach(selection, function(value) {
-            console.log('==================================');
-            console.log('value: ' + value);
             let key = self.pollutantOptionsMap[value];
             options[key].selected = true;
         });

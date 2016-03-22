@@ -13,16 +13,30 @@
     <link rel="stylesheet" href="app/assets/clusters/MarkerCluster.Default.css"/>
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
     <link rel="stylesheet" href="app/assets/styles/app.min.css">
+
+    <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-sanitize.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-messages.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.10/ngStorage.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-animate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ui-router-extras/0.1.0/ct-ui-router-extras.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+</head>
 <body ng-app="app">
 <div class="container" ng-controller="AppController as actrl">
-    <header class="header row" ng-controller="HeaderController as hctrl">
+    <header class="header row" ng-controller="HeaderController as hctrl" ng-cloak>
         <!--<div class="headerzone col-md-1" id="hamburger">-->
             <!--<i class="fa fa-bars fa-3x" uib-popover-template="'app/templates/siteNavTemplate.html'" popover-placement="bottom-left" popover-animation="true" popover-trigger="outsideClick"></i>-->
         <!--</div>-->
         <div class="headerzone col-md-1"><img src="app/assets/images/AirU.png" alt="University of Utah" id="logo"></div>
         <ul class="nav navbar-nav col-md-4">
             <li ui-sref-active="active" class="tab"><a ui-sref="app.almanac">Almanac</a></li>
-            <li ui-sref-active="active" class="tab"><a ui-sref="app.map">Maps</a></li>
+            <li ui-sref-active="active" class="tab"><a ui-sref="app.map">Map</a></li>
             <!--<li ui-sref-active="active" class="tab"><a ui-sref="app.compare">Compare</a></li>-->
             <li ui-sref-active="active" class="tab"><a ui-sref="app.faq">FAQ</a></li>
         </ul>
@@ -60,24 +74,11 @@
     </div>
     <!--<page-footer></page-footer>-->
 </div>
-<script src="https://code.jquery.com/jquery-2.2.0.js"></script>
-<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-sanitize.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-aria.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-messages.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.10/ngStorage.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-animate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ui-router-extras/0.1.0/ct-ui-router-extras.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/angular-moment/0.9.0/angular-moment.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.shapeshift/2.0.0/jquery.shapeshift.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.1.1/ui-bootstrap-tpls.min.js"></script>
-
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-moment/0.9.0/angular-moment.min.js"></script>
 <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.13/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.js"></script>

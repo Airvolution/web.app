@@ -2,7 +2,7 @@
     <div class="stations-wrapper col-md-8 col-md-offset-2">
         <h1>My Stations</h1>
 
-        <div class="col-md-12 warning-wrapper">
+        <div class="col-md-12 warning-wrapper" ng-if="ctrl.notifications">
             <span class="warning-title">System Notifications</span>
 
             <div ng-repeat="notif in ctrl.notifications">

@@ -37,6 +37,5 @@ class ToolboxController {
     }
 
     public centerMap() {
-        console.log('centerMap called');
     }
 }

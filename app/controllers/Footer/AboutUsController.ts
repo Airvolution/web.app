@@ -17,6 +17,5 @@ class AboutUsController {
         var zachL   = new UserProfile('Zach Lobato', 'Backend ASP.NET API, MySQL Database, and 3rd party data gathering.', 'https://www.linkedin.com/in/zachlobato', 'https://github.com/ZachLobato', 'app/assets/images/profilePictures/zach_lobato.png');
 
         this.profiles = [jaredP, jaredM, taylorW, zachL];
-        console.log('AboutUsController constructor');
     };
 };

@@ -270,7 +270,7 @@ class MapFactory {
                 });
             },
             function (response) {
-                self.$log.log('Map Factory received rejected promise: ' + response);
+                self.$log.debug('Unable to get last datapoint: ' + response);
                 deferred.reject(response);
             }
         );

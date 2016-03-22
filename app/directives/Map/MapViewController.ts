@@ -95,7 +95,6 @@ class MapViewController {
         });
 
         $scope.$watch('centerOnLocation', function () {
-            mv.$log.log('lets try to center shall we please');
             mv.mapFactory.getCenterNoAutoDiscover(mv.center.zoom).then(
                 function (response) {
                     mv.center = response;
@@ -105,7 +104,6 @@ class MapViewController {
 
         $scope.$watch('centerOnMarker', function (marker) {
             if (mv.selectedStation && mv.selectedStation.id) {
-                mv.$log.log('lets try to center on a marker, that would be neat-o-rific');
                 mv.center = mv.mapFactory.getCenterFromMarker(mv.selectedStation, mv.center.zoom);
             }
         });
@@ -172,7 +170,6 @@ class MapViewController {
     private showStationsByCluster(cluster) {
         let self = this;
         if (cluster === undefined) {
-            self.$log.log('MapViewController received undefined stateParam.');
             return;
         }
         if (!cluster || cluster == "") {
@@ -226,8 +223,6 @@ class MapViewController {
             self.leafletData.getMap().then(
                 function (map) {
                     self.bounds = map.getBounds();
-                    self.$log.log('updating map bounds');
-                    self.$log.log('zoom: ' + map.getZoom());
                 }
             );
         });
@@ -236,7 +231,6 @@ class MapViewController {
     private onMarkerClick() {
         let self = this;
         self.$scope.$on('leafletDirectiveMarker.map.click', function (event, args) {
-            self.$log.log('a marker has been clicked');
 
             // TODO: there is a reason why this is commented out for now
             //if (self.selectedStation && self.selectedStation.id && args.model.id == self.selectedStation.id) {
@@ -282,20 +276,16 @@ class MapViewController {
 
     private getMapMarkers() {
         let self = this;
-
-        self.$log.log('*********************UpdatingMapMarkers*********************');
         self.mapFactory.getMapMarkers().then(
             function (response) {
                 if (self.markers == undefined) {
                     self.markers = response;
-                    self.$log.log('marker array was empty');
                 } else {
                     self.markers = self.markers.concat(response);
-                    self.$log.log('concatenation of the marker array');
                 }
             },
             function (response) {
-                self.$log.log('MapViewController received rejected promise when getting map markers.' + response);
+                self.$log.debug('Unable to get markers. Response:' + response);
                 self.markers = [];
             }
         );
@@ -306,9 +296,6 @@ class MapViewController {
         if (this.plotVisible) {
             this.generatePlot();
         }
-        //this.SearchService.getAllStations().then((stations)=>{
-        //    console.log('got %d stations',stations.length);
-        //});
     }
 
     public downloadStationData() {
@@ -356,7 +343,7 @@ class MapViewController {
                 self.chartData = response.chartData;
             },
             function (response) {
-                self.$log.log('MapViewController received rejected promise when getting data for plot.' + response);
+                self.$log.debug('Unable to get chart data. Response' + response);
             }
         );
     }

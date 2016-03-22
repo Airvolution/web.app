@@ -51,10 +51,8 @@ class SelectionService {
         let index = this.currentStationSelection.indexOf(marker);
         if (index > -1) {
             this.removeIndexFromStationSelection(index);
-            this.$log.log('UPDATE: removing station from list: ' + marker);
         } else {
             this.addStationToSelection(marker);
-            this.$log.log('UPDATE: adding station to list: ' + marker);
         }
     }
 
@@ -79,7 +77,6 @@ class SelectionService {
     }
 
     public getCurrentStationSelection() {
-        this.$log.log('Selection Service returning current selection: ' + this.currentStationSelection);
         return this.currentStationSelection;
     }
 
@@ -117,10 +114,8 @@ class SelectionService {
         let index = this.currentPollutantSelection.indexOf(kind);
         if (index > -1) {
             this.removeIndexFromPollutantSelection(index);
-            this.$log.log('UPDATE: removing parameter from list: ' + kind);
         } else {
             this.addPollutantToSelection(kind);
-            this.$log.log('UPDATE: adding parameter to list: ' + kind);
         }
     }
 
