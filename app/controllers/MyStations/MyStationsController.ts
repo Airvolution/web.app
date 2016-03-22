@@ -16,7 +16,6 @@ class MyStationsController {
             method: 'GET'
         }).then(function(data){
             self.stations = data.data;
-            console.log('what is data: ' + data);
         });
     };
 

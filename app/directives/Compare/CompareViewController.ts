@@ -113,17 +113,14 @@ class CompareViewController {
     };
 
     private plot(dataPoints) {
-        this.$log.log('ready to plot points: ' + dataPoints);
         let dataToPlot = [];
         let parameters = this.selectionService.getCurrentParameterSelection();
         for (let i = 0; i < dataPoints.length; i++) {
-            this.$log.log('i: ' + i);
             for (let j = 0; j < dataPoints[i].length; j++) {
-                this.$log.log('j: ' + j);
                 if (parameters.indexOf(dataPoints[i][j]['key']) > -1) {
                     dataToPlot.push(dataPoints[i][j]);
                 } else {
-                    this.$log.log('parameter did not match: ' + dataPoints[i][j]['key']);
+                    this.$log.debug('parameter did not match: ' + dataPoints[i][j]['key']);
                 }
             }
         }
@@ -137,13 +134,11 @@ class CompareViewController {
 
     public generatePlot() {
         let self = this;
-        self.$log.log('generating plot for selected stations');
         // TODO: add parameter selection
         // TODO: elimnate for loop with list of station IDs???
         let selected = self.selectionService.getCurrentStationSelection();
         let dataPoints = [];
         for (var index in selected) {
-            self.$log.log('station: ' + selected[index]);
             let url = "api/stations/parameterValues";
             let config = {
                 params: {
@@ -153,7 +148,6 @@ class CompareViewController {
             };
             self.$http.get(url, config).then(
                 function (response) {
-                    console.log('PASS!');
                     dataPoints.push(response.data);
                     if (dataPoints.length == selected.length) {
                         let plot = { visible: true, data: [] };
@@ -162,17 +156,14 @@ class CompareViewController {
                     }
                 },
                 function (response) {
-                    console.log('Failure!');
                 }
             );
         }
     }
 
     public selectPollutant(kind) {
-        console.log('is pollutant selected? ' + kind.checked);
     }
 
     public selectWeather(kind) {
-        console.log('is weather selected? ' + kind.checked);
     }
 }

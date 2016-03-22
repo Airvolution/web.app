@@ -25,7 +25,6 @@ class HeaderController {
     }
 
     public toggelNav() {
-        console.log('toggling nav...');
         this.$scope.showNav = !this.$scope.showNav;
     }
 

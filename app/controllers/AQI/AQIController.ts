@@ -16,7 +16,6 @@ class AQIController {
         private locationService,
         private APIService
     ) {
-        console.log('AQIController constructor');
         this.getClientAQI();
     }
 

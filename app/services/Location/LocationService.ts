@@ -25,7 +25,6 @@ class LocationService {
             let url = 'http://ip-api.com/json'; // query lat lon
             self.$http.get(url).then(
                 function(response) {
-                    self.$log.log('ip address: ' + response.data.query);
                     self.locationData = response.data;
                     self.locationData.lng = response.data.lon;
                     deferred.resolve({
@@ -36,7 +35,7 @@ class LocationService {
                     });
                 },
                 function(response) {
-                    self.$log.log('bad response from freegeoip');
+                    self.$log.error('Unable to retrieve location. Response: '+response);
                     deferred.reject({
                         city: '',
                         region: '',

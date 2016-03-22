@@ -32,7 +32,6 @@ class CompareToolboxController {
         ctc.setSortOrderForStations('name');
 
         $scope.$parent.$watch('ctrl.selectedStation', function () {
-            console.log('selectedStation watcher in MapToolboxController triggerd.');
             ctc.currentStation = ctc.selectionService.getCurrentStation();
         });
 
@@ -56,12 +55,10 @@ class CompareToolboxController {
     }
 
     public removeMarkerFromGroup(marker) {
-        console.log('removing marker: ' + marker.id);
         this.selectionService.removeStationFromSelection(marker);
     }
 
     public addMarkerToGroup(marker) {
-        console.log('adding marker: ' + marker.id);
         this.selectionService.addStationToSelection(marker);
     }
 
@@ -74,7 +71,6 @@ class CompareToolboxController {
     }
 
     public isMarkerInGroup(marker) {
-        //console.log('isMarkerInGroup: ' + ++this.count);
         return this.stationGroupMap.hasOwnProperty(marker.id);
     }
 

@@ -55,7 +55,7 @@ class APIService {
                 deferred.resolve(response);
             },
             function(response) {
-                self.$log.log('we did not get any markers get back');
+                self.$log.debug('No markers returned');
                 deferred.reject([
                     // empty array
                 ]);
@@ -134,7 +134,6 @@ class APIService {
             parameter: ["PM2.5", "PM10", "OZONE", "CO", "NO2", "SO2"]
         };
         let url = '/api/stations/download?' + this.$httpParamSerializer(config);
-        console.log('URL: ' + url);
 
         let iframe = angular.element('<iframe id="download-frame"/>').attr({
             src:url,

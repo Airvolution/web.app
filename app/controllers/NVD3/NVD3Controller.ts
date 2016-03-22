@@ -59,7 +59,7 @@ class NVD3Controller {
                 self.data = response;
             },
             function(response) {
-                self.$log.log('api for device data points failure');
+                self.$log.debug('Unable to retrieve datapoints for station:' +response);
             }
         );
     }
@@ -73,7 +73,6 @@ class NVD3Controller {
                 self.data = response;
             },
             function(response) {
-                self.$log.log('api for EPA device data points failure');
             }
         );
     }

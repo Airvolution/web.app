@@ -7,13 +7,11 @@ class AppController {
     // public navVisible = false;
     public static $inject = ['$scope'];
     constructor(private $scope) {
-        console.log('set navVisible = false on load');
         $scope.navVisible = false;
     }
 
     public toggleNav() {
         // this.navVisible = !this.navVisible;
-        console.log('toggly toggly toggly');
         this.$scope.navVisible = !this.$scope.navVisible;
     }
 }
