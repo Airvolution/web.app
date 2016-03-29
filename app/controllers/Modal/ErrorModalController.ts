@@ -9,7 +9,7 @@ class ErrorModalController {
     public redirectParams;
 
     public static name = "ErrorModalController";
-    static $inject = ['$state', '$scope'];
+    public static $inject = ['$state', '$scope'];
 
     public constructor(private $state, private $scope) {
 
@@ -37,3 +37,4 @@ class ErrorModalController {
     }
 
 }
+
