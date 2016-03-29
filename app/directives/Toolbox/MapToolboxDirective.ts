@@ -6,7 +6,7 @@ class MapToolboxDirective implements ng.IDirective {
     public static htmlName = 'mapToolbox';
 
     public restict = 'E';
-    public templateUrl = 'app/directives/Map/MapToolboxTemplate.html';
+    public templateUrl = 'app/directives/Toolbox/MapToolboxTemplate.html';
     public controller = MapToolboxController;
     public controllerAs = 'ctrl';
     public bindToController = true;

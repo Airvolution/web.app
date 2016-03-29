@@ -49,6 +49,30 @@ class SearchService {
             return error;
         });
     }
+
+    public searchStations(queryString:string) {
+        var url = this.getSearchUrl('stations');
+        var query = {
+            "query": {
+                "multi_match": {
+                    "query": queryString,
+                    "type": "cross_fields",
+                    "fields": [
+                        "id",
+                        "name",
+                        "agency",
+                        "city",
+                        "state",
+                        "postal"
+                    ]
+                }
+            }
+        };
+
+        return this.$http.post(url,query).then((results)=>{
+            return results.data && results.data.hits ? results.data.hits : [];
+        });
+    }
     public getAllStations() {
         var url = this.getSearchUrl('stations');
         var query = {
