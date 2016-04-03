@@ -2,6 +2,7 @@
   position: relative;
   width: 100%;
   height: 100%;
+  z-index: inherit;
 
   -webkit-transition: width 1s;
   transition: width 1s;
@@ -35,22 +36,25 @@
     }
   }
 }
+@toolbox-background: rgba(0,0,0,.75);
+@toolbox-drawer-background: rgba(0,0,0,.75);
+@toolbox-border: 2px solid rgba(0,0,0,.90);
 .toolbox {
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   z-index: 5;
-  width: 4%;
-  background: rgba(0,0,0,.75);
-  border: 2px solid rgba(0,0,0,.85);
+  padding: .5em;
+  background: @toolbox-background;
+  border: @toolbox-border;
   color: white;
 
   &.hidden{
     display: none;
   }
   &.expanded {
-      width: 5%;
+      padding: 1em;
   }
 
   .tool {
@@ -99,17 +103,19 @@
   }
 }
 
+@toolbox-drawer-width: 30em;
 .toolbox-drawer {
   position: absolute;
   z-index: 1;
-  background: rgba(0, 0, 0, .75);
+  border: @toolbox-border;
+  background: @toolbox-drawer-background;
   color: white;
   top: 0;
-  left: -100%;
+  left: -@toolbox-drawer-width;
   bottom: 0;
   padding: 1em;
-  width: 33em;
-  overflow-y: scroll;
+  width: @toolbox-drawer-width;
+  overflow-y: auto;
 
   -webkit-transition: left 1s;
   transition: left 1s;
@@ -230,11 +236,11 @@
 }
 
 .drawer-open {
-  left: 4%;
+  left: 100%;
 
-  &.expanded {
-    left: 5%;
-  }
+  //&.expanded {
+  //  left: 5%;
+  //}
 }
 
 #station-container {

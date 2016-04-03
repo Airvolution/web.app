@@ -5,6 +5,9 @@ export = MapToolboxController;
 class MapToolboxController {
     public stationQuery;
     public stationQueryResults;
+
+    public selectedParameters;
+
     public searchOptions;
 
     public expanded;
@@ -29,6 +32,7 @@ class MapToolboxController {
 
         this.searchOptions = {updateOn: 'default blur', debounce: {'default': 250 , 'blur': 0}};
         this.stationQueryResults = [];
+        this.selectedParameters = [];
 
         let mtc = this;
         mtc.showDetails = false;
@@ -57,6 +61,7 @@ class MapToolboxController {
             });
         });
     }
+
     private getStationGroupFromSelectionService() {
         this.currentStation = this.selectionService.getCurrentStation();
         this.stationGroup = this.selectionService.getCurrentStationSelection();
@@ -243,5 +248,4 @@ class MapToolboxController {
             'OZONE': 5
         };
     }
-
 }

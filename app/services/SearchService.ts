@@ -7,27 +7,74 @@ class SearchService {
     private baseUrl:string = '/search';
     private pageSize = 100;
     private endpointMap = {
-        "datapoints": "/datapoints/_search",
+        //"datapoints": "/datapoints/_search",
+        "parameters": "/stations/_search",
         "stations": "/stations/_search",
         "faq": "/faqs/_search"
     };
+    private stopWords = [
+        'a',
+        'an',
+        'and ',
+        'are',
+        'as ',
+        'at ',
+        'be ',
+        'by ',
+        'for ',
+        'from',
+        'has',
+        'he',
+        'in',
+        'is',
+        'it',
+        'its',
+        'of',
+        'on',
+        'that',
+        'the',
+        'to',
+        'was',
+        'were',
+        'will',
+        'with'
+    ];
     public static $inject = ['$http', '$q'];
 
     constructor(private $http,
                 private $q) {
     }
 
-    public searchFAQs(queryString:string){
+    private filterStopwords(query) {
+        query = query.toLowerCase();
+        var arr = query.split(' ');
+        arr = _.difference(arr, this.stopWords);
+        return arr.join(' ');
+
+    }
+
+    private createFuzzyQuery(query) {
+        var arr = query.split(' ');
+        var tmp = [];
+        for (var i = 0; i < arr.length; i++) {
+            tmp.push('*' + arr[i] + '*');
+        }
+        return tmp.join(' ');
+    }
+
+    public searchFAQs(queryString:string) {
         var url = this.getSearchUrl('faqs');
+        var filteredQuery = this.filterStopwords(queryString);
         var query = {
             "query": {
                 "multi_match": {
-                    "query": queryString,
+                    "query": filteredQuery,
                     "type": "cross_fields",
                     "fields": [
                         "question",
                         "answer"
-                    ]
+                    ],
+                    "cutoff_frequency": .01
                 }
             },
             "highlight": {
@@ -43,36 +90,57 @@ class SearchService {
                 }
             }
         };
-        return this.$http.post(url,query).then((results)=>{
+        return this.$http.post(url, query).then((results)=> {
             return results.data;
-        },(error)=>{
+        }, (error)=> {
             return error;
         });
     }
 
     public searchStations(queryString:string) {
         var url = this.getSearchUrl('stations');
+        var filteredQuery = this.filterStopwords(queryString);
         var query = {
             "query": {
-                "multi_match": {
-                    "query": queryString,
-                    "type": "cross_fields",
-                    "fields": [
-                        "id",
-                        "name",
-                        "agency",
-                        "city",
-                        "state",
-                        "postal"
-                    ]
+                "bool": {
+                    "should": [
+                        {
+                            "multi_match": {
+                                "query": filteredQuery,
+                                "type": "cross_fields",
+                                "fields": [
+                                    "id",
+                                    "name",
+                                    "agency",
+                                    "city",
+                                    "state",
+                                    "postal"
+                                ],
+                                "cutoff_frequency": .01
+                            }
+                        },
+                        {
+                            "prefix": {
+                                "name": filteredQuery
+                            }
+                        },
+                        {
+                            "prefix": {
+                                "name": queryString
+                            }
+                        }
+                    ],
+                    "minimum_should_match" : 1
                 }
+
             }
         };
 
-        return this.$http.post(url,query).then((results)=>{
+        return this.$http.post(url, query).then((results)=> {
             return results.data && results.data.hits ? results.data.hits : [];
         });
     }
+
     public getAllStations() {
         var url = this.getSearchUrl('stations');
         var query = {
