@@ -3,6 +3,13 @@
 export = MapToolboxController;
 
 class MapToolboxController {
+    public stationQuery;
+    public stationQueryResults;
+
+    public selectedParameters;
+
+    public searchOptions;
+
     public expanded;
     public showDetails;
     public clusters;
@@ -14,13 +21,19 @@ class MapToolboxController {
     public pollutantOptionsMap;
     public weatherOptions;
     //public count; // TODO: remove! Currently using to witness the woes of ng-repeat & ng-filter
-    public static $inject = ['$scope','$state', 'mapFactory', 'selectionService'];
+    public static $inject = ['$scope','$state', 'mapFactory', 'selectionService','SearchService'];
     constructor(
         private $scope,
         private $state,
         private mapFactory,
-        private selectionService
+        private selectionService,
+        private SearchService
     ) {
+
+        this.searchOptions = {updateOn: 'default blur', debounce: {'default': 250 , 'blur': 0}};
+        this.stationQueryResults = [];
+        this.selectedParameters = [];
+
         let mtc = this;
         mtc.showDetails = false;
         mtc.clusters = [];
@@ -33,8 +46,20 @@ class MapToolboxController {
         $scope.$parent.$watch('ctrl.selectedStation', function () {
             mtc.currentStation = mtc.selectionService.getCurrentStation();
         });
+    }
 
-        //this.count = 0; // TODO: remove! Currently using to witness the woes of ng-repeat & ng-filter
+    public searchStations() {
+        if(!this.stationQuery || this.stationQuery  == ''){
+            this.stationQueryResults = [];
+            return;
+        }
+
+        var self = this;
+        this.SearchService.searchStations(this.stationQuery).then((results)=>{
+            this.stationQueryResults = _.map(results.hits,(result:any)=>{
+                return result._source;
+            });
+        });
     }
 
     private getStationGroupFromSelectionService() {
@@ -223,5 +248,4 @@ class MapToolboxController {
             'OZONE': 5
         };
     }
-
 }

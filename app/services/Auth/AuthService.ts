@@ -30,7 +30,7 @@ class AuthService {
         var deferred = this.$q.defer();
 
         var self = this;
-        this.$http.post('/api/token', data, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).success(function (response) {
+        this.$http.post('/api/users/login', data, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}).success(function (response) {
             self.$localStorage.authorizationData = {token: response.access_token, userName: loginData.userName};
             self.authentication.isAuth = true;
             self.authentication.userName = loginData.userName;

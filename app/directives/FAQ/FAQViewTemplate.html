@@ -5,7 +5,8 @@
             <div class="search-bar col-md-4">
                 <input type="text"
                        placeholder="Search FAQs" class="search-box"
-                       ng-model-options="{debounce: 750}"
+                       update-on-enter
+                       ng-model-options="{updateOn: 'default blur', debounce:{default: 500, blur: 0}}"
                        ng-model="ctrl.search"
                        ng-change="ctrl.onSearchChange()"
                        ng-focus="ctrl.resultsVisible = true"

@@ -6,7 +6,7 @@ class ToolDirective implements ng.IDirective {
     public static htmlName = 'tool';
 
     public restrict = 'E';
-    public templateUrl = 'app/directives/Toolbox/MapToolTemplate.html';
+    public templateUrl = 'app/directives/Toolbox/ToolTemplate.html';
     public controller = ToolController;
     public controllerAs = 'ctrl';
     public bindToController = true;
@@ -18,7 +18,7 @@ class ToolDirective implements ng.IDirective {
 
     public compile = ($element,$attrs) => {
       if(!$attrs.border) {
-          $attrs.border = 'true';
+          $attrs.border = 'false';
       }
 
         return {};
