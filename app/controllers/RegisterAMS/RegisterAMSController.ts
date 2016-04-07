@@ -20,7 +20,7 @@ class RegisterAMSController {
         if (!this.formData.location) {
             this.formData.location = {lat: 0, lng: 0};
         }
-        if (this.formData.id == undefined || this.formData.private == undefined || this.formData.indoor == undefined) {
+        if (this.formData.id == undefined || this.formData.indoor == undefined) {
             return;
         }
         this.$http.post('api/stations/register', this.formData);
