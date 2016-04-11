@@ -119,7 +119,8 @@ module.exports = function (grunt) {
         concat:{
             less:{
                 src: 'app/assets/styles/**/*.less',
-                dest: 'app/assets/styles/app.less'            }
+                dest: 'app/assets/styles/app.less'
+            }
         },
         cssmin: {
             app: {

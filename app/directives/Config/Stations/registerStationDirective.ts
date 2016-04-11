@@ -12,7 +12,6 @@ class RegisterStationDirective implements ng.IDirective{
     public controllerAs = "ctrl";
     public bindToController = true;
 
-    
     public static create(){
         return new RegisterStationDirective();
     }

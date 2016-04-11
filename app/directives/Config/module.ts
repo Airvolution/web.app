@@ -2,7 +2,7 @@
 
 import StationsModule = require("./Stations/module");
 import UserModule = require('./User/module');
-import ConfigViewDirective = require("./configViewDIrective");
+import ConfigViewDirective = require("./configViewDirective");
 
 export = angular.module('app.directives.config',[
     StationsModule.name,
