@@ -1,4 +1,4 @@
-<main id="myStations" ng-controller="MyStationsController as ctrl">
+<main id="myStations">
     <div class="stations-wrapper col-md-8 col-md-offset-2">
         <h1>My Stations</h1>
 
@@ -10,9 +10,9 @@
                                      station-id="{{notif.stationId}}"></system-notification>
             </div>
         </div>
-        <div class="col-md-12 download-btn">
-            <button class="btn btn-default btn-sm">Download Configuration</button>
-        </div>
+        <!--<div class="col-md-12 download-btn">-->
+            <!--<button class="btn btn-default btn-sm">Download Configuration</button>-->
+        <!--</div>-->
         <div class="col-md-12 station-wrapper">
             <div ng-repeat="station in ctrl.stations">
                 <station station="station"></station>

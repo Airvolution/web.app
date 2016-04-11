@@ -10,7 +10,7 @@
         <div ui-view ></div>
     </div>
     <div ng-show="okAction || okText || cancelAction || cancelText" class="modal-footer">
+        <button ng-show="cancelAction || cancelText" class="btn btn-lg btn-default" ng-click="cancelAction ? cancelAction() : undefined">{{cancelText || "Cancel"}}</button>
         <button ng-show="okAction || okText" class="btn btn-lg btn-primary" ng-click="okAction ? okAction() : undefined">{{okText || "Submit"}}</button>
-        <button ng-show="cancelAction || cancelText" class="btn btn-lg btn-info" ng-click="cancelAction ? cancelAction() : undefined">{{cancelText || "Cancel"}}</button>
     </div>
 </div>

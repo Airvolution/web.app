@@ -14,6 +14,33 @@ class APIService {
         private $timeout
     ) {}
 
+    public getUserStations(){
+        var deferred = this.$q.defer();
+        var self = this;
+        var onError = (error)=>{deferred.reject(error);};
+        return this.$http.get('api/users/stations').then((response)=>{
+            return response.data;
+        },onError);
+    }
+
+    public getStation(id){
+        var deferred = this.$q.defer();
+        var self = this;
+        var onError = (error)=>{deferred.reject(error);};
+        return this.$http.get('api/stations/'+id).then((response)=>{
+            return response.data;
+        },onError);
+    }
+
+    public updateStation(station){
+        var deferred = this.$q.defer();
+        var self = this;
+        var onError = (error)=>{deferred.reject(error);};
+        return this.$http.put('api/stations/'+station.id,station).then((response)=>{
+            return response.data;
+        },onError);
+    }
+
     public getDailies(days) {
         var deferred = this.$q.defer();
         var self = this;

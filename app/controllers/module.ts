@@ -1,25 +1,15 @@
 ///<reference path='../../typings/tsd.d.ts' />
-import RegisterAMSController = require('./RegisterAMS/RegisterAMSController');
-import MyProfileController = require('./MyProfile/MyProfileController');
-import MyStationsController = require('./MyStations/MyStationsController');
 import NVD3Controller = require('./NVD3/NVD3Controller');
 import AQIController = require('./AQI/AQIController');
 import HeaderController = require('./Index/HeaderController');
 import AppController = require('./Index/AppController');
-import UserRegistrationController = require("./MyProfile/UserRegistrationController");
-import PreferencesController = require('./Preferences/PreferencesController');
 import AboutUsController = require('./Footer/AboutUsController');
 import ErrorModalController = require("./Modal/ErrorModalController");
 
 export = angular.module('controllers', [])
-            .controller(RegisterAMSController.name, RegisterAMSController)
-            .controller(MyProfileController.name, MyProfileController)
-            .controller(MyStationsController.name, MyStationsController)
             .controller(NVD3Controller.name, NVD3Controller)
             .controller(AQIController.name, AQIController)
             .controller(HeaderController.name, HeaderController)
             .controller(AppController.name, AppController)
-            .controller(UserRegistrationController.name, UserRegistrationController)
-            .controller(PreferencesController.name, PreferencesController)
             .controller(AboutUsController.name, AboutUsController)
             .controller(ErrorModalController.name, ErrorModalController);

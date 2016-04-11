@@ -1,9 +1,8 @@
-/// <reference path="../../../typings/tsd.d.ts" />
+/// <reference path="../../../../typings/tsd.d.ts" />
 
-export = UserRegistrationController;
+export = UserLoginRegisterController;
 
-class UserRegistrationController {
-    public static name = "UserRegistrationController";
+class UserLoginRegisterController {
     public message;
     public static $inject = ['AuthService','$scope'];
 

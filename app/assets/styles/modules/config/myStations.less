@@ -81,7 +81,6 @@
 }
 
 .station-wrapper {
-  max-height: 40em;
   overflow-y: auto;
 }
 .station {
@@ -112,23 +111,17 @@
       }
     }
 
+
+
     .station-header {
       font-size: 1.25em;
       padding: .5em 2em;
-
-      .station-nickname-none {
-        color: @medium-light-gray;
-      }
     }
 
     .station-update {
       display: flex;
       align-items: center;
       padding: .5em 0;
-
-      .update-buttons {
-        text-align: right;
-      }
     }
   }
   .expander {
@@ -138,5 +131,11 @@
     &:hover {
       background-color: @medium-light-gray;
     }
+  }
+}
+
+.panel-body {
+  .btn {
+    margin: .5em;
   }
 }
