@@ -1,0 +1,76 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <div class="panel-title row">
+            <span class="station-name col-md-3">Station - {{ctrl.station.id}}</span>
+              <span class="col-md-3" ng-show="ctrl.station.name">{{ctrl.station.name}}</span>
+                <small class="col-md-3" ng-hide="ctrl.station.name">No Station Name</small>
+            <span class="station-location col-md-5"><span
+                    ng-show="ctrl.station.city">{{ctrl.station.city}},</span> <span ng-show="ctrl.station.state">{{ctrl.station.state}}</span></span>
+            <small class="station-location col-md-5" ng-hide="ctrl.station.city || ctrl.station.state">Location Unknown</small>
+            <div class="col-md-1 ams-refresh" ng-click="ctrl.onUpdate()">
+                <i ng-class="{'fa-spin':ctrl.updating} " class="fa fa-rotate-right"></i>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form name="ctrl.updateForm" class="station-body" ng-hide="ctrl.collapsed" ng-submit="ctrl.onSubmit()">
+            <input type="hidden" name="id" value="{{ctrl.station.id}}" ng-model="ctrl.formStation.id">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="pull-left">Station Name</label>
+                        <input type="text" class="form-control" placeholder="Station Name" ng-model="ctrl.formStation.name">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="pull-left">Agency</label>
+                        <input type="text" class="form-control" placeholder="Agency" ng-model="ctrl.formStation.agency">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label class="pull-left">Station Location</label>
+                    </div>
+                    <div class="radio  col-md-12">
+                        <label class="pull-left">
+                            <input type="radio" name="indoor" ng-value="true" ng-model="ctrl.formStation.indoor">
+                            Indoor
+                        </label>
+                        </div>
+                    <div class="radio col-md-12">
+                        <label class="pull-left">
+                            <input type="radio" name="indoor" ng-value="false" ng-model="ctrl.formStation.indoor">
+                            Outdoor
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class=" col-md-12">
+                    <div class="form-group">
+                        <label class="pull-left">Purpose</label>
+                        <textarea class="form-control" ng-model="ctrl.formStation.purpose"
+                                  style="resize: vertical;"
+                                  placeholder="Station Purpose">{{ctrl.station.purpose}}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class=" update-buttons col-md-12 ">
+                    <button class="btn btn-info btn-lg pull-left" ng-click="ctrl.calibrate()">Calibrate Station</button>
+                    <button class="btn btn-primary btn-lg pull-right" type="submit">Save</button>
+                    <button class="btn btn-default btn-lg pull-right">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="expander panel-footer" ng-click="ctrl.collapsed = !ctrl.collapsed">
+        <i ng-class="{'fa-angle-double-down': ctrl.collapsed, 'fa-angle-double-up': !ctrl.collapsed}"
+           class="fa fa-angle-double-down"></i>
+    </div>
+</div>

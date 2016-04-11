@@ -1,11 +1,9 @@
-///<referecnce path='../../typings/tsd.d.ts'/>
+///<referecnce path='../../../../typings/tsd.d.ts'/>
 
-// import Globals = require('../../Globals');
-export = RegisterAMSController;
+export = RegisterStationController;
 
-class RegisterAMSController {
+class RegisterStationController {
 
-    public static name = 'RegisterAMSController';
     public formData: any = {};
     public static $inject = ['$http'];
     constructor(private $http) {}

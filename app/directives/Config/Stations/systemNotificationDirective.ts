@@ -1,10 +1,10 @@
-///<reference path='../../../typings/tsd.d.ts'/>
+///<reference path='../../../../typings/tsd.d.ts'/>
 import SystemNotificationController = require('./SystemNotificationController');
 export = SystemNotificationDirective;
 
 class SystemNotificationDirective implements ng.IDirective {
     public static htmlName = 'systemNotification';
-    public templateUrl = 'app/templates/systemNotification.html';
+    public templateUrl = 'app/directives/Config/Stations/systemNotificationTemplate.html';
     public restrict = 'E';
     public controller = SystemNotificationController;
     public controllerAs = 'ctrl';

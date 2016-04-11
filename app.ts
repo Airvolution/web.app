@@ -69,8 +69,7 @@ angular.module('app', [
         states.push({
             name: 'modal.login',
             url: 'login/',
-            templateUrl: 'app/templates/loginTemplate.html',
-            controller: 'UserRegistrationController as ctrl'
+            template: '<user-login></user-login>'
         });
         states.push({
             name: 'modal.error',
@@ -78,6 +77,12 @@ angular.module('app', [
             templateUrl: 'app/templates/errorModalTemplate.html',
             controller: 'ErrorModalController as ctrl'
         });
+        states.push({
+            name: "modal.calibrate",
+            url: 'calibrate/:id',
+            template: '<calibrate-station></calibrate-station>'
+        });
+
         states.push({
             name: 'app',
             url: '/',
@@ -94,32 +99,32 @@ angular.module('app', [
             name: 'app.config',
             url: 'config/',
             deepStateRedirect: {default: defaultConfigState},
-            templateUrl: 'app/templates/configTemplate.html',
+            template: '<config-view></config-view>',
             requireAuth: true
         });
 
         states.push({
             name: 'app.config.profile',
             url: 'profile/',
-            templateUrl: 'app/templates/myProfile.html',
+            template: '<my-profile></my-profile>',
             requireAuth: true
         });
         states.push({
             name: 'app.config.stations',
             url: 'stations/',
-            templateUrl: 'app/templates/myStations.html',
+            template: '<my-stations></my-stations>',
             requireAuth: true
         });
         states.push({
             name: 'app.config.register',
             url: 'register/',
-            templateUrl: 'app/templates/registerStation.html',
+            template: '<register-station></register-station>',
             requireAuth: true
         });
         states.push({
             name: 'app.config.preferences',
             url: 'preferences/',
-            templateUrl: 'app/templates/userPreferences.html',
+            template: '<user-preferences></user-preferences>',
             requireAuth: true
         });
         states.push({
@@ -139,13 +144,9 @@ angular.module('app', [
             template: '<compare-view></compare-view>'
         });
         states.push({
-            name: 'app.indoor',
-            url: 'indoor/',
-            templateUrl: 'app/templates/indoor.html'
-        });
-        states.push({
-            name: 'error',
-            templateUrl: 'app/templates/404.html'
+            name: 'app.faq',
+            url: 'faq?id',
+            template: '<faq-view></faq-view>'
         });
         states.push({
             name: 'app.about',
@@ -157,11 +158,7 @@ angular.module('app', [
             url: 'contact/',
             templateUrl: 'app/templates/contactUs.html'
         });
-        states.push({
-            name: 'app.faq',
-            url: 'faq?id',
-            template: '<faq-view></faq-view>'
-        });
+
         states.push({
             name: 'app.disclaimer',
             url: 'disclaimer/',
@@ -175,8 +172,6 @@ angular.module('app', [
     })
     .run(['AuthService', (authService)=> {
         authService.fillAuthData();
-
-
     }])
     .run(['$rootScope', '$state', 'AuthService', ($rootScope, $state, authService)=> {
         //Default Background state for modals, then we can deeplink them without breaking the app
