@@ -10,10 +10,11 @@ class AuthService {
         userName: ''
     };
 
-    public static $inject = ['$http', '$q', '$localStorage'];
+    public static $inject = ['$http', '$q', '$localStorage', 'preferencesService'];
     constructor(private $http,
                 private $q,
-                private $localStorage) {
+                private $localStorage,
+                private preferencesService) {
     }
 
     public saveRegistration = function (registration) {
@@ -34,8 +35,8 @@ class AuthService {
             self.$localStorage.authorizationData = {token: response.access_token, userName: loginData.userName};
             self.authentication.isAuth = true;
             self.authentication.userName = loginData.userName;
+            self.preferencesService.loadUserDefaults();
             deferred.resolve(response);
-
         }).error(function (err, status) {
             self.logOut();
             deferred.reject(err);
@@ -49,7 +50,7 @@ class AuthService {
         delete this.$localStorage.authorizationData;
         this.authentication.isAuth = false;
         this.authentication.userName = '';
-
+        this.preferencesService.resetUserDefaults();
     };
 
     public fillAuthData = function () {
@@ -57,9 +58,10 @@ class AuthService {
         if (authData) {
             this.authentication.isAuth = true;
             this.authentication.userName = authData.userName;
+            this.preferencesService.loadUserDefaults();
+        } else {
+            this.preferencesService.resetUserDefaults();
         }
-
     };
-
 }
 

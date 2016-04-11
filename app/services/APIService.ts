@@ -14,6 +14,14 @@ class APIService {
         private $timeout
     ) {}
 
+    public getUserPreferences() {
+        var deferred = this.$q.defer();
+        let onError = (error) => { deferred.reject(error); };
+        return this.$http.get('api/users/preferences').then((response) => {
+            return response.data;
+        }, onError);
+    }
+
     public getUserStations(){
         var deferred = this.$q.defer();
         var self = this;
