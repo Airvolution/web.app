@@ -30,8 +30,6 @@ class UserPreferencesController {
         private SearchService,
         private preferencesService
     ) {
-        $scope.submit = this.onSubmit;
-
         this.searchOptions = { updateOn: 'default blur', debounce: {'default': 250 , 'blur': 0} };
         this.stationQueryResults = [];
         this.selectedParameters = [];
