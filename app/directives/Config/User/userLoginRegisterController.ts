@@ -3,33 +3,42 @@
 export = UserLoginRegisterController;
 
 class UserLoginRegisterController {
-    public message;
+    public loginForm;
+    public loginData;
+    public registrationForm;
+    public registrationData;
+
+    public modelOptions;
+    public alert;
+    public alertTimeout;
+
     public static $inject = ['AuthService','$scope'];
 
     constructor(private AuthService,
                 private $scope) {
-        //$scope.configureModal('Welcome!','Submit',this.login,"Cancel",$scope.closeModal);
         $scope.configureModal('Welcome!');
-        $scope.setAlert('');
-        $scope.signUp = this.signUp;
-        $scope.login = this.login;
+
+        this.registrationData = {
+            email: "",
+            password: "",
+            confirmPassword: ""
+        };
+
+        this.loginData = {
+            userName: "",
+            password: ""
+        };
+        this.alert = undefined;
+        this.alertTimeout = 2000;
+        this.modelOptions = {updateOn: 'default blur', debounce: {default: 250, blur: 0}};
     }
 
     public savedSuccessfully = false;
 
-    public registration = {
-        email: "",
-        password: "",
-        confirmPassword: ""
-    };
-
-    public signUp = ()=> {
+    public signUp(){
         var self = this;
-        this.AuthService.saveRegistration(this.registration).then((response)=> {
-
-                self.savedSuccessfully = true;
-                self.message = "You have successfully registered.";
-                self.$scope.closeModal();
+        this.AuthService.saveRegistration(this.registrationData).then((response)=> {
+                self.alert = {type: 'success', message: 'You have successfully registered', isRegistration: true};
             },
             (response)=> {
                 var errors = [];
@@ -38,25 +47,33 @@ class UserLoginRegisterController {
                         errors.push(response.data.modelState[key][i]);
                     }
                 }
-                self.message = "Failed to register user due to:" + errors.join(' ');
-                self.$scope.closeModal();
+                self.alert = {type: 'danger', message: "Failed to register user due to:" + errors.join(' ')};
             });
     };
 
-    public loginData = {
-        userName: "",
-        password: ""
-    };
 
-    public login = ()=> {
+
+    public login(){
         var self = this;
         this.AuthService.login(this.loginData).then((response)=> {
-                self.message = "You have sucessfully logged in.";
-                self.$scope.closeModal();
+                self.alert = {type: 'success', message: "Login successful"};
             },
             (err)=> {
-                self.message = err.error_description;
-                self.$scope.closeModal();
+                self.alert = {type: 'danger', message: err.error_description};
             });
     };
+
+    public onAlertClose(alert){
+        if(alert.type == 'success'){
+            this.alert = undefined;
+            if(alert.isRegistration){
+                this.loginData.password = this.registrationData.password;
+                this.loginData.userName = this.registrationData.email;
+                this.login();
+            }
+            this.$scope.closeModal();
+        }else{
+            this.alert = undefined;
+        }
+    }
 }

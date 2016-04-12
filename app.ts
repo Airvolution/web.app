@@ -83,6 +83,21 @@ angular.module('app', [
             url: 'calibrate/:id',
             template: '<calibrate-station></calibrate-station>'
         });
+        states.push({
+            name: 'modal.resetPassword',
+            url: 'password/reset',
+            template: '<user-reset-password></user-reset-password>'
+        });
+        states.push({
+            name: 'modal.resetComplete',
+            url: 'password/reset/complete',
+            template: '<password-reset-modal></password-reset-modal>'
+        });
+        states.push({
+            name: 'modal.emailConfirmed',
+            url: 'email/confirmed',
+            template: "<email-confirmed-modal></email-confirmed-modal>"
+        });
 
         states.push({
             name: 'app',

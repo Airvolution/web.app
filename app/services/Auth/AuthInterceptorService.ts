@@ -22,11 +22,4 @@ class AuthInterceptorService {
 
         return config;
     };
-
-    public responseError = (rejection)=> {
-        if (rejection.status === 401) {
-            this.$location.path('/modal/login');
-        }
-        return this.$q.reject(rejection);
-    };
 }

@@ -48,10 +48,12 @@ class MyProfileController {
 
     public resetPassword() {
         var self = this;
-        this.APIService.resetUserPassword(this.passwordFormData.password).then((result)=> {
+        this.APIService.resetUserPassword(this.passwordFormData.currentPassword, this.passwordFormData.password).then((result)=> {
             this.passwordFormData = undefined;
             if (result) {
                 self.passwordAlert = {type: 'success', message: 'Your password has been successfully updated.'};
+                self.passwordFormData = undefined;
+                self.passwordForm.$setPristine();
             } else {
                 self.passwordAlert = {type: 'danger', message: 'Sorry, we were unable to update your password.'};
             }

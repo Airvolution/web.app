@@ -33,11 +33,22 @@ class APIService {
         },onError);
     }
 
-    public resetUserPassword(password){
+    public resetUserPassword(current, password){
         var deferred = this.$q.defer();
-        var self = this;
         var onError = (error)=>{deferred.reject(error);};
-        return this.$http.post('api/users/current/password',{password:password}).then((response)=>{
+        return this.$http.post('api/users/current/password',{currentPassword: current, password:password}).then((response)=>{
+            if(response.status == 200){
+                return true;
+            }else {
+                return false;
+            }
+        },onError);
+    }
+    public sendPasswordResetEmail(email){
+        var deferred = this.$q.defer();
+        var onError = (error)=>{
+            deferred.reject(error);};
+        return this.$http.get('api/users/password/reset?email='+email).then((response)=>{
             if(response.status == 200){
                 return true;
             }else {
