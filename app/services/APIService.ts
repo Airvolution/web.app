@@ -218,4 +218,22 @@ class APIService {
 
         return deferred.promise;
     }
+
+    public PostContactUsEmail(email) {
+        var deferred = this.$q.defer();
+
+        let self = this;
+        let url = "api/contactUs";
+
+        let data = JSON.stringify(email);
+
+        let onError = (error) => {
+            deferred.reject(error);
+        };
+
+        return this.$http.post(url, data)
+            .then((response) => {
+                return response.data;
+            }, onError);
+    }
 }

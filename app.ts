@@ -156,7 +156,7 @@ angular.module('app', [
         states.push({
             name: 'app.contact',
             url: 'contact/',
-            templateUrl: 'app/templates/contactUs.html'
+            templateUrl: 'app/directives/ContactUs/ContactUsTemplate.html'
         });
 
         states.push({

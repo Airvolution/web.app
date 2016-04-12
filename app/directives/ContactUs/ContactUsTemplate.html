@@ -8,8 +8,8 @@
                     <input class="input-right" type='text' id='name' value=''/>
                 </div>
                 <div class='col-md-12'>
-                    <label class="label-left" for='email'>Email</label>
-                    <input class="input-right" type='text' id='email' value=''/>
+                    <label class="label-left" for='emailAddress'>Email</label>
+                    <input class="input-right" type='text' id='emailAddress' value=''/>
                 </div>
                 <div class='col-md-12'>
                     <label class="label-left" for='subject'>Subject</label>
@@ -20,7 +20,8 @@
                     <textarea class="textarea-right" id='message'></textarea>
                 </div>
                 <div class='col-md-12'>
-                    <input class='btn btn-primary' type='submit' name='$formSubmit' value='Submit'/>
+                    <input class='btn btn-primary' type='submit' name='$formSubmit' ng-click="ctrl.SendEmail()" value='Submit'/>
+                    <button class="btn" ng-click="ctrl.SendEmail()" >Submit</button>
                 </div>
             </div>
         </form>
