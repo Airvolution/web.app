@@ -22,6 +22,15 @@ class APIService {
         }, onError);
     }
 
+    public updateUserPreferences(preferences) {
+        var deferred = this.$q.defer();
+        let data = JSON.stringify(preferences);
+        let onError = (error) => { deferred.reject(error); };
+        return this.$http.post('api/users/preferences', data).then((response) => {
+            return response.data;
+        }, onError);
+    }
+
     public getUserStations(){
         var deferred = this.$q.defer();
         var self = this;
