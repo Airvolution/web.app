@@ -35,6 +35,8 @@ class AlmanacWidgetDirective implements ng.IDirective {
                 return 2;
             case 'large':
                 return 3;
+            case 'xl':
+                return 4;
             default:
                 return 1;
         }
