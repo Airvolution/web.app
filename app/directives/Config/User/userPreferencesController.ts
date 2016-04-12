@@ -23,11 +23,10 @@ class UserPreferencesController {
     public selectedParameters;
     public preferences;
 
-    public static $inject = ['$scope', '$log', '$filter', 'SearchService', 'preferencesService'];
+    public static $inject = ['$scope', '$log', 'SearchService', 'preferencesService'];
     constructor(
         private $scope,
         private $log,
-        private $filter,
         private SearchService,
         private preferencesService
     ) {
