@@ -5,9 +5,8 @@ var url = require('url');
 
 //var apiDest = 'localhost:2307';
 ///var apiDest = 'localhost:2307';
-var apiDest = 'dev.air.eng.utah.edu';
+//var apiDest = 'dev.air.eng.utah.edu';
 var searchDest = 'dev.air.eng.utah.edu';
-//var apiDest = 'winhost:1243';
 app.use('/api',proxy(apiDest,{
     forwardPath: function(req, res){
         var forward = '/api'+url.parse(req.url).path;
