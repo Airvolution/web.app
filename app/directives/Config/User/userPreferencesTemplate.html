@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="list-group" ng-if="ctrl.stationQueryResults.length > 0">
-                    <div class="list-group-item" ng-repeat="marker in ctrl.stationQueryResults track by marker.name">
+                    <div class="list-group-item" ng-repeat="marker in ctrl.stationQueryResults track by marker.id">
                         <div class="radio">
                             <label>
                                 <input type="radio"
