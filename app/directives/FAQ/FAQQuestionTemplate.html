@@ -1,2 +1,6 @@
-<h4 id="question{{ctrl.question.id}}" class="">{{::ctrl.question.question}}</h4>
-<p class="indent">{{::ctrl.question.answer}}</p>
+<div ng-click="ctrl.toggleChev()" data-toggle="collapse" data-target="#{{::ctrl.question.id}}" id="faq-question-container">
+    <img id="img_{{ctrl.question.id}}" ng-src="{{ctrl.chev == 'UP' && 'app/assets/images/chev-up.png' || 'app/assets/images/chev-down.png'}}">
+    <h4 id="question{{ctrl.question.id}}" class="">{{::ctrl.question.question}}</h4>
+</div>
+
+<div id="{{::ctrl.question.id}}" class="well collapse">{{::ctrl.question.answer}}</div>
