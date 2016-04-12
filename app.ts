@@ -22,7 +22,8 @@ angular.module('app', [
         'ngAnimate',
         'ngSanitize',
         'angularMoment',
-        'ngMaterial'
+        'ngMaterial',
+        'ngMessages'
     ])
     .config(($stateProvider, $urlRouterProvider, $httpProvider) => {
 
@@ -151,19 +152,9 @@ angular.module('app', [
         states.push({
             name: 'app.about',
             url: 'about/',
-            templateUrl: 'app/templates/aboutUs.html'
-        });
-        states.push({
-            name: 'app.contact',
-            url: 'contact/',
-            templateUrl: 'app/directives/ContactUs/ContactUsTemplate.html'
+            template: '<about></about>'
         });
 
-        states.push({
-            name: 'app.disclaimer',
-            url: 'disclaimer/',
-            templateUrl: 'app/templates/disclaimer.html'
-        });
         angular.forEach(states, (state)=> {
             $stateProvider.state(state);
         });

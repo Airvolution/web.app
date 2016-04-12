@@ -231,7 +231,7 @@ class APIService {
             deferred.reject(error);
         };
 
-        return this.$http.post(url, data)
+        return self.$http.post(url, data)
             .then((response) => {
                 return response.data;
             }, onError);
