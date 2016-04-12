@@ -18,7 +18,7 @@ class UserLoginRegisterController {
     public savedSuccessfully = false;
 
     public registration = {
-        userName: "",
+        email: "",
         password: "",
         confirmPassword: ""
     };

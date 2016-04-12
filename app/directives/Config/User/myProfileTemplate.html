@@ -2,41 +2,114 @@
     <h1 class="col-md-8 col-md-offset-3">My Profile</h1>
 
     <div>
-        <div class="initials col-md-offset-3 col-lg-1">
+        <div class="initials col-md-offset-3 col-md-1">
                     <span class="fa-stack fa-4x">
                         <i class="fa fa-circle fa-stack-2x initialsBorder"></i>
                         <i class="fa fa-circle fa-stack-1x initialsBG"></i>
                         <span class="fa-stack-1x">JM</span>
                     </span>
-            <!--<div class="col-md-12">-->
-            <button class="btn btn-sm btn-default">Upload Photo</button>
-            <!--</div>-->
         </div>
 
-        <form class="col-md-6" id="profileForm">
-            <div class="form-group col-md-5">
-                <input type="text" class="form-control" id="firstName" placeholder="First Name"/>
-            </div>
-            <div class="form-group col-md-2">
-                <input type="text" class="form-control" id="initial" placeholder="I">
-            </div>
-            <div class="form-group col-md-7">
-                <input type="text" class="form-control" id="lastName" placeholder="Last Name">
+        <form name="ctrl.userForm" ng-submit="ctrl.onSubmit()" class="col-md-6" novalidate>
+            <uib-alert class="col-md-8" ng-if="ctrl.profileAlert" type="{{ctrl.profileAlert.type}}"
+                       dismiss-on-timeout="{{ctrl.alertTimeout}}" close="ctrl.onAlertClose(ctrl.profileAlert)">
+                {{ctrl.profileAlert.message}}
+            </uib-alert>
+            <div class="form-group col-md-8">
+                <label class="pull-left">First Name</label>
+                <input class="form-control"
+                       type="text"
+                       placeholder="First Name"
+                       name="firstName"
+                       ng-model="ctrl.userFormData.firstName"
+                       ng-model-options="ctrl.modelOptions"/>
             </div>
             <div class="form-group col-md-8">
-                <input type="text" class="form-control" id="username" placeholder="Username">
+                <label class="pull-left">Last Name</label>
+                <input class="form-control"
+                       type="text"
+                       placeholder="Last Name"
+                       name="lastName"
+                       ng-model="ctrl.userFormData.lastName"
+                       ng-model-options="ctrl.modelOptions">
             </div>
             <div class="form-group col-md-8">
-                <input type="text" class="form-control" id="email" placeholder="Email">
+                <label class="pull-left">Email</label>
+                <div class="col-md-12" ng-show="ctrl.userForm.email.$touched">
+                    <span class="pull-left">Warning: updating your email will change your username as well</span></div>
+                <input class="form-control"
+                       type="email"
+                       placeholder="Email"
+                       name="email"
+                       ng-model="ctrl.userFormData.email"
+                       ng-model-options="ctrl.modelOptions"
+                       required>
+                <div class="col-md-12" ng-messages="ctrl.userForm.email.$error" style="color:red" role="alert"
+                     ng-if="ctrl.userForm.email.$dirty">
+                    <div class="pull-left" ng-message="required">This field is required</div>
+                    <div class="pull-left" ng-message="email">This email is not valid</div>
+                </div>
+            </div>
+            <div class="form-group col-md-8 submitButton">
+                <button type="submit" class="btn btn-primary pull-right" ng-disabled="!ctrl.userForm.$valid || ctrl.userForm.$pristine">Update
+                </button>
+            </div>
+        </form>
+    </div>
+    <h2 class="col-md-8 col-md-offset-3">Reset Password</h2>
+    <div>
+        <div class="col-md-offset-3 col-md-1"></div>
+        <form name="ctrl.passwordForm" ng-submit="ctrl.resetPassword()" class="col-md-6" novalidate>
+            <uib-alert class="col-md-8" ng-if="ctrl.passwordAlert" type="{{ctrl.passwordAlert.type}}"
+                       dismiss-on-timeout="{{ctrl.alertTimeout}}" close="ctrl.onAlertClose(ctrl.passwordAlert)">
+                {{ctrl.passwordAlert.message}}
+            </uib-alert>
+            <div class="form-group col-md-8">
+                <label class="pull-left">Current Password</label>
+                <input class="form-control"
+                       type="password"
+                       placeholder="Current Password"
+                       ng-model="ctrl.passwordFormData.currentPassword"
+                       ng-model-options="ctrl.modelOptions"
+                       required>
+                <div class="col-md-12" ng-messages="ctrl.passwordForm.password.$error" style="color:red"
+                     role="alert" ng-if="ctrl.passwordForm.confirmPassword.$dirty">
+                    <div class="pull-left" ng-message="required">This field is required</div>
+                </div>
             </div>
             <div class="form-group col-md-8">
-                <input type="password" class="form-control" id="newPass" placeholder="Reset Password">
+                <label class="pull-left">New Password</label>
+                <input class="form-control"
+                       type="password"
+                       placeholder="New Password"
+                       ng-model="ctrl.passwordFormData.password"
+                       ng-model-options="ctrl.modelOptions"
+                       required>
+                <div class="col-md-12" ng-messages="ctrl.passwordForm.password.$error" style="color:red"
+                     role="alert" ng-if="ctrl.passwordForm.confirmPassword.$dirty">
+                    <div class="pull-left" ng-message="required">This field is required</div>
+                </div>
             </div>
             <div class="form-group col-md-8">
-                <input type="password" class="form-control" id="confirmPass" placeholder="Confirm Password">
+                <label class="pull-left">Confirm Password</label>
+                <input class="form-control"
+                       type="password"
+                       placeholder="Confirm Password"
+                       name="confirmPassword"
+                       ng-model="ctrl.passwordFormData.confirmPassword"
+                       ng-model-options="ctrl.modelOptions"
+                       model-matches="ctrl.passwordFormData.password"
+                       required>
+                <div class="col-md-12" ng-messages="ctrl.passwordForm.confirmPassword.$error" style="color:red"
+                     role="alert" ng-if="ctrl.passwordForm.confirmPassword.$dirty">
+                    <div class="pull-left" ng-message="required">This field is required</div>
+                    <div class="pull-left" ng-message="matches">The two passwords do not match</div>
+                </div>
             </div>
-            <div class="form-group col-md-2 col-md-offset-1 submitButton">
-                <button type="submit" class="btn btn-primary">Update</button>
+            <div class="form-group col-md-8">
+                <button type="submit" class="btn btn-primary pull-right" ng-disabled="!ctrl.passwordForm.$valid || ctrl.passwordForm.$pristine">Reset
+                    Password
+                </button>
             </div>
         </form>
     </div>

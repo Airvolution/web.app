@@ -25,7 +25,7 @@ class AuthInterceptorService {
 
     public responseError = (rejection)=> {
         if (rejection.status === 401) {
-            this.$location.path('/login');
+            this.$location.path('/modal/login');
         }
         return this.$q.reject(rejection);
     };

@@ -22,7 +22,8 @@ angular.module('app', [
         'ngAnimate',
         'ngSanitize',
         'angularMoment',
-        'ngMaterial'
+        'ngMaterial',
+        'ngMessages'
     ])
     .config(($stateProvider, $urlRouterProvider, $httpProvider) => {
 
