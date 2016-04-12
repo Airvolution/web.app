@@ -10,10 +10,9 @@ class PreferencesService {
     private defaultStationId;
     private defaultParameters;
 
-    public static $inject = ['$q', '$localStorage', '$log', 'APIService'];
+    public static $inject = ['$q', '$log', 'APIService'];
     constructor (
         private $q,
-        private $localStorage,
         private $log,
         private APIService
     ) {
