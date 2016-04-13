@@ -51,8 +51,6 @@ class UserLoginRegisterController {
             });
     };
 
-
-
     public login(){
         var self = this;
         this.AuthService.login(this.loginData).then((response)=> {

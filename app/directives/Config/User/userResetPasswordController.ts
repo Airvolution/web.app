@@ -28,7 +28,7 @@ class UserResetPasswordController {
             }else{
                 this.alert = {type: 'danger',message: 'Unfortunately, we were unable to send the password reset email. Please try again later.'};
             }
-        })
+        });
     }
 
     public onAlertClose(alert){
