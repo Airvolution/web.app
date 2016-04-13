@@ -42,10 +42,11 @@ class TrendsWidgetController {
                 xAxis: {
                     tickFormat: function (d) {
                         return d3.time.format('%m/%d')(new Date(d))
-                    }
+                    },
+                    showMinMax: false
                 },
                 xDomain: [this.then, this.now],
-                yDomain:[0,200],
+                yDomain: [0, 200],
                 yAxis: {
                     axisLabel: 'AQI',
                     axisLabelDistance: -10,
@@ -57,46 +58,47 @@ class TrendsWidgetController {
                     keyFormatter: function (d) {
                         return d3.time.format('%x')(new Date(d));
                     }
-                },
-                zoom: {
-                    enabled: false
                 }
             }
         };
         var self = this;
-        var unregisterDailies = $scope.$watch('dailies',(val)=>{
+        var unregisterDailies = $scope.$watch('dailies', (val)=> {
             self.getPlotData(val);
         });
-
+        this.plotData = [];
         this.getPlotData($scope.dailies);
 
-        $scope.$on("$destroy",()=>{
+        $scope.$on("$destroy", ()=> {
             unregisterDailies();
         });
     }
 
     public getPlotData(dailies) {
-        if(!this.$scope.dailies){
+        if (!this.$scope.dailies) {
             this.loading = true;
             return;
         }
-        var tmp = [];
-        var self = this;
-        _.each(dailies.slice(0,45),(daily:any)=>{
-            var timestamp = daily.date ? new Date(daily.date).getTime() : undefined;
-            if(timestamp && (timestamp < self.now && timestamp > self.then)){
-                tmp.push([timestamp, daily.maxAQI]);
-            }else{
-                tmp.push([undefined, undefined]);
-            }
 
-        });
-        this.plotData = [{
-            key: "Quantity",
+        var self = this;
+        var tmp = dailies.slice(0, 45);
+        while (tmp.length < 45) {
+            tmp.push({});
+        } //pad the array
+        var data = {
+            "key":"AQI",
             bar: true,
-            values: tmp
-        }];
+            values: []
+        };
+        _.each(tmp, (daily:any)=> {
+            if(daily.date){
+                data.values.push([new Date(daily.date), daily.maxAQI]);
+            }else{
+                data.values.push([undefined, undefined]);
+            }
+        });
+        self.plotData = [data];
         this.loading = false;
         return;
     }
+
 }
