@@ -8,12 +8,12 @@ class PreferencesService {
     private defaultPreferences;
     private userPreferences;
 
-    public static $inject = ['$scope', '$q', '$log', 'APIService'];
+    public static $inject = ['$q', '$log', 'APIService', 'notificationService'];
 
-    constructor(private $scope,
-                private $q,
+    constructor(private $q,
                 private $log,
-                private APIService
+                private APIService,
+                private notificationService
     ) {
         this.defaultPreferences = {
             defaultMapMode: 'LIGHT',
@@ -22,12 +22,8 @@ class PreferencesService {
             defaultParameters: []
         };
 
-        var unregisterLogin  = $scope.$on('UserLogin',  this.loadUserDefaults);
-        var unregisterLogout = $scope.$on('UserLogout', this.resetUserDefaults);
-        $scope.$on('$destroy',() => {
-            unregisterLogin();
-            unregisterLogout();
-        });
+        this.notificationService.subscribe(undefined, 'UserLogin', this.loadUserDefaults);
+        this.notificationService.subscribe(undefined, 'UserLogout', this.resetUserDefaults);
     }
 
     public loadUserDefaults() {

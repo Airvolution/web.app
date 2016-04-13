@@ -10,11 +10,12 @@ class AuthService {
         userName: ''
     };
 
-    public static $inject = ['$http', '$q', '$localStorage', '$rootScope'];
+    public static $inject = ['$http', '$q', '$localStorage', '$rootScope', 'notificationService'];
     constructor(private $http,
                 private $q,
                 private $localStorage,
-                private $rootScope) {
+                private $rootScope,
+                private notificationService) {
     }
 
     public saveRegistration = function (registration) {
@@ -35,7 +36,7 @@ class AuthService {
             self.$localStorage.authorizationData = {token: response.access_token, userName: loginData.userName};
             self.authentication.isAuth = true;
             self.authentication.userName = loginData.userName;
-            self.$rootScope.$broadcast('UserLogin');
+            self.notificationService.notify('UserLogin');
             deferred.resolve(response);
         }).error(function (err, status) {
             self.logOut();
@@ -50,17 +51,22 @@ class AuthService {
         delete this.$localStorage.authorizationData;
         this.authentication.isAuth = false;
         this.authentication.userName = '';
-        this.$rootScope.$broadcast('UserLogout');
+        this.notificationService.notify('UserLogout');
     };
 
     public fillAuthData = function () {
         var authData = this.$localStorage.authorizationData;
         if (authData) {
+            var self = this;
             this.authentication.isAuth = true;
             this.authentication.userName = authData.userName;
-            this.$rootScope.$broadcast('UserLogin');
-        } else {
-            this.logOut();
+            this.$http.get('api/users/authtest').then((response)=>{
+                if(response.status != 200){
+                    self.logout();
+                } else {
+                    self.notificationService.notify('UserLogin');
+                }
+            });
         }
     };
 }

@@ -14,7 +14,10 @@ class NotificationService {
 
     public subscribe(scope, event, callback) {
         let handler = this.$rootScope.$on(event, callback);
-        scope.$on('destroy', handler);
+        if (scope) {
+            scope.$on('destroy', handler);
+        }
+        return handler;
     }
 
     public notify(event) {
