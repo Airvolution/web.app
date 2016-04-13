@@ -39,7 +39,7 @@ class PreferencesService {
     }
 
     public resetUserDefaults() {
-        this.userPreferences = angular.copy(this.defaultPreferences)
+        this.userPreferences = angular.copy(this.defaultPreferences);
     }
 
     public updateUserDefaults(preferences) {
