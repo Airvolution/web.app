@@ -20,7 +20,7 @@ class AlmanacViewDirective implements ng.IDirective {
                 selector: 'almanac-widget',
                 "enable-resize": false,
                 align: 'left',
-                minColumns: 4
+                minColumns: 6
             });
         }
     };

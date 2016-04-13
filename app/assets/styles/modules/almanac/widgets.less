@@ -5,14 +5,34 @@ almanac-widget {
   &[widget-size="small"] {
     width: 150px;
     height: 310px;
+
+    &[tall]{
+      height: 630px;
+    }
   }
   &[widget-size="medium"] {
     width: 310px;
     height: 310px;
+
+    &[tall]{
+      height: 630px;
+    }
   }
   &[widget-size="large"] {
-    width: 470px;
+    width: 630px;
     height: 310px;
+
+    &[tall]{
+      height: 630px;
+    }
+  }
+  &[widget-size="xl"] {
+    width: 950px;
+    height: 310px;
+
+    &[tall]{
+      height: 630px;
+    }
   }
   box-shadow: 0 5px 10px @dark-gray;
   text-align: left;

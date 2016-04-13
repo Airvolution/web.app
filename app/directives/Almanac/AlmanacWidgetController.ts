@@ -23,7 +23,7 @@ class AlmanacWidgetController {
 
     public static $inject = ['$scope'];
 
-    constructor($scope) {
+    constructor(private $scope) {
         var self = this;
         var deregister = $scope.$watch('ctrl.type', (oldVal, newVal)=> {
             self.templateUrl = self.getTemplateLocation(newVal);
@@ -31,6 +31,14 @@ class AlmanacWidgetController {
                 deregister();
             }
         });
+        var unregisterDailies = $scope.$watch('ctrl.dailies',(val)=>{
+            $scope.dailies = val;
+        });
+
+        $scope.$on("$destroy",()=>{
+            unregisterDailies();
+        });
+
     }
 
     private getTemplateLocation(type) {
