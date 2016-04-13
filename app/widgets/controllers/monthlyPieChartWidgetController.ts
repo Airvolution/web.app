@@ -9,11 +9,12 @@ class MonthlyPieChartWidgetController {
     public plotData;
     public loading;
 
-    public static $inject = ['$scope', '$log'];
+    public static $inject = ['$scope', '$log', 'AQIColors'];
 
     public constructor(
         private $scope,
-        private $log
+        private $log,
+        private AQIColors
     ) {
         this.$log.log('MonthlyPieChartController: constructor called');
         let self = this;
@@ -33,18 +34,17 @@ class MonthlyPieChartWidgetController {
             chart: {
                 type: "pieChart",
                 height: 220,
-                width: 220,
+                width: 280,
                 duration: 500,
-                labelThreshold: 0.01,
-                labelSunbeamLayout: true,
                 legend: {
                     margin: {
-                        top: 5,
-                        right: 35,
-                        bottom: 5,
+                        top: 8,
+                        right: 5,
+                        bottom: 0,
                         left: 0
                     }
                 },
+                showLabels: false,
                 color: [],
                 x: (d) => { return d.key; },
                 y: (d) => { return d.y; }
@@ -96,67 +96,34 @@ class MonthlyPieChartWidgetController {
             {
                 key: 'Green',
                 y: green,
-                color: '#00e400'
+                color: this.AQIColors.getColorFromCategory(1)
             },
             {
                 key: 'Yellow',
                 y: yellow,
-                color: '#ffff00'
+                color: this.AQIColors.getColorFromCategory(2)
             },
             {
                 key: 'Orange',
                 y: orange,
-                color: 'ff7e00'
+                color: this.AQIColors.getColorFromCategory(3)
             },
             {
                 key: 'Red',
                 y: red,
-                color: '#ff0000'
+                color: this.AQIColors.getColorFromCategory(4)
             },
             {
                 key: 'Purple',
                 y: purple,
-                color: '#99004c'
+                color: this.AQIColors.getColorFromCategory(5)
             },
             {
                 key: 'Maroon',
                 y: maroon,
-                color: '#7e0023'
+                color: this.AQIColors.getColorFromCategory(6)
             }
         ];
-
-        //this.plotData = [
-        //    {
-        //        key: "One",
-        //        y: 5,
-        //        color: "#8c564b"
-        //    },
-        //    {
-        //        key: "Two",
-        //        y: 2,
-        //        color: "#e377c2"
-        //    },
-        //    {
-        //        key: "Three",
-        //        y: 9
-        //    },
-        //    {
-        //        key: "Four",
-        //        y: 7
-        //    },
-        //    {
-        //        key: "Five",
-        //        y: 4
-        //    },
-        //    {
-        //        key: "Six",
-        //        y: 3
-        //    },
-        //    {
-        //        key: "Seven",
-        //        y: .5
-        //    }
-        //];
 
         this.loading = false;
     }
