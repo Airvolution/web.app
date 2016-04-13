@@ -69,8 +69,14 @@
                         <div ng-messages-include="app/templates/validation.html"></div>
                     </div>
                 </div>
-                <div class='col-md-12'>
+                <div class='col-md-12 marBot10'>
                     <button class='btn btn-primary' type="submit">Submit</button>
+                </div>
+                <div class='col-md-12'>
+                    <uib-alert class="col-md-7" ng-if="ctrl.emailAlert" type="{{ctrl.emailAlert.type}}"
+                               dismiss-on-timeout="{{ctrl.alertTimeout}}" close="ctrl.onAlertClose(ctrl.profileAlert)">
+                        {{ctrl.emailAlert.message}}
+                    </uib-alert>
                 </div>
             </div>
         </form>

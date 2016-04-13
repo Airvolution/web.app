@@ -8,6 +8,7 @@ class AboutController {
     public static $inject = ['APIService'];
 
     public profiles = [];
+    public emailAlert = undefined;
 
     constructor(private APIService) {
         this.formData = {
@@ -26,6 +27,12 @@ class AboutController {
     };
 
     public sendEmail() {
+        if(!this.formData.$valid) {
+            this.emailAlert = {type: "alert alert-success", message: "Email sent. Thank you."};
+            this.formData.$submitted = true;
+            return;
+        }
+
         this.APIService.PostContactUsEmail(this.formData).then(
             function (response) {
                 console.log("got valid response"+response);
