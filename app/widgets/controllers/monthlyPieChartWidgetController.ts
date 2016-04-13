@@ -127,5 +127,4 @@ class MonthlyPieChartWidgetController {
 
         this.loading = false;
     }
-
 }
