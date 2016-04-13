@@ -54,9 +54,15 @@ class AuthService {
 
     public fillAuthData = function () {
         var authData = this.$localStorage.authorizationData;
-        if (authData) {
+        if (authData) {;
+            var self = this;
             this.authentication.isAuth = true;
-            this.authentication.userName = authData.userName;
+            this.authentication.userName = authData.userName
+            this.$http.get('api/users/authtest').then((response)=>{
+                if(response.status != 200){
+                    self.logout();
+                }
+            })
         }
 
     };
