@@ -1,5 +1,6 @@
 ///<reference path="../../typings/tsd.d.ts" />
 
+import NotificationService = require('./NotificationService');
 import LocationService = require('./Location/LocationService');
 import APIService = require('./APIService');
 import AuthService = require('./Auth/AuthService');
@@ -11,6 +12,7 @@ import SearchService = require("./SearchService");
 import PreferencesService = require('./Preferences/PreferencesService');
 
 export = angular.module('services', [])
+            .service(NotificationService.serviceName, NotificationService)
             .service(LocationService.serviceName, LocationService)
             .service(APIService.serviceName, APIService)
             .service(AuthService.serviceName, AuthService)

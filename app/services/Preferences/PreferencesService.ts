@@ -5,62 +5,59 @@ export = PreferencesService;
 class PreferencesService {
     public static serviceName = 'preferencesService';
 
-    private defaultMapMode;
-    private defaultDownloadFormat;
-    private defaultStationId;
-    private defaultParameters;
+    private defaultPreferences;
+    private userPreferences;
 
-    public static $inject = ['$q', '$log', 'APIService'];
-    constructor (
-        private $q,
-        private $log,
-        private APIService
+    public static $inject = ['$scope', '$q', '$log', 'APIService'];
+
+    constructor(private $scope,
+                private $q,
+                private $log,
+                private APIService
     ) {
+        this.defaultPreferences = {
+            defaultMapMode: 'LIGHT',
+            defaultDownloadFormat: 'CSV',
+            defaultStationId: null,
+            defaultParameters: []
+        };
 
+        var unregisterLogin  = $scope.$on('UserLogin',  this.loadUserDefaults);
+        var unregisterLogout = $scope.$on('UserLogout', this.resetUserDefaults);
+        $scope.$on('$destroy',() => {
+            unregisterLogin();
+            unregisterLogout();
+        });
     }
 
     public loadUserDefaults() {
         var deferred = this.$q.defer();
         let self = this;
-        let onError = (error) => { deferred.reject('Failed to obtain User Preferences: ' + error); };
+        let onError = (error) => {
+            deferred.reject('Failed to obtain User Preferences: ' + error);
+        };
         return this.APIService.getUserPreferences().then((userPreferences) => {
-            self.defaultMapMode = userPreferences['defaultMapMode'];
-            self.defaultDownloadFormat = userPreferences['defaultDownloadFormat'];
-            self.defaultParameters = userPreferences['defaultParameters'];
-            self.defaultStationId = userPreferences['defaultStationId'];
-            return self.getUserDefaults();
+            self.userPreferences = userPreferences;
+            return userPreferences;
         }, onError);
     }
 
     public resetUserDefaults() {
-        this.defaultMapMode = 'LIGHT';
-        this.defaultDownloadFormat = 'CSV';
-        this.defaultStationId = null;
-        this.defaultParameters = [];
+        this.userPreferences = angular.copy(this.defaultPreferences)
     }
 
     public updateUserDefaults(preferences) {
         var deferred = this.$q.defer();
         let self = this;
-        let onError = (error) => { deferred.reject(error); };
+        let onError = (error) => {
+            deferred.reject(error);
+        };
         return self.APIService.updateUserPreferences(preferences).then((userPreferences) => {
-            self.defaultMapMode = userPreferences['defaultMapMode'];
-            self.defaultDownloadFormat = userPreferences['defaultDownloadFormat'];
-            self.defaultParameters = userPreferences['defaultParameters'];
-            self.defaultStationId = userPreferences['defaultStationId'];
-            return self.getUserDefaults();
+            self.userPreferences = userPreferences;
         }, onError);
     }
 
     public getUserDefaults() {
-        let preferences = {
-            defaultMapMode: this.defaultMapMode,
-            defaultDownloadFormat: this.defaultDownloadFormat,
-            defaultParameters: this.defaultParameters,
-            defaultStationId: this.defaultStationId
-        };
-
-        let copy = angular.copy(preferences);
-        return copy;
+        return angular.copy(this.userPreferences);
     }
 }
