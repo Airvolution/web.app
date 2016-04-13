@@ -10,18 +10,20 @@ class AlmanacWidgetController {
         'consecutive-green-days': "consecutiveGreenDays.html",
         'consecutive-red-days': "consecutiveRedDays.html",
         'consecutive-yellow-days': "consecutiveYellowDays.html",
+        '45-day-trend': 'trendsTemplate.html'
     };
 
     private templateSizeMap = {
         'avg-aqi-7-days': 'medium',
         'consecutive-green-days': 'medium',
         'consecutive-red-days': 'medium',
-        'consecutive-yellow-days': 'medium'
+        'consecutive-yellow-days': 'medium',
+        '45-day-trend': 'xl'
     };
 
     public static $inject = ['$scope'];
 
-    constructor($scope) {
+    constructor(private $scope) {
         var self = this;
         var deregister = $scope.$watch('ctrl.type', (oldVal, newVal)=> {
             self.templateUrl = self.getTemplateLocation(newVal);
@@ -29,6 +31,14 @@ class AlmanacWidgetController {
                 deregister();
             }
         });
+        var unregisterDailies = $scope.$watch('ctrl.dailies',(val)=>{
+            $scope.dailies = val;
+        });
+
+        $scope.$on("$destroy",()=>{
+            unregisterDailies();
+        });
+
     }
 
     private getTemplateLocation(type) {
