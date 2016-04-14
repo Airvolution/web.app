@@ -11,9 +11,9 @@ class TrendsWidgetController {
     public now;
     public loading;
 
-    public static $inject = ['$scope'];
+    public static $inject = ['$scope', 'AQIColors'];
 
-    public constructor(private $scope) {
+    public constructor(private $scope, private AQIColors) {
         var today = new Date();
         this.now = today.getTime();
         this.then = new Date().setDate(today.getDate() - 45);
@@ -21,39 +21,34 @@ class TrendsWidgetController {
             chart: {
                 type: 'historicalBarChart',
                 height: 220,
-                width: 920,
                 margin: {
-                    top: 30,
+                    top: 20,
                     right: 50,
                     bottom: 30,
                     left: 50
                 },
                 x: function (d) {
-                    return d[0];
+                    return d.label;
                 },
                 y: function (d) {
-                    return d[1];
+                    return d.value;
                 },
                 showValues: true,
                 valueFormat: function (d) {
-                    return d3.format(',.1f')(d);
+                    return d3.format('d')(d);
                 },
-                duration: 100,
+                duration: 500,
                 xAxis: {
                     tickFormat: function (d) {
                         return d3.time.format('%m/%d')(new Date(d));
                     },
                     showMinMax: false
                 },
-                xDomain: [this.then, this.now],
-                yDomain: [0, 200],
                 yAxis: {
                     axisLabel: 'AQI',
-                    axisLabelDistance: -10,
-                    tickFormat: function (d) {
-                        return d3.format(',.1f')(d);
-                    }
+                    axisLabelDistance: -15
                 },
+                xDomain: [this.then, this.now],
                 tooltip: {
                     keyFormatter: function (d) {
                         return d3.time.format('%x')(new Date(d));
@@ -83,18 +78,19 @@ class TrendsWidgetController {
         var tmp = dailies.slice(0, 45);
         while (tmp.length < 45) {
             tmp.push({});
-        } //pad the array
+        }
         var data = {
-            "key":"AQI",
-            bar: true,
+            "key": "AQI",
             values: []
         };
         _.each(tmp, (daily:any)=> {
-            if(daily.date){
-                data.values.push([new Date(daily.date), daily.maxAQI]);
-            }else{
-                data.values.push([undefined, undefined]);
+            var value:any = {};
+            if (daily.date) {
+                value.label = new Date(daily.date).getTime();
             }
+            value.value = daily.maxAQI ? daily.maxAQI : 0;
+            value.color = self.AQIColors.getColorFromCategory(daily.maxCategory);
+            data.values.push(value);
         });
         self.plotData = [data];
         this.loading = false;
