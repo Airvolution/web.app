@@ -6,19 +6,19 @@ class AlmanacWidgetController {
     public type:string;
     public templateUrl:string;
     private templateMap = {
-        'avg-aqi-7-days': "avgAQI7Days.html",
         'consecutive-green-days': "consecutiveGreenDays.html",
         'consecutive-red-days': "consecutiveRedDays.html",
         'consecutive-yellow-days': "consecutiveYellowDays.html",
-        '45-day-trend': 'trendsTemplate.html'
+        '45-day-trend': 'trendsTemplate.html',
+        'week-average': 'avgAQI7Days.html'
     };
 
     private templateSizeMap = {
-        'avg-aqi-7-days': 'medium',
         'consecutive-green-days': 'medium',
         'consecutive-red-days': 'medium',
         'consecutive-yellow-days': 'medium',
-        '45-day-trend': 'xl'
+        '45-day-trend': 'xl',
+        'week-average': 'medium'
     };
 
     public static $inject = ['$scope'];
