@@ -40,7 +40,7 @@ class TrendsWidgetController {
                 duration: 500,
                 xAxis: {
                     tickFormat: function (d) {
-                        return d3.time.format('%m/%d')(new Date(d))
+                        return d3.time.format('%m/%d')(new Date(d));
                     },
                     showMinMax: false
                 },

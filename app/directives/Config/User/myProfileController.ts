@@ -30,7 +30,6 @@ class MyProfileController {
         });
 
         this.modelOptions = {updateOn: 'default blur', debounce: {default: 250, blur: 0}};
-
     }
 
     public onSubmit() {
@@ -67,6 +66,4 @@ class MyProfileController {
             this.passwordAlert = undefined;
         }
     }
-
-
 }
