@@ -240,7 +240,7 @@ class MapFactory {
     public getCenterFromMarker(marker, currentZoom) {
         return {
             lat: marker.lat,
-            lng: marker.lng,
+            lng: marker.lng || marker.lon,
             zoom: currentZoom
         };
     }

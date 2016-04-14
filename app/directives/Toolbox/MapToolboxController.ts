@@ -20,7 +20,7 @@ class MapToolboxController {
     public pollutantOptions;
     public pollutantOptionsMap;
     public weatherOptions;
-    //public count; // TODO: remove! Currently using to witness the woes of ng-repeat & ng-filter
+
     public static $inject = ['$scope','$state', 'mapFactory', 'selectionService','SearchService'];
     constructor(
         private $scope,
@@ -35,7 +35,6 @@ class MapToolboxController {
         this.selectedParameters = [];
 
         let mtc = this;
-        mtc.showDetails = false;
         mtc.clusters = [];
         mtc.stationGroup = [];
         mtc.convertMapLayersToArray(mapFactory.createMapLayers().overlays);
@@ -43,9 +42,12 @@ class MapToolboxController {
         mtc.setSortOrderForStations('name');
         mtc.initPollutantOptions();
 
-        $scope.$parent.$watch('ctrl.selectedStation', function () {
-            mtc.currentStation = mtc.selectionService.getCurrentStation();
+        var deregister = $scope.$parent.$watch('selectedStation', function (val) {
+            mtc.currentStation = val;
         });
+
+        $scope.$on("$destroy",()=>{deregister();});
+
     }
 
     public searchStations() {
@@ -56,7 +58,7 @@ class MapToolboxController {
 
         var self = this;
         this.SearchService.searchStations(this.stationQuery).then((results)=>{
-            this.stationQueryResults = _.map(results.hits,(result:any)=>{
+            self.stationQueryResults = _.map(results.hits,(result:any)=>{
                 return result._source;
             });
         });
@@ -71,13 +73,13 @@ class MapToolboxController {
     public removeMarkerFromGroup(marker) {
         this.selectionService.removeStationFromSelection(marker);
         this.selectionService.setCurrentStation(marker);
-        this.$scope.$parent.ctrl.selectedStation = marker;
+        this.$scope.setSelectedStation(marker);
     }
 
     public addMarkerToGroup(marker) {
         this.selectionService.addStationToSelection(marker);
         this.selectionService.setCurrentStation(marker);
-        this.$scope.$parent.ctrl.selectedStation = marker;
+        this.$scope.setSelectedStation(marker);
     }
 
     public isMarkerInGroup(marker) {
@@ -95,55 +97,21 @@ class MapToolboxController {
         });
     }
 
-    public toggleDetails() {
-        this.showDetails = !this.showDetails;
-    }
-
-    public togglePreviewDetails() {
-        this.$scope.$parent.toggleDetails = !this.$scope.$parent.toggleDetails;
-    }
-
-    public toggleExpand() {
-        this.expanded = !this.expanded;
-    }
-
-    public toggleMap(mode) {
-        this.$scope.$parent.mode = mode;
-    }
 
     public getMarkerNames() {
         return this.mapFactory.getMarkerNames();
     }
 
-    public centerMapOnLocation() {
-        this.$scope.$parent.centerOnLocation = !this.$scope.$parent.centerOnLocation;
-    }
-
-    public togglePlot() {
-        this.$scope.$parent.togglePlot = !this.$scope.$parent.togglePlot;
-    }
-
-    public download() {
-        this.$scope.$parent.downloadPlot = !this.$scope.$parent.downloadPlot;
-    }
-
-    public centerMapOnSelectedMarker() {
-        this.$scope.$parent.centerOnMarker = !this.$scope.$parent.centerOnMarker;
-    }
-
-    public toggleCluster(cluster) {
-        this.$scope.$parent.toggleCluster = cluster.id;
-    }
 
     public showAllClusters() {
-        this.$scope.$parent.showAllClusters = !this.$scope.$parent.showAllClusters;
+        this.$scope.showAllClusters();
         angular.forEach(this.clusters, function (cluster) {
             cluster['visible'] = true;
         });
     }
 
     public hideAllClusters() {
-        this.$scope.$parent.hideAllClusters = !this.$scope.$parent.hideAllClusters;
+        this.$scope.hideAllClusters();
         angular.forEach(this.clusters, function (cluster) {
             cluster['visible'] = false;
         });
@@ -176,13 +144,9 @@ class MapToolboxController {
 
     public setSelectedStation(marker) {
         this.selectionService.setCurrentStation(marker);
-        this.$scope.$parent.ctrl.selectedStation = marker;
-        this.$scope.$parent.ctrl.center.zoom = 10;
-        this.centerMapOnSelectedMarker();
-    }
-
-    public zoomMapOut() {
-        this.$scope.$parent.ctrl.center.zoom = 5;
+        this.$scope.setSelectedStation(marker);
+        this.$scope.resetZoom(10);
+        this.$scope.centerOnMarker(marker.location);
     }
 
     public togglePollutantOption(pollutant) {
