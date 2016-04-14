@@ -26,7 +26,7 @@ class HeatmapWidgetController {
         this.defaults = {
             minZoom: 3,
             maxZoom: 3,
-            //dragging: false
+            dragging: false
         };
         this.layers = {
             overlays: {
