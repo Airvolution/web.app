@@ -10,6 +10,7 @@ class AlmanacWidgetController {
         'consecutive-red-days': "consecutiveRedDays.html",
         'consecutive-yellow-days': "consecutiveYellowDays.html",
         '45-day-trend': 'trendsTemplate.html',
+        'heatmap': 'heatmapTemplate.html',
         'week-average': 'avgAQI7Days.html',
         'monthly-pie-chart': 'monthlyPieChart.html'
     };
@@ -19,6 +20,7 @@ class AlmanacWidgetController {
         'consecutive-red-days': 'medium',
         'consecutive-yellow-days': 'medium',
         '45-day-trend': 'xl',
+        'heatmap': 'large',
         'week-average': 'medium',
         'monthly-pie-chart': 'medium'
     };

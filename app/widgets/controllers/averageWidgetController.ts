@@ -31,18 +31,22 @@ class AverageWidgetController {
         }
 
         var avg = this.average;
-        if(avg <= 50)
+        if(avg <= 50){
             return 'green';
-        if(avg <= 100)
+        }else if(avg <= 100){
             return 'yellow';
-        if(avg <= 150)
+        }else if(avg <= 150){
             return 'orange';
-        if(avg <= 200)
+        }else if(avg <= 200){
             return 'red';
-        if(avg <= 300)
+        }else if(avg <= 300){
             return 'purple';
-        if(avg <= 500)
+        }else if(avg <= 500){
             return 'maroon';
+        }else{
+            return 'neutral';
+        }
+
     }
 
     public calculateAverage(){
