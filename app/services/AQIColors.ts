@@ -5,24 +5,20 @@ export = AQIColors;
 class AQIColors {
     public static serviceName = 'AQIColors';
 
-    constructor() { }
+    private colors;
 
-    public getColorFromCategory(category) {
-        switch (category) {
-            case 1:
-                return '#00e400';
-            case 2:
-                return '#ffff00';
-            case 3:
-                return '#ff7e00';
-            case 4:
-                return '#ff0000';
-            case 5:
-                return '#99004c';
-            case 6:
-                return '#7e0023';
-            default:
-                return '#404040';
+    constructor() {
+        this.colors = {
+            1: '#00e400',
+            2: '#ffff00',
+            3: '#ff7e00',
+            4: '#ff0000',
+            5: '#99004c',
+            6: '#7e0023'
         }
+    }
+
+    public getColorFromCategory(number) {
+        return this.colors[number];
     }
 }

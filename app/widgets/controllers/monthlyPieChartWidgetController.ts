@@ -60,67 +60,52 @@ class MonthlyPieChartWidgetController {
         }
 
         // count the number of max categories in dailies
-        let green  = 0;
-        let yellow = 0;
-        let orange = 0;
-        let red    = 0;
-        let purple = 0;
-        let maroon = 0;
+        let categories = {
+            1: 0,
+            2: 0,
+            3: 0,
+            4: 0,
+            5: 0,
+            6: 0
+        };
 
-        angular.forEach(dailies, (daily) => {
-            switch (daily['maxCategory']) {
-                case 1:
-                    green += 1;
-                    break;
-                case 2:
-                    yellow += 1;
-                    break;
-                case 3:
-                    orange += 1;
-                    break;
-                case 4:
-                    red += 1;
-                    break;
-                case 5:
-                    purple += 1;
-                    break;
-                case 6:
-                    maroon += 1;
-                    break;
-                default:
-                    break;
+        // limits pie chart to 30 days maximum
+        for (let i = 0; i < dailies.length && i < 30; i++) {
+            let index = dailies[i]['maxCategory'];
+            if (index > 0 && index < 7) {
+                categories[index] += 1;
             }
-        });
+        }
 
         this.plotData = [
             {
                 key: 'Green',
-                y: green,
+                y: categories[1],
                 color: this.AQIColors.getColorFromCategory(1)
             },
             {
                 key: 'Yellow',
-                y: yellow,
+                y: categories[2],
                 color: this.AQIColors.getColorFromCategory(2)
             },
             {
                 key: 'Orange',
-                y: orange,
+                y: categories[3],
                 color: this.AQIColors.getColorFromCategory(3)
             },
             {
                 key: 'Red',
-                y: red,
+                y: categories[4],
                 color: this.AQIColors.getColorFromCategory(4)
             },
             {
                 key: 'Purple',
-                y: purple,
+                y: categories[5],
                 color: this.AQIColors.getColorFromCategory(5)
             },
             {
                 key: 'Maroon',
-                y: maroon,
+                y: categories[6],
                 color: this.AQIColors.getColorFromCategory(6)
             }
         ];
