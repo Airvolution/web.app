@@ -10,7 +10,8 @@ class AlmanacWidgetController {
         'consecutive-green-days': "consecutiveGreenDays.html",
         'consecutive-red-days': "consecutiveRedDays.html",
         'consecutive-yellow-days': "consecutiveYellowDays.html",
-        '45-day-trend': 'trendsTemplate.html'
+        '45-day-trend': 'trendsTemplate.html',
+        'heatmap': 'heatmapTemplate.html'
     };
 
     private templateSizeMap = {
@@ -18,7 +19,8 @@ class AlmanacWidgetController {
         'consecutive-green-days': 'medium',
         'consecutive-red-days': 'medium',
         'consecutive-yellow-days': 'medium',
-        '45-day-trend': 'xl'
+        '45-day-trend': 'xl',
+        'heatmap': 'large'
     };
 
     public static $inject = ['$scope'];
