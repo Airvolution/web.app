@@ -26,7 +26,7 @@ class AverageWidgetController {
     }
 
     public getAQICategory(){
-        if(!this.average){
+        if(!this.average || this.average > 500){
             return 'neutral';
         }
 
