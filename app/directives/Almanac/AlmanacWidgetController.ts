@@ -6,22 +6,28 @@ class AlmanacWidgetController {
     public type:string;
     public templateUrl:string;
     private templateMap = {
-        'avg-aqi-7-days': "avgAQI7Days.html",
         'consecutive-green-days': "consecutiveGreenDays.html",
         'consecutive-red-days': "consecutiveRedDays.html",
         'consecutive-yellow-days': "consecutiveYellowDays.html",
+        '45-day-trend': 'trendsTemplate.html',
+        'heatmap': 'heatmapTemplate.html',
+        'week-average': 'avgAQI7Days.html',
+        'monthly-pie-chart': 'monthlyPieChart.html'
     };
 
     private templateSizeMap = {
-        'avg-aqi-7-days': 'medium',
         'consecutive-green-days': 'medium',
         'consecutive-red-days': 'medium',
-        'consecutive-yellow-days': 'medium'
+        'consecutive-yellow-days': 'medium',
+        '45-day-trend': 'xl',
+        'heatmap': 'large',
+        'week-average': 'medium',
+        'monthly-pie-chart': 'medium'
     };
 
     public static $inject = ['$scope'];
 
-    constructor($scope) {
+    constructor(private $scope) {
         var self = this;
         var deregister = $scope.$watch('ctrl.type', (oldVal, newVal)=> {
             self.templateUrl = self.getTemplateLocation(newVal);
@@ -29,6 +35,14 @@ class AlmanacWidgetController {
                 deregister();
             }
         });
+        var unregisterDailies = $scope.$watch('ctrl.dailies',(val)=>{
+            $scope.dailies = val;
+        });
+
+        $scope.$on("$destroy",()=>{
+            unregisterDailies();
+        });
+
     }
 
     private getTemplateLocation(type) {

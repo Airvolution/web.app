@@ -12,7 +12,8 @@ class AlmanacWidgetDirective implements ng.IDirective {
     public controllerAs = 'ctrl';
     public bindToController = true;
     public scope = {
-        "type": "@"
+        "type": "@",
+        "dailies": "="
     };
 
     public link = {
@@ -34,7 +35,9 @@ class AlmanacWidgetDirective implements ng.IDirective {
             case 'medium':
                 return 2;
             case 'large':
-                return 3;
+                return 4;
+            case 'xl':
+                return 6;
             default:
                 return 1;
         }

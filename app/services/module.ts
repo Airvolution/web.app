@@ -1,5 +1,6 @@
 ///<reference path="../../typings/tsd.d.ts" />
 
+import NotificationService = require('./NotificationService');
 import LocationService = require('./Location/LocationService');
 import APIService = require('./APIService');
 import AuthService = require('./Auth/AuthService');
@@ -9,8 +10,10 @@ import OpenWeatherService = require('./Weather/OpenWeatherService');
 import MapFactory = require("./Map/MapFactory");
 import SearchService = require("./SearchService");
 import PreferencesService = require('./Preferences/PreferencesService');
+import AQIColors = require('./AQIColors');
 
 export = angular.module('services', [])
+            .service(NotificationService.serviceName, NotificationService)
             .service(LocationService.serviceName, LocationService)
             .service(APIService.serviceName, APIService)
             .service(AuthService.serviceName, AuthService)
@@ -20,4 +23,5 @@ export = angular.module('services', [])
             .service(OpenWeatherService.serviceName, OpenWeatherService)
             .service(MapFactory.serviceName, MapFactory)
             .service(SearchService.serviceName, SearchService)
-            .service(PreferencesService.serviceName, PreferencesService);
+            .service(PreferencesService.serviceName, PreferencesService)
+            .service(AQIColors.serviceName, AQIColors);

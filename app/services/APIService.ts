@@ -14,6 +14,65 @@ class APIService {
         private $timeout
     ) {}
 
+    public getUserPreferences() {
+        var deferred = this.$q.defer();
+        let onError = (error) => { deferred.reject(error); };
+        return this.$http.get('api/users/preferences').then((response) => {
+            return response.data;
+        }, onError);
+    }
+
+    public updateUserPreferences(preferences) {
+        var deferred = this.$q.defer();
+        let data = JSON.stringify(preferences);
+        let onError = (error) => { deferred.reject(error); };
+        return this.$http.post('api/users/preferences', data).then((response) => {
+            return response.data;
+        }, onError);
+    }
+
+    public getUserProfile(){
+        var deferred = this.$q.defer();
+        var self = this;
+        var onError = (error)=>{deferred.reject(error);};
+        return this.$http.get('api/users/current').then((response)=>{
+            return response.data;
+        },onError);
+    }
+
+    public updateUserProfile(profile){
+        var deferred = this.$q.defer();
+        var self = this;
+        var onError = (error)=>{deferred.reject(error);};
+        return this.$http.put('api/users/current',profile).then((response)=>{
+            return response.data;
+        },onError);
+    }
+
+    public resetUserPassword(current, password){
+        var deferred = this.$q.defer();
+        var onError = (error)=>{deferred.reject(error);};
+        return this.$http.post('api/users/current/password',{currentPassword: current, password:password}).then((response)=>{
+            if(response.status == 200){
+                return true;
+            }else {
+                return false;
+            }
+        },onError);
+    }
+    public sendPasswordResetEmail(email){
+        var deferred = this.$q.defer();
+        var onError = (error)=>{
+            deferred.reject(error);};
+        return this.$http.get('api/users/password/reset?email='+email).then((response)=>{
+            if(response.status == 200){
+                return true;
+            }else {
+                return false;
+            }
+        },onError);
+    }
+
     public getUserStations(){
         var deferred = this.$q.defer();
         var self = this;
