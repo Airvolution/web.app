@@ -129,8 +129,16 @@ module.exports = function (grunt) {
             }
         },
         clean: {
+            options:{
+                force: true
+            },
             local: ['app/assets/styles/app.*css','app/assets/styles/app.less'],
-            all: ['build/**/*', 'build/*', 'app/assets/styles/app.*css','app/assets/styles/app.less'],
+            all: {
+                options:{
+                    force: true
+                },
+                src: ['build/**/*', 'build/*', 'app/assets/styles/app.*css','app/assets/styles/app.less'],
+            },
             build: []
         },
         tslint: {

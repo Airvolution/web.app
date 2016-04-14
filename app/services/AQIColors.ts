@@ -15,7 +15,7 @@ class AQIColors {
             4: '#ff0000',
             5: '#99004c',
             6: '#7e0023'
-        }
+        };
     }
 
     public getColorFromCategory(number) {

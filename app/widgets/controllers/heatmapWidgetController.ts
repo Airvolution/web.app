@@ -51,11 +51,12 @@ class HeatmapWidgetController {
             function (response) {
                 let data = response.data;
                 for (let key in data) {
-                    if (data.hasOwnProperty(key)) {
+                    if (data[key]) {
                         let point = [data[key].location.lat, data[key].location.lng];
                         self.data.push(point);
                     }
                 }
+                self.layers.overlays.heat.doRefresh = true;
             }
         );
     }
