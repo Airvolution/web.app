@@ -24,6 +24,7 @@ class MapViewController {
     public layers;
     public chartOptions;
     public chartData;
+    public detailsMode;
 
     public static $inject = [
         '$state',
@@ -33,7 +34,6 @@ class MapViewController {
         'leafletData',
         'leafletBoundsHelpers',
         'leafletMarkerEvents',
-        '$http',
         '$log',
         'locationService',
         'APIService',
@@ -50,7 +50,6 @@ class MapViewController {
                 private leafletData,
                 private leafletBoundsHelpers,
                 private leafletMarkerEvents,
-                private $http,
                 private $log,
                 private locationService,
                 private APIService,
@@ -60,6 +59,8 @@ class MapViewController {
                 private SearchService
     ) {
         let mv = this;
+
+        mv.detailsMode = 'station';
 
         mv.detailsVisible = true;
         mv.plotVisible = false;
