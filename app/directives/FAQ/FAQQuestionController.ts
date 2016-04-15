@@ -6,12 +6,14 @@ class FAQQuestionController {
     public question;
     public chev = 'DOWN';
 
-    public static $inject = [];
-    constructor() {
+    public static $inject = ['$sanitize'];
+    constructor(private $sanitize) {
     };
 
-    public toggleChev = function () {
-        var image = angular.element('#img_' + this.question.id);
+    public toggleChevron = function () {
+        //var image = angular.element('#img_' + this.question.id);
+
+
         if(this.chev == 'DOWN') {
             this.chev = 'UP';
         }
