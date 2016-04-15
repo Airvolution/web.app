@@ -25,7 +25,7 @@
             <i class="fa fa-map-marker" ng-class="{'fa-2x':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="centerOnMarker()"></i>
         </tool>
         <tool expanded="ctrl.expanded" uib-tooltip="Show Data Plot" tooltip-placement="right" popover-trigger="mouseenter">
-            <i class="fa fa-line-chart" ng-class="{'fa-2x':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="toggleDetails()"></i>
+            <i class="fa fa-line-chart" ng-class="{'fa-2x':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.showPlotDrawer = !ctrl.showPlotDrawer"></i>
         </tool>
 
         <div class="toolbox-expander" ng-click="ctrl.expanded = !ctrl.expanded">
@@ -35,77 +35,77 @@
         </div>
     </div>
 
-    <div class="toolbox-drawer" ng-class="{'drawer-open':ctrl.showDetails,'expanded':ctrl.expanded}">
-        <div class="toolbox-drawer-top">
-            <!-- SEARCH -->
-            <div class="search-container box well">
-                <span class="icon"><i class="fa fa-search"></i></span>
-                <input type="search" class="search" placeholder="Search for a station"
-                    ng-model="ctrl.stationQuery"
-                    update-on-enter
-                    ng-change="ctrl.searchStations()"
-                    ng-model-options="ctrl.searchOptions"/>
-            </div>
+    <!--<div class="toolbox-drawer" ng-class="{'drawer-open':ctrl.showDetails,'expanded':ctrl.expanded}">-->
+        <!--<div class="toolbox-drawer-top">-->
+            <!--&lt;!&ndash; SEARCH &ndash;&gt;-->
+            <!--<div class="search-container box well">-->
+                <!--<span class="icon"><i class="fa fa-search"></i></span>-->
+                <!--<input type="search" class="search" placeholder="Search for a station"-->
+                    <!--ng-model="ctrl.stationQuery"-->
+                    <!--update-on-enter-->
+                    <!--ng-change="ctrl.searchStations()"-->
+                    <!--ng-model-options="ctrl.searchOptions"/>-->
+            <!--</div>-->
 
-            <!-- SEARCH RESULTS FOR STATIONS -->
-            <div class="station-container" ng-if="ctrl.stationQueryResults.length > 0">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th><span class="pull-left">Find</span></th>
-                            <th><span>Station Name</span></th>
-                            <th><input class="pull-right" type="checkbox"></th>
-                        </tr>
-                    </thead>
-                    <tr ng-repeat="marker in ctrl.stationQueryResults track by marker.id">
-                        <td>
-                            <button class="btn btn-map-marker pull-left" ng-click="ctrl.setSelectedStation(marker)">
-                            <span class="fa fa-map-marker" uib-tooltip="Locate On Map" tooltip-placement="left"></span>
-                            </button>
-                        </td>
-                        <td>{{::marker.name}}</td>
-                        <td><input class="pull right" type="checkbox" ng-click="ctrl.setSelectedStation(marker)"></td>
-                    </tr>
-                </table>
-            </div>
+            <!--&lt;!&ndash; SEARCH RESULTS FOR STATIONS &ndash;&gt;-->
+            <!--<div class="station-container" ng-if="ctrl.stationQueryResults.length > 0">-->
+                <!--<table class="table">-->
+                    <!--<thead>-->
+                        <!--<tr>-->
+                            <!--<th><span class="pull-left">Find</span></th>-->
+                            <!--<th><span>Station Name</span></th>-->
+                            <!--<th><input class="pull-right" type="checkbox"></th>-->
+                        <!--</tr>-->
+                    <!--</thead>-->
+                    <!--<tr ng-repeat="marker in ctrl.stationQueryResults track by marker.id">-->
+                        <!--<td>-->
+                            <!--<button class="btn btn-map-marker pull-left" ng-click="ctrl.setSelectedStation(marker)">-->
+                            <!--<span class="fa fa-map-marker" uib-tooltip="Locate On Map" tooltip-placement="left"></span>-->
+                            <!--</button>-->
+                        <!--</td>-->
+                        <!--<td>{{::marker.name}}</td>-->
+                        <!--<td><input class="pull right" type="checkbox" ng-click="ctrl.setSelectedStation(marker)"></td>-->
+                    <!--</tr>-->
+                <!--</table>-->
+            <!--</div>-->
 
-            <!-- SEARCH RESULTS FOR GROUPS -->
-            <div class="group-container" ng-if="ctrl.stationQueryResults.length > 0">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th><span>Group Name</span></th>
-                        <th><input class="pull-right" type="checkbox"></th>
-                    </tr>
-                    </thead>
-                    <tr ng-repeat="marker in ctrl.stationQueryResults track by marker.id">
-                        <td>{{::marker.name}}</td>
-                        <!-- TODO: add all markers in GROUP -->
-                        <td><input class="pull-right" type="checkbox"></td>
-                    </tr>
-                </table>
-            </div>
+            <!--&lt;!&ndash; SEARCH RESULTS FOR GROUPS &ndash;&gt;-->
+            <!--<div class="group-container" ng-if="ctrl.stationQueryResults.length > 0">-->
+                <!--<table class="table">-->
+                    <!--<thead>-->
+                    <!--<tr>-->
+                        <!--<th><span>Group Name</span></th>-->
+                        <!--<th><input class="pull-right" type="checkbox"></th>-->
+                    <!--</tr>-->
+                    <!--</thead>-->
+                    <!--<tr ng-repeat="marker in ctrl.stationQueryResults track by marker.id">-->
+                        <!--<td>{{::marker.name}}</td>-->
+                        <!--&lt;!&ndash; TODO: add all markers in GROUP &ndash;&gt;-->
+                        <!--<td><input class="pull-right" type="checkbox"></td>-->
+                    <!--</tr>-->
+                <!--</table>-->
+            <!--</div>-->
 
-            <!-- USER STATION SELECTION -->
-            <div class="selection-container">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th><span>Station Name</span></th>
-                        <th><input class="pull-right" type="checkbox"></th>
-                    </tr>
-                    </thead>
-                    <tr ng-repeat="marker in ctrl.stationGroup track by marker.id">
-                        <td>{{::marker.name}}</td>
-                        <td><input class="pull-right" type="checkbox"></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+            <!--&lt;!&ndash; USER STATION SELECTION &ndash;&gt;-->
+            <!--<div class="selection-container">-->
+                <!--<table class="table">-->
+                    <!--<thead>-->
+                    <!--<tr>-->
+                        <!--<th><span>Station Name</span></th>-->
+                        <!--<th><input class="pull-right" type="checkbox"></th>-->
+                    <!--</tr>-->
+                    <!--</thead>-->
+                    <!--<tr ng-repeat="marker in ctrl.stationGroup track by marker.id">-->
+                        <!--<td>{{::marker.name}}</td>-->
+                        <!--<td><input class="pull-right" type="checkbox"></td>-->
+                    <!--</tr>-->
+                <!--</table>-->
+            <!--</div>-->
+        <!--</div>-->
 
-        <div class="toolbox-drawer-bottom">
+        <!--<div class="toolbox-drawer-bottom">-->
 
-        </div>
+        <!--</div>-->
 
         <!-- Search for Stations -->
         <!--<uib-accordion>-->
@@ -224,9 +224,9 @@
                 <!--</div>-->
             <!--</uib-accordion-group>-->
         <!--</uib-accordion>-->
-    </div>
+    <!--</div>-->
     <div class="toolbox-drawer" ng-class="{'drawer-open':ctrl.showStationDrawer,'expanded':ctrl.expanded}" ng-include="'app/directives/Toolbox/templates/stationDrawer.html'"></div>
-    <div  class="toolbox-drawer" ng-class="{'drawer-open':ctrl.showPlotDrawer,'expanded':ctrl.expanded}" ng-include="'app/directives/Toolbox/templates/plotDrawer.html'"></div>
+    <div class="toolbox-drawer" ng-class="{'drawer-open':ctrl.showPlotDrawer,'expanded':ctrl.expanded}" ng-include="'app/directives/Toolbox/templates/plotDrawer.html'"></div>
 </div>
 
 
