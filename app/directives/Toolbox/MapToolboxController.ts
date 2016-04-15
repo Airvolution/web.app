@@ -21,6 +21,9 @@ class MapToolboxController {
     public pollutantOptionsMap;
     public weatherOptions;
     //public count; // TODO: remove! Currently using to witness the woes of ng-repeat & ng-filter
+
+
+
     public static $inject = ['$scope','$state', 'mapFactory', 'selectionService','SearchService'];
     constructor(
         private $scope,
@@ -46,6 +49,8 @@ class MapToolboxController {
         $scope.$parent.$watch('ctrl.selectedStation', function () {
             mtc.currentStation = mtc.selectionService.getCurrentStation();
         });
+
+
     }
 
     public searchStations() {
