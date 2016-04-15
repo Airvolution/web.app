@@ -147,7 +147,6 @@ angular.module('app', [
             name: 'app.map',
             url: 'map?mode&cluster',
             template: '<map-view></map-view>'
-
         });
         states.push({
             name: 'app.almanac',
