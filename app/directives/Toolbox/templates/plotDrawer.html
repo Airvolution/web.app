@@ -9,44 +9,50 @@
                ng-model-options="ctrl.searchOptions"/>
     </div>
 
-    <!-- SEARCH RESULTS FOR STATIONS -->
-    <div class="station-container" ng-if="ctrl.stationQueryResults.length > 0">
-        <table class="table">
-            <thead>
-            <tr>
-                <th><span class="pull-left">Find</span></th>
-                <th><span>Station Name</span></th>
-                <th><input class="pull-right" type="checkbox"></th>
-            </tr>
-            </thead>
-            <tr ng-repeat="marker in ctrl.stationQueryResults track by marker.id">
-                <td>
-                    <button class="btn btn-map-marker pull-left" ng-click="ctrl.setSelectedStation(marker)">
-                        <span class="fa fa-map-marker" uib-tooltip="Locate On Map" tooltip-placement="left"></span>
-                    </button>
-                </td>
-                <td>{{::marker.name}}</td>
-                <td><input class="pull right" type="checkbox" ng-click="ctrl.setSelectedStation(marker)"></td>
-            </tr>
-        </table>
+    <!-- SEARCH RESULTS -->
+    <div class="search-results" ng-if="ctrl.stationQueryResults.length > 0">
+
+        <!-- STATIONS -->
+        <div class="station-container">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th><span class="pull-left">Find</span></th>
+                    <th><span>Station Name</span></th>
+                    <th><input class="pull-right" type="checkbox"></th>
+                </tr>
+                </thead>
+                <tr ng-repeat="marker in ctrl.stationQueryResults track by marker.id">
+                    <td>
+                        <button class="btn btn-map-marker pull-left" ng-click="ctrl.setSelectedStation(marker)">
+                            <span class="fa fa-map-marker" uib-tooltip="Locate On Map" tooltip-placement="left"></span>
+                        </button>
+                    </td>
+                    <td>{{::marker.name}}</td>
+                    <td><input class="pull right" type="checkbox" ng-click="ctrl.addMarkerToGroup(marker)"></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- GROUPS -->
+        <div class="group-container" ng-if="ctrl.stationQueryResults.length > 0">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th><span>Group Name</span></th>
+                    <th><input class="pull-right" type="checkbox"></th>
+                </tr>
+                </thead>
+                <tr ng-repeat="marker in ctrl.stationQueryResults track by marker.id">
+                    <td>{{::marker.name}}</td>
+                    <!-- TODO: add all markers in GROUP -->
+                    <td><input class="pull-right" type="checkbox"></td>
+                </tr>
+            </table>
+        </div>
     </div>
 
-    <!-- SEARCH RESULTS FOR GROUPS -->
-    <div class="group-container" ng-if="ctrl.stationQueryResults.length > 0">
-        <table class="table">
-            <thead>
-            <tr>
-                <th><span>Group Name</span></th>
-                <th><input class="pull-right" type="checkbox"></th>
-            </tr>
-            </thead>
-            <tr ng-repeat="marker in ctrl.stationQueryResults track by marker.id">
-                <td>{{::marker.name}}</td>
-                <!-- TODO: add all markers in GROUP -->
-                <td><input class="pull-right" type="checkbox"></td>
-            </tr>
-        </table>
-    </div>
+
 
     <!-- USER STATION SELECTION -->
     <div class="selection-container">
