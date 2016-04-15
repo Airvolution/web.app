@@ -6,6 +6,7 @@ class MapToolboxController {
     public stationQuery;
     public stationQueryResults;
 
+    public availableParameters;
     public selectedParameters;
 
     public searchOptions;
@@ -21,18 +22,20 @@ class MapToolboxController {
     public pollutantOptionsMap;
     public weatherOptions;
 
-    public static $inject = ['$scope','$state', 'mapFactory', 'selectionService','SearchService'];
+    public static $inject = ['$scope','$state', 'mapFactory', 'selectionService','SearchService', 'AQIColors'];
     constructor(
         private $scope,
         private $state,
         private mapFactory,
         private selectionService,
-        private SearchService
+        private SearchService,
+        private AQIColors
     ) {
 
         this.searchOptions = {updateOn: 'default blur', debounce: {'default': 250 , 'blur': 0}};
         this.stationQueryResults = [];
         this.selectedParameters = [];
+        this.availableParameters = this.AQIColors.getParameterList();
 
         let mtc = this;
         mtc.clusters = [];

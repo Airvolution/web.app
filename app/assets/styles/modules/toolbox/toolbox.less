@@ -119,69 +119,86 @@
   -webkit-transition: left 1s;
   transition: left 1s;
 
-  .toolbox-drawer-top {
-    height: 75%;
+  .search-container {
+    padding: 1em;
+    border-radius: 2em;
+    margin-bottom: 1em;
+    background-color: transparent;
 
-    .search-container {
-      padding: 1em;
-      border-radius: 2em;
-      margin-bottom: 1em;
+    .search {
+      width: 80%;
       background-color: transparent;
-
-      .search {
-        width: 80%;
-        background-color: transparent;
-        border: none;
-        &:focus {
-          outline: none !important;
-          border: 1px solid @button-green;
-        }
+      border: none;
+      &:focus {
+        outline: none !important;
+        border: 1px solid @button-green;
       }
     }
+  }
 
-    .search-results {
-      position: absolute;
-      height: 40%;
+
+  .search-results {
+    position: absolute;
+    height: 40%;
+    width: 100%;
+    background-color: black;
+    z-index: 1;
+
+    .station-container {
+      height: 45%;
       width: 100%;
-      background-color: black;
-
-      .station-container {
-        height: 45%;
-        width: 100%;
-        overflow-y: scroll;
-        border-top: groove 1px;
-        border-bottom: groove 1px;
-
-        .btn {
-          color: black;
-          padding-top: 0;
-          padding-bottom: 0;
-          padding-left: 0.5em;
-          padding-right: 0.5em;
-        }
-      }
-
-      .group-container {
-        position: absolute;
-        bottom: 0;
-        height: 45%;
-        width: 100%;
-        overflow-y: scroll;
-        border-top: groove 1px;
-        border-bottom: groove 1px;
-      }
+      overflow-y: scroll;
+      border-top: groove 1px;
+      border-bottom: groove 1px;
     }
 
-    .selection-container {
-      height: 30%;
+    .group-container {
+      position: absolute;
+      bottom: 0;
+      height: 45%;
+      width: 100%;
       overflow-y: scroll;
       border-top: groove 1px;
       border-bottom: groove 1px;
     }
   }
 
-  .toolbox-drawer-bottom {
-    height: 25%;
+  .selection-container {
+    width: 100%;
+    margin-top: 3.5em;
+    min-height: 15%;
+    max-height: 35%;
+    overflow-y: auto;
+    border-top: groove 1px;
+    border-bottom: groove 1px;
+  }
+
+  .container-header {
+    width: 100%;
+    padding-left: 0.5em;
+    padding-right: 2em;
+  }
+
+  .btn-map-marker {
+    color: black;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .btn-action {
+    margin: 0.5em;
+  }
+
+  .parameter-container {
+    width: 100%;
+    background-color: transparent;
+    min-height: 15%;
+    max-height: 35%;
+    overflow-y: auto;
+    border-top: groove 1px;
+    border-bottom: groove 1px;
   }
 
 
