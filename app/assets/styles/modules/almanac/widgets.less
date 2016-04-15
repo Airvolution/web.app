@@ -39,11 +39,13 @@ almanac-widget {
   background-color: white;
 
   .card-header {
+    position: relative;
     padding: 1em;
     padding-bottom: 0;
     overflow: auto;
     box-shadow: 0 0 1px @medium-darker-gray;
     background-color: @medium-light-gray;
+    z-index: 10000;
     &.neutral {
       background-color: @medium-dark-gray;
     }
