@@ -47,7 +47,6 @@
   z-index: 5;
   padding: .5em;
   background: @toolbox-background;
-  border: @toolbox-border;
   color: white;
 
   &.hidden{
@@ -121,12 +120,12 @@
   transition: left 1s;
 
   .toolbox-drawer-top {
-    height: 50%;
+    height: 75%;
 
     .search-container {
       padding: 1em;
       border-radius: 2em;
-      margin-bottom: 0.5em;
+      margin-bottom: 1em;
       background-color: transparent;
 
       .search {
@@ -141,20 +140,41 @@
     }
 
     .station-container {
-      height: 40%;
+      position: absolute;
+      height: 25%;
       overflow-y: scroll;
-      margin-bottom: 0.5em;
+      border-top: groove 1px;
+      border-bottom: groove 1px;
+      background-color: black;
+
+      .btn {
+        padding-top: 0;
+        padding-bottom: 0;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+      }
     }
 
     .group-container {
-      height: 40%;
+      position: absolute;
+      top: 35%;
+      height: 25%;
       overflow-y: scroll;
+      border-top: groove 1px;
+      border-bottom: groove 1px;
+      background-color: black;
+    }
+
+    .selection-container {
+      height: 30%;
+      overflow-y: scroll;
+      border-top: groove 1px;
+      border-bottom: groove 1px;
     }
   }
 
   .toolbox-drawer-bottom {
-    background-color: red;
-    height: 50%
+    height: 25%;
   }
 
 
