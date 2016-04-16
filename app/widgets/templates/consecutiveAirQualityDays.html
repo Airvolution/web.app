@@ -1,0 +1,23 @@
+<div ng-controller="ConsecutiveDaysWidgetController as ctrl">
+    <div ng-class="{'green'  : ctrl.consecutiveDays.category == 'green',
+                    'yellow' : ctrl.consecutiveDays.category == 'yellow',
+                    'orange' : ctrl.consecutiveDays.category == 'orange',
+                    'red'    : ctrl.consecutiveDays.category == 'red',
+                    'purple' : ctrl.consecutiveDays.category == 'purple',
+                    'maroon' : ctrl.consecutiveDays.category == 'maroon'}" class="card-header">
+        <i ng-class="{'fa-smile-o' : ctrl.consecutiveDays.category == 'green',
+                     'fa-meh-o'    : ctrl.consecutiveDays.category == 'yellow',
+                     'fa-frown-o'  : ctrl.consecutiveDays.category == 'orange',
+                     'fa-frown-o'  : ctrl.consecutiveDays.category == 'red',
+                     'fa-frown-o'  : ctrl.consecutiveDays.category == 'purple',
+                     'fa-frown-o'  : ctrl.consecutiveDays.category == 'maroon'}" class="fa fa-2x fa-border pull-right emoji"></i>
+        <p class="category">Consecutive</p>
+        <p class="title">{{ctrl.capitalizeFirst(ctrl.consecutiveDays.category)}} Air Days</p>
+    </div>
+    <div class="card-body">
+        <p class="value">{{ctrl.getConsecutiveDays()}}</p>
+    </div>
+    <div class="actions">
+        <i class="fa fa-twitter fa-2x pull-right"></i>
+    </div>
+</div>

@@ -13,11 +13,16 @@ class ConsecutiveDaysWidgetController {
         });
     }
 
-    public getConsecutiveDays(category){
-        if(this.consecutiveDays && this.consecutiveDays.category == category){
+    public getConsecutiveDays(){
+        if(this.consecutiveDays){
             return this.consecutiveDays.count;
-        }else{
-            return 0;
+        }
+    }
+
+    public capitalizeFirst(input){
+        if (input != null){
+            input = input.toLowerCase();
+            return input.substring(0,1).toUpperCase()+input.substring(1);
         }
     }
 }
