@@ -84,9 +84,9 @@ class MapViewController {
                 });
             },
             togglePlot: ()=>{
-                if (!mv.selectedStation || !mv.selectedStation.id) {
-                    return;
-                }
+                //if (!mv.selectedStation || !mv.selectedStation.id) {
+                //    return;
+                //}
                 mv.plotVisible = !mv.plotVisible;
                 if (mv.plotVisible) {
                     mv.generatePlot();
@@ -279,14 +279,9 @@ class MapViewController {
         let stationsGroup = this.selectionService.getCurrentStationSelectionIds();
         let paramsGroup = this.selectionService.getCurrentPollutantSelection();
 
-        if (stationsGroup.length != 0) {
+        if (stationsGroup.length != 0 && paramsGroup != 0) {
             this.unsetChartData();
             this.getDataForPlot(stationsGroup, paramsGroup);
-        } else if (!this.selectedStation || !this.selectedStation.id) {
-            return;
-        } else {
-            this.unsetChartData();
-            this.getDataForPlot(this.selectedStation.id, paramsGroup);
         }
     }
 

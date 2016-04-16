@@ -5,10 +5,6 @@ export = MapToolboxController;
 class MapToolboxController {
     public stationQuery;
     public stationQueryResults;
-
-    public availableParameters;
-    public selectedParameters;
-
     public searchOptions;
 
     public expanded;
@@ -26,8 +22,16 @@ class MapToolboxController {
     public markerSelection;
     public markerSelectionIds;
     public markerUncheckedIds;
+    public availableParameters;
+    public selectedParameters;
+    public fromDate;
+    public toDate;
 
-    public static $inject = ['$scope','$state', '$log', 'mapFactory', 'selectionService','SearchService', 'AQIColors'];
+    // variables for user defaults
+    public userDefaultStation;
+    public userDefaultParameters;
+
+    public static $inject = ['$scope','$state', '$log', 'mapFactory', 'selectionService','SearchService', 'AQIColors', 'preferencesService', 'notificationService'];
     constructor(
         private $scope,
         private $state,
@@ -35,16 +39,27 @@ class MapToolboxController {
         private mapFactory,
         private selectionService,
         private SearchService,
-        private AQIColors
+        private AQIColors,
+        private preferencesService,
+        private notificationService
     ) {
         this.markerSelection = [];    // array of all markers in selection group
         this.markerSelectionIds = {}; // maps marker.id to index in marker array
         this.markerUncheckedIds = {}; // maps marker.id to index in marker array, contains unchecked markers which must still be displayed
+        this.availableParameters = this.AQIColors.getParameterList();
+        this.selectedParameters = [];
+        //this.loadUserDefaults(); // <-- TODO: see comment in method declaration!
+        this.toDate = new Date();
+        this.fromDate = new Date();
+        this.fromDate.setDate(this.fromDate.getDate() - 7);
+
+
+        //var today = new Date();
+        //this.then = new Date().setDate(today.getDate() - 45);
+
 
         this.searchOptions = {updateOn: 'default blur', debounce: {'default': 250 , 'blur': 0}};
         this.stationQueryResults = [];
-        this.selectedParameters = [];
-        this.availableParameters = this.AQIColors.getParameterList();
 
         let mtc = this;
         mtc.clusters = [];
@@ -102,6 +117,10 @@ class MapToolboxController {
         return this.markerUncheckedIds[marker.id] == undefined;
     }
 
+    public isParameterChecked(parameter) {
+        return this.selectedParameters.indexOf(parameter) > -1;
+    }
+
     public toggleMarker(marker) {
         let index = this.markerSelectionIds[marker.id];
         if (index != undefined) {
@@ -125,6 +144,54 @@ class MapToolboxController {
             // Un-Checks the marker in the Selection Group
             this.markerUncheckedIds[marker.id] = this.markerSelectionIds[marker.id];
         }
+    }
+
+    public toggleParameter(parameter) {
+        let index = this.selectedParameters.indexOf(parameter);
+        if (index > -1) {
+            this.selectedParameters.splice(index, 1);
+        } else {
+            this.selectedParameters.push(parameter);
+        }
+    }
+
+    public configurePlot() {
+        let self = this;
+        angular.forEach(self.markerSelection, (marker) => {
+            if (self.isMarkerChecked(marker)) {
+                self.selectionService.addStationToSelection(marker);
+            }
+        });
+
+        angular.forEach(self.selectedParameters, (parameter) => {
+            if (self.isParameterChecked(parameter)) {
+                self.selectionService.addPollutantToSelection(parameter.name);
+            }
+        });
+
+        self.$scope.togglePlot();
+        self.selectionService.reset();
+    }
+
+    public loadUserDefaults() {
+        // TODO: BUG!!! if this is called before the map loads, the map will never load tiles !??!
+        let self = this;
+        this.preferencesService.loadUserDefaults().then((userPreferences) => {
+            // TODO: do something with the station id
+            self.userDefaultStation = userPreferences.defaultStationId;
+            self.userDefaultParameters = userPreferences.defaultParameters;
+
+            angular.forEach(self.userDefaultParameters, (userParameter) => {
+                angular.forEach(self.availableParameters, (parameter) => {
+                    if (parameter.name == userParameter.name) {
+                        self.selectedParameters.push(parameter);
+                    }
+                });
+            });
+            self.$log.log('received userPreferences: ' + userPreferences);
+        }, (error) => {
+            self.$log.log('received error: ' + error);
+        });
     }
 
     public clearSelectionGroup() {
