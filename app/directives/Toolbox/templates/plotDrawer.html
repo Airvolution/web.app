@@ -60,7 +60,7 @@
 <!-- USER STATION SELECTION -->
 <div class="container-header">
     <span class="pull-left">Selected Stations: </span>
-    <span class="pull-right">{{ctrl.stationGroup.length}}</span>
+    <span class="pull-right">{{ctrl.markerSelection.length}}</span>
 </div>
 <div class="selection-container">
     <table class="table">
@@ -78,13 +78,16 @@
                 </button>
             </td>
             <td>{{::marker.name}}</td>
-            <td><input class="pull-right" type="checkbox"></td>
+            <td><input class="pull-right"
+                       type="checkbox"
+                       ng-click="ctrl.toggleChecked(marker)"
+                       ng-checked="ctrl.isMarkerChecked(marker)"></td>
         </tr>
     </table>
 </div>
 <div class="container-header">
-    <button class="btn btn-primary btn-action pull-right">Save</button>
-    <button class="btn btn-danger btn-action pull-right">Clear</button>
+    <button class="btn btn-primary btn-action pull-right" ng-click="ctrl.saveSelectionGroup()">Save</button>
+    <button class="btn btn-danger btn-action pull-right" ng-click="ctrl.clearSelectionGroup()">Clear</button>
 </div>
 
 <!-- PARAMETER SELECTION -->

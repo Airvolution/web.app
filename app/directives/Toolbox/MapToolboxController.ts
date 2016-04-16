@@ -25,18 +25,21 @@ class MapToolboxController {
     // new variables ^^^ some of previous variables are buggy
     public markerSelection;
     public markerSelectionIds;
+    public markerUncheckedIds;
 
-    public static $inject = ['$scope','$state', 'mapFactory', 'selectionService','SearchService', 'AQIColors'];
+    public static $inject = ['$scope','$state', '$log', 'mapFactory', 'selectionService','SearchService', 'AQIColors'];
     constructor(
         private $scope,
         private $state,
+        private $log,
         private mapFactory,
         private selectionService,
         private SearchService,
         private AQIColors
     ) {
-        this.markerSelection = [];
-        this.markerSelectionIds = {};
+        this.markerSelection = [];    // array of all markers in selection group
+        this.markerSelectionIds = {}; // maps marker.id to index in marker array
+        this.markerUncheckedIds = {}; // maps marker.id to index in marker array, contains unchecked markers which must still be displayed
 
         this.searchOptions = {updateOn: 'default blur', debounce: {'default': 250 , 'blur': 0}};
         this.stationQueryResults = [];
@@ -92,25 +95,47 @@ class MapToolboxController {
     }
 
     public isMarkerInGroup(marker) {
-        //return this.stationGroupMap.hasOwnProperty(marker.id);
         return this.markerSelectionIds[marker.id] != undefined;
     }
 
+    public isMarkerChecked(marker) {
+        return this.markerUncheckedIds[marker.id] == undefined;
+    }
+
     public toggleMarker(marker) {
-        //if (this.stationGroupMap[marker.id]) {
-        //    this.removeMarkerFromGroup(marker);
-        //} else {
-        //    this.addMarkerToGroup(marker);
-        //}
-        //this.getStationGroupFromSelectionService();
         let index = this.markerSelectionIds[marker.id];
         if (index != undefined) {
+            // Removes marker from Selection Group
             this.markerSelection.splice(index, 1);
             delete this.markerSelectionIds[marker.id];
+            delete this.markerUncheckedIds[marker.id];
         } else {
+            // Adds marker to Selection Group
             this.markerSelectionIds[marker.id] = this.markerSelection.length;
             this.markerSelection.push(marker);
         }
+    }
+
+    public toggleChecked(marker) {
+        let index = this.markerUncheckedIds[marker.id];
+        if (index != undefined) {
+            // Re-Checks the marker in the Selection Group
+            delete this.markerUncheckedIds[marker.id];
+        } else {
+            // Un-Checks the marker in the Selection Group
+            this.markerUncheckedIds[marker.id] = this.markerSelectionIds[marker.id];
+        }
+    }
+
+    public clearSelectionGroup() {
+        this.markerSelection = [];    // array of all markers in selection group
+        this.markerSelectionIds = {}; // maps marker.id to index in marker array
+        this.markerUncheckedIds = {}; // maps marker.id to index in marker array, contains unchecked markers which must still be displayed
+    }
+
+    public saveSelectionGroup() {
+        // TODO: implement this functionality
+        this.$log.log('MapToolboxController: saveSelectionGroup() called. TODO: Implement this functionality.');
     }
 
     private convertMapLayersToArray(layers) {
