@@ -102,20 +102,21 @@ class MapViewController {
                 }
             },
             downloadPlotData: ()=>{
-                if (!mv.selectedStation || !mv.selectedStation.id) {
+                /*if (!mv.selectedStation || !mv.selectedStation.id) {
                     return;
-                }
+                }*/
 
                 let stationsGroup = mv.selectionService.getCurrentStationSelectionIds();
                 let paramsGroup = mv.selectionService.getCurrentPollutantSelection();
+                let dates = mv.selectionService.getDateRange();
 
                 if (stationsGroup.length != 0) {
-                    mv.mapFactory.downloadDataFromStation(stationsGroup, paramsGroup);
-                } else if (!mv.selectedStation || !mv.selectedStation.id) {
+                    mv.mapFactory.downloadDataFromStation(stationsGroup, paramsGroup, dates);
+                } /*else if (!mv.selectedStation || !mv.selectedStation.id) {
                     return;
                 } else {
                     this.mapFactory.downloadDataFromStation(mv.selectedStation.id, paramsGroup);
-                }
+                }*/
             },
             toggleCluster: (cluster)=>{
                 if (cluster.id && mv.layers.overlays[cluster.id]) {
@@ -278,16 +279,17 @@ class MapViewController {
     public generatePlot() {
         let stationsGroup = this.selectionService.getCurrentStationSelectionIds();
         let paramsGroup = this.selectionService.getCurrentPollutantSelection();
+        let dateRange = this.selectionService.getDateRange();
 
         if (stationsGroup.length != 0 && paramsGroup != 0) {
             this.unsetChartData();
-            this.getDataForPlot(stationsGroup, paramsGroup);
+            this.getDataForPlot(stationsGroup, paramsGroup, dateRange);
         }
     }
 
-    private getDataForPlot(ids, params) {
+    private getDataForPlot(ids, params, dates) {
         let self = this;
-        self.mapFactory.getDataFromStation(ids, params).then(
+        self.mapFactory.getDataFromStation(ids, params, dates).then(
             function (response) {
                 self.chartOptions = response.chartOptions;
                 self.chartData = response.chartData;

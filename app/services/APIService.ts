@@ -213,11 +213,12 @@ class APIService {
         return deferred.promise;
     }
 
-    public downloadDataFromStation(id) {
-        // TODO: when compare view is ready, add support for multiple stations / variable param lists
+    public downloadDataFromStation(ids, params, dates) {
         let config = {
-            stationID: id,
-            parameter: ["PM2.5", "PM10", "OZONE", "CO", "NO2", "SO2"]
+            StationIds: ids,
+            Parameters: params,
+            FromDate: dates[0],
+            ToDate: dates[1]
         };
         let url = '/api/stations/download?' + this.$httpParamSerializer(config);
 
@@ -232,20 +233,17 @@ class APIService {
         }, 10000);
     }
 
-    public asyncGetNVD3DataPointsFrom(ids, params) {
-        // TODO: when compare view is ready, add support for multiple stations / variable param lists
+    public asyncGetNVD3DataPointsFrom(ids, params, dates) {
         var deferred = this.$q.defer();
 
         let self = this;
         let url = "api/stations/parameterValues";
         let config = {
-            //params: {
-            //    stationID: ids,
-            //    parameter: ["PM2.5", "PM10", "OZONE", "CO", "NO2", "SO2"]
-            //}
             params: {
-                stationID: ids,
-                parameter: params
+                StationIds: ids,
+                Parameters: params,
+                FromDate: dates[0],
+                ToDate: dates[1]
             }
         };
         self.$http.get(url, config).then(

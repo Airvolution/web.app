@@ -53,11 +53,6 @@ class MapToolboxController {
         this.fromDate = new Date();
         this.fromDate.setDate(this.fromDate.getDate() - 7);
 
-
-        //var today = new Date();
-        //this.then = new Date().setDate(today.getDate() - 45);
-
-
         this.searchOptions = {updateOn: 'default blur', debounce: {'default': 250 , 'blur': 0}};
         this.stationQueryResults = [];
 
@@ -155,22 +150,36 @@ class MapToolboxController {
         }
     }
 
-    public configurePlot() {
+    public showPlot() {
+        this.configureOptions();
+        this.$scope.togglePlot();
+        this.selectionService.reset();
+    }
+
+    public downloadData() {
+        this.configureOptions();
+        this.$scope.downloadPlotData();
+        this.selectionService.reset();
+    }
+
+    public configureOptions() {
         let self = this;
+        // sets markers
         angular.forEach(self.markerSelection, (marker) => {
             if (self.isMarkerChecked(marker)) {
                 self.selectionService.addStationToSelection(marker);
             }
         });
 
+        // sets parameters
         angular.forEach(self.selectedParameters, (parameter) => {
             if (self.isParameterChecked(parameter)) {
                 self.selectionService.addPollutantToSelection(parameter.name);
             }
         });
 
-        self.$scope.togglePlot();
-        self.selectionService.reset();
+        // sets time range
+        this.selectionService.setDateRange(this.fromDate, this.toDate);
     }
 
     public loadUserDefaults() {
