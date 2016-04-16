@@ -22,6 +22,10 @@ class MapToolboxController {
     public pollutantOptionsMap;
     public weatherOptions;
 
+    // new variables ^^^ some of previous variables are buggy
+    public markerSelection;
+    public markerSelectionIds;
+
     public static $inject = ['$scope','$state', 'mapFactory', 'selectionService','SearchService', 'AQIColors'];
     constructor(
         private $scope,
@@ -31,6 +35,8 @@ class MapToolboxController {
         private SearchService,
         private AQIColors
     ) {
+        this.markerSelection = [];
+        this.markerSelectionIds = {};
 
         this.searchOptions = {updateOn: 'default blur', debounce: {'default': 250 , 'blur': 0}};
         this.stationQueryResults = [];
@@ -86,7 +92,25 @@ class MapToolboxController {
     }
 
     public isMarkerInGroup(marker) {
-        return this.stationGroupMap.hasOwnProperty(marker.id);
+        //return this.stationGroupMap.hasOwnProperty(marker.id);
+        return this.markerSelectionIds[marker.id] != undefined;
+    }
+
+    public toggleMarker(marker) {
+        //if (this.stationGroupMap[marker.id]) {
+        //    this.removeMarkerFromGroup(marker);
+        //} else {
+        //    this.addMarkerToGroup(marker);
+        //}
+        //this.getStationGroupFromSelectionService();
+        let index = this.markerSelectionIds[marker.id];
+        if (index != undefined) {
+            this.markerSelection.splice(index, 1);
+            delete this.markerSelectionIds[marker.id];
+        } else {
+            this.markerSelectionIds[marker.id] = this.markerSelection.length;
+            this.markerSelection.push(marker);
+        }
     }
 
     private convertMapLayersToArray(layers) {

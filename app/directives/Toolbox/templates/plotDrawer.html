@@ -21,6 +21,9 @@
                 <th><input type="checkbox"></th>
             </tr>
             </thead>
+            <!-- TODO: getting an error here:
+            https://docs.angularjs.org/error/ngRepeat/dupes?p0=marker%20in%20ctrl.stationGroup&p1=object:398&p2=%7B%22id%22:%22840261619991%22,%22userid%22:1,%22indoor%22:false,%22agency%22:%22EPA%20Office%20of%20Atmospheric%20Programs%22,%22name%22:%22Ann%20Arbor%22,%22city%22:%22Dexter%22,%22state%22:%22MI%22,%22postal%22:%2248130%22,%22groupname%22:null,%22groupemail%22:null,%22aqi%22:19,%22@version%22:%221%22,%22@timestamp%22:%222016-03-09T10:37:36.063Z%22,%22location%22:%7B%22lat%22:42.4164,%22lon%22:-83.9019%7D,%22$$hashKey%22:%22object:398%22%7D
+            -->
             <tr ng-repeat="marker in ctrl.stationQueryResults track by marker.id">
                 <td>
                     <button class="btn btn-map-marker pull-left" ng-click="ctrl.setSelectedStation(marker)">
@@ -28,7 +31,10 @@
                     </button>
                 </td>
                 <td>{{::marker.name}}</td>
-                <td><input class="pull right" type="checkbox" ng-click="ctrl.addMarkerToGroup(marker)"></td>
+                <td><input class="pull right"
+                           type="checkbox"
+                           ng-click="ctrl.toggleMarker(marker)"
+                           ng-checked="ctrl.isMarkerInGroup(marker)"></td>
             </tr>
         </table>
     </div>
@@ -53,8 +59,8 @@
 
 <!-- USER STATION SELECTION -->
 <div class="container-header">
-    <span class="pull-left">Selected Stations</span>
-    <span class="pull-right"># {{ctrl.stationGroup.length}}</span>
+    <span class="pull-left">Selected Stations: </span>
+    <span class="pull-right">{{ctrl.stationGroup.length}}</span>
 </div>
 <div class="selection-container">
     <table class="table">
@@ -65,7 +71,7 @@
             <th><input class="pull-right" type="checkbox"></th>
         </tr>
         </thead>
-        <tr ng-repeat="marker in ctrl.stationGroup track by marker.id">
+        <tr ng-repeat="marker in ctrl.markerSelection track by marker.id">
             <td>
                 <button class="btn btn-map-marker pull-left" ng-click="ctrl.setSelectedStation(marker)">
                     <span class="fa fa-map-marker" uib-tooltip="Locate On Map" tooltip-placement="left"></span>
@@ -83,8 +89,8 @@
 
 <!-- PARAMETER SELECTION -->
 <div class="container-header">
-    <span class="pull-left">Parameter Selection</span>
-    <span class="pull-right"># {{ctrl.selectedParameters.length}}</span>
+    <span class="pull-left">Selected Parameters: </span>
+    <span class="pull-right">{{ctrl.selectedParameters.length}}</span>
 </div>
 <div class="parameter-container">
     <table class="table">
@@ -111,4 +117,12 @@
 <div class="datetime-container">
     <span>To: </span>
     <input class="pull-right" type="datetime-local" name="toDate">
+</div>
+
+<!-- PLOT / DOWNLOAD -->
+<div class="datetime-container">
+    <button class="btn btn-primary" id="plot-button">Plot</button>
+    <button class="btn btn-default" id="download-button">
+        <span class="fa fa-download"></span>
+    </button>
 </div>
