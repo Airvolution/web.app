@@ -12,13 +12,15 @@ class AlmanacWidgetController {
         '45-day-trend': 'trendsTemplate.html',
         'heatmap': 'heatmapTemplate.html',
         'week-average': 'avgAQI7Days.html',
-        'monthly-pie-chart': 'monthlyPieChart.html'
+        'monthly-pie-chart': 'monthlyPieChart.html',
+        'longest-streaks' : 'longestStreaks.html'
     };
 
     private templateSizeMap = {
         'consecutive-green-days': 'medium',
         'consecutive-red-days': 'medium',
         'consecutive-yellow-days': 'medium',
+        'longest-streaks' : 'medium',
         '45-day-trend': 'xl',
         'heatmap': 'large',
         'week-average': 'medium',

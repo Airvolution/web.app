@@ -10,6 +10,36 @@ class ConsecutiveDaysFactory {
     constructor(private ApiService,
                 private $q) {}
 
+    public getLongestStreaks() {
+        var deferred = this.$q.defer();
+        var self = this;
+        var longestGreenStreak = 0;
+        var longestYellowStreak = 0;
+        var longestOrangeStreak = 0;
+        var longestRedStreak = 0;
+        var longestPurpleStreak = 0;
+        var longestMaroonStreak = 0;
+        this.ApiService.getDailies(365).then((values)=>{
+
+            longestGreenStreak  = this.getLongestStreakFor(1, values);
+            longestYellowStreak = this.getLongestStreakFor(2, values);
+            longestOrangeStreak = this.getLongestStreakFor(3, values);
+            longestRedStreak    = this.getLongestStreakFor(4, values);
+            longestPurpleStreak = this.getLongestStreakFor(5, values);
+            longestMaroonStreak = this.getLongestStreakFor(6, values);
+
+            deferred.resolve({
+                longestGreen:  longestGreenStreak,
+                longestYellow: longestYellowStreak,
+                longestOrange: longestOrangeStreak,
+                longestRed:    longestRedStreak,
+                longestPurple: longestPurpleStreak,
+                longestMaroon: longestMaroonStreak
+            });
+        },(error)=>{deferred.reject(error);});
+        return deferred.promise;
+    }
+
     public getConsecutiveDays() {
         var deferred = this.$q.defer();
         var self = this;
@@ -47,5 +77,28 @@ class ConsecutiveDaysFactory {
             default:
                 return 'unknown';
         }
+    }
+
+    private getLongestStreakFor(category, values) {
+        var count = 0;
+        var currentStreakCount = 0;
+        var longestStreak = 0;
+        for (count; count < values.length; count++) {
+            var value = values[count];
+            if (value.maxCategory == category) {
+                currentStreakCount++;
+            }
+            else {
+                if(currentStreakCount > longestStreak) {
+                    // Save longest streak so far.
+                    longestStreak = currentStreakCount;
+                }
+
+                // Reset current count to 0.
+                currentStreakCount = 0;
+            }
+        }
+
+        return longestStreak;
     }
 }
