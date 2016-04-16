@@ -132,6 +132,12 @@ angular.module('app', [
             requireAuth: true
         });
         states.push({
+            name: 'app.config.groups',
+            url: 'groups/',
+            template: '<my-groups></my-groups>',
+            requireAuth: true
+        });
+        states.push({
             name: 'app.config.register',
             url: 'register/',
             template: '<register-station></register-station>',
