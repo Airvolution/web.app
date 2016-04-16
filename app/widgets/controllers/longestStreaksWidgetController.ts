@@ -4,19 +4,21 @@ export = LongestStreaksWidgetController;
 
 class LongestStreaksWidgetController {
     public static name = 'LongestStreaksWidgetController';
-    public static $inject = ['ConsecutiveDaysFactory', 'AQIColors'];
+    public static $inject = ['ConsecutiveDaysFactory', 'AQIColors', '$scope'];
     public longestStreaks;
     public plotOptions;
     public plotData;
     public loading;
 
-    constructor(ConsecutiveDaysFactory, private AQIColors) {
+    constructor(ConsecutiveDaysFactory, private AQIColors, private $scope) {
         var self = this;
 
         self.configurePlotOptions();
 
         ConsecutiveDaysFactory.getLongestStreaks().then((data)=>{
             self.longestStreaks = data;
+
+            self.getPlotData(self.longestStreaks);
         });
     }
 
@@ -27,80 +29,76 @@ class LongestStreaksWidgetController {
     public configurePlotOptions() {
         this.plotOptions = {
             chart: {
-                type: "barChart",
-                height: 220,
-                width: 280,
-                duration: 500,
-                legend: {
-                    margin: {
-                        top: 8,
-                        right: 5,
-                        bottom: 0,
-                        left: 0
-                    }
+                type: "discreteBarChart",
+                height: 230,
+                width: 600,
+                margin : {
+                    top: 20,
+                    right: 20,
+                    bottom: 50,
+                    left: 60
                 },
-                showLabels: false,
-                color: [],
-                x: (d) => { return d.key; },
-                y: (d) => { return d.y; }
+                x: function(d){return d.label;},
+                y: function(d){return d.value;},
+                showValues: true,
+                valueFormat: function(d){
+                    return d3.format('.0f')(d);
+                },
+                duration: 500,
+                xAxis: {
+                    axisLabel: 'AQI Categories'
+                },
+                yAxis: {
+                    axisLabel: 'Longest Streak in Days',
+                    tickFormat: d3.format(',.0d')
+                },
+                color: []
             }
         };
     }
 
-    public getPlotData(dailies) {
+    public getPlotData(longestStreaks) {
         let self = this;
-        if (!dailies) {
+        if (!longestStreaks) {
             self.loading = true;
             return;
         }
 
-        // count the number of max categories in dailies
-        let categories = {
-            1: 0,
-            2: 0,
-            3: 0,
-            4: 0,
-            5: 0,
-            6: 0
-        };
-
-        for (let i = 0; i < dailies.length; i++) {
-            let index = dailies[i]['maxCategory'];
-            if (index > 0 && index < 7) {
-                categories[index] += 1;
-            }
-        }
-
         this.plotData = [
             {
-                key: 'Green',
-                y: categories[1],
-                color: this.AQIColors.getColorFromCategory(1)
-            },
-            {
-                key: 'Yellow',
-                y: categories[2],
-                color: this.AQIColors.getColorFromCategory(2)
-            },
-            {
-                key: 'Orange',
-                y: categories[3],
-                color: this.AQIColors.getColorFromCategory(3)
-            },
-            {
-                key: 'Red',
-                y: categories[4],
-                color: this.AQIColors.getColorFromCategory(4)
-            },
-            {
-                key: 'Purple',
-                y: categories[5],
-                color: this.AQIColors.getColorFromCategory(5)
-            },
-            {
-                key: 'Maroon',
-                y: categories[6],
-                color: this.AQIColors.getColorFromCategory(6)
+                key: "asd",
+                values: [
+                    {
+                        label: 'Green',
+                        value: longestStreaks.longestGreen,
+                        color: this.AQIColors.getColorFromCategory(1)
+                    },
+                    {
+                        label: 'Yellow',
+                        value: longestStreaks.longestYellow,
+                        color: this.AQIColors.getColorFromCategory(2)
+                    },
+                    {
+                        label: 'Orange',
+                        value: longestStreaks.longestOrange,
+                        color: this.AQIColors.getColorFromCategory(3)
+                    },
+                    {
+                        label: 'Red',
+                        value: longestStreaks.longestRed,
+                        color: this.AQIColors.getColorFromCategory(4)
+                    },
+                    {
+                        label: 'Purple',
+                        value: longestStreaks.longestPurple,
+                        color: this.AQIColors.getColorFromCategory(5)
+                    },
+                    {
+                        label: 'Maroon',
+                        value: longestStreaks.longestMaroon,
+                        color: this.AQIColors.getColorFromCategory(6)
+                    }
+                ]
             }
         ];
 

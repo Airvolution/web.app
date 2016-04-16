@@ -20,7 +20,7 @@ class AlmanacWidgetController {
         'consecutive-green-days': 'medium',
         'consecutive-red-days': 'medium',
         'consecutive-yellow-days': 'medium',
-        'longest-streaks' : 'medium',
+        'longest-streaks' : 'large',
         '45-day-trend': 'xl',
         'heatmap': 'large',
         'week-average': 'medium',
