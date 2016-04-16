@@ -9,6 +9,7 @@ import ToolboxDirectives = require('./Toolbox/module');
 import FAQDirectives = require('./FAQ/module');
 import SearchDirectives = require('./Search/module');
 import ConfigModule = require('./Config/module');
+import AboutModule = require('./About/module');
 import ModelMatchesDirective = require("./modelMatchesDirective");
 
 export = angular.module('directives', [
@@ -18,7 +19,8 @@ export = angular.module('directives', [
         ToolboxDirectives.name,
         FAQDirectives.name,
         SearchDirectives.name,
-        ConfigModule.name
+        ConfigModule.name,
+        AboutModule.name
     ])
             .directive(WeatherDirective.htmlName, WeatherDirective.create)
             .directive(FooterDirective.htmlName, FooterDirective.create)
