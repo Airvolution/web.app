@@ -22,7 +22,7 @@ class AlmanacWidgetController {
         'heatmap': 'large',
         'week-average': 'medium',
         'monthly-pie-chart': 'medium',
-        'ranking-widget': 'medium'
+        'ranking-widget': 'large'
     };
 
     public static $inject = ['$scope'];
