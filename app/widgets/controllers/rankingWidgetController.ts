@@ -13,6 +13,13 @@ class RankingWidgetController {
     public yourStation;
 
     public nationalRank;
+    public nationalTotal;
+
+    public bestStateStation;
+    public worstStateStation;
+
+    public stateRank;
+    public stateTotal;
 
     public static $inject = ['$scope', '$log', 'APIService'];
     public constructor (
@@ -36,14 +43,37 @@ class RankingWidgetController {
         });
     }
 
-    public getStationAndRanking(stationID, stations) {
+    public getStationAndNationalRanking(stationID, stations) {
         for (var i = 0; i < stations.length; i++){
             if (stations[i].id==stationID){
-                this.nationalRank = i;
+                this.nationalRank = i+1;
                 return stations[i];
             }
 
         }
+    }
+
+    public setStateRankingAndLength(stations){
+        var stateTotalCount = 0;
+        var lastStateStation = 0;
+
+        for (var i = 0; i < stations.length; i ++){
+            if (stations[i].id==this.yourStation.id) {
+                this.stateRank = stateTotalCount + 1;
+            }
+
+            if (stations[i].state==this.yourStation.state){
+                if (stateTotalCount == 0){
+                    this.bestStateStation = stations[i];
+                }
+
+                stateTotalCount++;
+                lastStateStation = i;
+            }
+
+        }
+        this.stateTotal = stateTotalCount;
+        this.worstStateStation = stations[lastStateStation];
     }
 
     public someFunction(dailies, markers) {
@@ -54,11 +84,10 @@ class RankingWidgetController {
 
         markers.sort((a, b) => a.aqi - b.aqi);
 
-        this.yourStation = this.getStationAndRanking(dailies[0].station_Id, markers);
+        this.nationalTotal = markers.length;
+        this.yourStation = this.getStationAndNationalRanking(dailies[0].station_Id, markers);
+        this.setStateRankingAndLength(markers);
         this.bestStation = markers[0];
         this.worstStation = markers[markers.length-1];
-
-
-
     }
 }

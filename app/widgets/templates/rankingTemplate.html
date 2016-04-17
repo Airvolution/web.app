@@ -1,16 +1,32 @@
 <div ng-controller="RankingWidgetController as ctrl">
     <div class="card-header neutral">
         <p class="category">AQI</p>
-        <p class="title">National Rankings</p>
+        <p class="title">Best and Worst Cities (by AQI)</p>
     </div>
     <div class="card-body">
-        <h5>Best: {{ctrl.bestStation.city}}, {{ctrl.bestStation.state}}</h5>
-        {{ctrl.bestStation.aqi}}
-        <h5>Worst: {{ctrl.worstStation.city}}, {{ctrl.worstStation.state}}</h5>
-        {{ctrl.worstStation.aqi}}
-        <hr>
-        <h5>Yours: {{ctrl.yourStation.city}}, {{ctrl.yourStation.state}}</h5>
-        <p>{{ctrl.yourStation.aqi}} Ranking: {{ctrl.nationalRank}}/355</p>
+        <div class="box">
+
+            <div class="box-left">
+                <h4 class="box-header">National</h4>
+                <h5>Best: {{ctrl.bestStation.city}}, {{ctrl.bestStation.state}}: {{ctrl.bestStation.aqi}}</h5>
+
+                <h5>Worst: {{ctrl.worstStation.city}}, {{ctrl.worstStation.state}}: {{ctrl.worstStation.aqi}}</h5>
+                <hr>
+                <h5>Yours: {{ctrl.yourStation.city}}, {{ctrl.yourStation.state}}: {{ctrl.yourStation.aqi}}</h5>
+                <p>Ranking: {{ctrl.nationalRank}}/{{ctrl.nationalTotal}}</p>
+            </div>
+
+            <div class="box-right">
+                <h4 class="box-header">State</h4>
+                <h5>Best: {{ctrl.bestStateStation.city}}, {{ctrl.bestStateStation.state}}: {{ctrl.bestStateStation.aqi}}</h5>
+                <h5>Worst: {{ctrl.worstStateStation.city}}, {{ctrl.worstStateStation.state}}: {{ctrl.worstStateStation.aqi}}</h5>
+                <hr>
+                <h5>Yours: {{ctrl.yourStation.city}}, {{ctrl.yourStation.state}}: {{ctrl.yourStation.aqi}}</h5>
+                <p>Ranking: {{ctrl.stateRank}}/{{ctrl.stateTotal}}</p>
+            </div>
+
+        </div>
+
     </div>
     <div class="actions">
     </div>
