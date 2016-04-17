@@ -117,3 +117,45 @@
   }
 }
 
+#map-search {
+  z-index: 1;
+  position: absolute;
+  top: 2em;
+  left: 5em;
+  text-align: left;
+  padding: 0;
+
+  color: @medium-lighter-gray;
+  background-color: rgba(0,0,0,.75);
+  border-radius: 1em;
+
+  input {
+   width: 20em;
+    border-radius: 1em;
+    padding: .25em .5em;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    color: @medium-lighter-gray;
+    background: transparent;
+    border: none;
+
+    &::-webkit-input-placeholder {
+      color: @medium-lighter-gray;
+      opacity: 1;
+    }
+    &::-moz-placeholder {
+      color:    @medium-lighter-gray;
+      opacity:  1;
+    }
+    &:-ms-input-placeholder {
+      color:    @medium-lighter-gray;
+    }
+  }
+
+  .results {
+    padding: .5em;
+  }
+}
+

@@ -1,8 +1,9 @@
 <main>
     <map-toolbox></map-toolbox>
+    <map-search></map-search>
     <leaflet id="map" lf-center="ctrl.center" markers="ctrl.markers" defaults="ctrl.defaults" tiles="ctrl.tiles" layers="ctrl.layers" controls="ctrl.controls" event-broadcast="ctrl.events"></leaflet>
 
-    <!-- Coordinate bounds of Map for development purposes -->
+    <!-- Coordinate bounds of Map for development purposes
     <div ng-class="{'hidden':true}" class="col-md-12" id="map-coords">
         <div class="coord-bound" id="sw">
             <h3 class="coord-title">South West</h3>
@@ -18,15 +19,10 @@
                 Lng : <input type="number" step="any" ng-model="ctrl.bounds._northEast.lng"/>
             </form>
         </div>
-    </div>
+    </div>-->
 
-    <!-- This is the NVD3 data plot that is linked with the Details Panel -->
     <div id="details-plot" ng-class="{'hidden':!ctrl.plotVisible}">
         <nvd3 class="dark-plot" options="ctrl.chartOptions" data="ctrl.chartData"></nvd3>
-        <!-- An SVG object will be here when built -->
     </div>
-
-    <!--<button ng-hide="false" id="map-plot-btn" ng-click="ctrl.showStationChart()" class="btn btn-default">{{ctrl.plotVisible ? 'Hide' : 'Show' }} Plot</button>-->
-    <!--<button ng-hide="!ctrl.selectedStation || !ctrl.selectedStation.id" id="map-download-btn" ng-click="ctrl.downloadStationData()" class="btn btn-default">Download</button>-->
     <map-details visible="ctrl.detailsVisible" data="ctrl.selectedStation" loading="ctrl.loadingStationData" type="ctrl.detailsMode"></map-details>
 </main>

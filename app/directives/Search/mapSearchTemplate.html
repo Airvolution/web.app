@@ -1,0 +1,31 @@
+<div id="map-search">
+    <input type="text"
+           placeholder="Search the site"
+           ng-model="ctrl.query"
+           ng-model-options="ctrl.modelOptions"
+           update-on-enter>
+    <div class="results" ng-show="ctrl.showResults && !(ctrl.showStations || ctrl.showGroups || ctrl.showFaq)">No results found</div>
+    <div class="results"
+         ng-show="ctrl.showStations || ctrl.showGroups || ctrl.showFaq">
+        <div ng-if="ctrl.showStations">
+            <strong>Stations</strong>
+            <div ng-repeat="station in ctrl.results.stations track by $index | limitTo:10">
+                {{$index}}
+            </div>
+        </div>
+        <hr ng-if="ctrl.showStations && ctrl.showGroups">
+        <div ng-if="ctrl.showGroups">
+            <strong>Groups</strong>
+            <div ng-repeat="group  in ctrl.results.groups track by $index | limitTo:5">
+                {{$index}}
+            </div>
+        </div>
+        <hr ng-if="ctrl.showFaq && (ctrl.showGroups || ctrl.showStations)">
+        <div ng-if="ctrl.showFaq">
+            <strong>Frequently asked questions</strong>
+            <div ng-repeat="faq in ctrl.results.faqs track by $index | limitTo:5">
+                {{$index}}
+            </div>
+        </div>
+    </div>
+</div>
