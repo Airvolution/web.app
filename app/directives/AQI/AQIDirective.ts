@@ -11,7 +11,7 @@ class AQIDirective implements ng.IDirective {
         aqi: '=',
         category: '='
     };
-    public templateUrl = 'app/templates/aqi-popover.html';
+    public templateUrl = 'app/directives/AQI/aqi-popover.html';
     public restrict = 'E';
 
     public link(scope, element, attrs, ctrl) {

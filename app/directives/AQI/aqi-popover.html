@@ -1,13 +1,7 @@
 <div class="panel aqi-popover">
     <div class="panel-title">Today's AQI is <span ng-class="ctrl.getCategoryClass()">{{ctrl.category}}</span></div>
     <div class="panel-body">
-        <div ng-class="ctrl.getMeterClass()">
-                    <span class="fa fa-stack fa-2x indicator" ng-style="{'margin-left': ctrl.aqiRange}">
-                        <span class="indicator-line"></span>
-                        <i class="fa fa-circle fa-stack-2x"></i>
-                        <span class="fa-stack-1x aqi-number">{{ctrl.aqi}}</span>
-                    </span>
-        </div>
+        <aqi-scale aqi="ctrl.aqi"></aqi-scale>
         <div class="epa-link"><a href="http://air.utah.gov">Where do we get this data?</a></div>
         <hr/>
         <div class="epa-link"><a href="http://www.health.utah.gov/utahair/AQI/">What does this data
