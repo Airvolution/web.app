@@ -151,8 +151,13 @@ class APIService {
         }, onError);
     }
 
-    public updateStationAdjustments() {
-
+    public updateStationAdjustments(id, adjustments) {
+        var deferred = this.$q.defer();
+        let data = JSON.stringify(adjustments);
+        var onError = (error) => { deferred.reject(error); };
+        return this.$http.post('api/stations/' + id + '/adjustments', data).then((response) => {
+            return response.data;
+        }, onError);
     }
 
     public getDailies(days) {

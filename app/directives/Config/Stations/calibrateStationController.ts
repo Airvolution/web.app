@@ -38,8 +38,24 @@ class CalibrateStationController {
         $scope.configureModal('Calibrate Station '+$stateParams.id,
             "Save",
             ()=> {
-                //TODO Save adjustments here
-                $scope.closeModal();
+                let newAdjustments = [];
+                angular.forEach(self.newAdjustments, (newAdjustment) => {
+                    let isDuplicate = false;
+                    angular.forEach(self.existingAdjustments, (existingAdjustment) => {
+                        if (newAdjustment.parameter.name == existingAdjustment.parameter.name) {
+                            isDuplicate = true;
+                        }
+                    });
+                    if (!isDuplicate) {
+                        newAdjustments.push(newAdjustment);
+                    }
+                });
+                let onError = (error) => { /*TODO*/
+                    console.log('error!!!' + error);
+                };
+                self.APIService.updateStationAdjustments($stateParams.id, newAdjustments.concat(self.existingAdjustments)).then((response) => {
+                    // success
+                }, onError);
             },
             "Cancel",
             ()=> {
@@ -61,14 +77,11 @@ class CalibrateStationController {
     }
 
     public addNewAdjustment() {
+        let parameter = this.unadjustedParameters[0];
         this.newAdjustments.push({
-            parameter: this.unadjustedParameters[0],
+            parameter: parameter,
             scaleFactor: 1.0,
             shiftFactor: 0.0
         });
-    }
-
-    public setAdjustmentParameter(adjustment, parameter) {
-        adjustment.parameter = parameter;
     }
 }

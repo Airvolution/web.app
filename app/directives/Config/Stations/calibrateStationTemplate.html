@@ -18,8 +18,8 @@
                 <tr ng-repeat="adjustment in ctrl.existingAdjustments">
                     <td>{{adjustment.parameter.name}}</td>
                     <td>{{adjustment.parameter.unit}}</td>
-                    <td><input type="number" step="0.01" ng-value="adjustment.scaleFactor" required></td>
-                    <td><input type="number" step="0.01" ng-value="adjustment.shiftFactor" required></td>
+                    <td><input type="number" step="0.01" ng-model="adjustment.scaleFactor" required></td>
+                    <td><input type="number" step="0.01" ng-model="adjustment.shiftFactor" required></td>
                     <td><button class="btn btn-danger" ng-click="ctrl.deleteFromExistingAdjustments(adjustment)">Delete</button></td>
                 </tr>
                 </tbody>
@@ -39,10 +39,11 @@
                 <tbody>
                 <tr ng-repeat="adjustment in ctrl.newAdjustments">
                     <td><select ng-options="parameter.name for parameter in ctrl.unadjustedParameters"
-                                ng-model="adjustment.parameter"></select></td>
+                                ng-model="adjustment.parameter"
+                                required></select></td>
                     <td>{{adjustment.parameter.unit}}</td>
-                    <td><input type="number" step="0.01" ng-value="adjustment.scaleFactor"></td>
-                    <td><input type="number" step="0.01" ng-value="adjustment.shiftFactor"></td>
+                    <td><input type="number" step="0.01" ng-model="adjustment.scaleFactor" required></td>
+                    <td><input type="number" step="0.01" ng-model="adjustment.shiftFactor" required></td>
                     <td><button class="btn btn-danger" ng-click="ctrl.deleteFromNewAdjustments(adjustment)">Delete</button></td>
                 </tr>
                 </tbody>
