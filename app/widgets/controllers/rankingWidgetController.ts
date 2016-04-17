@@ -5,19 +5,17 @@ export = RankingWidgetController;
 class RankingWidgetController {
     public static name = "RankingWidgetController";
 
-    public someValue;
     public loading;
 
-    public bestStation;
-    public worstStation;
     public yourStation;
 
+    public bestNationalStation;
+    public worstNationalStation;
     public nationalRank;
     public nationalTotal;
 
     public bestStateStation;
     public worstStateStation;
-
     public stateRank;
     public stateTotal;
 
@@ -32,7 +30,7 @@ class RankingWidgetController {
         let unregisterDailies = $scope.$watch('dailies', (dailies) => {
             let bounds = {'northEast': {'lat': 89, 'lng': 179}, 'southWest': {'lat': -89, 'lng': -179}};
             this.APIService.asyncGetMarkersInside(bounds).then((response) => {
-                self.someFunction(dailies, response.data);
+                self.calculateStateAndNationalRankings(dailies, response.data);
 
                 this.loading = false;
             });
@@ -76,7 +74,7 @@ class RankingWidgetController {
         this.worstStateStation = stations[lastStateStation];
     }
 
-    public someFunction(dailies, markers) {
+    public calculateStateAndNationalRankings(dailies, markers) {
         if (!markers || !dailies) {
             this.loading = true;
             return;
@@ -87,7 +85,7 @@ class RankingWidgetController {
         this.nationalTotal = markers.length;
         this.yourStation = this.getStationAndNationalRanking(dailies[0].station_Id, markers);
         this.setStateRankingAndLength(markers);
-        this.bestStation = markers[0];
-        this.worstStation = markers[markers.length-1];
+        this.bestNationalStation = markers[0];
+        this.worstNationalStation = markers[markers.length-1];
     }
 }
