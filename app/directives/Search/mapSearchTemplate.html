@@ -8,23 +8,31 @@
     <div class="results"
          ng-show="ctrl.showStations || ctrl.showGroups || ctrl.showFaq">
         <div ng-if="ctrl.showStations">
-            <strong>Stations</strong>
+            <span><strong>Stations</strong> <small>({{ctrl.totalStationHits}}  {{ctrl.totalStationHits > 1 ? 'Results': 'Result'}})</small></span>
             <div ng-repeat="station in ctrl.results.stations track by $index | limitTo:10">
-                {{$index}}
+                <div class="search-result" ng-click="ctrl.onStationResultClick(station)">{{station.name || 'No Name'}} - {{station.city || 'Unknown City'}}<span ng-if="station.state">, </span>{{station.state}}</div>
             </div>
         </div>
-        <hr ng-if="ctrl.showStations && ctrl.showGroups">
+        <!--<hr ng-if="ctrl.showStations && ctrl.showGroups">-->
         <div ng-if="ctrl.showGroups">
-            <strong>Groups</strong>
+            <span><strong>Groups</strong> <small>({{ctrl.totalGroupHits}}  {{ctrl.totalGroupHits > 1 ? 'Results': 'Result'}})</small></span>
             <div ng-repeat="group  in ctrl.results.groups track by $index | limitTo:5">
-                {{$index}}
+                <div class="search-result" ng-click="ctrl.onGroupResultClick(group)">{{group.name || 'No Name'}} ({{group.stations.length}} Stations) - {{group.description || 'No Description'}}</div>
             </div>
         </div>
-        <hr ng-if="ctrl.showFaq && (ctrl.showGroups || ctrl.showStations)">
+        <!--<hr ng-if="ctrl.showFaq && (ctrl.showGroups || ctrl.showStations)">-->
         <div ng-if="ctrl.showFaq">
-            <strong>Frequently asked questions</strong>
+            <span><strong>Frequently asked questions</strong> <small>({{ctrl.totalFaqHits}}  {{ctrl.totalFaqHits > 1 ? 'Results': 'Result'}})</small></span>
             <div ng-repeat="faq in ctrl.results.faqs track by $index | limitTo:5">
-                {{$index}}
+                <div class="search-result"  ng-click="ctrl.onFaqResultClick(faq._source)">
+                    <div ng-if="faq.highlight.question">
+                        <p ng-repeat="hit in faq.highlight.question" ng-bind-html="hit"></p>
+                    </div>
+                    <div ng-if="faq.highlight.answer">
+                        <p ng-if="!faq.highlight.question">{{faq._source.question}}</p>
+                        <p ng-repeat="hit in faq.highlight.answer" ng-bind-html="hit"></p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -128,6 +128,7 @@
   color: @medium-lighter-gray;
   background-color: rgba(0,0,0,.75);
   border-radius: 1em;
+  max-width: 40em;
 
   input {
    width: 20em;
@@ -140,6 +141,11 @@
     color: @medium-lighter-gray;
     background: transparent;
     border: none;
+
+    &:focus{
+      outline-style: none;
+      box-shadow: 0 0 2pt 1pt#e6e6e6
+    }
 
     &::-webkit-input-placeholder {
       color: @medium-lighter-gray;
@@ -156,6 +162,27 @@
 
   .results {
     padding: .5em;
+
+    strong {
+      font-size: large;
+    }
+  }
+
+  .search-result {
+    border-top: 1px solid #e6e6e6;
+    padding: .5em;
+
+    &:hover {
+      box-shadow: inset 0 0 10px 1px #FFF;
+    }
+
+    & mark {
+      background: none;
+      color: white;
+      font-weight: bolder;
+      text-shadow: 0 0 4px #3F8CFF;
+      padding: .5em;
+    }
   }
 }
 
