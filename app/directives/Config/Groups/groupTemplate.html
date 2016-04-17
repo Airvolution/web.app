@@ -1,0 +1,45 @@
+<div class="panel panel-primary" ng-if="ctrl.group">
+    <div class="panel-heading">
+        <div class="panel-title row">
+            <span class="col-md-12">{{ctrl.group.name || "No Name" }} - {{ctrl.group.id}}</span>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12"><strong>Description</strong>: {{ctrl.group.description}}</div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped">
+                    <caption>Group Stations</caption>
+                    <thead>
+                    <tr>
+                        <th class="col-md-2">ID</th>
+                        <th class="col-md-4">Name</th>
+                        <th class="col-md-3">Location</th>
+                        <th class="col-md-2">Postal Code</th>
+                        <th class="col-md-1">Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="station in ctrl.group.stations track by station.id">
+                        <td>{{station.id}}</td>
+                        <td>{{station.name || 'No Name'}}</td>
+                        <td>{{station.city || 'Unknown City'}}<span ng-if="station.state">,</span> {{station.state|| ''}}</td>
+                        <td>{{station.postal}}</td>
+                        <td>{{station.indoor ? 'Indoor' : 'Outdoor'}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-warning pull-right" type="button" ng-click="ctrl.deleteGroup()">Delete Group</button>
+            </div>
+        </div>
+    </div>
+</div>

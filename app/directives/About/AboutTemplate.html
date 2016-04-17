@@ -1,0 +1,92 @@
+<main>
+    <div class="col-md-12"></div>
+    <nav class="col-md-2">
+        <ul class="nav nav-pills nav-stacked jump-menu">
+            <li><a ng-click="ctrl.scrollTo('about')">About Us</a></li>
+            <li><a ng-click="ctrl.scrollTo('contact')">Contact Us</a></li>
+            <li><a ng-click="ctrl.scrollTo('disclaimer')">Disclaimer</a></li>
+        </ul>
+    </nav>
+    <div id="about" class="col-md-8 col-md-offset-2 about-us">
+        <h1>About Us</h1>
+        <p class="indent">
+            Welcome to AirU. AirU is a web application providing air quality statistics and visualizations for both the casual user and the atmospheric scientist.
+            We provide an interactive map that allows users to focus on specific air monitoring stations and to see a pollution layer that displays the level of pollutants in the area.
+        </p>
+        <p class="indent">
+            For the researcher, multiple stations may be selected, saved as groups, and their data compared with that from other stations and the EPA. For the general user, air quality can be checked at a glance to determine how long it is safe to be outside.
+        </p>
+        <p class="indent">
+            Our content is user driven, meaning you can contribute to the project by connecting your own air monitoring station to the site. From checking the current air quality conditions in Salt Lake to downloading the last twelve months of air quality data in your neighborhood, AirU has got you covered.
+        </p>
+        <div class="col-md-12" ng-repeat="value in ctrl.profiles">
+            <div class="col-md-6 profile">
+                <h4 class="col-md-12">{{value.name}}</h4>
+                <span class="col-md-12">Involvement: {{value.involvement}}</span>
+                <a class="col-md-12" href="{{value.githubUrl}}">GitHub</a>
+                <a class="col-md-12" href="{{value.linkedInUrl}}">LinkedIn</a>
+                <img class="col-md-12 profile-picture" src="{{value.picturePath}}" alt="{{value.name}}">
+            </div>
+        </div>
+    </div>
+    <div id="contact" class='col-md-6 col-md-offset-2'>
+        <h1>Contact Us</h1>
+        <form name="ctrl.contactUsForm" ng-submit="ctrl.sendEmail()" novalidate>
+            <div>
+                <div class='col-md-12 marBot10'>
+                    <div class="col-md-7 label-left">
+                        <label class="label-left">Name</label>
+                        <input class="input-right" type='text' ng-model="ctrl.formData.name"/>
+                    </div>
+                    <div class="col-md-4" ng-messages="ctrl.contactUsForm.message.$error" >
+                        <div ng-messages-include="app/templates/validation.html"></div>
+                    </div>
+                </div>
+                <div class='col-md-12 marBot10'>
+                    <div class="col-md-7 label-left">
+                        <label class="label-left">Email</label>
+                        <input class="input-right" type='email' ng-model="ctrl.formData.email"/>
+                    </div>
+                    <div class="col-md-4" ng-messages="ctrl.contactUsForm.message.$error" >
+                        <div ng-messages-include="app/templates/validation.html"></div>
+                    </div>
+                </div>
+                <div class='col-md-12 marBot10'>
+                    <div class="col-md-7 label-left">
+                        <label class="label-left">Subject</label>
+                        <input class="input-right" type='text' ng-model="ctrl.formData.subject"/>
+                    </div>
+                    <div class="col-md-4" ng-messages="ctrl.contactUsForm.message.$error" >
+                        <div ng-messages-include="app/templates/validation.html"></div>
+                    </div>
+                </div>
+                <div class='col-md-12 marBot10'>
+                    <div class="col-md-7 label-left">
+                        <label class="label-left">Message</label>
+                        <textarea class="input-right" ng-model="ctrl.formData.message" name="message" required></textarea>
+                    </div>
+                    <div class="col-md-4" ng-messages="ctrl.contactUsForm.message.$error" >
+                        <div ng-messages-include="app/templates/validation.html"></div>
+                    </div>
+                </div>
+                <div class='col-md-12 marBot10'>
+                    <button class='btn btn-primary' type="submit">Submit</button>
+                </div>
+                <div class='col-md-12'>
+                    <uib-alert class="col-md-7" ng-if="ctrl.emailAlert" type="{{ctrl.emailAlert.type}}"
+                               dismiss-on-timeout="{{ctrl.alertTimeout}}" close="ctrl.onAlertClose(ctrl.profileAlert)">
+                        {{ctrl.emailAlert.message}}
+                    </uib-alert>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="disclaimer" class="disclaimer">
+        <h1 class="col-md-10 col-md-offset-2">Disclaimer</h1>
+        <p class="col-md-8 col-md-offset-2">
+            Although we pull our data from numerous legitimate sources, including federal, state, local, provincial, and tribal organizations, the data has not been verified and/or validated and thus should not be used as a base to create and/or support public policy decisions, guidance, regulation, or trends.
+
+            For officially verified and validated air quality, visit the EPA’s Air Quality System (<a href="http://www.epa.gov/aqs">http://www.epa.gov/aqs</a>).
+        </p>
+    </div>
+</main>

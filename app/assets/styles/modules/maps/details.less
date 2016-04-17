@@ -50,6 +50,19 @@
         white-space: nowrap;
         text-overflow: ellipsis;
       }
+
+      .extra-info {
+        padding: 0;
+        color: @medium-light-gray;
+        font-size: .75em;
+        min-width: 100%;
+        margin: 0 -1em -1em;
+
+        & * {
+          padding: 5px;
+          margin: .25em .5em;
+        }
+      }
     }
     .panel-subtitle {
       color: @light-gray;
@@ -81,22 +94,6 @@
         padding: .2em;
       }
 
-    }
-
-    .extra-info {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      left: 0;
-      padding: 0;
-      color: @medium-light-gray;
-      font-size: .75em;
-      min-width: 100%;
-
-      & * {
-        padding: 5px;
-        margin: .25em .5em;
-      }
     }
   }
 }

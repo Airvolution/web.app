@@ -10,7 +10,8 @@ class SearchService {
         //"datapoints": "/datapoints/_search",
         "parameters": "/stations/_search",
         "stations": "/stations/_search",
-        "faq": "/faqs/_search"
+        "faq": "/faqs/_search",
+        "groups": "/groups/_search"
     };
     private stopWords = [
         'a',
@@ -115,6 +116,50 @@ class SearchService {
                                     "city",
                                     "state",
                                     "postal"
+                                ],
+                                "cutoff_frequency": .01
+                            }
+                        },
+                        {
+                            "prefix": {
+                                "name": filteredQuery
+                            }
+                        },
+                        {
+                            "prefix": {
+                                "name": queryString
+                            }
+                        }
+                    ],
+                    "minimum_should_match" : 1
+                }
+
+            }
+        };
+
+        return this.$http.post(url, query).then((results)=> {
+            return results.data && results.data.hits ? results.data.hits : [];
+        });
+    }
+
+    public searchGroups(queryString:string) {
+        var url = this.getSearchUrl('groups');
+        var filteredQuery = this.filterStopwords(queryString);
+        var query = {
+            "query": {
+                "bool": {
+                    "should": [
+                        {
+                            "multi_match": {
+                                "query": filteredQuery,
+                                "type": "cross_fields",
+                                "fields": [
+                                    "id",
+                                    "name",
+                                    "full_name",
+                                    "descriptions",
+                                    "stations",
+                                    "owner_id"
                                 ],
                                 "cutoff_frequency": .01
                             }

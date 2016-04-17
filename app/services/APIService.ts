@@ -14,6 +14,49 @@ class APIService {
         private $timeout
     ) {}
 
+    public createGroup(group){
+        var deferred = this.$q.defer();
+        let onError = (error) => { deferred.reject(error); };
+        return this.$http.post('api/groups',group).then((response) => {
+            return response.data;
+        }, onError);
+    }
+
+    public getUserGroups(){
+        var deferred = this.$q.defer();
+        let onError = (error) => { deferred.reject(error); };
+        return this.$http.get('api/groups').then((response) => {
+            return response.data;
+        }, onError);
+    }
+
+    public addStationToGroup(stationId,group){
+        var deferred = this.$q.defer();
+        let onError = (error) => { deferred.reject(error); };
+        return this.$http.put('api/groups/'+group.id+'/'+stationId).then((response) => {
+            return response.data;
+        }, onError);
+    }
+
+    public removeStationFromGroup(stationId, group){
+        var deferred = this.$q.defer();
+        let onError = (error) => { deferred.reject(error); };
+        return this.$http.delete('api/groups/'+group.id+'/'+stationId).then((response) => {
+            return response.data;
+        }, onError);
+    }
+
+    public deleteGroup(group){
+        var deferred = this.$q.defer();
+        let onError = (error) => { deferred.reject(error); };
+        return this.$http.delete('api/groups/'+group.id).then((response) => {
+            if(response.status == 200){
+                return true;
+            }
+            return false;
+        }, onError);
+    }
+
     public getUserPreferences() {
         var deferred = this.$q.defer();
         let onError = (error) => { deferred.reject(error); };
@@ -98,6 +141,23 @@ class APIService {
         return this.$http.put('api/stations/'+station.id,station).then((response)=>{
             return response.data;
         },onError);
+    }
+
+    public getStationAdjustments(id) {
+        var deferred = this.$q.defer();
+        var onError = (error) => { deferred.reject(error); };
+        return this.$http.get('api/stations/' + id + '/adjustments').then((response) => {
+            return response.data;
+        }, onError);
+    }
+
+    public updateStationAdjustments(id, adjustments) {
+        var deferred = this.$q.defer();
+        let data = JSON.stringify(adjustments);
+        var onError = (error) => { deferred.reject(error); };
+        return this.$http.post('api/stations/' + id + '/adjustments', data).then((response) => {
+            return response.data;
+        }, onError);
     }
 
     public getDailies(days) {
@@ -276,5 +336,23 @@ class APIService {
         );
 
         return deferred.promise;
+    }
+
+    public PostContactUsEmail(email) {
+        var deferred = this.$q.defer();
+
+        let self = this;
+        let url = "api/contactUs";
+
+        let data = JSON.stringify(email);
+
+        let onError = (error) => {
+            deferred.reject(error);
+        };
+
+        return self.$http.post(url, data)
+            .then((response) => {
+                return response.data;
+            }, onError);
     }
 }

@@ -10,10 +10,7 @@ class MapToolboxDirective implements ng.IDirective {
     public controller = MapToolboxController;
     public controllerAs = 'ctrl';
     public bindToController = true;
-    public scope = {
-
-    };
-
+    public scope = true;
     public static create(){
         return new MapToolboxDirective();
     }

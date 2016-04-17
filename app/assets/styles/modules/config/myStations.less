@@ -1,4 +1,4 @@
-#myStations {
+#myGroups,#myStations {
   overflow-y: auto;
 
   h1 {
@@ -80,7 +80,7 @@
   }
 }
 
-.station-wrapper {
+.group-wrapper, .station-wrapper {
   overflow-y: auto;
 }
 .station {
@@ -135,7 +135,22 @@
 }
 
 .panel-body {
+  text-align: left;
   .btn {
     margin: .5em;
+  }
+
+  hr {
+    margin-bottom: 0;
+  }
+}
+
+.panel-title {
+  text-align: left;
+}
+
+#calibrateStation {
+  input {
+    width: 6em;
   }
 }

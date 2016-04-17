@@ -1,5 +1,5 @@
 /// <reference path="../../../typings/tsd.d.ts" />
-import MapViewController = require('./MapViewController');
+import MapViewController = require('./mapViewController');
 export = MapViewDirective;
 
 class MapViewDirective implements ng.IDirective {
