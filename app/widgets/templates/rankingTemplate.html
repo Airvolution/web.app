@@ -1,10 +1,16 @@
 <div ng-controller="RankingWidgetController as ctrl">
     <div class="card-header neutral">
-        <p class="category">Rankings</p>
-        <p class="title">Something nice</p>
+        <p class="category">AQI</p>
+        <p class="title">National Rankings</p>
     </div>
     <div class="card-body">
-        <p class="value">{{ctrl.someValue}}</p>
+        <h5>Best: {{ctrl.bestStation.city}}, {{ctrl.bestStation.state}}</h5>
+        {{ctrl.bestStation.aqi}}
+        <h5>Worst: {{ctrl.worstStation.city}}, {{ctrl.worstStation.state}}</h5>
+        {{ctrl.worstStation.aqi}}
+        <hr>
+        <h5>Yours: {{ctrl.yourStation.city}}, {{ctrl.yourStation.state}}</h5>
+        <p>{{ctrl.yourStation.aqi}} Ranking: {{ctrl.nationalRank}}/355</p>
     </div>
     <div class="actions">
     </div>
