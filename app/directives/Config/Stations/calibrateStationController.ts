@@ -8,18 +8,18 @@ class CalibrateStationController {
     public newAdjustments;
     public unadjustedParameters;
     public loading;
-    public static $inject = ['$scope', '$state','$stateParams','APIService', 'AQIColors'];
+    public static $inject = ['$scope', '$state','$stateParams','APIService', 'ParameterService'];
     public constructor(
         private $scope,
         private $state,
         private $stateParams,
         private APIService,
-        private AQIColors
+        private ParameterService
 
     ){
         this.loading = true;
         this.newAdjustments = [];
-        this.unadjustedParameters = angular.copy(this.AQIColors.getParameterList());
+        this.unadjustedParameters = angular.copy(this.ParameterService.getParameterList());
 
         var self = this;
         this.APIService.getStation($stateParams.id).then((station) => {
