@@ -1,5 +1,8 @@
 <div>
-    <form id="calibrateStation" novalidate ng-submit="ctrl.formSubmit()" autocomplete="off">
+    <i class="fa fa-spinner fa-pulse fa-3x" ng-if="ctrl.loading">
+        <span class="sr-only">Loading...</span>
+    </i>
+    <form id="calibrateStation" ng-if="!ctrl.loading" novalidate ng-submit="ctrl.formSubmit()" autocomplete="off">
         <div ng-if="ctrl.existingAdjustments.length > 0">
             <table class="table table-striped">
                 <thead>
@@ -17,7 +20,7 @@
                     <td>{{adjustment.parameter.unit}}</td>
                     <td><input type="number" step="0.01" ng-value="adjustment.scaleFactor" required></td>
                     <td><input type="number" step="0.01" ng-value="adjustment.shiftFactor" required></td>
-                    <td><button class="btn btn-danger">Delete</button></td>
+                    <td><button class="btn btn-danger" ng-click="ctrl.deleteFromExistingAdjustments(adjustment)">Delete</button></td>
                 </tr>
                 </tbody>
             </table>
@@ -35,23 +38,16 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="adjustment in ctrl.newAdjustments">
-                    <td>
-                        <select>
-                            <option value="bla"></option>
-                        </select>
-                    </td>
-                    <td>Unit</td>
-                    <td>
-                        <input type="number" step="0.01">
-                    </td>
-                    <td>
-                        <input type="number" step="0.01">
-                    </td>
-                    <td><button class="btn btn-danger">Delete</button></td>
+                    <td><select ng-options="parameter.name for parameter in ctrl.unadjustedParameters"
+                                ng-model="adjustment.parameter"></select></td>
+                    <td>{{adjustment.parameter.unit}}</td>
+                    <td><input type="number" step="0.01" ng-value="adjustment.scaleFactor"></td>
+                    <td><input type="number" step="0.01" ng-value="adjustment.shiftFactor"></td>
+                    <td><button class="btn btn-danger" ng-click="ctrl.deleteFromNewAdjustments(adjustment)">Delete</button></td>
                 </tr>
                 </tbody>
             </table>
         </div>
-        <button class="btn btn-primary">Add Adjustment</button>
+        <button class="btn btn-primary" ng-click="ctrl.addNewAdjustment()">Add Adjustment</button>
     </form>
 </div>
