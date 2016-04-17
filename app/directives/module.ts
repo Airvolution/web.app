@@ -11,6 +11,7 @@ import SearchDirectives = require('./Search/module');
 import ConfigModule = require('./Config/module');
 import AboutModule = require('./About/module');
 import ModelMatchesDirective = require("./modelMatchesDirective");
+import SVGAQIDirective = require("./AQI/svgAQIDirective");
 
 export = angular.module('directives', [
         MapDirectives.name,
@@ -25,4 +26,5 @@ export = angular.module('directives', [
             .directive(WeatherDirective.htmlName, WeatherDirective.create)
             .directive(FooterDirective.htmlName, FooterDirective.create)
             .directive(AQIDirective.htmlName, AQIDirective.create)
-            .directive(ModelMatchesDirective.htmlName, ModelMatchesDirective.create);
+            .directive(ModelMatchesDirective.htmlName, ModelMatchesDirective.create)
+            .directive(SVGAQIDirective.htmlName, SVGAQIDirective.create);
