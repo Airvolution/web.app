@@ -14,6 +14,49 @@ class APIService {
         private $timeout
     ) {}
 
+    public createGroup(group){
+        var deferred = this.$q.defer();
+        let onError = (error) => { deferred.reject(error); };
+        return this.$http.post('api/groups',group).then((response) => {
+            return response.data;
+        }, onError);
+    }
+
+    public getUserGroups(){
+        var deferred = this.$q.defer();
+        let onError = (error) => { deferred.reject(error); };
+        return this.$http.get('api/groups').then((response) => {
+            return response.data;
+        }, onError);
+    }
+
+    public addStationToGroup(stationId,group){
+        var deferred = this.$q.defer();
+        let onError = (error) => { deferred.reject(error); };
+        return this.$http.put('api/groups/'+group.id+'/'+stationId).then((response) => {
+            return response.data;
+        }, onError);
+    }
+
+    public removeStationFromGroup(stationId, group){
+        var deferred = this.$q.defer();
+        let onError = (error) => { deferred.reject(error); };
+        return this.$http.delete('api/groups/'+group.id+'/'+stationId).then((response) => {
+            return response.data;
+        }, onError);
+    }
+
+    public deleteGroup(group){
+        var deferred = this.$q.defer();
+        let onError = (error) => { deferred.reject(error); };
+        return this.$http.delete('api/groups/'+group.id).then((response) => {
+            if(response.status == 200){
+                return true;
+            }
+            return false;
+        }, onError);
+    }
+
     public getUserPreferences() {
         var deferred = this.$q.defer();
         let onError = (error) => { deferred.reject(error); };

@@ -1,0 +1,11 @@
+<main id="myGroups">
+    <div class="groups-wrapper col-md-8 col-md-offset-2">
+        <h1>My Groups</h1>
+
+        <div class="col-md-12 group-wrapper">
+            <div ng-repeat="group in ctrl.groups">
+                <group group="group" refresh="ctrl.refreshGroups()"></group>
+            </div>
+        </div>
+    </div>
+</main>
