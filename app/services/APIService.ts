@@ -143,6 +143,18 @@ class APIService {
         },onError);
     }
 
+    public getStationAdjustments(id) {
+        var deferred = this.$q.defer();
+        var onError = (error) => { deferred.reject(error); };
+        return this.$http.get('api/stations/' + id + '/adjustments').then((response) => {
+            return response.data;
+        }, onError);
+    }
+
+    public updateStationAdjustments() {
+
+    }
+
     public getDailies(days) {
         var deferred = this.$q.defer();
         var self = this;

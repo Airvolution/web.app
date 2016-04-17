@@ -4,13 +4,24 @@ export = CalibrateStationController;
 
 class CalibrateStationController {
     public station;
-    public parameterAdjustments;
+    public existingAdjustments;
+    public newAdjustments;
     public static $inject = ['$state','$stateParams','APIService','$scope'];
-    public constructor(private $state, private $stateParams, private APIService, private $scope){
+    public constructor(
+        private $state,
+        private $stateParams,
+        private APIService,
+        private $scope
+    ){
         var self = this;
-        this.APIService.getStation($stateParams.id).then((station)=>{
+        this.APIService.getStation($stateParams.id).then((station) => {
             self.station = station;
+            self.APIService.getStationAdjustments(station.id).then((adjustments) => {
+                self.existingAdjustments = adjustments;
+            });
         });
+
+        this.newAdjustments = [];
 
         $scope.configureModal('Calibrate Station '+$stateParams.id,
             "Save",
