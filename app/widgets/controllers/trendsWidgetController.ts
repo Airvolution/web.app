@@ -45,7 +45,7 @@ class TrendsWidgetController {
                     showMinMax: false
                 },
                 yAxis: {
-                    axisLabel: 'AQIColors',
+                    axisLabel: 'AQI',
                     axisLabelDistance: -15
                 },
                 xDomain: [this.then, this.now],
@@ -80,7 +80,7 @@ class TrendsWidgetController {
             tmp.push({});
         }
         var data = {
-            "key": "AQIColors",
+            "key": "AQI",
             values: []
         };
         _.each(tmp, (daily:any)=> {
