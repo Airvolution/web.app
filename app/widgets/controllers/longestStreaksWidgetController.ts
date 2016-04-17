@@ -66,7 +66,7 @@ class LongestStreaksWidgetController {
 
         this.plotData = [
             {
-                key: "asd",
+                key: "Cumulative Return",
                 values: [
                     {
                         label: 'Green',

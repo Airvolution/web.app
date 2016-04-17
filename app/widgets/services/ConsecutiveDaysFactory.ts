@@ -21,12 +21,12 @@ class ConsecutiveDaysFactory {
         var longestMaroonStreak = 0;
         this.ApiService.getDailies(365).then((values)=>{
 
-            longestGreenStreak  = this.getLongestStreakFor(1, values);
-            longestYellowStreak = this.getLongestStreakFor(2, values);
-            longestOrangeStreak = this.getLongestStreakFor(3, values);
-            longestRedStreak    = this.getLongestStreakFor(4, values);
-            longestPurpleStreak = this.getLongestStreakFor(5, values);
-            longestMaroonStreak = this.getLongestStreakFor(6, values);
+            longestGreenStreak  = this.getLongestStreakForCategory(1, values);
+            longestYellowStreak = this.getLongestStreakForCategory(2, values);
+            longestOrangeStreak = this.getLongestStreakForCategory(3, values);
+            longestRedStreak    = this.getLongestStreakForCategory(4, values);
+            longestPurpleStreak = this.getLongestStreakForCategory(5, values);
+            longestMaroonStreak = this.getLongestStreakForCategory(6, values);
 
             deferred.resolve({
                 longestGreen:  longestGreenStreak,
@@ -79,7 +79,7 @@ class ConsecutiveDaysFactory {
         }
     }
 
-    private getLongestStreakFor(category, values) {
+    private getLongestStreakForCategory(category, values) {
         var count = 0;
         var currentStreakCount = 0;
         var longestStreak = 0;
