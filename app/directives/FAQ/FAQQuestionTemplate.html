@@ -1,5 +1,13 @@
 <div ng-click="ctrl.toggleChevron()"  class="clear faq-question-container">
     <div ng-class="{'fa-chevron-down' : ctrl.chev == 'DOWN', 'fa-chevron-up' : ctrl.chev == 'UP'}" class="fa fa-2x chevron"></div>
     <h4 id="question{{ctrl.question.id}}" class="">{{::ctrl.question.question}}</h4>
+
 </div>
-<div id="{{::ctrl.question.id}}" ng-class="{'collapse' : ctrl.chev == 'DOWN', 'collapse in' : ctrl.chev == 'UP'}" class="well"><div ng-bind-html="ctrl.question.answerRichText"></div></div>
+<div id="{{::ctrl.question.id}}" ng-class="{'collapse' : ctrl.chev == 'DOWN', 'collapse in' : ctrl.chev == 'UP'}" class="well">
+    <div ng-bind-html="ctrl.question.answerRichText"></div>
+    <div>
+        <div>Did you find this helpful?</div>
+        <div id="{{ctrl.question.id}}_upVote"   ng-click="ctrl.vote('up')"   class="voteButtons fa fa-thumbs-o-up fa-2x"></div>
+        <div id="{{ctrl.question.id}}_downVote" ng-click="ctrl.vote('down')" class="voteButtons fa fa-thumbs-o-down fa-2x"></div>
+    </div>
+</div>
