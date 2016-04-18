@@ -22,6 +22,10 @@ class MapToolboxController {
     public userDefaultParameters;
 
     public userStations;
+    public userGroups;
+    public userGroupsMap;
+    public selectedGroup;
+    public markersInSelectedGroup;
 
     public static $inject = ['$scope','$state', '$log', 'mapFactory', 'selectionService','SearchService', 'AQIColors', 'preferencesService', 'notificationService', 'APIService'];
     constructor(
@@ -50,13 +54,41 @@ class MapToolboxController {
         this.stationQueryResults = [];
 
         this.userStations = [];
+        this.userGroups = [];
+        this.userGroupsMap = {};
+        this.selectedGroup = {};
+        this.markersInSelectedGroup = [];
 
         let self = this;
-        this.notificationService.subscribe(undefined, 'UserLogin', () => {
-            self.APIService.getUserStations().then((markers) => {
-                self.userStations = markers;
+
+        // try to load user stations and groups first
+        let loadUserMarkers = (markers) => {
+            self.userStations = markers;
+        };
+
+        let loadUserGroups = (groups) => {
+            self.userGroups = groups;
+            angular.forEach(groups, (group) => {
+                angular.forEach(group.stations, (station) => {
+                    self.userGroupsMap[station.id] = group.id;
+                })
             });
-        });
+        };
+
+        let waitForUserMarkers = () => {
+            self.notificationService.subscribe(undefined, 'UserLogin', () => {
+                self.APIService.getUserStations().then(loadUserMarkers);
+            });
+        };
+
+        let waitForUserGroups = () => {
+            self.notificationService.subscribe(undefined, 'UserLogin', () => {
+                self.APIService.getUserGroups().then(loadUserGroups);
+            });
+        };
+
+        this.APIService.getUserStations().then(loadUserMarkers, waitForUserMarkers);
+        this.APIService.getUserGroups().then(loadUserGroups, waitForUserGroups);
     }
 
     public searchStations() {
@@ -170,6 +202,22 @@ class MapToolboxController {
         }, (error) => {
             self.$log.log('received error: ' + error);
         });
+    }
+
+    public listStationsInGroup(group) {
+        let self = this;
+        self.selectedGroup = group;
+        self.markersInSelectedGroup = [];
+        angular.forEach(self.mapFactory.mapMarkers, (marker) => {
+            if (self.userGroupsMap[marker.id] == group.id) {
+                self.markersInSelectedGroup.push(marker);
+            }
+        });
+    }
+
+    public hideStationsInGroup(group) {
+        this.selectedGroup = {};
+        this.markersInSelectedGroup = [];
     }
 
     public clearSelectionGroup() {

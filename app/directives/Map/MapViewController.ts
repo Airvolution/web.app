@@ -149,7 +149,8 @@ class MapViewController {
             setSelectedStation: (station)=>{
                 mv.selectedStation = station;
                 mv.populateDetails(station);
-            }
+            },
+            markers: mv.markers
         });
 
         mv.tiles = mapFactory.createTilesFromKey($scope.mode);
