@@ -205,6 +205,10 @@ class MapToolboxController {
     }
 
     public listStationsInGroup(group) {
+        if (this.selectedGroup['id'] != undefined) {
+            this.hideStationsInGroup();
+        }
+
         let self = this;
         this.selectedGroup = group;
         this.markersInSelectedGroup = [];

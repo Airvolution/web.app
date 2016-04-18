@@ -28,24 +28,57 @@ class EditGroupController {
             self.loading = false;
             console.log('Error loading group in modal: ' + error);
         };
+
         this.APIService.getUserGroup($stateParams.id).then((group) => {
             self.group = group;
             self.groupOriginalMarkers = angular.copy(group.stations);
             this.loading = false;
         }, onError);
 
-
         $scope.configureModal('Edit Group: ' + $stateParams.name,
             'Save',
             ()=> {
-                console.log('EditGroupController: formSubmit() called.');
-                $scope.closeModal();
+                let markersToAdd = [];
+                let markersToRemove = [];
+
+                angular.forEach(self.group.stations, (marker) => {
+                    if (!self.originalGroupContainsStation(marker)) {
+                        markersToAdd.push(marker.id);
+                    }
+                });
+
+                angular.forEach(self.groupOriginalMarkers, (marker) => {
+                    if (!self.groupContainsStation(marker)) {
+                        markersToRemove.push(marker.id);
+                    }
+                });
+
+                let onUpdateError = (error) => {
+                    console.log('error modifying group: ' + error);
+                    // TODO: show something ugly
+                };
+
+                if (markersToAdd.length > 0) {
+                    self.APIService.addStationToGroup(self.group, markersToAdd).then((group) => {
+                        if (markersToRemove.length > 0) {
+                            self.APIService.removeStationFromGroup(self.group, markersToRemove).then((group) => {
+                                self.group = group;
+                                self.groupOriginalMarkers = angular.copy(group.stations);
+                            }, onUpdateError);
+                        } else {
+                            self.group = group;
+                            self.groupOriginalMarkers = angular.copy(group.stations);
+                        }
+                    }, onUpdateError);
+                } else if (markersToRemove.length > 0) {
+                    self.APIService.removeStationFromGroup(self.group, markersToRemove).then((group) => {
+                        self.group = group;
+                        self.groupOriginalMarkers = angular.copy(group.stations);
+                    }, onUpdateError);
+                }
             },
             'Cancel',
-            ()=> {
-                console.log('EditGroupController: formCancel() called.');
-                $scope.closeModal();
-            });
+            ()=> { $scope.closeModal(); });
 
         //TODO Load Adjustment params here
         console.log('Editing group: ' + $stateParams.id);
@@ -90,6 +123,15 @@ class EditGroupController {
     public groupContainsStation(marker) {
         for (let i = 0; i < this.group.stations.length; i++) {
             if (this.group.stations[i].id == marker.id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public originalGroupContainsStation(marker) {
+        for (let i = 0; i < this.groupOriginalMarkers.length; i++) {
+            if (this.groupOriginalMarkers[i].id == marker.id) {
                 return true;
             }
         }
