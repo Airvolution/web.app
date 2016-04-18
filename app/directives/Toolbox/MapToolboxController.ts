@@ -206,18 +206,20 @@ class MapToolboxController {
 
     public listStationsInGroup(group) {
         let self = this;
-        self.selectedGroup = group;
-        self.markersInSelectedGroup = [];
+        this.selectedGroup = group;
+        this.markersInSelectedGroup = [];
         angular.forEach(self.mapFactory.mapMarkers, (marker) => {
             if (self.userGroupsMap[marker.id] == group.id) {
                 self.markersInSelectedGroup.push(marker);
             }
         });
+        this.$scope.hideAllClusters();
     }
 
     public hideStationsInGroup(group) {
         this.selectedGroup = {};
         this.markersInSelectedGroup = [];
+        this.$scope.showAllClusters();
     }
 
     public clearSelectionGroup() {
