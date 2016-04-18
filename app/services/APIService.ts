@@ -30,6 +30,14 @@ class APIService {
         }, onError);
     }
 
+    public getUserGroup(id) {
+        let deferred = this.$q.defer();
+        let onError = (error) => { deferred.reject(error); };
+        return this.$http.get('api/groups/' + id).then((response) => {
+            return response.data;
+        }, onError);
+    }
+
     public addStationToGroup(stationId,group){
         var deferred = this.$q.defer();
         let onError = (error) => { deferred.reject(error); };

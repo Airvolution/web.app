@@ -91,6 +91,7 @@
             <th><span>Name</span></th>
             <th><span>Description</span></th>
             <th><span></span></th>
+            <th></th>
         </tr>
         </thead>
         <tr ng-repeat="group in ctrl.userGroups track by group.id">
@@ -106,6 +107,9 @@
                         ng-click="ctrl.hideStationsInGroup(group)">
                 Hide</button>
             </td>
+            <td><button class="btn btn-danger"
+                        ng-click="ctrl.editGroup(group)">
+                Edit</button></td>
         </tr>
     </table>
 </div>

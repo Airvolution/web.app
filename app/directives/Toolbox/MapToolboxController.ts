@@ -237,6 +237,10 @@ class MapToolboxController {
         this.$log.log('MapToolboxController: saveSelectionGroup() called. TODO: Implement this functionality.');
     }
 
+    public editGroup(group) {
+        this.$state.go('modal.editGroup', { id: group.id, name: group.name } );
+    }
+
     //////////////////////////////////////////////////////
     // OLD CODE SHOWS HOW TO TOGGLE ON AND OFF CLUSTERS //
     //private convertMapLayersToArray(layers) {

@@ -1,0 +1,67 @@
+<div>
+    <div class="search-container box well">
+        <span class="icon"><i class="fa fa-search"></i></span>
+        <input type="search" class="search" placeholder="Search for a station"
+               ng-model="ctrl.stationQuery"
+               update-on-enter
+               ng-change="ctrl.searchStations()"
+               ng-model-options="ctrl.searchOptions"/>
+        <button class="btn btn-primary pull-right"
+                ng-if="ctrl.stationQueryResults.length > 0"
+                ng-click="ctrl.hideSearchResults()">
+            Close Results</button>
+        <div class="search-results search-results-modal" ng-if="ctrl.stationQueryResults.length > 0">
+            <div class="station-container">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th><span>Station Name</span></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tr ng-repeat="marker in ctrl.stationQueryResults track by marker.id">
+                        <td>{{::marker.name}}</td>
+                        <td>
+                            <button class="btn btn-primary pull-right"
+                                    ng-if="!ctrl.groupContainsStation(marker)"
+                                    ng-click="ctrl.addStation(marker)">
+                                Add</button>
+                            <button class="btn btn-danger pull-right"
+                                    ng-if="ctrl.groupContainsStation(marker)"
+                                    ng-click="ctrl.removeStation(marker)">
+                                Remove</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <i class="fa fa-spinner fa-pulse fa-3x" ng-if="ctrl.loading">
+        <span class="sr-only">Loading...</span>
+    </i>
+    <form id="editGroup" ng-if="!ctrl.loading" novalidate ng-submit="ctrl.formSubmit()" autocomplete="off">
+        <div>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Agency</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="marker in ctrl.group.stations">
+                    <td>{{marker.name}}</td>
+                    <td>{{marker.agency}}</td>
+                    <td>{{marker.city}}</td>
+                    <td>{{marker.state}}</td>
+                    <td><button class="btn btn-danger" ng-click="ctrl.removeStation(marker)">Remove</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
