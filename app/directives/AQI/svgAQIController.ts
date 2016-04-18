@@ -6,6 +6,7 @@ class SVGAQIController {
     public aqi;
     public category;
     public percentOfCategory;
+    public id;
     static $inject = ['$scope'];
     constructor(private $scope){}
 
