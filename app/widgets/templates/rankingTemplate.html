@@ -6,7 +6,7 @@
     <div class="card-body">
         <div class="box">
 
-            <div class="box-left">
+            <div class="national-container">
                 <h3 class="box-header">National</h3>
                 <h4>Best: {{ctrl.bestNationalLocation}}:</h4>
                 <aqi-scale aqi="ctrl.bestNationalStation.aqi"></aqi-scale>
@@ -14,7 +14,7 @@
                 <aqi-scale aqi="ctrl.worstNationalStation.aqi"></aqi-scale>
             </div>
 
-            <div class="box-right">
+            <div class="state-container">
                 <h3 class="box-header">State</h3>
                 <h4>Best: {{ctrl.bestStateLocation}}:</h4>
                 <aqi-scale aqi="ctrl.bestStateStation.aqi"></aqi-scale>
@@ -22,21 +22,21 @@
                 <aqi-scale aqi="ctrl.worstStateStation.aqi"></aqi-scale>
             </div>
 
-            <div class="box-bottom-left">
+            <div class="nationanl-ranking-container">
                 <h3 class="box-header">National Ranking</h3>
                 <h4 class="ranking">{{ctrl.nationalRank}}</h4>
                 <hr class="divider">
                 <h4 class="ranking">{{ctrl.nationalTotal}}</h4>
             </div>
 
-            <div class="box-bottom-mid">
+            <div class="local-container">
                 <br/>
                 <h3 class="box-header">{{ctrl.yourLocation}}</h3>
                 <br/>
                 <aqi-scale aqi="ctrl.yourStation.aqi"></aqi-scale>
             </div>
 
-            <div class="box-bottom-right">
+            <div class="state-ranking-container">
                 <h3 class="box-header">State Ranking</h3>
                 <h4 class="ranking">{{ctrl.stateRank}}</h4>
                 <hr class="divider">
