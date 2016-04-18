@@ -21,7 +21,9 @@ class MapToolboxController {
     public userDefaultStation;
     public userDefaultParameters;
 
-    public static $inject = ['$scope','$state', '$log', 'mapFactory', 'selectionService','SearchService', 'AQIColors', 'preferencesService', 'notificationService'];
+    public userStations;
+
+    public static $inject = ['$scope','$state', '$log', 'mapFactory', 'selectionService','SearchService', 'AQIColors', 'preferencesService', 'notificationService', 'APIService'];
     constructor(
         private $scope,
         private $state,
@@ -31,7 +33,8 @@ class MapToolboxController {
         private SearchService,
         private AQIColors,
         private preferencesService,
-        private notificationService
+        private notificationService,
+        private APIService
     ) {
         this.markerSelection = [];    // array of all markers in selection group
         this.markerSelectionIds = {}; // maps marker.id to index in marker array
@@ -45,6 +48,15 @@ class MapToolboxController {
 
         this.searchOptions = {updateOn: 'default blur', debounce: {'default': 250 , 'blur': 0}};
         this.stationQueryResults = [];
+
+        this.userStations = [];
+
+        let self = this;
+        this.notificationService.subscribe(undefined, 'UserLogin', () => {
+            self.APIService.getUserStations().then((markers) => {
+                self.userStations = markers;
+            });
+        });
     }
 
     public searchStations() {
