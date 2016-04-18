@@ -8,14 +8,23 @@ class RankingWidgetController {
     public loading;
 
     public yourStation;
+    public yourLocation;
 
     public bestNationalStation;
     public worstNationalStation;
+
+    public bestNationalLocation;
+    public worstNationalLocation;
+
     public nationalRank;
     public nationalTotal;
 
     public bestStateStation;
     public worstStateStation;
+
+    public bestStateLocation;
+    public worstStateLocation;
+
     public stateRank;
     public stateTotal;
 
@@ -87,5 +96,13 @@ class RankingWidgetController {
         this.setStateRankingAndLength(markers);
         this.bestNationalStation = markers[0];
         this.worstNationalStation = markers[markers.length-1];
+
+        this.bestNationalLocation = this.bestNationalStation.city + ", " + this.bestNationalStation.state;
+        this.bestStateLocation = this.bestStateStation.city + ", " + this. bestStateStation.state;
+
+        this.worstNationalLocation = this.worstNationalStation.city + ", " + this.worstNationalStation.state;
+        this.worstStateLocation = this.worstStateStation.city + ", " + this.worstStateStation.state;
+
+        this.yourLocation = this.yourStation.city + ", " + this.yourStation.state;
     }
 }

@@ -1,32 +1,49 @@
 <div ng-controller="RankingWidgetController as ctrl">
     <div class="card-header neutral">
-        <p class="category">AQI</p>
-        <p class="title">Best and Worst Cities (by AQI)</p>
+        <p class="category">Ranking</p>
+        <p class="title">Your city ranked against the best and worst (by AQI)</p>
     </div>
     <div class="card-body">
         <div class="box">
 
             <div class="box-left">
-                <h4 class="box-header">National</h4>
-                <h5>Best: {{ctrl.bestNationalStation.city}}, {{ctrl.bestNationalStation.state}}: {{ctrl.bestNationalStation.aqi}}</h5>
-                <h5>Worst: {{ctrl.worstNationalStation.city}}, {{ctrl.worstNationalStation.state}}: {{ctrl.worstNationalStation.aqi}}</h5>
-                <hr>
-                <h5>Yours: {{ctrl.yourStation.city}}, {{ctrl.yourStation.state}}: {{ctrl.yourStation.aqi}}</h5>
-                <p>Ranking: {{ctrl.nationalRank}}/{{ctrl.nationalTotal}}</p>
+                <h3 class="box-header">National</h3>
+                <h4>Best: {{ctrl.bestNationalLocation}}:</h4>
+                <aqi-scale aqi="ctrl.bestNationalStation.aqi"></aqi-scale>
+                <h4>Worst: {{ctrl.worstNationalLocation}}:</h4>
+                <aqi-scale aqi="ctrl.worstNationalStation.aqi"></aqi-scale>
             </div>
 
             <div class="box-right">
-                <h4 class="box-header">State</h4>
-                <h5>Best: {{ctrl.bestStateStation.city}}, {{ctrl.bestStateStation.state}}: {{ctrl.bestStateStation.aqi}}</h5>
-                <h5>Worst: {{ctrl.worstStateStation.city}}, {{ctrl.worstStateStation.state}}: {{ctrl.worstStateStation.aqi}}</h5>
-                <hr>
-                <h5>Yours: {{ctrl.yourStation.city}}, {{ctrl.yourStation.state}}: {{ctrl.yourStation.aqi}}</h5>
-                <p>Ranking: {{ctrl.stateRank}}/{{ctrl.stateTotal}}</p>
+                <h3 class="box-header">State</h3>
+                <h4>Best: {{ctrl.bestStateLocation}}:</h4>
+                <aqi-scale aqi="ctrl.bestStateStation.aqi"></aqi-scale>
+                <h4>Worst: {{ctrl.worstStateLocation}}:</h4>
+                <aqi-scale aqi="ctrl.worstStateStation.aqi"></aqi-scale>
+            </div>
+
+            <div class="box-bottom-left">
+                <h3 class="box-header">National Ranking</h3>
+                <h4 class="ranking">{{ctrl.nationalRank}}</h4>
+                <hr class="divider">
+                <h4 class="ranking">{{ctrl.nationalTotal}}</h4>
+            </div>
+
+            <div class="box-bottom-mid">
+                <br/>
+                <h3 class="box-header">{{ctrl.yourLocation}}</h3>
+                <br/>
+                <aqi-scale aqi="ctrl.yourStation.aqi"></aqi-scale>
+            </div>
+
+            <div class="box-bottom-right">
+                <h3 class="box-header">State Ranking</h3>
+                <h4 class="ranking">{{ctrl.stateRank}}</h4>
+                <hr class="divider">
+                <h4 class="ranking">{{ctrl.stateTotal}}</h4>
             </div>
 
         </div>
 
-    </div>
-    <div class="actions">
     </div>
 </div>

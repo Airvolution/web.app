@@ -106,27 +106,88 @@ almanac-widget {
       //   1px  1px 0 #000;;
     }
 
-    .box{
+    .box {
       width: 100%;
       height: 15em;
       display: inline-block;
-      padding: 0;
+      padding: 1em;
 
-      .box-header{
+      .clearfix:after{
+        content:"";
+        display:block;
+        clear:both;
+      }
+
+      .box-header {
+        text-align: center;
+      }
+
+      .divider {
+        margin: 0;
+        padding:0;
+        height:4px;
+        background-color: black;
+      }
+
+      .my-station{
+        vertical-align: middle;
+      }
+
+      .ranking {
+        font-size: 3.5em;
         text-align: center;
       }
 
       .box-left {
-        height: 15em;
+        height: 17.5em;
         position: absolute;
-        width: 21em;
+        width: 20.5em;
+        //background-color: #00b3ee;
       }
       .box-right {
         position: relative;
         float: right;
-        height: 15em;
-        width: 21em;
+        height: 17.5em;
+        width: 20.5em;
+        //background-color: #ffff00;
       }
+
+      .box-bottom-left {
+        position: absolute;
+        top: 25.5em;
+        height: 17.5em;
+        width: 10em;
+        //background-color: #7e0023;
+      }
+
+      .box-bottom-right {
+        position: absolute;
+        top: 25.5em;
+        left: 33em;
+        height: 17.5em;
+        width: 10em;
+        float: right;
+        //background-color: #7e0023;
+      }
+
+
+      .box-bottom-mid {
+        position: absolute;
+        top: 25.5em;
+        left: 12.25em;
+        height: 17.5em;
+        width: 20.5em;
+        //background-color: #00c800;
+      }
+
+      .box-bottom {
+        position: absolute;
+        top: 25em;
+        height: 17em;
+        width: 41em;
+        //background-color: #00c800;
+      }
+
     }
 
     .description {
