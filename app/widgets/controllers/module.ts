@@ -6,6 +6,8 @@ import HeatmapWidgetController = require('./heatmapWidgetController');
 import AverageWidgetController = require("./averageWidgetController");
 import MonthlyPieChartWidgetController = require('./monthlyPieChartWidgetController');
 import LongestStreaksWidgetController = require('./longestStreaksWidgetController');
+import ClosestStationWidgetController = require('./closestStationController');
+import RankingWidgetController = require('./rankingWidgetController');
 
 export = angular.module('app.widgets.controllers',[])
     .controller(ConsecutiveDaysWidgetController.name,ConsecutiveDaysWidgetController)
@@ -13,4 +15,6 @@ export = angular.module('app.widgets.controllers',[])
     .controller(HeatmapWidgetController.name, HeatmapWidgetController)
     .controller(AverageWidgetController.name, AverageWidgetController)
     .controller(MonthlyPieChartWidgetController.name, MonthlyPieChartWidgetController)
-    .controller(LongestStreaksWidgetController.name, LongestStreaksWidgetController);
+    .controller(LongestStreaksWidgetController.name, LongestStreaksWidgetController)
+    .controller(ClosestStationWidgetController.name, ClosestStationWidgetController)
+    .controller(RankingWidgetController.name, RankingWidgetController);

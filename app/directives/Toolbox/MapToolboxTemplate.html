@@ -1,11 +1,11 @@
 <div class="toolbox" ng-class="{'expanded':ctrl.expanded}">
     <div class="toolbox-wrapper expanded">
         <tool expanded="ctrl.expanded" uib-tooltip="Open Toolbox Details" tooltip-placement="right" popover-trigger="mouseenter">
-            <i class="fa fa-bars" ng-class="{'fa-2x':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.showStationDrawer = !ctrl.showStationDrawer"></i>
+            <i class="fa fa-home" ng-class="{'fa-2x':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.showStationDrawer = !ctrl.showStationDrawer"></i>
         </tool>
-        <tool expanded="ctrl.expanded" uib-tooltip="Preview Station" tooltip-placement="right" popover-trigger="mouseenter">
-            <i class="fa fa-eye" ng-class="{'fa-2x':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="toggleDetails()"></i>
-        </tool>
+        <!--<tool expanded="ctrl.expanded" uib-tooltip="Preview Station" tooltip-placement="right" popover-trigger="mouseenter">-->
+            <!--<i class="fa fa-eye" ng-class="{'fa-2x':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="toggleDetails()"></i>-->
+        <!--</tool>-->
         <tool expanded="ctrl.expanded" uib-tooltip="Light Map" tooltip-placement="right" popover-trigger="mouseenter">
             <i class="fa fa-map" ng-class="{'fa-2x':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="setMapMode('light')"></i>
         </tool>
@@ -21,16 +21,12 @@
         <tool expanded="ctrl.expanded" uib-tooltip="Center On Location" tooltip-placement="right" popover-trigger="mouseenter">
             <i class="fa fa-dot-circle-o" ng-class="{'fa-2x':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="centerOnLocation()"></i>
         </tool>
-        <tool expanded="ctrl.expanded" uib-tooltip="Center On Marker" tooltip-placement="right" popover-trigger="mouseenter">
-            <i class="fa fa-map-marker" ng-class="{'fa-2x':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="centerOnMarker()"></i>
-        </tool>
+        <!--<tool expanded="ctrl.expanded" uib-tooltip="Center On Marker" tooltip-placement="right" popover-trigger="mouseenter">-->
+            <!--<i class="fa fa-map-marker" ng-class="{'fa-2x':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="centerOnMarker()"></i>-->
+        <!--</tool>-->
         <tool expanded="ctrl.expanded" uib-tooltip="Show Data Plot" tooltip-placement="right" popover-trigger="mouseenter">
-            <i class="fa fa-bar-chart" ng-class="{'fa-2x':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="togglePlot()"></i>
+            <i class="fa fa-line-chart" ng-class="{'fa-2x':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.showPlotDrawer = !ctrl.showPlotDrawer"></i>
         </tool>
-        <tool expanded="ctrl.expanded" uib-tooltip="Download Data" tooltip-placement="right" popover-trigger="mouseenter">
-            <i class="fa fa-download" ng-class="{'fa-2x':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="downloadPlotData()"></i>
-        </tool>
-
 
         <div class="toolbox-expander" ng-click="ctrl.expanded = !ctrl.expanded">
             <div class="expander-wrapper">
@@ -38,8 +34,9 @@
             </div>
         </div>
     </div>
+
     <div class="toolbox-drawer" ng-class="{'drawer-open':ctrl.showStationDrawer,'expanded':ctrl.expanded}" ng-include="'app/directives/Toolbox/templates/stationDrawer.html'"></div>
-    <div  class="toolbox-drawer" ng-class="{'drawer-open':ctrl.showPlotDrawer,'expanded':ctrl.expanded}" ng-include="'app/directives/Toolbox/templates/plotDrawer.html'"></div>
+    <div class="toolbox-drawer" ng-class="{'drawer-open':ctrl.showPlotDrawer,'expanded':ctrl.expanded}" ng-include="'app/directives/Toolbox/templates/plotDrawer.html'"></div>
 </div>
 
 

@@ -10,10 +10,12 @@ class SelectionService {
     private currentStationSelectionMap = {};
     private currentPollutantSelection = [];
     private currentWeatherSelection = [];
+    private currentFromDate;
+    private currentToDate;
     constructor(
         private $log
     ) {
-        this.getDefaultPollutantSelection();
+        //this.getDefaultPollutantSelection();
     }
 
     private getDefaultPollutantSelection() {
@@ -131,4 +133,23 @@ class SelectionService {
         return this.currentWeatherSelection;
     }
 
+    // Dates
+
+    public setDateRange(from, to) {
+        this.currentFromDate = from;
+        this.currentToDate = to;
+    }
+
+    public getDateRange() {
+        return [this.currentFromDate, this.currentToDate];
+    }
+
+    // Resets
+
+    public reset() {
+        this.currentFromDate = undefined;
+        this.currentToDate = undefined;
+        this.currentStationSelection = [];
+        this.currentPollutantSelection = [];
+    }
 }

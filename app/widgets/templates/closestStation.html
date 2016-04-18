@@ -1,0 +1,9 @@
+<div ng-controller="ClosestStationWidgetController as ctrl">
+    <div class="card-header neutral">
+        <p class="category">Station</p>
+        <p class="title">Closest Station To You</p>
+    </div>
+    <div class="card-body">
+        <leaflet id="map" class="fill closestStation" markers="ctrl.markers" tiles="ctrl.tiles"></leaflet>
+    </div>
+</div>

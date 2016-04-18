@@ -64,7 +64,7 @@ class SearchService {
     }
 
     public searchFAQs(queryString:string) {
-        var url = this.getSearchUrl('faqs');
+        var url = this.getSearchUrl('faq');
         var filteredQuery = this.filterStopwords(queryString);
         var query = {
             "query": {
@@ -92,7 +92,7 @@ class SearchService {
             }
         };
         return this.$http.post(url, query).then((results)=> {
-            return results.data;
+            return results.data && results.data.hits ? results.data.hits : [];
         }, (error)=> {
             return error;
         });
@@ -157,7 +157,7 @@ class SearchService {
                                     "id",
                                     "name",
                                     "full_name",
-                                    "descriptions",
+                                    "description",
                                     "stations",
                                     "owner_id"
                                 ],
