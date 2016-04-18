@@ -133,6 +133,14 @@ class MapViewController {
                     cluster.visible = true;
                 });
             },
+            showUserClusters: ()=>{
+                mv.layers.overlays['USER'].visible = true;
+                mv.layers.overlays['USER'].doRefresh = true;
+            },
+            hideUserClusters: ()=>{
+                mv.layers.overlays['USER'].visible = false;
+                mv.layers.overlays['USER'].doRefresh = true;
+            },
             toggleDetails: ()=>{
                 mv.detailsVisible = !mv.detailsVisible;
             },
@@ -150,7 +158,8 @@ class MapViewController {
                 mv.selectedStation = station;
                 mv.populateDetails(station);
             },
-            markers: mv.markers
+            markers: mv.markers,
+            layers: mv.layers
         });
 
         mv.tiles = mapFactory.createTilesFromKey($scope.mode);

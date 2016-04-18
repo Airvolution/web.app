@@ -295,6 +295,18 @@ class MapFactory {
         };
     }
 
+    public createUserGroupLayer(markers) {
+        angular.forEach(markers, (marker) => {
+            marker['layer'] = 'USER';
+        })
+    }
+
+    public removeUserGroupLayer(markers) {
+        angular.forEach(markers, (marker) => {
+            marker['layer'] = marker['state'];
+        })
+    }
+
     public createMapLayers() {
         return {
             overlays: {
@@ -604,6 +616,12 @@ class MapFactory {
                     type: 'markercluster',
                     name: 'Nuevo León',
                     visible: true
+                },
+                // USER SELECTION
+                USER: {
+                    type: 'markercluster',
+                    name: 'User',
+                    visible: false
                 }
             }
         };

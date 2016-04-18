@@ -214,9 +214,13 @@ class MapToolboxController {
             }
         });
         this.$scope.hideAllClusters();
+        this.mapFactory.createUserGroupLayer(this.markersInSelectedGroup);
+        this.$scope.showUserClusters();
     }
 
-    public hideStationsInGroup(group) {
+    public hideStationsInGroup() {
+        this.$scope.hideUserClusters();
+        this.mapFactory.removeUserGroupLayer(this.markersInSelectedGroup);
         this.selectedGroup = {};
         this.markersInSelectedGroup = [];
         this.$scope.showAllClusters();
