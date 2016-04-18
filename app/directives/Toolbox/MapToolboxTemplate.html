@@ -25,7 +25,7 @@
             <!--<i class="fa fa-map-marker" ng-class="{'fa-2x':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="centerOnMarker()"></i>-->
         <!--</tool>-->
         <tool expanded="ctrl.expanded" uib-tooltip="Show Data Plot" tooltip-placement="right" popover-trigger="mouseenter">
-            <i class="fa fa-line-chart" ng-class="{'fa-2x':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.showPlotDrawer = !ctrl.showPlotDrawer"></i>
+            <i class="fa fa-line-chart" ng-class="{'fa-2x':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.togglePlotDrawer()"></i>
         </tool>
 
         <div class="toolbox-expander" ng-click="ctrl.expanded = !ctrl.expanded">

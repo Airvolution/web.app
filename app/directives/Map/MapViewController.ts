@@ -63,6 +63,7 @@ class MapViewController {
 
         mv.detailsVisible = true;
         mv.plotVisible = false;
+        mv.$scope.siteSearchVisible = true;
 
         mv.selectedStation = {location: {}, last: {}};
 
@@ -78,6 +79,13 @@ class MapViewController {
         }
 
         angular.extend($scope, {
+            toggleSiteSearch: (show)=>{
+                if(show !== undefined){
+                    mv.$scope.siteSearchVisible = !!show;
+                    return;
+                }
+                mv.$scope.siteSearchVisible = !mv.$scope.siteSearchVisible;
+            },
             centerOnLocation: ()=> {
                 mv.mapFactory.getCenterNoAutoDiscover(mv.center.zoom).then((response)=> {
                     mv.center = response;

@@ -1,6 +1,6 @@
 <main>
     <map-toolbox></map-toolbox>
-    <map-search></map-search>
+    <map-search ng-show="siteSearchVisible"></map-search>
     <leaflet id="map" lf-center="ctrl.center" markers="ctrl.markers" defaults="ctrl.defaults" tiles="ctrl.tiles" layers="ctrl.layers" controls="ctrl.controls" event-broadcast="ctrl.events"></leaflet>
 
     <!-- Coordinate bounds of Map for development purposes
