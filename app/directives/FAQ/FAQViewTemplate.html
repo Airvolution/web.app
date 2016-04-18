@@ -15,15 +15,30 @@
             </div>
         </div>
         <div class="col-md-12"></div>
-        <nav class="col-md-2">
+        <div class="col-md-2">
+            <h3>Top 5 Most Viewed Questions</h3>
             <ul class="nav nav-pills nav-stacked jump-menu">
-                <li><a ng-click="ctrl.scrollTo('section1')">General</a></li>
-                <li><a ng-click="ctrl.scrollTo('section2')">Pollutants</a></li>
-                <li><a ng-click="ctrl.scrollTo('section3')">What Can I Do To Reduce Pollution?</a></li>
-                <li><a ng-click="ctrl.scrollTo('section4')">Map Controls</a></li>
+                <li><div><a class="menu-items" ng-click="ctrl.scrollTo('section1')">General</a></div></li>
+                <li><div><a class="menu-items" ng-click="ctrl.scrollTo('section2')">Pollutants</a></div></li>
+                <li><div><a class="menu-items" ng-click="ctrl.scrollTo('section3')">What Can I Do To Reduce Pollution?</a></div></li>
+                <li><div><a class="menu-items" ng-click="ctrl.scrollTo('section4')">Map Controls</a></div></li>
             </ul>
-        </nav>
-        <div class="col-md-8 col-md-offset-1 question-answer" scroll-to="ctrl.scrollPos">
+            <h3>Top 5 User Recommended Questions</h3>
+            <ul class="nav nav-pills nav-stacked jump-menu">
+                <li><div><a class="menu-items" ng-click="ctrl.scrollTo('section1')">General</a></div></li>
+                <li><div><a class="menu-items" ng-click="ctrl.scrollTo('section2')">Pollutants</a></div></li>
+                <li><div><a class="menu-items" ng-click="ctrl.scrollTo('section3')">What Can I Do To Reduce Pollution?</a></div></li>
+                <li><div><a class="menu-items" ng-click="ctrl.scrollTo('section4')">Map Controls</a></div></li>
+            </ul>
+            <h3>Sections</h3>
+            <ul class="nav nav-pills nav-stacked jump-menu">
+                <li><div><a class="menu-items" ng-click="ctrl.scrollTo('section1')">General</a></div></li>
+                <li><div><a class="menu-items" ng-click="ctrl.scrollTo('section2')">Pollutants</a></div></li>
+                <li><div><a class="menu-items" ng-click="ctrl.scrollTo('section3')">What Can I Do To Reduce Pollution?</a></div></li>
+                <li><div><a class="menu-items" ng-click="ctrl.scrollTo('section4')">Map Controls</a></div></li>
+            </ul>
+        </div>
+        <div class="col-md-6 col-md-offset-1 question-answer" scroll-to="ctrl.scrollPos">
             <h2 id="section1">General</h2>
             <faq-question ng-repeat="faq in ctrl.faqList | filter: {section:{name:'General'}}"
                           question="faq"></faq-question>

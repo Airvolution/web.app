@@ -148,6 +148,7 @@ class MapViewController {
             },
             setSelectedStation: (station)=>{
                 mv.selectedStation = station;
+                mv.populateDetails(station);
             }
         });
 
@@ -240,22 +241,27 @@ class MapViewController {
             //}
 
             self.selectedStation = args.model;
-            self.selectionService.setCurrentStation(self.selectedStation);
-            self.mapFactory.getLastDataPointFromStation(self.selectedStation.id).then(
-                function (response) {
-                    self.selectedStation.last = response.lastDataPoint;
-                    self.selectedStation.lastUpdated = response.lastUpdated;
-
-                    self.detailsVisible = true;
-                    if (self.plotVisible) {
-                        self.plotVisible = false;
-                    }
-                },
-                function (response) {
-                    // error
-                }
-            );
+            self.populateDetails(self.selectedStation);
         });
+    }
+
+    private populateDetails(station){
+        var self = this;
+        self.selectionService.setCurrentStation(station);
+        self.mapFactory.getLastDataPointFromStation(station.id).then(
+            function (response) {
+                self.selectedStation.last = response.lastDataPoint;
+                self.selectedStation.lastUpdated = response.lastUpdated;
+
+                self.detailsVisible = true;
+                if (self.plotVisible) {
+                    self.plotVisible = false;
+                }
+            },
+            function (response) {
+                // error
+            }
+        );
     }
 
     private getMapMarkers() {

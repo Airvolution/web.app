@@ -1,0 +1,10 @@
+<div ng-controller="ConsecutiveDaysWidgetController as ctrl">
+    <div class="card-header {{ctrl.consecutiveDays.category}}">
+        <i class="fa fa-2x fa-border pull-right emoji {{ctrl.faEmoji}}"></i>
+        <p class="category">Consecutive</p>
+        <p class="title">{{ctrl.capitalizeFirst(ctrl.consecutiveDays.category)}} Air Days</p>
+    </div>
+    <div class="card-body">
+        <p class="value">{{ctrl.getConsecutiveDays()}}</p>
+    </div>
+</div>

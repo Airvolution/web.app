@@ -132,6 +132,12 @@ angular.module('app', [
             requireAuth: true
         });
         states.push({
+            name: 'app.config.groups',
+            url: 'groups/',
+            template: '<my-groups></my-groups>',
+            requireAuth: true
+        });
+        states.push({
             name: 'app.config.register',
             url: 'register/',
             template: '<register-station></register-station>',
@@ -166,19 +172,9 @@ angular.module('app', [
         states.push({
             name: 'app.about',
             url: 'about/',
-            templateUrl: 'app/templates/aboutUs.html'
-        });
-        states.push({
-            name: 'app.contact',
-            url: 'contact/',
-            templateUrl: 'app/templates/contactUs.html'
+            template: '<about></about>'
         });
 
-        states.push({
-            name: 'app.disclaimer',
-            url: 'disclaimer/',
-            templateUrl: 'app/templates/disclaimer.html'
-        });
         angular.forEach(states, (state)=> {
             $stateProvider.state(state);
         });

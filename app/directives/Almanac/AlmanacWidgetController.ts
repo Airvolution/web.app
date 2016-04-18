@@ -6,19 +6,17 @@ class AlmanacWidgetController {
     public type:string;
     public templateUrl:string;
     private templateMap = {
-        'consecutive-green-days': "consecutiveGreenDays.html",
-        'consecutive-red-days': "consecutiveRedDays.html",
-        'consecutive-yellow-days': "consecutiveYellowDays.html",
+        'consecutive-air-quality-days': "consecutiveAirQualityDays.html",
         '45-day-trend': 'trendsTemplate.html',
         'heatmap': 'heatmapTemplate.html',
         'week-average': 'avgAQI7Days.html',
-        'monthly-pie-chart': 'monthlyPieChart.html'
+        'monthly-pie-chart': 'monthlyPieChart.html',
+        'longest-streaks' : 'longestStreaks.html'
     };
 
     private templateSizeMap = {
-        'consecutive-green-days': 'medium',
-        'consecutive-red-days': 'medium',
-        'consecutive-yellow-days': 'medium',
+        'longest-streaks' : 'large',
+        'consecutive-air-quality-days': 'medium',
         '45-day-trend': 'xl',
         'heatmap': 'large',
         'week-average': 'medium',
