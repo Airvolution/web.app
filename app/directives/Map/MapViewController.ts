@@ -84,9 +84,9 @@ class MapViewController {
                 });
             },
             togglePlot: ()=>{
-                if (!mv.selectedStation || !mv.selectedStation.id) {
-                    return;
-                }
+                //if (!mv.selectedStation || !mv.selectedStation.id) {
+                //    return;
+                //}
                 mv.plotVisible = !mv.plotVisible;
                 if (mv.plotVisible) {
                     mv.generatePlot();
@@ -102,20 +102,21 @@ class MapViewController {
                 }
             },
             downloadPlotData: ()=>{
-                if (!mv.selectedStation || !mv.selectedStation.id) {
+                /*if (!mv.selectedStation || !mv.selectedStation.id) {
                     return;
-                }
+                }*/
 
                 let stationsGroup = mv.selectionService.getCurrentStationSelectionIds();
                 let paramsGroup = mv.selectionService.getCurrentPollutantSelection();
+                let dates = mv.selectionService.getDateRange();
 
                 if (stationsGroup.length != 0) {
-                    mv.mapFactory.downloadDataFromStation(stationsGroup, paramsGroup);
-                } else if (!mv.selectedStation || !mv.selectedStation.id) {
+                    mv.mapFactory.downloadDataFromStation(stationsGroup, paramsGroup, dates);
+                } /*else if (!mv.selectedStation || !mv.selectedStation.id) {
                     return;
                 } else {
                     this.mapFactory.downloadDataFromStation(mv.selectedStation.id, paramsGroup);
-                }
+                }*/
             },
             toggleCluster: (cluster)=>{
                 if (cluster.id && mv.layers.overlays[cluster.id]) {
@@ -131,6 +132,14 @@ class MapViewController {
                 angular.forEach(mv.layers.overlays, function (cluster:any) {
                     cluster.visible = true;
                 });
+            },
+            showUserClusters: ()=>{
+                mv.layers.overlays['USER'].visible = true;
+                mv.layers.overlays['USER'].doRefresh = true;
+            },
+            hideUserClusters: ()=>{
+                mv.layers.overlays['USER'].visible = false;
+                mv.layers.overlays['USER'].doRefresh = true;
             },
             toggleDetails: ()=>{
                 mv.detailsVisible = !mv.detailsVisible;
@@ -148,7 +157,9 @@ class MapViewController {
             setSelectedStation: (station)=>{
                 mv.selectedStation = station;
                 mv.populateDetails(station);
-            }
+            },
+            markers: mv.markers,
+            layers: mv.layers
         });
 
         mv.tiles = mapFactory.createTilesFromKey($scope.mode);
@@ -284,21 +295,17 @@ class MapViewController {
     public generatePlot() {
         let stationsGroup = this.selectionService.getCurrentStationSelectionIds();
         let paramsGroup = this.selectionService.getCurrentPollutantSelection();
+        let dateRange = this.selectionService.getDateRange();
 
-        if (stationsGroup.length != 0) {
+        if (stationsGroup.length != 0 && paramsGroup != 0) {
             this.unsetChartData();
-            this.getDataForPlot(stationsGroup, paramsGroup);
-        } else if (!this.selectedStation || !this.selectedStation.id) {
-            return;
-        } else {
-            this.unsetChartData();
-            this.getDataForPlot(this.selectedStation.id, paramsGroup);
+            this.getDataForPlot(stationsGroup, paramsGroup, dateRange);
         }
     }
 
-    private getDataForPlot(ids, params) {
+    private getDataForPlot(ids, params, dates) {
         let self = this;
-        self.mapFactory.getDataFromStation(ids, params).then(
+        self.mapFactory.getDataFromStation(ids, params, dates).then(
             function (response) {
                 self.chartOptions = response.chartOptions;
                 self.chartData = response.chartData;
