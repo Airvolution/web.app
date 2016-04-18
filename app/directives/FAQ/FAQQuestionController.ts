@@ -5,16 +5,28 @@ export = FAQQuestionController;
 class FAQQuestionController {
     public question;
     public chev = 'DOWN';
-    public userLoggedIn = false;
+    public userId = undefined;
+    public userReviewColor = 'black';
 
     public static $inject = ['$sanitize', 'APIService', 'preferencesService'];
     constructor(private $sanitize, private APIService, private preferencesService) {
+
+        this.APIService.getUserProfile().then((userProfile)=> {
+            if(userProfile.id != undefined) {
+                this.userId = userProfile.id;
+
+                var score = this.getMyQuestionReivewScore();
+                if(score == 1) {
+                    this.userReviewColor = 'green';
+                }
+                else if(score == -1) {
+                    this.userReviewColor = 'red';
+                }
+            }
+        });
     };
 
     public toggleChevron() {
-        //var image = angular.element('#img_' + this.question.id);
-
-
         if(this.chev == 'DOWN') {
             this.chev = 'UP';
 
@@ -34,16 +46,10 @@ class FAQQuestionController {
     public vote(direction) {
 
         // Check if user is logged in.
-        this.preferencesService.loadUserDefaults().then((userPreferences) => {
-            this.userLoggedIn = true;
-        }, (error) => {
-            this.userLoggedIn = false;
-
-            alert("Error: You must be logged in.");
-
-            // Exits if user is not logged in.
+        if(this.userId == undefined) {
+            alert('You must be logged in to make a user review!');
             return;
-        });
+        }
 
         var review = {
             questionId: this.question.id,
@@ -52,19 +58,28 @@ class FAQQuestionController {
 
         if(direction == 'up') {
 
-            review.score = 2;
-            angular.element('#' + this.question.id + '_upVote').css('color', 'green');
-            angular.element('#' + this.question.id + '_downVote').css('color', 'black');
+            review.score = 1;
+            //angular.element('#' + this.question.id + '_downVote').addClass('black');
+            this.userReviewColor = 'green';
             this.APIService.PostFaqUserReview(review).then((data)=>{
             });
         }
         else if(direction == 'down') {
 
-            review.score = 1;
-            angular.element('#' + this.question.id + '_upVote').css('color', 'black');
-            angular.element('#' + this.question.id + '_downVote').css('color', 'red');
+            review.score = -1;
+            //angular.element('#' + this.question.id + '_upVote').addClass('black');
+            this.userReviewColor = 'red';
             this.APIService.PostFaqUserReview(review).then((data)=>{
             });
+        }
+    };
+
+    public getMyQuestionReivewScore()
+    {
+        for(var i = 0; i < this.question.userReviews.length; i++) {
+            if(this.question.userReviews[i].user_Id == this.userId) {
+                return this.question.userReviews[i].userReviewScore;
+            }
         }
     };
 };

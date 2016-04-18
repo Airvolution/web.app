@@ -7,7 +7,7 @@
     <div ng-bind-html="ctrl.question.answerRichText"></div>
     <div>
         <div>Did you find this helpful?</div>
-        <div id="{{ctrl.question.id}}_upVote"   ng-click="ctrl.vote('up')"   class="voteButtons fa fa-thumbs-o-up fa-2x"></div>
-        <div id="{{ctrl.question.id}}_downVote" ng-click="ctrl.vote('down')" class="voteButtons fa fa-thumbs-o-down fa-2x"></div>
+        <div id="{{ctrl.question.id}}_upVote"   ng-click="ctrl.vote('up')"   ng-class="ctrl.userReviewColor == 'green' ? 'green' : 'black'" class="voteButtons fa fa-thumbs-o-up fa-2x"></div>
+        <div id="{{ctrl.question.id}}_downVote" ng-click="ctrl.vote('down')" ng-class="ctrl.userReviewColor == 'red' ? 'red' : 'black'" class="voteButtons fa fa-thumbs-o-down fa-2x"></div>
     </div>
 </div>
