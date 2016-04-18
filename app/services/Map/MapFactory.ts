@@ -619,7 +619,7 @@ class MapFactory {
                 },
                 // USER SELECTION
                 USER: {
-                    type: 'markercluster',
+                    type: 'group',
                     name: 'User',
                     visible: false
                 }
