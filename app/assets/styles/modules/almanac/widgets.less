@@ -106,19 +106,13 @@ almanac-widget {
       //   1px  1px 0 #000;;
     }
 
-    .box {
+    .container {
       width: 100%;
       height: 15em;
       display: inline-block;
       padding: 1em;
 
-      .clearfix:after{
-        content:"";
-        display:block;
-        clear:both;
-      }
-
-      .box-header {
+      .container-header {
         text-align: center;
       }
 
@@ -141,6 +135,7 @@ almanac-widget {
         text-align: center;
       }
 
+      /* Top-Half of Widget */
       .national-container {
         height: 17.5em;
         position: absolute;
@@ -155,12 +150,22 @@ almanac-widget {
         //background-color: #ffff00;
       }
 
+      /* Bottom-Half of Widget */
       .nationanl-ranking-container {
         position: absolute;
         top: 25.5em;
         height: 17.5em;
         width: 10em;
         //background-color: #7e0023;
+      }
+
+      .local-container {
+        position: absolute;
+        top: 25.5em;
+        left: 12.25em;
+        height: 17.5em;
+        width: 20.5em;
+        //background-color: #00c800;
       }
 
       .state-ranking-container {
@@ -174,22 +179,7 @@ almanac-widget {
       }
 
 
-      .local-container {
-        position: absolute;
-        top: 25.5em;
-        left: 12.25em;
-        height: 17.5em;
-        width: 20.5em;
-        //background-color: #00c800;
-      }
 
-      .box-bottom {
-        position: absolute;
-        top: 25em;
-        height: 17em;
-        width: 41em;
-        //background-color: #00c800;
-      }
 
     }
 

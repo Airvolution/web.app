@@ -4,10 +4,10 @@
         <p class="title">Your city ranked against the best and worst (by AQI)</p>
     </div>
     <div class="card-body">
-        <div class="box">
+        <div class="container">
 
             <div class="national-container">
-                <h3 class="box-header">National</h3>
+                <h3 class="container-header">National</h3>
                 <h4>Best: {{ctrl.bestNationalLocation}}:</h4>
                 <aqi-scale aqi="ctrl.bestNationalStation.aqi"></aqi-scale>
                 <h4>Worst: {{ctrl.worstNationalLocation}}:</h4>
@@ -15,7 +15,7 @@
             </div>
 
             <div class="state-container">
-                <h3 class="box-header">State</h3>
+                <h3 class="container-header">State</h3>
                 <h4>Best: {{ctrl.bestStateLocation}}:</h4>
                 <aqi-scale aqi="ctrl.bestStateStation.aqi"></aqi-scale>
                 <h4>Worst: {{ctrl.worstStateLocation}}:</h4>
@@ -23,7 +23,7 @@
             </div>
 
             <div class="nationanl-ranking-container">
-                <h3 class="box-header">National Ranking</h3>
+                <h3 class="container-header">National Ranking</h3>
                 <h4 class="ranking">{{ctrl.nationalRank}}</h4>
                 <hr class="divider">
                 <h4 class="ranking">{{ctrl.nationalTotal}}</h4>
@@ -31,13 +31,13 @@
 
             <div class="local-container">
                 <br/>
-                <h3 class="box-header">{{ctrl.yourLocation}}</h3>
+                <h3 class="container-header">{{ctrl.yourLocation}}</h3>
                 <br/>
                 <aqi-scale aqi="ctrl.yourStation.aqi"></aqi-scale>
             </div>
 
             <div class="state-ranking-container">
-                <h3 class="box-header">State Ranking</h3>
+                <h3 class="container-header">State Ranking</h3>
                 <h4 class="ranking">{{ctrl.stateRank}}</h4>
                 <hr class="divider">
                 <h4 class="ranking">{{ctrl.stateTotal}}</h4>
