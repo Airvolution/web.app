@@ -4,12 +4,13 @@ export = FAQQuestionController;
 
 class FAQQuestionController {
     public question;
-    public chev = 'DOWN';
     public userId = undefined;
     public userReviewColor = 'black';
 
     public static $inject = ['$sanitize', 'APIService', 'preferencesService'];
     constructor(private $sanitize, private APIService, private preferencesService) {
+
+        this.question.chevron = 'DOWN';
 
         this.APIService.getUserProfile().then((userProfile)=> {
             if(userProfile.id != undefined) {
@@ -27,19 +28,17 @@ class FAQQuestionController {
     };
 
     public toggleChevron() {
-        if(this.chev == 'DOWN') {
-            this.chev = 'UP';
+        if(this.question.chevron == 'DOWN') {
+            this.question.chevron = 'UP';
 
             // Increment view count.
-
             this.APIService.PostFaqViewCount(this.question.id).then((data)=>{
-
             }, (error) => {
             });
 
         }
         else {
-            this.chev = 'DOWN';
+            this.question.chevron = 'DOWN';
         }
     };
 

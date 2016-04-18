@@ -373,4 +373,34 @@ class APIService {
             return response.data;
         },onError);
     }
+
+    public GetTop5MostViewedList() {
+        var deferred = this.$q.defer();
+        let self = this;
+        let url = "api/faq/top5Viewed";
+        self.$http.get(url).then(
+            function (response) {
+                deferred.resolve(response.data);
+            },
+            function (response) {
+                deferred.reject(response);
+            }
+        );
+        return deferred.promise;
+    };
+
+    public GetTop5HighestRatedList() {
+        var deferred = this.$q.defer();
+        let self = this;
+        let url = "api/faq/top5Rated";
+        self.$http.get(url).then(
+            function (response) {
+                deferred.resolve(response.data);
+            },
+            function (response) {
+                deferred.reject(response);
+            }
+        );
+        return deferred.promise;
+    };
 }
