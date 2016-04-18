@@ -60,26 +60,47 @@ class RankingWidgetController {
         }
     }
 
-    public setStateRankingAndLength(stations){
+    public setBestWorstAndRankings(stations){
         var stateTotalCount = 0;
         var lastStateStation = 0;
+        var nationalTotalCount = 0;
 
-        for (var i = 0; i < stations.length; i ++){
-            if (stations[i].id==this.yourStation.id) {
-                this.stateRank = stateTotalCount + 1;
-            }
+        var bestStateStationTemp;
+        var bestNationalStationTemp;
 
-            if (stations[i].state==this.yourStation.state){
-                if (stateTotalCount == 0){
-                    this.bestStateStation = stations[i];
+        for (var i = 0; i < stations.length; i++){
+            if (stations[i].parameter != null){
+
+                if (typeof bestNationalStationTemp == 'undefined'){
+                    bestNationalStationTemp = stations[i];
                 }
 
-                stateTotalCount++;
-                lastStateStation = i;
+                if (stations[i].id==this.yourStation.id) {
+                    this.stateRank = stateTotalCount + 1;
+                    this.nationalRank = nationalTotalCount + 1;
+                }
+
+                if (stations[i].state==this.yourStation.state){
+                    if (stateTotalCount == 0){
+                        bestStateStationTemp = stations[i];
+                    }
+
+                    stateTotalCount++;
+                    lastStateStation = i;
+                }
+                nationalTotalCount++;
             }
 
         }
+
+        // Set important values
+        this.nationalTotal = nationalTotalCount;
+        this.bestNationalStation = bestNationalStationTemp;
+        this.worstNationalStation = stations[stations.length-1];
+
+
         this.stateTotal = stateTotalCount;
+        this.bestStateStation = bestStateStationTemp;
         this.worstStateStation = stations[lastStateStation];
     }
 
@@ -89,14 +110,17 @@ class RankingWidgetController {
             return;
         }
 
+        // Sort Markers
         markers.sort((a, b) => a.aqi - b.aqi);
 
-        this.nationalTotal = markers.length;
+        // Get your station
         this.yourStation = this.getStationAndNationalRanking(dailies[0].station_Id, markers);
-        this.setStateRankingAndLength(markers);
-        this.bestNationalStation = markers[0];
-        this.worstNationalStation = markers[markers.length-1];
 
+        // Set best & worst stations, as well as yourStations rankings
+        this.setBestWorstAndRankings(markers);
+
+
+        // Create strings for making the widget load pretty
         this.bestNationalLocation = this.bestNationalStation.city + ", " + this.bestNationalStation.state;
         this.bestStateLocation = this.bestStateStation.city + ", " + this. bestStateStation.state;
 
