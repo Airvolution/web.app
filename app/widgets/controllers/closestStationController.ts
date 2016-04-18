@@ -12,6 +12,10 @@ class ClosestStationWidgetController {
     public myLocation;
     public station;
     public markers = [];
+    public myLocationIcon = {
+        iconSize: [35, 45],
+        iconAnchor: [17, 28]
+    }
 
     constructor(
         private mapFactory,
@@ -32,8 +36,8 @@ class ClosestStationWidgetController {
                         lng: self.myLocation.lng,
                         icon: {
                             iconUrl: 'app/assets/images/markers/red.png',
-                            iconSize: [35, 45],
-                            iconAnchor: [17, 28]
+                            iconSize: this.myLocationIcon.iconSize,
+                            iconAnchor: this.myLocationIcon.iconAnchor
                         }
                     },
                     {
