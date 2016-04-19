@@ -2,13 +2,15 @@
 
 export = MapToolboxController;
 
-    class MapToolboxController {
+class MapToolboxController {
     public expanded;
+    public query;
     public showPlotDrawer;
-        public showStationDrawer;
-    public stationQuery;
+    public showStationDrawer;
     public stationQueryResults;
+    public groupQueryResults;
     public searchOptions;
+    public showSearchResults;
 
     public markerSelection;
     public markerSelectionIds;
@@ -27,6 +29,11 @@ export = MapToolboxController;
     public userGroupsMap;
     public selectedGroup;
     public markersInSelectedGroup;
+
+    public showUserGroups;
+    public newGroupName;
+    public newGroupDesc;
+    public userAddingNewGroup;
 
     public static $inject = ['$scope','$state', '$log', 'mapFactory', 'selectionService','SearchService', 'AQIColors', 'preferencesService', 'notificationService', 'APIService'];
     constructor(
@@ -54,28 +61,38 @@ export = MapToolboxController;
         this.showPlotDrawer = false;
         this.showStationDrawer = false;
 
-        this.searchOptions = {updateOn: 'default blur', debounce: {'default': 250 , 'blur': 0}};
+        this.searchOptions = {updateOn: 'default blur', debounce: {'default': 250, 'blur': 0}};
         this.stationQueryResults = [];
-
+        this.groupQueryResults = [];
         this.userStations = [];
         this.userGroups = [];
         this.userGroupsMap = {};
         this.selectedGroup = {};
         this.markersInSelectedGroup = [];
 
+        this.showUserGroups = false;
+        this.newGroupName = '';
+        this.newGroupDesc = '';
+        this.userAddingNewGroup = false;
+
         let self = this;
 
         // try to load user stations and groups first
         let loadUserMarkers = (markers) => {
             self.userStations = markers;
+            for (let i = 0; i < self.userStations.length; i++) {
+                self.markerSelection.push(self.userStations[i]);
+                self.markerSelectionIds[self.userStations[i].id] = i
+            }
         };
 
         let loadUserGroups = (groups) => {
             self.userGroups = groups;
+            self.userGroupsMap = {};
             angular.forEach(groups, (group) => {
                 angular.forEach(group.stations, (station) => {
                     self.userGroupsMap[station.id] = group.id;
-                })
+                });
             });
         };
 
@@ -91,26 +108,69 @@ export = MapToolboxController;
             });
         };
 
+        this.notificationService.subscribe(this.$scope, 'GroupModified', () => {
+            self.APIService.getUserGroups().then((groups) => {
+                loadUserGroups(groups);
+                self.hideStationsInGroup();
+                self.mapFactory.showAllClusters();
+            }, waitForUserGroups);
+        });
+
         this.APIService.getUserStations().then(loadUserMarkers, waitForUserMarkers);
         this.APIService.getUserGroups().then(loadUserGroups, waitForUserGroups);
     }
 
-    public searchStations() {
-        if(!this.stationQuery || this.stationQuery  == ''){
-            this.stationQueryResults = [];
+    public search() {
+        this.resetSearchResults();
+        if (!this.query) {
+            this.closeSearchResults();
             return;
         }
-
+        this.showSearchResults = true;
         var self = this;
-        this.SearchService.searchStations(this.stationQuery).then((results)=>{
-            self.stationQueryResults = _.map(results.hits,(result:any)=>{
+        this.SearchService.searchStations(this.query).then((results)=> {
+            self.stationQueryResults = _.map(results.hits, (result:any)=> {
+                return result._source;
+            });
+        });
+        this.SearchService.searchGroups(this.query).then((results)=> {
+            self.groupQueryResults = _.map(results.hits, (result:any)=> {
                 return result._source;
             });
         });
     }
 
+    public closeSearchResults() {
+        this.query = '';
+        this.showSearchResults = false;
+        this.resetSearchResults();
+    }
+
+    public resetSearchResults() {
+        this.stationQueryResults = [];
+        this.groupQueryResults = [];
+    }
+
     public isMarkerInGroup(marker) {
-        return this.markerSelectionIds[marker.id] != undefined;
+        var result;
+        if (!marker.id) {
+            result = this.markerSelectionIds[marker];
+        } else {
+            result = this.markerSelectionIds[marker.id];
+        }
+        return result !== undefined;
+    }
+
+    public markersInGroup(group) {
+        if (!group || !group.stations || !group.stations.length) {
+            return false;
+        }
+        for (var i = 0; i < group.stations.length; i++) {
+            if (!this.isMarkerInGroup(group.stations[i])) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public isMarkerChecked(marker) {
@@ -124,14 +184,67 @@ export = MapToolboxController;
     public toggleMarker(marker) {
         let index = this.markerSelectionIds[marker.id];
         if (index != undefined) {
-            // Removes marker from Selection Group
-            this.markerSelection.splice(index, 1);
-            delete this.markerSelectionIds[marker.id];
-            delete this.markerUncheckedIds[marker.id];
+            this.removeMarker(marker);
         } else {
-            // Adds marker to Selection Group
-            this.markerSelectionIds[marker.id] = this.markerSelection.length;
-            this.markerSelection.push(marker);
+            this.addMarker(marker);
+        }
+    }
+
+    public addMarker(marker) {
+        // TODO: This implementation breaks when removing groups from selection
+        // TODO: Use the CLEAR button for now
+        if (this.markerSelectionIds[marker.id]) {
+            return;
+        }
+        this.markerSelectionIds[marker.id] = this.markerSelection.length;
+        this.markerSelection.push(marker);
+    }
+
+    public removeMarker(marker) {
+        // TODO: This implementation breaks when removing group from selection
+        // TODO: Use the CLEAR button for now
+        var id = marker.id ? marker.id : marker;
+        let index = this.markerSelectionIds[id];
+        if (index === undefined) {
+            return;
+        }
+        this.markerSelection.splice(index, 1);
+        delete this.markerSelectionIds[id];
+        delete this.markerUncheckedIds[id];
+    }
+
+    public toggleGroup(group) {
+        if (!this.markersInGroup(group)) {
+
+            // group may have stationsIds or stationObjects
+            let stationIds = [];
+            let stationObjectCount = 0;
+            angular.forEach(group.stations, (station) => {
+                if (!station.id) {
+                    stationIds.push(station);
+                } else {
+                    stationIds.push(station.id);
+                    stationObjectCount++;
+                }
+            });
+
+            // if we have all the station objects already, do nothin
+            var self = this;
+            if (stationObjectCount == group.stations.length) {
+                angular.forEach(group.stations, (station) => {
+                    self.addMarker(station);
+                });
+            } else {
+                this.APIService.getMultipleStations(stationIds).then((stations)=> {
+                    _.map(stations, (station)=> {
+                        self.addMarker(station);
+                    });
+                });
+            }
+        } else {
+            for (var i = 0; i < group.stations.length; i++) {
+                this.removeMarker(group.stations[i]);
+            }
         }
     }
 
@@ -210,6 +323,10 @@ export = MapToolboxController;
     }
 
     public listStationsInGroup(group) {
+        if (this.selectedGroup['id'] != undefined) {
+            this.hideStationsInGroup();
+        }
+
         let self = this;
         this.selectedGroup = group;
         this.markersInSelectedGroup = [];
@@ -224,7 +341,7 @@ export = MapToolboxController;
     }
 
     public hideStationsInGroup() {
-        this.$scope.hideUserClusters();
+        this.$scope.hideAllClusters();
         this.mapFactory.removeUserGroupLayer(this.markersInSelectedGroup);
         this.selectedGroup = {};
         this.markersInSelectedGroup = [];
@@ -242,33 +359,36 @@ export = MapToolboxController;
         this.$log.log('MapToolboxController: saveSelectionGroup() called. TODO: Implement this functionality.');
     }
 
-    //////////////////////////////////////////////////////
-    // OLD CODE SHOWS HOW TO TOGGLE ON AND OFF CLUSTERS //
-    //private convertMapLayersToArray(layers) {
-    //    let self = this;
-    //    angular.forEach(layers, function(value, key) {
-    //        self.clusters.push({
-    //            id: key,
-    //            name: value.name,
-    //            visible: value.visible
-    //        });
-    //    });
-    //}
-    //
-    //public showAllClusters() {
-    //    this.$scope.showAllClusters();
-    //    angular.forEach(this.clusters, function (cluster) {
-    //        cluster['visible'] = true;
-    //    });
-    //}
-    //
-    //public hideAllClusters() {
-    //    this.$scope.hideAllClusters();
-    //    angular.forEach(this.clusters, function (cluster) {
-    //        cluster['visible'] = false;
-    //    });
-    //}
-    //////////////////////////////////////////////////////
+    public editGroup(group) {
+        this.$state.go('modal.editGroup', { id: group.id, name: group.name } );
+    }
+
+    public addNewGroup() {
+        this.userAddingNewGroup = true;
+    }
+
+    public cancelNewGroup() {
+        this.userAddingNewGroup = false;
+        this.newGroupName = '';
+        this.newGroupDesc = '';
+    }
+
+    public createNewGroup() {
+        let group = {
+            name: this.newGroupName,
+            description: this.newGroupDesc,
+            stationIds: []
+        };
+
+        let self = this;
+        this.APIService.createGroup(group).then((newGroup) => {
+            self.userGroups.push(newGroup);
+            angular.forEach(newGroup.stations, (station) => {
+                self.userGroupsMap[station.id] = newGroup.id;
+            });
+            self.cancelNewGroup();
+        });
+    }
 
     public setSelectedStation(marker) {
         this.selectionService.setCurrentStation(marker);
@@ -277,25 +397,28 @@ export = MapToolboxController;
         this.$scope.centerOnMarker(marker.location);
     }
 
-        public closeAllDrawers(){
-            this.showPlotDrawer = false;
-            this.showStationDrawer = false;
-        }
+    public closeAllDrawers() {
+        this.showPlotDrawer = false;
+        this.showStationDrawer = false;
+    }
 
-        public toggleStationDrawer(){
-            if(this.showStationDrawer){
-                this.closeAllDrawers();
-            }else{
-                this.closeAllDrawers();
-                this.showStationDrawer = true;
-            }
+    public toggleStationDrawer() {
+        if (this.showStationDrawer) {
+            this.closeAllDrawers();
+        } else {
+            this.closeAllDrawers();
+            this.showStationDrawer = true;
         }
-        public togglePlotDrawer(){
-            if(this.showPlotDrawer){
-                this.closeAllDrawers();
-            }else{
-                this.closeAllDrawers();
-                this.showPlotDrawer = true;
-            }
+        this.$scope.toggleSiteSearch(!this.showStationDrawer);
+    }
+
+    public togglePlotDrawer() {
+        if (this.showPlotDrawer) {
+            this.closeAllDrawers();
+        } else {
+            this.closeAllDrawers();
+            this.showPlotDrawer = true;
         }
+        this.$scope.toggleSiteSearch(!this.showPlotDrawer);
+    }
 }

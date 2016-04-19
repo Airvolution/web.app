@@ -74,9 +74,15 @@ class FAQQuestionController {
     public getMyQuestionReivewScore()
     {
         for(var i = 0; i < this.question.userReviews.length; i++) {
-            if(this.question.userReviews[i].user_Id == this.userId) {
+            if (this.question.userReviews[i].user_Id == this.userId) {
                 return this.question.userReviews[i].userReviewScore;
+            }
+
+            if (this.question.chevron == 'DOWN') {
+                this.question.chevron = 'UP';
+            } else {
+                this.question.chevron = 'DOWN';
             }
         }
     };
-};
+}

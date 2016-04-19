@@ -91,4 +91,4 @@ class FAQViewController {
             this.top5Rated = top5Rated;
         });
     }
-};
+}

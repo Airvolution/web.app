@@ -87,8 +87,7 @@ class ConsecutiveDaysFactory {
             var value = values[count];
             if (value.maxCategory == category) {
                 currentStreakCount++;
-            }
-            else {
+            } else {
                 if(currentStreakCount > longestStreak) {
                     // Save longest streak so far.
                     longestStreak = currentStreakCount;

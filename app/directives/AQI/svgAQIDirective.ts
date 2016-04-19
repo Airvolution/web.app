@@ -55,8 +55,7 @@ class SVGAQIDirective implements ng.IDirective {
             category();
             aqi();
             percent();
-        })
-
+        });
     };
 
     public static create() {
