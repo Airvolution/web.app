@@ -19,8 +19,7 @@ class FAQQuestionController {
                 var score = this.getMyQuestionReivewScore();
                 if(score == 1) {
                     this.userReviewColor = 'green';
-                }
-                else if(score == -1) {
+                }else if(score == -1) {
                     this.userReviewColor = 'red';
                 }
             }
@@ -36,8 +35,7 @@ class FAQQuestionController {
             }, (error) => {
             });
 
-        }
-        else {
+        } else {
             this.question.chevron = 'DOWN';
         }
     };
@@ -61,8 +59,7 @@ class FAQQuestionController {
             this.userReviewColor = 'green';
             this.APIService.PostFaqUserReview(review).then((data)=>{
             });
-        }
-        else if(direction == 'down') {
+        } else if(direction == 'down') {
 
             review.score = -1;
             this.userReviewColor = 'red';
@@ -71,8 +68,7 @@ class FAQQuestionController {
         }
     };
 
-    public getMyQuestionReivewScore()
-    {
+    public getMyQuestionReivewScore(){
         for(var i = 0; i < this.question.userReviews.length; i++) {
             if (this.question.userReviews[i].user_Id == this.userId) {
                 return this.question.userReviews[i].userReviewScore;

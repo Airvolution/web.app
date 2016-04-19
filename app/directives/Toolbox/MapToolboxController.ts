@@ -82,7 +82,7 @@ class MapToolboxController {
             self.userStations = markers;
             for (let i = 0; i < self.userStations.length; i++) {
                 self.markerSelection.push(self.userStations[i]);
-                self.markerSelectionIds[self.userStations[i].id] = i
+                self.markerSelectionIds[self.userStations[i].id] = i;
             }
         };
 
