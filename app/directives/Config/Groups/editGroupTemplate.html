@@ -1,4 +1,6 @@
 <div>
+    <uib-alert class="col-md-12" ng-if="ctrl.alert" type="{{ctrl.alert.type}}"
+               dismiss-on-timeout="{{ctrl.alertTimeout}}" close="ctrl.onAlertClose(ctrl.alert)">{{ctrl.alert.message}}</uib-alert>
     <div class="search-container box well">
         <span class="icon"><i class="fa fa-search"></i></span>
         <input type="search" class="search" placeholder="Search for a station"

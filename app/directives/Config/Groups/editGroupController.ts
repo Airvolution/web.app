@@ -11,6 +11,10 @@ class EditGroupController {
     public stationQueryResults;
     public searchOptions;
 
+    public modelOptions;
+    public alert;
+    public alertTimeout;
+
     public static $inject = ['$scope', '$state','$stateParams','APIService', 'SearchService', 'notificationService'];
     public constructor(
         private $scope,
@@ -23,6 +27,10 @@ class EditGroupController {
         this.loading = true;
         this.searchOptions = {updateOn: 'default blur', debounce: {'default': 250 , 'blur': 0}};
         this.stationQueryResults = [];
+
+        this.alert = undefined;
+        this.alertTimeout = 2000;
+        this.modelOptions = {updateOn: 'default blur', debounce: {default: 250, blur: 0}};
 
         let self = this;
         let onError = (error) => {
@@ -55,15 +63,14 @@ class EditGroupController {
                 });
 
                 let onUpdateError = (error) => {
-                    console.log('error modifying group: ' + error);
-                    // TODO: show something ugly
+                    self.alert = { type: 'danger', message: 'Sorry. We encountered an error while saving your group.' };
                 };
 
                 let onSuccess = (group) => {
                     self.group = group;
                     self.groupOriginalMarkers = angular.copy(group.stations);
                     self.notificationService.notify('GroupModified');
-                    $scope.closeModal();
+                    self.alert = { type: 'success', message: 'Changes to your group have been saved.' };
                 };
 
                 if (markersToAdd.length > 0) {
@@ -74,7 +81,7 @@ class EditGroupController {
                             self.group = group;
                             self.groupOriginalMarkers = angular.copy(group.stations);
                             self.notificationService.notify('GroupModified');
-                            $scope.closeModal();
+                            self.alert = { type: 'success', message: 'Changes to your group have been saved.' };
                         }
                     }, onUpdateError);
                 } else if (markersToRemove.length > 0) {
@@ -140,5 +147,14 @@ class EditGroupController {
             }
         }
         return false;
+    }
+
+    public onAlertClose(alert){
+        if (alert.type == 'success'){
+            this.alert = undefined;
+            this.$scope.closeModal();
+        } else {
+            this.alert = undefined;
+        }
     }
 }
