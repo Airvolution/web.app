@@ -19,19 +19,22 @@ class SVGAQIDirective implements ng.IDirective {
 
         //DO NOT USE ANGULAR HERE. Regular DOM Manipulation with SVG doesn't work.
         //Relevant (necessary) styles are in aqiScale.less
+        var rand = new Date().getTime() + Math.ceil(Math.random()*50);
+        $ctrl.id = 'aqi_scale_'+rand;
+        $element.attr('id',$ctrl.id);
         var category = $scope.$watch('ctrl.category', (newVal)=> {
             if(newVal === undefined){
                 return;
             }
-            document.querySelector('#indicator circle').setAttribute("class", newVal + '_indicator');
-            document.querySelector('#gradient').setAttribute("class", newVal + '_gradient');
+            document.querySelector('#'+$ctrl.id+' #indicator circle').setAttribute("class", newVal + '_indicator');
+            document.querySelector('#'+$ctrl.id+' #gradient').setAttribute("class", newVal + '_gradient');
         });
 
         var aqi = $scope.$watch('ctrl.aqi', (newVal)=> {
             if(newVal === undefined){
                 return;
             }
-            document.querySelector('#indicator text').textContent = "" + newVal ? newVal : '';
+            document.querySelector('#'+$ctrl.id+' #indicator text').textContent = "" + newVal ? newVal : '';
             $ctrl.update(newVal);
         });
 
@@ -45,7 +48,7 @@ class SVGAQIDirective implements ng.IDirective {
             var base = 32;
             var factor = 4.66;
             var update = base + newVal * factor;
-            document.querySelector('#indicator').setAttribute('transform', "translate(" + update + "," + yBase + ")");
+            document.querySelector('#'+$ctrl.id+' #indicator').setAttribute('transform', "translate(" + update + "," + yBase + ")");
         });
 
         $scope.$on('$destroy',()=>{

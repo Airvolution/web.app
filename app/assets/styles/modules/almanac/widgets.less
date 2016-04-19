@@ -106,14 +106,103 @@ almanac-widget {
       //   1px  1px 0 #000;;
     }
 
+    .container {
+      width: 100%;
+      height: 15em;
+      display: inline-block;
+      padding: 1em;
+
+      .container-header {
+        text-align: center;
+      }
+
+      .divider {
+        background-color: black;
+        color: black;
+        height:4px;
+        margin: 0 auto;
+        padding:0;
+        width: 75%;
+        text-align: center;
+      }
+
+      .my-station{
+        vertical-align: middle;
+      }
+
+      .ranking {
+        font-size: 3.5em;
+        text-align: center;
+      }
+
+      /* Top-Half of Widget */
+      .national-container {
+        height: 17.5em;
+        position: absolute;
+        width: 20.5em;
+        //background-color: #00b3ee;
+      }
+      .state-container {
+        position: relative;
+        float: right;
+        height: 17.5em;
+        width: 20.5em;
+        //background-color: #ffff00;
+      }
+
+      /* Bottom-Half of Widget */
+      .nationanl-ranking-container {
+        position: absolute;
+        top: 25.5em;
+        height: 17.5em;
+        width: 10em;
+        //background-color: #7e0023;
+      }
+
+      .local-container {
+        position: absolute;
+        top: 25.5em;
+        left: 12.25em;
+        height: 17.5em;
+        width: 20.5em;
+        //background-color: #00c800;
+      }
+
+      .state-ranking-container {
+        position: absolute;
+        top: 25.5em;
+        left: 33em;
+        height: 17.5em;
+        width: 10em;
+        float: right;
+        //background-color: #7e0023;
+      }
+
+
+
+
+    }
+
     .description {
       font-size: 1em;
     }
   }
 
+
+
   .actions {
     padding: 1em;
     border-top: 1px solid @medium-light-gray;
+  }
+
+  .closestStation {
+    width: 100%;
+    height: 234px;
+    margin-top: 76px;
+
+    .leaflet-control-zoom {
+      visibility: hidden;
+    }
   }
 }
 
