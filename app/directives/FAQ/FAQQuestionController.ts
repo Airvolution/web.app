@@ -7,18 +7,15 @@ class FAQQuestionController {
     public chev = 'DOWN';
 
     public static $inject = ['$sanitize'];
-    constructor(private $sanitize) {
-    };
+    constructor(private $sanitize) {}
 
     public toggleChevron = function () {
         //var image = angular.element('#img_' + this.question.id);
 
-
-        if(this.chev == 'DOWN') {
+        if (this.chev == 'DOWN') {
             this.chev = 'UP';
-        }
-        else {
+        } else {
             this.chev = 'DOWN';
         }
     };
-};
+}

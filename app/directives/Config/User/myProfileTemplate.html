@@ -2,14 +2,14 @@
     <h1 class="col-md-8 col-md-offset-3">My Profile</h1>
 
     <div>
-        <div class="initials col-md-offset-3 col-md-1">
-                    <span class="fa-stack fa-4x">
-                        <i class="fa fa-circle fa-stack-2x initialsBorder"></i>
-                        <i class="fa fa-circle fa-stack-1x initialsBG"></i>
-                        <span class="fa-stack-1x">JM</span>
-                    </span>
-        </div>
-
+        <user-initials user-profile="ctrl.userProfile"></user-initials>
+        <!--<div class="initials col-md-offset-3 col-md-1">-->
+                    <!--<span class="fa-stack fa-4x">-->
+                        <!--<i class="fa fa-circle fa-stack-2x initialsBorder"></i>-->
+                        <!--<i class="fa fa-circle fa-stack-1x initialsBG"></i>-->
+                        <!--<span class="fa-stack-1x">{{ctrl.userFormData.firstName[0]}}{{ctrl.userFormData.lastName[0]}}</span>-->
+                    <!--</span>-->
+        <!--</div>-->
         <form name="ctrl.userForm" ng-submit="ctrl.onSubmit()" class="col-md-6" novalidate>
             <uib-alert class="col-md-8" ng-if="ctrl.profileAlert" type="{{ctrl.profileAlert.type}}"
                        dismiss-on-timeout="{{ctrl.alertTimeout}}" close="ctrl.onAlertClose(ctrl.profileAlert)">

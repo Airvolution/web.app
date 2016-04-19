@@ -135,6 +135,15 @@ class APIService {
         },onError);
     }
 
+    public getMultipleStations(ids){
+        var deferred = this.$q.defer();
+        var self = this;
+        var onError = (error)=>{deferred.reject(error);};
+        return this.$http.post('api/stations',ids).then((response)=>{
+            return response.data;
+        },onError);
+    }
+
     public getStation(id){
         var deferred = this.$q.defer();
         var self = this;
@@ -294,7 +303,7 @@ class APIService {
 
         let iframe = angular.element('<iframe id="download-frame"/>').attr({
             src:url,
-            style:'visibility:none;display:hidden;'
+            style:'visibility:none; display:hidden; display:none !important;'
         });
         angular.element('body').append(iframe);
 

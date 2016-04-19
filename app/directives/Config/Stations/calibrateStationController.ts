@@ -15,7 +15,6 @@ class CalibrateStationController {
         private $stateParams,
         private APIService,
         private ParameterService
-
     ){
         this.loading = true;
         this.newAdjustments = [];
@@ -32,8 +31,6 @@ class CalibrateStationController {
                 // TODO: handle error nicely
             });
         });
-
-
 
         $scope.configureModal('Calibrate Station '+$stateParams.id,
             "Save",
