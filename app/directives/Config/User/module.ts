@@ -6,6 +6,7 @@ import UserLoginRegisterDirective = require("./userLoginRegisterDirective");
 import UserResetPasswordDirective = require('./userResetPasswordDirective');
 import PasswordResetModalDirective = require("./passwordResetModalDirective");
 import EmailConfirmedModalDirective = require("./emailConfirmedModalDirective");
+import UserInitialsDirective = require("./userInitialsDirective");
 
 export = angular.module('app.directives.config.user',[])
     .directive(MyProfileDirective.htmlName, MyProfileDirective.create)
@@ -13,4 +14,5 @@ export = angular.module('app.directives.config.user',[])
     .directive(UserLoginRegisterDirective.htmlName, UserLoginRegisterDirective.create)
     .directive(UserResetPasswordDirective.htmlName, UserResetPasswordDirective.create)
     .directive(PasswordResetModalDirective.htmlName, PasswordResetModalDirective.create)
-    .directive(EmailConfirmedModalDirective.htmlName, EmailConfirmedModalDirective.create);
+    .directive(EmailConfirmedModalDirective.htmlName, EmailConfirmedModalDirective.create)
+    .directive(UserInitialsDirective.htmlName, UserInitialsDirective.create);
