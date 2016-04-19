@@ -57,21 +57,19 @@ class MapFactory {
         return markerNames;
     }
 
-    public downloadDataFromStation(id) {
-        // TODO: when compare view is ready, add support for multiple stations / variable param lists
-        this.APIService.downloadDataFromStation(id);
+    public downloadDataFromStation(ids, params, dates) {
+        this.APIService.downloadDataFromStation(ids, params, dates);
     }
 
-    public getDataFromStation(ids, params) {
-        // TODO: when compare view is ready, add support for multiple stations / variable param lists
+    public getDataFromStation(ids, params, dates) {
         var deferred = this.$q.defer();
         let self = this;
 
-        if (params.length == 0) {
-            params = ["PM2.5", "PM10", "OZONE", "CO", "NO2", "SO2"];
-        }
+        //if (params.length == 0) {
+        //    params = ["PM2.5", "PM10", "OZONE", "CO", "NO2", "SO2"];
+        //}
 
-        self.APIService.asyncGetNVD3DataPointsFrom(ids, params).then(
+        self.APIService.asyncGetNVD3DataPointsFrom(ids, params, dates).then(
             function (response) {
                 deferred.resolve({
                     chartOptions: self.getChartOptions(),
@@ -295,6 +293,18 @@ class MapFactory {
             default:
                 return _.clone(this.tilesDictionary['light_map']);
         };
+    }
+
+    public createUserGroupLayer(markers) {
+        angular.forEach(markers, (marker) => {
+            marker['layer'] = 'USER';
+        })
+    }
+
+    public removeUserGroupLayer(markers) {
+        angular.forEach(markers, (marker) => {
+            marker['layer'] = marker['state'];
+        })
     }
 
     public createMapLayers() {
@@ -606,6 +616,12 @@ class MapFactory {
                     type: 'markercluster',
                     name: 'Nuevo León',
                     visible: true
+                },
+                // USER SELECTION
+                USER: {
+                    type: 'group',
+                    name: 'User',
+                    visible: false
                 }
             }
         };

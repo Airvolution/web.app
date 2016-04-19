@@ -11,7 +11,9 @@ class AlmanacWidgetController {
         'heatmap': 'heatmapTemplate.html',
         'week-average': 'avgAQI7Days.html',
         'monthly-pie-chart': 'monthlyPieChart.html',
-        'longest-streaks' : 'longestStreaks.html'
+        'longest-streaks' : 'longestStreaks.html',
+        'closest-station' : 'closestStation.html',
+        'ranking-widget': 'rankingTemplate.html'
     };
 
     private templateSizeMap = {
@@ -20,7 +22,9 @@ class AlmanacWidgetController {
         '45-day-trend': 'xl',
         'heatmap': 'large',
         'week-average': 'medium',
-        'monthly-pie-chart': 'medium'
+        'monthly-pie-chart': 'medium',
+        'closest-station' : 'medium',
+        'ranking-widget': 'large'
     };
 
     public static $inject = ['$scope'];

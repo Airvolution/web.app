@@ -22,8 +22,14 @@ class PreferencesService {
             defaultParameters: []
         };
 
-        this.notificationService.subscribe(undefined, 'UserLogin', this.loadUserDefaults);
-        this.notificationService.subscribe(undefined, 'UserLogout', this.resetUserDefaults);
+        let self = this;
+        this.notificationService.subscribe(undefined, 'UserLogin', () => {
+            self.loadUserDefaults();
+        });
+
+        this.notificationService.subscribe(undefined, 'UserLogout', () => {
+            self.resetUserDefaults();
+        });
     }
 
     public loadUserDefaults() {
