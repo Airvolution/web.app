@@ -50,8 +50,8 @@ class FAQViewController {
     public onSearchChange(){
         var self = this;
         this.SearchService.searchFAQs(this.search).then((results)=>{
-            self.searchResults = results.hits.hits;
-            self.resultsCount = results.hits.total;
+            self.searchResults = results.hits;
+            self.resultsCount = results.total;
         });
     }
 

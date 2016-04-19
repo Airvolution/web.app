@@ -84,8 +84,9 @@ class MapFactory {
     }
 
     private getChartHeight() {
-        let divHeight = angular.element(document).find('#details-plot').css('height');
-        return parseInt(divHeight.substring(0, divHeight.length - 2));
+        //let divHeight = angular.element(document).find('#details-plot').css('height');
+        //return parseInt(divHeight.substring(0, divHeight.length - 2));
+        return 450;
     }
 
     public getChartOptions() {

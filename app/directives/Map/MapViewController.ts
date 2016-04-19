@@ -8,7 +8,6 @@ class MapViewController {
     private deregisterStateWatcher;
 
     public detailsVisible:boolean;
-    public plotVisible:boolean;
 
     public selectedStation;
     // TODO: bring this back at some point...
@@ -22,8 +21,6 @@ class MapViewController {
     public events;
     public tiles;
     public layers;
-    public chartOptions;
-    public chartData;
     public detailsMode;
 
     public static $inject = [
@@ -62,7 +59,7 @@ class MapViewController {
         mv.detailsMode = 'station';
 
         mv.detailsVisible = true;
-        mv.plotVisible = false;
+        mv.$scope.plotVisible = false;
 
         mv.selectedStation = {location: {}, last: {}};
 
@@ -87,8 +84,8 @@ class MapViewController {
                 //if (!mv.selectedStation || !mv.selectedStation.id) {
                 //    return;
                 //}
-                mv.plotVisible = !mv.plotVisible;
-                if (mv.plotVisible) {
+                mv.$scope.plotVisible = !mv.$scope.plotVisible;
+                if (mv.$scope.plotVisible) {
                     mv.generatePlot();
                 }
             },
@@ -264,8 +261,8 @@ class MapViewController {
                 self.selectedStation.lastUpdated = response.lastUpdated;
 
                 self.detailsVisible = true;
-                if (self.plotVisible) {
-                    self.plotVisible = false;
+                if (self.$scope.plotVisible) {
+                    self.$scope.plotVisible = false;
                 }
             },
             function (response) {
@@ -307,8 +304,8 @@ class MapViewController {
         let self = this;
         self.mapFactory.getDataFromStation(ids, params, dates).then(
             function (response) {
-                self.chartOptions = response.chartOptions;
-                self.chartData = response.chartData;
+                self.$scope.chartOptions = response.chartOptions;
+                self.$scope.chartData = response.chartData;
             },
             function (response) {
                 self.$log.debug('Unable to get chart data. Response' + response);
@@ -317,7 +314,8 @@ class MapViewController {
     }
 
     private unsetChartData() {
-        this.chartOptions = undefined;
-        this.chartData = undefined;
+        this.$scope.plotVisible = false;
+        this.$scope.chartOptions = undefined;
+        this.$scope.chartData = undefined;
     }
 }
