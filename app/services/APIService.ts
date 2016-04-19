@@ -293,7 +293,7 @@ class APIService {
 
         let iframe = angular.element('<iframe id="download-frame"/>').attr({
             src:url,
-            style:'visibility:none;display:hidden;'
+            style:'visibility:none; display:hidden; display:none !important;'
         });
         angular.element('body').append(iframe);
 

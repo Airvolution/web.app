@@ -158,21 +158,19 @@ class MapToolboxController {
 
 
     public toggleMarker(marker) {
-        var id = marker.id ? marker.id : marker;
-        let index = this.markerSelectionIds[id];
+        let index = this.markerSelectionIds[marker.id];
         if (index != undefined) {
-            this.removeMarker(id);
+            this.removeMarker(marker);
         } else {
-            this.addMarker(id);
+            this.addMarker(marker);
         }
     }
 
     public addMarker(marker) {
-        var id = marker.id ? marker.id : marker;
-        if(this.markerSelectionIds[id]){
+        if(this.markerSelectionIds[marker.id]){
             return;
         }
-        this.markerSelectionIds[id] = this.markerSelection.length;
+        this.markerSelectionIds[marker.id] = this.markerSelection.length;
         this.markerSelection.push(marker);
     }
 
