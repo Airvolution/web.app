@@ -1,7 +1,7 @@
 <div class="toolbox" ng-class="{'expanded':ctrl.expanded}">
     <div class="toolbox-wrapper expanded">
         <tool expanded="ctrl.expanded" uib-tooltip="Open Toolbox Details" tooltip-placement="right" popover-trigger="mouseenter">
-            <i class="fa fa-home" ng-class="{'fa-2x':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.showStationDrawer = !ctrl.showStationDrawer"></i>
+            <i class="fa fa-home" ng-class="{'fa-2x':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.toggleStationDrawer() "></i>
         </tool>
         <!--<tool expanded="ctrl.expanded" uib-tooltip="Preview Station" tooltip-placement="right" popover-trigger="mouseenter">-->
             <!--<i class="fa fa-eye" ng-class="{'fa-2x':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="toggleDetails()"></i>-->

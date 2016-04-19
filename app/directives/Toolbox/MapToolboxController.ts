@@ -4,8 +4,9 @@ export = MapToolboxController;
 
 class MapToolboxController {
     public expanded;
-
     public query;
+    public showPlotDrawer;
+    public showStationDrawer;
     public stationQueryResults;
     public groupQueryResults;
     public searchOptions;
@@ -23,8 +24,6 @@ class MapToolboxController {
     public userDefaultStation;
     public userDefaultParameters;
 
-    public showPlotDrawer;
-    public showStationDrawer;
     public userStations;
     public userGroups;
     public userGroupsMap;
@@ -52,6 +51,9 @@ class MapToolboxController {
         this.toDate = new Date();
         this.fromDate = new Date();
         this.fromDate.setDate(this.fromDate.getDate() - 7);
+
+        this.showPlotDrawer = false;
+        this.showStationDrawer = false;
 
         this.searchOptions = {updateOn: 'default blur', debounce: {'default': 250, 'blur': 0}};
         this.stationQueryResults = [];
@@ -137,7 +139,7 @@ class MapToolboxController {
     }
 
     public markersInGroup(group) {
-        if(!group || !group.stations || !group.stations.length){
+        if (!group || !group.stations || !group.stations.length) {
             return false;
         }
         for (var i = 0; i < group.stations.length; i++) {
@@ -167,7 +169,7 @@ class MapToolboxController {
     }
 
     public addMarker(marker) {
-        if(this.markerSelectionIds[marker.id]){
+        if (this.markerSelectionIds[marker.id]) {
             return;
         }
         this.markerSelectionIds[marker.id] = this.markerSelection.length;
@@ -177,7 +179,7 @@ class MapToolboxController {
     public removeMarker(marker) {
         var id = marker.id ? marker.id : marker;
         let index = this.markerSelectionIds[id];
-        if(index === undefined){
+        if (index === undefined) {
             return;
         }
         this.markerSelection.splice(index, 1);
@@ -187,15 +189,15 @@ class MapToolboxController {
 
 
     public toggleGroup(group) {
-        if(!this.markersInGroup(group)){
+        if (!this.markersInGroup(group)) {
             var self = this;
-            this.APIService.getMultipleStations(group.stations).then((stations)=>{
-               _.map(stations, (station)=>{
-                   self.addMarker(station);
-               });
+            this.APIService.getMultipleStations(group.stations).then((stations)=> {
+                _.map(stations, (station)=> {
+                    self.addMarker(station);
+                });
             });
-        }else{
-            for(var i = 0; i < group.stations; i++){
+        } else {
+            for (var i = 0; i < group.stations; i++) {
                 this.removeMarker(group.stations[i]);
             }
         }
@@ -224,6 +226,7 @@ class MapToolboxController {
     public showPlot() {
         this.configureOptions();
         this.$scope.togglePlot();
+        this.showPlotDrawer = false;
         this.selectionService.reset();
     }
 
@@ -342,9 +345,28 @@ class MapToolboxController {
         this.$scope.centerOnMarker(marker.location);
     }
 
-    public togglePlotDrawer() {
-        this.showPlotDrawer = !this.showPlotDrawer;
-        this.$scope.toggleSiteSearch(!this.showPlotDrawer);
+    public closeAllDrawers() {
+        this.showPlotDrawer = false;
+        this.showStationDrawer = false;
     }
 
+    public toggleStationDrawer() {
+        if (this.showStationDrawer) {
+            this.closeAllDrawers();
+        } else {
+            this.closeAllDrawers();
+            this.showStationDrawer = true;
+        }
+        this.$scope.toggleSiteSearch(!this.showStationDrawer);
+    }
+
+    public togglePlotDrawer() {
+        if (this.showPlotDrawer) {
+            this.closeAllDrawers();
+        } else {
+            this.closeAllDrawers();
+            this.showPlotDrawer = true;
+        }
+        this.$scope.toggleSiteSearch(!this.showPlotDrawer);
+    }
 }
