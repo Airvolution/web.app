@@ -5,10 +5,11 @@ export = GroupController;
 class GroupController {
     public group;
     public refresh:()=>void;
-    public static $inject = ['$state', 'APIService'];
+    public static $inject = ['$state', 'APIService', 'notificationService'];
     public constructor(
         private $state,
-        private APIService
+        private APIService,
+        private notificationService
     ){}
 
     public deleteGroup() {

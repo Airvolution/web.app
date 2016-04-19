@@ -6,9 +6,18 @@ class MyGroupsController {
     public static name = 'MyGroupsController';
     public groups = [];
 
-    public static $inject = [ 'APIService','$log'];
-    constructor(private APIService, private $log) {
+    public static $inject = ['$scope', 'APIService','$log', 'notificationService'];
+    constructor(
+        private $scope,
+        private APIService,
+        private $log,
+        private notificationService
+    ) {
         this.refreshGroups();
+        let self = this;
+        this.notificationService.subscribe(this.$scope, 'GroupModified', () => {
+            self.refreshGroups();
+        });
     };
 
     public refreshGroups(){
