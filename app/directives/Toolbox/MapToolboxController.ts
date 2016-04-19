@@ -27,6 +27,10 @@ class MapToolboxController {
     public selectedGroup;
     public markersInSelectedGroup;
 
+    public newGroupName;
+    public newGroupDesc;
+    public userAddingNewGroup;
+
     public static $inject = ['$scope','$state', '$log', 'mapFactory', 'selectionService','SearchService', 'AQIColors', 'preferencesService', 'notificationService', 'APIService'];
     constructor(
         private $scope,
@@ -58,6 +62,10 @@ class MapToolboxController {
         this.userGroupsMap = {};
         this.selectedGroup = {};
         this.markersInSelectedGroup = [];
+
+        this.newGroupName = '';
+        this.newGroupDesc = '';
+        this.userAddingNewGroup = false;
 
         let self = this;
 
@@ -243,6 +251,33 @@ class MapToolboxController {
 
     public editGroup(group) {
         this.$state.go('modal.editGroup', { id: group.id, name: group.name } );
+    }
+
+    public addNewGroup() {
+        this.userAddingNewGroup = true;
+    }
+
+    public cancelNewGroup() {
+        this.userAddingNewGroup = false;
+        this.newGroupName = '';
+        this.newGroupDesc = '';
+    }
+
+    public createNewGroup() {
+        let group = {
+            name: this.newGroupName,
+            description: this.newGroupDesc,
+            stationIds: []
+        };
+
+        let self = this;
+        this.APIService.createGroup(group).then((newGroup) => {
+            self.userGroups.push(newGroup);
+            angular.forEach(newGroup.stations, (station) => {
+                self.userGroupsMap[station.id] = newGroup.id;
+            });
+            self.cancelNewGroup();
+        });
     }
 
     //////////////////////////////////////////////////////

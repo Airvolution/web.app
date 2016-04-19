@@ -1,62 +1,3 @@
-<!-- SEARCH -->
-<div class="search-container box well">
-    <span class="icon"><i class="fa fa-search"></i></span>
-    <input type="search" class="search" placeholder="Search for a station"
-           ng-model="ctrl.stationQuery"
-           update-on-enter
-           ng-change="ctrl.searchStations()"
-           ng-model-options="ctrl.searchOptions"/>
-</div>
-
-<!-- SEARCH RESULTS -->
-<div class="search-results" ng-if="ctrl.stationQueryResults.length > 0">
-
-    <!-- STATIONS -->
-    <div class="station-container">
-        <table class="table">
-            <thead>
-            <tr>
-                <th><span class="pull-left">Find</span></th>
-                <th><span>Station Name</span></th>
-                <th><input type="checkbox"></th>
-            </tr>
-            </thead>
-            <!-- TODO: getting an error here:
-            https://docs.angularjs.org/error/ngRepeat/dupes?p0=marker%20in%20ctrl.stationGroup&p1=object:398&p2=%7B%22id%22:%22840261619991%22,%22userid%22:1,%22indoor%22:false,%22agency%22:%22EPA%20Office%20of%20Atmospheric%20Programs%22,%22name%22:%22Ann%20Arbor%22,%22city%22:%22Dexter%22,%22state%22:%22MI%22,%22postal%22:%2248130%22,%22groupname%22:null,%22groupemail%22:null,%22aqi%22:19,%22@version%22:%221%22,%22@timestamp%22:%222016-03-09T10:37:36.063Z%22,%22location%22:%7B%22lat%22:42.4164,%22lon%22:-83.9019%7D,%22$$hashKey%22:%22object:398%22%7D
-            -->
-            <tr ng-repeat="marker in ctrl.stationQueryResults track by marker.id">
-                <td>
-                    <button class="btn btn-map-marker pull-left" ng-click="ctrl.setSelectedStation(marker)">
-                        <span class="fa fa-map-marker" uib-tooltip="Locate On Map" tooltip-placement="left"></span>
-                    </button>
-                </td>
-                <td>{{::marker.name}}</td>
-                <td><input class="pull right"
-                           type="checkbox"
-                           ng-click="ctrl.toggleMarker(marker)"
-                           ng-checked="ctrl.isMarkerInGroup(marker)"></td>
-            </tr>
-        </table>
-    </div>
-
-    <!-- GROUPS -->
-    <div class="group-container" ng-if="ctrl.stationQueryResults.length > 0">
-        <table class="table">
-            <thead>
-            <tr>
-                <th><span>Group Name</span></th>
-                <th><input class="pull-right" type="checkbox"></th>
-            </tr>
-            </thead>
-            <tr ng-repeat="marker in ctrl.stationQueryResults track by marker.id">
-                <td>{{::marker.name}}</td>
-                <!-- TODO: add all markers in GROUP -->
-                <td><input class="pull-right" type="checkbox"></td>
-            </tr>
-        </table>
-    </div>
-</div>
-
 <!-- USER STATIONS -->
 <div class="container-header">
     <span class="pull-left">My Stations: </span>
@@ -83,6 +24,14 @@
 <!-- USER GROUPS -->
 <div class="container-header">
     <span class="pull-left">My Groups: </span>
+    <button class="btn btn-primary pull-right"
+            ng-if="!ctrl.userAddingNewGroup"
+            ng-click="ctrl.addNewGroup()">
+        New Group</button>
+    <button class="btn btn-warning pull-right"
+            ng-if="ctrl.userAddingNewGroup"
+            ng-click="ctrl.cancelNewGroup()">
+        Cancel</button>
 </div>
 <div class="selection-container">
     <table class="table">
@@ -90,37 +39,41 @@
         <tr>
             <th><span>Name</span></th>
             <th><span>Description</span></th>
-            <th><span></span></th>
-            <!--<th></th>-->
         </tr>
         </thead>
+        <tr ng-if="ctrl.userAddingNewGroup">
+            <td><input class="form-control toolbar-input-text" type="text" ng-model="ctrl.newGroupName"></td>
+            <td><input class="form-control toolbar-input-text" type="text" ng-model="ctrl.newGroupDesc"></td>
+            <td><button class="btn btn-primary"
+                        ng-click="ctrl.createNewGroup()"
+                        ng-disabled="ctrl.newGroupName.length == 0">
+                Create</button></td>
+        </tr>
         <tr ng-repeat="group in ctrl.userGroups track by group.id">
             <td>{{::group.name}}</td>
             <td>{{::group.description}}</td>
             <td>
-                <button class="btn btn-primary"
+                <button class="btn btn-primary pull-right"
                         ng-if="ctrl.selectedGroup != group"
                         ng-click="ctrl.listStationsInGroup(group)">
                 List</button>
-                <button class="btn btn-danger"
+                <button class="btn btn-info pull-right"
                         ng-if="ctrl.selectedGroup == group"
                         ng-click="ctrl.hideStationsInGroup(group)">
                 Hide</button>
             </td>
-            <!--<td><button class="btn btn-danger"-->
-                        <!--ng-click="ctrl.editGroup(group)">-->
-                <!--Edit</button></td>-->
         </tr>
     </table>
 </div>
 
 <!-- MARKERS IN SELECTED GROUP -->
-<div class="container-header" ng-if="ctrl.markersInSelectedGroup.length > 0">
+<div class="container-header" ng-if="ctrl.selectedGroup['id'] != undefined">
     <span class="pull-left">Stations in {{ctrl.selectedGroup.name}}: </span>
-    <button class="btn btn-danger pull-right"ng-click="ctrl.editGroup(ctrl.selectedGroup)">Edit Group</button>
+    <button class="btn btn-warning pull-right" ng-click="ctrl.editGroup(ctrl.selectedGroup)">Edit Group</button>
 </div>
-<div class="selection-container" ng-if="ctrl.markersInSelectedGroup.length > 0">
-    <table class="table">
+<div class="selection-container" ng-if="ctrl.selectedGroup['id'] != undefined">
+    <span ng-if="ctrl.markersInSelectedGroup == 0">You do not have any stations in {{ctrl.selectedGroup.name}}. Please click "Edit Group" button to add some.</span>
+    <table class="table" ng-if="ctrl.markersInSelectedGroup.length > 0">
         <thead>
         <tr>
             <th><span class="pull-left">Find</span></th>
