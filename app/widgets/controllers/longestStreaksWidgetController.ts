@@ -30,7 +30,7 @@ class LongestStreaksWidgetController {
         this.plotOptions = {
             chart: {
                 type: "discreteBarChart",
-                height: 230,
+                height: 220,
                 width: 600,
                 margin : {
                     top: 20,

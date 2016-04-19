@@ -90,7 +90,7 @@ class MapFactory {
 
     private getChartWidth() {
         let divWidth = angular.element(document).find('#details-plot').innerWidth();
-        return divWidth - 77; // yay for magic numbers!
+        return divWidth - 90; // yay for magic numbers!
     }
 
     public getChartOptions() {
@@ -298,13 +298,13 @@ class MapFactory {
     public createUserGroupLayer(markers) {
         angular.forEach(markers, (marker) => {
             marker['layer'] = 'USER';
-        })
+        });
     }
 
     public removeUserGroupLayer(markers) {
         angular.forEach(markers, (marker) => {
             marker['layer'] = marker['state'];
-        })
+        });
     }
 
     public createMapLayers() {

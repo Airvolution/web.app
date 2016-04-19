@@ -15,7 +15,7 @@ class ClosestStationWidgetController {
     public myLocationIcon = {
         iconSize: [35, 45],
         iconAnchor: [17, 28]
-    }
+    };
 
     constructor(
         private mapFactory,

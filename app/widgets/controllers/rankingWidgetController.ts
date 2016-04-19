@@ -154,7 +154,6 @@ class RankingWidgetController {
         this.bestNationalStation = bestNationalStationTemp;
         this.worstNationalStation = stations[stations.length-1];
 
-
         this.stateTotal = stateTotalCount;
         this.bestStateStation = bestStateStationTemp;
         this.worstStateStation = stations[lastStateStation];
@@ -174,7 +173,6 @@ class RankingWidgetController {
 
         // Set best & worst stations, as well as yourStations rankings
         this.setBestWorstAndRankings(markers);
-
 
         // Create strings for making the widget load pretty
         this.bestNationalLocation = this.bestNationalStation.city + ", " + this.bestNationalStation.state;

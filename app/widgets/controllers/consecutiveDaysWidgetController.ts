@@ -31,13 +31,11 @@ class ConsecutiveDaysWidgetController {
     public getEmoji(){
         var category = this.consecutiveDays.category;
 
-        if(category == 'green') {
+        if (category == 'green') {
             this.faEmoji = 'fa-smile-o';
-        }
-        else if(category == 'yellow') {
+        } else if (category == 'yellow') {
             this.faEmoji = 'fa-meh-o';
-        }
-        else {
+        } else {
             this.faEmoji = 'fa-frown-o';
         }
     }

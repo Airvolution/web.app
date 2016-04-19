@@ -18,6 +18,9 @@ class AboutController {
             message: undefined
         };
 
+        // TODO: some Url Links are not working
+        // http://stackoverflow.com/questions/15606751/angular-changes-urls-to-unsafe-in-extension-page
+        // this link may be the problem
         var jaredP  = new UserProfile('Jared Potter', 'Backend ASP.NET API, Frontend Angular.JS, and 3rd party data gathering.', 'https://www.linkedin.com/in/jared-potter-34138634', 'https://github.com/JDoge', 'app/assets/images/profilePictures/jared_potter.png');
         var jaredM  = new UserProfile('Jared Moore', 'Frontend Angular.JS, Search, SQL Database, ASP.NET API, Architecture, Tools, Testing, Deployment', 'https://www.linkedin.com/in/jared-moore-820b2975', 'GitHub: https://github.com/Jmoore1127', 'app/assets/images/profilePictures/jared_moore.png');
         var taylorW = new UserProfile('Taylor Wilson', 'Frontend Angular.JS', 'https://www.linkedin.com/in/t3ilson', 'GitHub: https://github.com/rolyatwilson', 'app/assets/images/profilePictures/taylor_wilson.png');

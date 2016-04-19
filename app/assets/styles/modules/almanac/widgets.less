@@ -45,7 +45,7 @@ almanac-widget {
     overflow: auto;
     box-shadow: 0 0 1px @medium-darker-gray;
     background-color: @medium-light-gray;
-    z-index: 10000;
+    z-index: 0;
     &.neutral {
       background-color: @medium-dark-gray;
     }
@@ -92,8 +92,11 @@ almanac-widget {
   }
 
   .card-body {
-    padding: 1em;
-    padding-top: 0;
+    //padding: 1em;
+    //padding-top: 0;
+    padding-left: 1em;
+    padding-right: 1em;
+    //background-color: white;
 
     .value {
       font-size: 7em;
@@ -152,8 +155,6 @@ almanac-widget {
         width: 20.5em;
         //background-color: #00b3ee;
       }
-
-
     }
 
     .description {
@@ -161,21 +162,35 @@ almanac-widget {
     }
   }
 
+  //.actions {
+  //  padding: 1em;
+  //  border-top: 1px solid @medium-light-gray;
+  //}
 
+  //.card-body-plain {
+  //  padding-top: 0.1em;
+  //  padding-bottom: 0.5em;
+  //}
 
-  .actions {
-    padding: 1em;
-    border-top: 1px solid @medium-light-gray;
+  .card-body-map {
+    background-color: transparent;
   }
 
-  .closestStation {
+  .map-widget-small {
     width: 100%;
-    height: 234px;
-    margin-top: 76px;
+    height: 225px;
+    margin-top: 82px;
+  }
 
-    .leaflet-control-zoom {
-      visibility: hidden;
-    }
+  .leaflet-control-zoom {
+    visibility: hidden;
+  }
+
+  .leaflet-control-layers {
+    visibility: hidden;
+  }
+
+  #heatmap {
+    margin-top: 82px;
   }
 }
-

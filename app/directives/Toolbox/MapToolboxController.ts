@@ -30,18 +30,24 @@ class MapToolboxController {
     public selectedGroup;
     public markersInSelectedGroup;
 
-    public static $inject = ['$scope', '$state', '$log', 'mapFactory', 'selectionService', 'SearchService', 'AQIColors', 'preferencesService', 'notificationService', 'APIService'];
+    public showUserGroups;
+    public newGroupName;
+    public newGroupDesc;
+    public userAddingNewGroup;
 
-    constructor(private $scope,
-                private $state,
-                private $log,
-                private mapFactory,
-                private selectionService,
-                private SearchService,
-                private AQIColors,
-                private preferencesService,
-                private notificationService,
-                private APIService) {
+    public static $inject = ['$scope','$state', '$log', 'mapFactory', 'selectionService','SearchService', 'AQIColors', 'preferencesService', 'notificationService', 'APIService'];
+    constructor(
+        private $scope,
+        private $state,
+        private $log,
+        private mapFactory,
+        private selectionService,
+        private SearchService,
+        private AQIColors,
+        private preferencesService,
+        private notificationService,
+        private APIService
+    ) {
         this.markerSelection = [];    // array of all markers in selection group
         this.markerSelectionIds = {}; // maps marker.id to index in marker array
         this.markerUncheckedIds = {}; // maps marker.id to index in marker array, contains unchecked markers which must still be displayed
@@ -64,19 +70,29 @@ class MapToolboxController {
         this.selectedGroup = {};
         this.markersInSelectedGroup = [];
 
+        this.showUserGroups = false;
+        this.newGroupName = '';
+        this.newGroupDesc = '';
+        this.userAddingNewGroup = false;
+
         let self = this;
 
         // try to load user stations and groups first
         let loadUserMarkers = (markers) => {
             self.userStations = markers;
+            for (let i = 0; i < self.userStations.length; i++) {
+                self.markerSelection.push(self.userStations[i]);
+                self.markerSelectionIds[self.userStations[i].id] = i
+            }
         };
 
         let loadUserGroups = (groups) => {
             self.userGroups = groups;
+            self.userGroupsMap = {};
             angular.forEach(groups, (group) => {
                 angular.forEach(group.stations, (station) => {
                     self.userGroupsMap[station.id] = group.id;
-                })
+                });
             });
         };
 
@@ -91,6 +107,14 @@ class MapToolboxController {
                 self.APIService.getUserGroups().then(loadUserGroups);
             });
         };
+
+        this.notificationService.subscribe(this.$scope, 'GroupModified', () => {
+            self.APIService.getUserGroups().then((groups) => {
+                loadUserGroups(groups);
+                self.hideStationsInGroup();
+                self.mapFactory.showAllClusters();
+            }, waitForUserGroups);
+        });
 
         this.APIService.getUserStations().then(loadUserMarkers, waitForUserMarkers);
         this.APIService.getUserGroups().then(loadUserGroups, waitForUserGroups);
@@ -135,7 +159,6 @@ class MapToolboxController {
             result = this.markerSelectionIds[marker.id];
         }
         return result !== undefined;
-
     }
 
     public markersInGroup(group) {
@@ -158,7 +181,6 @@ class MapToolboxController {
         return this.selectedParameters.indexOf(parameter) > -1;
     }
 
-
     public toggleMarker(marker) {
         let index = this.markerSelectionIds[marker.id];
         if (index != undefined) {
@@ -169,6 +191,8 @@ class MapToolboxController {
     }
 
     public addMarker(marker) {
+        // TODO: This implementation breaks when removing groups from selection
+        // TODO: Use the CLEAR button for now
         if (this.markerSelectionIds[marker.id]) {
             return;
         }
@@ -177,6 +201,8 @@ class MapToolboxController {
     }
 
     public removeMarker(marker) {
+        // TODO: This implementation breaks when removing group from selection
+        // TODO: Use the CLEAR button for now
         var id = marker.id ? marker.id : marker;
         let index = this.markerSelectionIds[id];
         if (index === undefined) {
@@ -187,17 +213,36 @@ class MapToolboxController {
         delete this.markerUncheckedIds[id];
     }
 
-
     public toggleGroup(group) {
         if (!this.markersInGroup(group)) {
+
+            // group may have stationsIds or stationObjects
+            let stationIds = [];
+            let stationObjectCount = 0;
+            angular.forEach(group.stations, (station) => {
+                if (!station.id) {
+                    stationIds.push(station);
+                } else {
+                    stationIds.push(station.id);
+                    stationObjectCount++;
+                }
+            });
+
+            // if we have all the station objects already, do nothin
             var self = this;
-            this.APIService.getMultipleStations(group.stations).then((stations)=> {
-                _.map(stations, (station)=> {
+            if (stationObjectCount == group.stations.length) {
+                angular.forEach(group.stations, (station) => {
                     self.addMarker(station);
                 });
-            });
+            } else {
+                this.APIService.getMultipleStations(stationIds).then((stations)=> {
+                    _.map(stations, (station)=> {
+                        self.addMarker(station);
+                    });
+                });
+            }
         } else {
-            for (var i = 0; i < group.stations; i++) {
+            for (var i = 0; i < group.stations.length; i++) {
                 this.removeMarker(group.stations[i]);
             }
         }
@@ -278,6 +323,10 @@ class MapToolboxController {
     }
 
     public listStationsInGroup(group) {
+        if (this.selectedGroup['id'] != undefined) {
+            this.hideStationsInGroup();
+        }
+
         let self = this;
         this.selectedGroup = group;
         this.markersInSelectedGroup = [];
@@ -292,7 +341,7 @@ class MapToolboxController {
     }
 
     public hideStationsInGroup() {
-        this.$scope.hideUserClusters();
+        this.$scope.hideAllClusters();
         this.mapFactory.removeUserGroupLayer(this.markersInSelectedGroup);
         this.selectedGroup = {};
         this.markersInSelectedGroup = [];
@@ -310,33 +359,36 @@ class MapToolboxController {
         this.$log.log('MapToolboxController: saveSelectionGroup() called. TODO: Implement this functionality.');
     }
 
-    //////////////////////////////////////////////////////
-    // OLD CODE SHOWS HOW TO TOGGLE ON AND OFF CLUSTERS //
-    //private convertMapLayersToArray(layers) {
-    //    let self = this;
-    //    angular.forEach(layers, function(value, key) {
-    //        self.clusters.push({
-    //            id: key,
-    //            name: value.name,
-    //            visible: value.visible
-    //        });
-    //    });
-    //}
-    //
-    //public showAllClusters() {
-    //    this.$scope.showAllClusters();
-    //    angular.forEach(this.clusters, function (cluster) {
-    //        cluster['visible'] = true;
-    //    });
-    //}
-    //
-    //public hideAllClusters() {
-    //    this.$scope.hideAllClusters();
-    //    angular.forEach(this.clusters, function (cluster) {
-    //        cluster['visible'] = false;
-    //    });
-    //}
-    //////////////////////////////////////////////////////
+    public editGroup(group) {
+        this.$state.go('modal.editGroup', { id: group.id, name: group.name } );
+    }
+
+    public addNewGroup() {
+        this.userAddingNewGroup = true;
+    }
+
+    public cancelNewGroup() {
+        this.userAddingNewGroup = false;
+        this.newGroupName = '';
+        this.newGroupDesc = '';
+    }
+
+    public createNewGroup() {
+        let group = {
+            name: this.newGroupName,
+            description: this.newGroupDesc,
+            stationIds: []
+        };
+
+        let self = this;
+        this.APIService.createGroup(group).then((newGroup) => {
+            self.userGroups.push(newGroup);
+            angular.forEach(newGroup.stations, (station) => {
+                self.userGroupsMap[station.id] = newGroup.id;
+            });
+            self.cancelNewGroup();
+        });
+    }
 
     public setSelectedStation(marker) {
         this.selectionService.setCurrentStation(marker);

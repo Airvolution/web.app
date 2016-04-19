@@ -30,18 +30,28 @@ class APIService {
         }, onError);
     }
 
-    public addStationToGroup(stationId,group){
-        var deferred = this.$q.defer();
+    public getUserGroup(id) {
+        let deferred = this.$q.defer();
         let onError = (error) => { deferred.reject(error); };
-        return this.$http.put('api/groups/'+group.id+'/'+stationId).then((response) => {
+        return this.$http.get('api/groups/' + id).then((response) => {
             return response.data;
         }, onError);
     }
 
-    public removeStationFromGroup(stationId, group){
+    public addStationToGroup(group, stationIds) {
         var deferred = this.$q.defer();
         let onError = (error) => { deferred.reject(error); };
-        return this.$http.delete('api/groups/'+group.id+'/'+stationId).then((response) => {
+        let params = this.$httpParamSerializer({ 'id': stationIds });
+        return this.$http.put('api/groups/'+group.id+'/stations?'+params).then((response) => {
+            return response.data;
+        }, onError);
+    }
+
+    public removeStationFromGroup(group, stationIds) {
+        var deferred = this.$q.defer();
+        let onError = (error) => { deferred.reject(error); };
+        let params = this.$httpParamSerializer({ 'id': stationIds });
+        return this.$http.delete('api/groups/'+group.id+'/stations?'+params).then((response) => {
             return response.data;
         }, onError);
     }

@@ -5,10 +5,14 @@ export = GroupController;
 class GroupController {
     public group;
     public refresh:()=>void;
-    public static $inject = ['APIService'];
-    public constructor(private APIService){}
+    public static $inject = ['$state', 'APIService', 'notificationService'];
+    public constructor(
+        private $state,
+        private APIService,
+        private notificationService
+    ){}
 
-    public deleteGroup(){
+    public deleteGroup() {
         var self = this;
         this.APIService.deleteGroup(this.group).then((succeeded)=>{
             if(succeeded){
@@ -16,6 +20,9 @@ class GroupController {
                 self.refresh();
             }
         });
+    }
 
+    public editGroup() {
+        this.$state.go('modal.editGroup', { id: this.group.id, name: this.group.name } );
     }
 }

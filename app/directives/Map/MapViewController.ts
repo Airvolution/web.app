@@ -180,7 +180,6 @@ class MapViewController {
         this.showStationsByCluster($stateParams['cluster']);
     }
 
-
     private registerStateWatcher($rootScope) {
         var self = this;
         $rootScope.$on('$stateChangeSuccess', (event, toState, toParams, fromState, fromParams)=> {
@@ -219,9 +218,7 @@ class MapViewController {
         } else {
             this.layers.overlays[cluster].visible = true;
         }
-
     }
-
 
     private createMapEvents() {
         return {
@@ -298,7 +295,6 @@ class MapViewController {
             }
         );
     }
-
 
     public generatePlot() {
         let stationsGroup = this.selectionService.getCurrentStationSelectionIds();

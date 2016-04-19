@@ -16,8 +16,7 @@ class UserInitialsController{
             if (val){
                 if (typeof self.userProfile.firstName == 'undefined'){
                     self.initials = self.userProfile.email[0].toUpperCase();
-                }
-                else{
+                } else {
                     self.initials = self.userProfile.firstName[0].toUpperCase() + self.userProfile.lastName[0].toUpperCase();
                 }
             }
