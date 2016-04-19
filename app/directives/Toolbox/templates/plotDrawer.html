@@ -61,10 +61,13 @@
 </div>
 
 <!-- USER's STATIONS -->
-<div class="container-header">
+<div class="container-header" ng-if="!ctrl.showUserGroups">
     <span class="pull-left">My Stations: </span>
+    <button class="btn btn-primary pull-right"
+            ng-click="ctrl.showUserGroups = true">
+        Show My Groups</button>
 </div>
-<div class="selection-container">
+<div class="selection-container" ng-if="!ctrl.showUserGroups">
     <table class="table">
         <thead>
         <tr>
@@ -83,7 +86,32 @@
             <td><input class="pull-right"
                        type="checkbox"
                        ng-click="ctrl.toggleMarker(marker)"
-                       ng-checked="ctrl.isMarkerChecked(marker)"></td>
+                       ng-checked="ctrl.isMarkerInGroup(marker)"></td>
+        </tr>
+    </table>
+</div>
+
+<!-- USER's GROUPS -->
+<div class="container-header" ng-if="ctrl.showUserGroups">
+    <span class="pull-left">My Groups: </span>
+    <button class="btn btn-primary pull-right"
+            ng-click="ctrl.showUserGroups = false">
+        Show My Stations</button>
+</div>
+<div class="selection-container" ng-if="ctrl.showUserGroups">
+    <table class="table">
+        <thead>
+        <tr>
+            <th><span>Name</span></th>
+            <th><span>Description</span></th>
+        </tr>
+        </thead>
+        <tr ng-repeat="group in ctrl.userGroups track by group.id">
+            <td>{{::group.name || 'No Name'}}</td>
+            <td>{{::group.description || 'No Description'}}</td>
+            <td><input class="pull-right" type="checkbox"
+                       ng-click="ctrl.toggleGroup(group)"
+                       ng-checked="ctrl.markersInGroup(group)"></td>
         </tr>
     </table>
 </div>
@@ -91,7 +119,8 @@
 <!-- USER SELECTION -->
 <div class="container-header">
     <span class="pull-left">Selected Stations: </span>
-    <span class="pull-right">{{ctrl.markerSelection.length}}</span>
+    <!--<span class="pull-right">{{ctrl.markerSelection.length}}</span>-->
+    <button class="btn btn-danger btn-action pull-right" ng-if="ctrl.markerSelection.length > 0" ng-click="ctrl.clearSelectionGroup()">Clear</button>
 </div>
 <div class="selection-container">
     <table class="table">
@@ -117,8 +146,8 @@
     </table>
 </div>
 <div class="container-header">
-    <button class="btn btn-primary btn-action pull-right" ng-click="ctrl.saveSelectionGroup()">Save</button>
-    <button class="btn btn-danger btn-action pull-right" ng-click="ctrl.clearSelectionGroup()">Clear</button>
+    <!--<button class="btn btn-primary btn-action pull-right" ng-click="ctrl.saveSelectionGroup()">Save</button>-->
+    <!--<button class="btn btn-danger btn-action pull-right" ng-click="ctrl.clearSelectionGroup()">Clear</button>-->
 </div>
 
 <!-- PARAMETER SELECTION -->

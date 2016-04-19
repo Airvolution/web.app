@@ -30,6 +30,7 @@ class MapToolboxController {
     public selectedGroup;
     public markersInSelectedGroup;
 
+    public showUserGroups;
     public newGroupName;
     public newGroupDesc;
     public userAddingNewGroup;
@@ -69,6 +70,7 @@ class MapToolboxController {
         this.selectedGroup = {};
         this.markersInSelectedGroup = [];
 
+        this.showUserGroups = false;
         this.newGroupName = '';
         this.newGroupDesc = '';
         this.userAddingNewGroup = false;
@@ -157,7 +159,6 @@ class MapToolboxController {
             result = this.markerSelectionIds[marker.id];
         }
         return result !== undefined;
-
     }
 
     public markersInGroup(group) {
@@ -190,6 +191,8 @@ class MapToolboxController {
     }
 
     public addMarker(marker) {
+        // TODO: This implementation breaks when removing groups from selection
+        // TODO: Use the CLEAR button for now
         if (this.markerSelectionIds[marker.id]) {
             return;
         }
@@ -198,6 +201,8 @@ class MapToolboxController {
     }
 
     public removeMarker(marker) {
+        // TODO: This implementation breaks when removing group from selection
+        // TODO: Use the CLEAR button for now
         var id = marker.id ? marker.id : marker;
         let index = this.markerSelectionIds[id];
         if (index === undefined) {
@@ -210,14 +215,34 @@ class MapToolboxController {
 
     public toggleGroup(group) {
         if (!this.markersInGroup(group)) {
+
+            // group may have stationsIds or stationObjects
+            let stationIds = [];
+            let stationObjectCount = 0;
+            angular.forEach(group.stations, (station) => {
+                if (!station.id) {
+                    stationIds.push(station);
+                } else {
+                    stationIds.push(station.id);
+                    stationObjectCount++;
+                }
+            });
+
+            // if we have all the station objects already, do nothin
             var self = this;
-            this.APIService.getMultipleStations(group.stations).then((stations)=> {
-                _.map(stations, (station)=> {
+            if (stationObjectCount == group.stations.length) {
+                angular.forEach(group.stations, (station) => {
                     self.addMarker(station);
                 });
-            });
+            } else {
+                this.APIService.getMultipleStations(stationIds).then((stations)=> {
+                    _.map(stations, (station)=> {
+                        self.addMarker(station);
+                    });
+                });
+            }
         } else {
-            for (var i = 0; i < group.stations; i++) {
+            for (var i = 0; i < group.stations.length; i++) {
                 this.removeMarker(group.stations[i]);
             }
         }

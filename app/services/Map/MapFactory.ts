@@ -90,7 +90,7 @@ class MapFactory {
 
     private getChartWidth() {
         let divWidth = angular.element(document).find('#details-plot').innerWidth();
-        return divWidth - 77; // yay for magic numbers!
+        return divWidth - 90; // yay for magic numbers!
     }
 
     public getChartOptions() {

@@ -8,14 +8,14 @@
     </nav>
     <div id="about" class="col-md-8 about-us">
         <h1>About Us</h1>
-        <p class="indent">
+        <p>
             Welcome to AirU. AirU is a web application providing air quality statistics and visualizations for both the casual user and the atmospheric scientist.
             We provide an interactive map that allows users to focus on specific air monitoring stations and to see a pollution layer that displays the level of pollutants in the area.
         </p>
-        <p class="indent">
+        <p>
             For the researcher, multiple stations may be selected, saved as groups, and their data compared with that from other stations and the EPA. For the general user, air quality can be checked at a glance to determine how long it is safe to be outside.
         </p>
-        <p class="indent">
+        <p>
             Our content is user driven, meaning you can contribute to the project by connecting your own air monitoring station to the site. From checking the current air quality conditions in Salt Lake to downloading the last twelve months of air quality data in your neighborhood, AirU has got you covered.
         </p>
         <div class="col-md-12" >
@@ -24,8 +24,8 @@
                     <div class="col-md-8">
                         <h4 class="col-md-12">{{value.name}}</h4>
                         <div class="col-md-12">
-                            <a  href="{{value.githubUrl}}" uib-tooltip="Github"><i class="fa fa-3x fa-github-square"></i></a>
-                            <a  href="{{value.linkedInUrl}}" uib-tooltip="LinkedIn"><i class="fa fa-3x fa-linkedin-square"></i></a>
+                            <a  href="{{value.githubUrl}}"><i class="fa fa-3x fa-github-square"></i></a>
+                            <a  href="{{value.linkedInUrl}}"><i class="fa fa-3x fa-linkedin-square"></i></a>
                         </div>
                         <div class="col-md-12"></div>
                         <span class="col-md-12">Involvement: {{value.involvement}}</span>
@@ -38,7 +38,7 @@
 
         </div>
     </div>
-    <div id="contact" class='col-md-6 col-md-offset-2'>
+    <div id="contact" class='col-md-6 col-md-offset-2 about-us'>
         <h1>Contact Us</h1>
         <form name="ctrl.contactUsForm" ng-submit="ctrl.sendEmail()" novalidate>
             <div>
@@ -90,9 +90,9 @@
             </div>
         </form>
     </div>
-    <div id="disclaimer" class="disclaimer">
+    <div id="disclaimer" class="about-us">
         <h1 class="col-md-10 col-md-offset-2">Disclaimer</h1>
-        <p class="col-md-8 col-md-offset-2">
+        <p class="col-md-8 col-md-offset-2 about">
             Although we pull our data from numerous legitimate sources, including federal, state, local, provincial, and tribal organizations, the data has not been verified and/or validated and thus should not be used as a base to create and/or support public policy decisions, guidance, regulation, or trends.
 
             For officially verified and validated air quality, visit the EPA’s Air Quality System (<a href="http://www.epa.gov/aqs">http://www.epa.gov/aqs</a>).
