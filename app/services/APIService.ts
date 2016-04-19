@@ -372,4 +372,52 @@ class APIService {
                 return response.data;
             }, onError);
     }
+
+    public PostFaqViewCount(questionId) {
+        var deferred = this.$q.defer();
+        var self = this;
+        var onError = (error)=>{deferred.reject(error);};
+        return this.$http.post('api/faq/' + questionId + '/view').then((response)=>{
+            return response.data;
+        },onError);
+    }
+
+    public PostFaqUserReview(review) {
+        var deferred = this.$q.defer();
+        var self = this;
+        var onError = (error)=>{deferred.reject(error);};
+        return this.$http.post('api/faq/' + review.questionId + '/userReview/' + review.score).then((response)=>{
+            return response.data;
+        },onError);
+    }
+
+    public GetTop5MostViewedList() {
+        var deferred = this.$q.defer();
+        let self = this;
+        let url = "api/faq/top5Viewed";
+        self.$http.get(url).then(
+            function (response) {
+                deferred.resolve(response.data);
+            },
+            function (response) {
+                deferred.reject(response);
+            }
+        );
+        return deferred.promise;
+    };
+
+    public GetTop5HighestRatedList() {
+        var deferred = this.$q.defer();
+        let self = this;
+        let url = "api/faq/top5Rated";
+        self.$http.get(url).then(
+            function (response) {
+                deferred.resolve(response.data);
+            },
+            function (response) {
+                deferred.reject(response);
+            }
+        );
+        return deferred.promise;
+    };
 }
