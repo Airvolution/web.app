@@ -84,10 +84,12 @@ class MapViewController {
                 //if (!mv.selectedStation || !mv.selectedStation.id) {
                 //    return;
                 //}
-                mv.$scope.plotVisible = !mv.$scope.plotVisible;
-                if (mv.$scope.plotVisible) {
-                    mv.generatePlot();
-                }
+                //mv.$scope.plotVisible = !mv.$scope.plotVisible;
+                //if (mv.$scope.plotVisible) {
+                //    mv.generatePlot();
+                //}
+                mv.$scope.plotVisible = true;
+                mv.generatePlot();
             },
             centerOnMarker: (marker)=>{
                 if(marker){
@@ -294,10 +296,12 @@ class MapViewController {
         let paramsGroup = this.selectionService.getCurrentPollutantSelection();
         let dateRange = this.selectionService.getDateRange();
 
-        if (stationsGroup.length != 0 && paramsGroup != 0) {
-            this.unsetChartData();
-            this.getDataForPlot(stationsGroup, paramsGroup, dateRange);
-        }
+        //if (stationsGroup.length != 0 && paramsGroup.length != 0) {
+        //    this.unsetChartData();
+        //    this.getDataForPlot(stationsGroup, paramsGroup, dateRange);
+        //}
+        this.unsetChartData();
+        this.getDataForPlot(stationsGroup, paramsGroup, dateRange);
     }
 
     private getDataForPlot(ids, params, dates) {
@@ -313,8 +317,12 @@ class MapViewController {
         );
     }
 
-    private unsetChartData() {
+    private hideChart() {
         this.$scope.plotVisible = false;
+    }
+
+    private unsetChartData() {
+        //this.$scope.plotVisible = false;
         this.$scope.chartOptions = undefined;
         this.$scope.chartData = undefined;
     }

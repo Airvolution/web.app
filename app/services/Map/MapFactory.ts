@@ -84,22 +84,21 @@ class MapFactory {
     }
 
     private getChartHeight() {
-        //let divHeight = angular.element(document).find('#details-plot').css('height');
-        //return parseInt(divHeight.substring(0, divHeight.length - 2));
-        return 450;
+        let divHeight = angular.element(document).find('#details-plot').innerHeight();
+        return divHeight;
+    }
+
+    private getChartWidth() {
+        let divWidth = angular.element(document).find('#details-plot').innerWidth();
+        return divWidth - 77; // yay for magic numbers!
     }
 
     public getChartOptions() {
         return {
             chart: {
                 type: 'lineChart',
+                width: this.getChartWidth(),
                 height: this.getChartHeight(),
-                margin: {
-                    top: 20,
-                    right: 20,
-                    bottom: 30,
-                    left: 40
-                },
                 x: function (d) {
                     return d[0];
                 },

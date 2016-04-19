@@ -23,7 +23,7 @@
 
     <div id="details-plot" ng-class="{'hidden':!plotVisible}">
         <nvd3 class="dark-plot" options="chartOptions" data="chartData"></nvd3>
-        <button class="btn btn-default close-button" ng-click="ctrl.unsetChartData()"><i class="fa fa-times"></i></button>
+        <button class="btn btn-primary close-button" ng-click="ctrl.hideChart()">Close</button>
     </div>
     <map-details visible="ctrl.detailsVisible" data="ctrl.selectedStation" loading="ctrl.loadingStationData" type="ctrl.detailsMode"></map-details>
 </main>
