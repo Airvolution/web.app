@@ -11,13 +11,14 @@ class EditGroupController {
     public stationQueryResults;
     public searchOptions;
 
-    public static $inject = ['$scope', '$state','$stateParams','APIService', 'SearchService'];
+    public static $inject = ['$scope', '$state','$stateParams','APIService', 'SearchService', 'notificationService'];
     public constructor(
         private $scope,
         private $state,
         private $stateParams,
         private APIService,
-        private SearchService
+        private SearchService,
+        private notificationService
     ) {
         this.loading = true;
         this.searchOptions = {updateOn: 'default blur', debounce: {'default': 250 , 'blur': 0}};
@@ -58,23 +59,26 @@ class EditGroupController {
                     // TODO: show something ugly
                 };
 
+                let onSuccess = (group) => {
+                    self.group = group;
+                    self.groupOriginalMarkers = angular.copy(group.stations);
+                    self.notificationService.notify('GroupModified');
+                    $scope.closeModal();
+                };
+
                 if (markersToAdd.length > 0) {
                     self.APIService.addStationToGroup(self.group, markersToAdd).then((group) => {
                         if (markersToRemove.length > 0) {
-                            self.APIService.removeStationFromGroup(self.group, markersToRemove).then((group) => {
-                                self.group = group;
-                                self.groupOriginalMarkers = angular.copy(group.stations);
-                            }, onUpdateError);
+                            self.APIService.removeStationFromGroup(self.group, markersToRemove).then(onSuccess, onUpdateError);
                         } else {
                             self.group = group;
                             self.groupOriginalMarkers = angular.copy(group.stations);
+                            self.notificationService.notify('GroupModified');
+                            $scope.closeModal();
                         }
                     }, onUpdateError);
                 } else if (markersToRemove.length > 0) {
-                    self.APIService.removeStationFromGroup(self.group, markersToRemove).then((group) => {
-                        self.group = group;
-                        self.groupOriginalMarkers = angular.copy(group.stations);
-                    }, onUpdateError);
+                    self.APIService.removeStationFromGroup(self.group, markersToRemove).then(onSuccess, onUpdateError);
                 }
             },
             'Cancel',

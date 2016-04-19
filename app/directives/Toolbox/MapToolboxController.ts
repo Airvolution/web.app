@@ -76,6 +76,7 @@ class MapToolboxController {
 
         let loadUserGroups = (groups) => {
             self.userGroups = groups;
+            self.userGroupsMap = {};
             angular.forEach(groups, (group) => {
                 angular.forEach(group.stations, (station) => {
                     self.userGroupsMap[station.id] = group.id;
@@ -94,6 +95,14 @@ class MapToolboxController {
                 self.APIService.getUserGroups().then(loadUserGroups);
             });
         };
+
+        this.notificationService.subscribe(this.$scope, 'GroupModified', () => {
+            self.APIService.getUserGroups().then((groups) => {
+                loadUserGroups(groups);
+                self.hideStationsInGroup();
+                self.mapFactory.showAllClusters();
+            }, waitForUserGroups);
+        });
 
         this.APIService.getUserStations().then(loadUserMarkers, waitForUserMarkers);
         this.APIService.getUserGroups().then(loadUserGroups, waitForUserGroups);
@@ -231,7 +240,7 @@ class MapToolboxController {
     }
 
     public hideStationsInGroup() {
-        this.$scope.hideUserClusters();
+        this.$scope.hideAllClusters();
         this.mapFactory.removeUserGroupLayer(this.markersInSelectedGroup);
         this.selectedGroup = {};
         this.markersInSelectedGroup = [];
