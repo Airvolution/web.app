@@ -78,6 +78,10 @@ class MapToolboxController {
         // try to load user stations and groups first
         let loadUserMarkers = (markers) => {
             self.userStations = markers;
+            for (let i = 0; i < self.userStations.length; i++) {
+                self.markerSelection.push(self.userStations[i]);
+                self.markerSelectionIds[self.userStations[i].id] = i
+            }
         };
 
         let loadUserGroups = (groups) => {
