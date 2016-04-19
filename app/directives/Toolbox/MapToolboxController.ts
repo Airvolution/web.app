@@ -2,9 +2,10 @@
 
 export = MapToolboxController;
 
-class MapToolboxController {
+    class MapToolboxController {
     public expanded;
-
+    public showPlotDrawer;
+        public showStationDrawer;
     public stationQuery;
     public stationQueryResults;
     public searchOptions;
@@ -49,6 +50,9 @@ class MapToolboxController {
         this.toDate = new Date();
         this.fromDate = new Date();
         this.fromDate.setDate(this.fromDate.getDate() - 7);
+
+        this.showPlotDrawer = false;
+        this.showStationDrawer = false;
 
         this.searchOptions = {updateOn: 'default blur', debounce: {'default': 250 , 'blur': 0}};
         this.stationQueryResults = [];
@@ -154,6 +158,7 @@ class MapToolboxController {
     public showPlot() {
         this.configureOptions();
         this.$scope.togglePlot();
+        this.showPlotDrawer = false;
         this.selectionService.reset();
     }
 
@@ -271,4 +276,26 @@ class MapToolboxController {
         this.$scope.resetZoom(10);
         this.$scope.centerOnMarker(marker.location);
     }
+
+        public closeAllDrawers(){
+            this.showPlotDrawer = false;
+            this.showStationDrawer = false;
+        }
+
+        public toggleStationDrawer(){
+            if(this.showStationDrawer){
+                this.closeAllDrawers();
+            }else{
+                this.closeAllDrawers();
+                this.showStationDrawer = true;
+            }
+        }
+        public togglePlotDrawer(){
+            if(this.showPlotDrawer){
+                this.closeAllDrawers();
+            }else{
+                this.closeAllDrawers();
+                this.showPlotDrawer = true;
+            }
+        }
 }

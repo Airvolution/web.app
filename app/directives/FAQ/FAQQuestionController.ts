@@ -58,7 +58,6 @@ class FAQQuestionController {
         if(direction == 'up') {
 
             review.score = 1;
-            //angular.element('#' + this.question.id + '_downVote').addClass('black');
             this.userReviewColor = 'green';
             this.APIService.PostFaqUserReview(review).then((data)=>{
             });
@@ -66,7 +65,6 @@ class FAQQuestionController {
         else if(direction == 'down') {
 
             review.score = -1;
-            //angular.element('#' + this.question.id + '_upVote').addClass('black');
             this.userReviewColor = 'red';
             this.APIService.PostFaqUserReview(review).then((data)=>{
             });

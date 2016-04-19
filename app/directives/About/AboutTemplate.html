@@ -1,5 +1,4 @@
 <main>
-    <div class="col-md-12"></div>
     <nav class="col-md-2">
         <ul class="nav nav-pills nav-stacked jump-menu">
             <li><a ng-click="ctrl.scrollTo('about')">About Us</a></li>
@@ -7,7 +6,7 @@
             <li><a ng-click="ctrl.scrollTo('disclaimer')">Disclaimer</a></li>
         </ul>
     </nav>
-    <div id="about" class="col-md-8 col-md-offset-2 about-us">
+    <div id="about" class="col-md-8 about-us">
         <h1>About Us</h1>
         <p class="indent">
             Welcome to AirU. AirU is a web application providing air quality statistics and visualizations for both the casual user and the atmospheric scientist.
@@ -19,14 +18,24 @@
         <p class="indent">
             Our content is user driven, meaning you can contribute to the project by connecting your own air monitoring station to the site. From checking the current air quality conditions in Salt Lake to downloading the last twelve months of air quality data in your neighborhood, AirU has got you covered.
         </p>
-        <div class="col-md-12" ng-repeat="value in ctrl.profiles">
-            <div class="col-md-6 profile">
-                <h4 class="col-md-12">{{value.name}}</h4>
-                <span class="col-md-12">Involvement: {{value.involvement}}</span>
-                <a class="col-md-12" href="{{value.githubUrl}}">GitHub</a>
-                <a class="col-md-12" href="{{value.linkedInUrl}}">LinkedIn</a>
-                <img class="col-md-12 profile-picture" src="{{value.picturePath}}" alt="{{value.name}}">
+        <div class="col-md-12" >
+            <div class="row">
+                <div class="col-md-6 profile" ng-repeat="value in ctrl.profiles">
+                    <div class="col-md-8">
+                        <h4 class="col-md-12">{{value.name}}</h4>
+                        <div class="col-md-12">
+                            <a  href="{{value.githubUrl}}" uib-tooltip="Github"><i class="fa fa-3x fa-github-square"></i></a>
+                            <a  href="{{value.linkedInUrl}}" uib-tooltip="LinkedIn"><i class="fa fa-3x fa-linkedin-square"></i></a>
+                        </div>
+                        <div class="col-md-12"></div>
+                        <span class="col-md-12">Involvement: {{value.involvement}}</span>
+                    </div>
+                    <div class="col-md-4">
+                        <img class=" profile-picture pull-right" src="{{value.picturePath}}" alt="{{value.name}}">
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
     <div id="contact" class='col-md-6 col-md-offset-2'>

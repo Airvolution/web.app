@@ -59,14 +59,6 @@ class FAQViewController {
             function (response) {
                 // Add content to page.
                 self.faqList = response;
-
-                //var length = self.faqList.length;
-                //
-                //for(var i = 0; i < length; i++)
-                //{
-                //    self.faqList[i].chevron = 'UP';
-                //    this.faqDict['question' + self.faqList[i].id] = self.faqList[i];
-                //}
             },
             function (response) {
                 //display an error here... if we want
@@ -77,8 +69,8 @@ class FAQViewController {
     public onSearchChange(){
         var self = this;
         this.SearchService.searchFAQs(this.search).then((results)=>{
-            self.searchResults = results.hits.hits;
-            self.resultsCount = results.hits.total;
+            self.searchResults = results.hits;
+            self.resultsCount = results.total;
         });
     };
 

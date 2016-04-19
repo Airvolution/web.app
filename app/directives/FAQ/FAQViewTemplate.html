@@ -1,8 +1,8 @@
 <main>
     <div class="content-wrapper">
-        <div class="faq-header">
-            <div class="col-md-offset-3 col-md-5 faq-title">Frequently Asked Questions</div>
-            <div class="search-bar col-md-4">
+        <div>
+            <div class="col-md-offset-3 col-md-9 faq-title">Frequently Asked Questions</div>
+            <div class="search-bar col-md-offset-3  col-md-4">
                 <input type="text"
                        placeholder="Search FAQs" class="search-box"
                        update-on-enter
@@ -11,7 +11,9 @@
                        ng-change="ctrl.onSearchChange()"
                        ng-focus="ctrl.resultsVisible = true"
                 >
-                <faq-search-results search-results="ctrl.searchResults" total-results="ctrl.resultsCount" ng-show="ctrl.resultsVisible" on-result-click="ctrl.onSearchSelect(result)"></faq-search-results>
+                <faq-search-results search-results="ctrl.searchResults" total-results="ctrl.resultsCount"
+                                    ng-show="ctrl.resultsVisible"
+                                    on-result-click="ctrl.onSearchSelect(result)"></faq-search-results>
             </div>
         </div>
         <div class="col-md-12"></div>
