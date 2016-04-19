@@ -36,7 +36,7 @@ almanac-widget {
   }
   box-shadow: 0 5px 10px @dark-gray;
   text-align: left;
-  background-color: white;
+  //background-color: white;
 
   .card-header {
     position: relative;
@@ -94,6 +94,7 @@ almanac-widget {
   .card-body {
     padding: 1em;
     padding-top: 0;
+    background-color: white;
 
     .value {
       font-size: 7em;
@@ -152,7 +153,6 @@ almanac-widget {
         width: 20.5em;
         //background-color: #00b3ee;
       }
-
     }
 
     .description {
@@ -168,10 +168,20 @@ almanac-widget {
   .closestStation {
     width: 100%;
     height: 234px;
-    margin-top: 76px;
+    margin-top: 82px;
+    background-color: transparent;
+    z-index: -1;
+  }
 
-    .leaflet-control-zoom {
-      visibility: hidden;
-    }
+  .leaflet-control-zoom {
+    visibility: hidden;
+  }
+
+  .leaflet-control-layers {
+    visibility: hidden;
+  }
+
+  #heatmap {
+    z-index: -1;
   }
 }
