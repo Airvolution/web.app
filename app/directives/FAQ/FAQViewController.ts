@@ -62,4 +62,4 @@ class FAQViewController {
         this.resultsVisible = false;
         this.search = '';
     }
-};
+}
