@@ -82,7 +82,7 @@ class MapSearchController {
         });
         $scope.$on('$destroy', ()=> {
             deregister();
-        })
+        });
     }
 
     public clearSearchResults(){
@@ -91,7 +91,7 @@ class MapSearchController {
             stations: [],
             groups: [],
             faqs: []
-        }
+        };
         this.showFaq = false;
         this.showStations = false;
         this.showGroups = false;

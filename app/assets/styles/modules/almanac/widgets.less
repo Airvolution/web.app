@@ -45,7 +45,7 @@ almanac-widget {
     overflow: auto;
     box-shadow: 0 0 1px @medium-darker-gray;
     background-color: @medium-light-gray;
-    z-index: 10000;
+    z-index: 0;
     &.neutral {
       background-color: @medium-dark-gray;
     }
@@ -92,8 +92,11 @@ almanac-widget {
   }
 
   .card-body {
-    padding: 1em;
-    padding-top: 0;
+    //padding: 1em;
+    //padding-top: 0;
+    padding-left: 1em;
+    padding-right: 1em;
+    //background-color: white;
 
     .value {
       font-size: 7em;
@@ -110,77 +113,48 @@ almanac-widget {
       width: 100%;
       height: 15em;
       display: inline-block;
-      padding: 1em;
+      font-variant: small-caps;
 
       .container-header {
         text-align: center;
       }
 
-      .divider {
-        background-color: black;
-        color: black;
-        height:4px;
-        margin: 0 auto;
-        padding:0;
-        width: 75%;
-        text-align: center;
-      }
-
-      .my-station{
-        vertical-align: middle;
-      }
-
-      .ranking {
-        font-size: 3.5em;
-        text-align: center;
-      }
-
       /* Top-Half of Widget */
-      .national-container {
-        height: 17.5em;
-        position: absolute;
-        width: 20.5em;
-        //background-color: #00b3ee;
-      }
-      .state-container {
-        position: relative;
-        float: right;
-        height: 17.5em;
-        width: 20.5em;
-        //background-color: #ffff00;
-      }
-
-      /* Bottom-Half of Widget */
-      .nationanl-ranking-container {
-        position: absolute;
-        top: 25.5em;
-        height: 17.5em;
-        width: 10em;
-        //background-color: #7e0023;
-      }
-
       .local-container {
         position: absolute;
-        top: 25.5em;
         left: 12.25em;
-        height: 17.5em;
+        height: 10em;
         width: 20.5em;
         //background-color: #00c800;
       }
 
-      .state-ranking-container {
+      .ranking {
+        text-align: center;
         position: absolute;
-        top: 25.5em;
-        left: 33em;
-        height: 17.5em;
-        width: 10em;
-        float: right;
-        //background-color: #7e0023;
+        height: 10em;
+        top: 16.5em;
+        width: 41em;
+        //background-color: #ffaa00;
       }
 
+      /* Bottom-Half of Widget */
 
+      .best-container {
+        height: 17.5em;
+        position: absolute;
+        top: 26.5em;
+        width: 20.5em;
+        //background-color: #ffff00;
+      }
 
-
+      .worst-container {
+        height: 17.5em;
+        left: 22.5em;
+        position: absolute;
+        top: 26.5em;
+        width: 20.5em;
+        //background-color: #00b3ee;
+      }
     }
 
     .description {
@@ -188,21 +162,35 @@ almanac-widget {
     }
   }
 
+  //.actions {
+  //  padding: 1em;
+  //  border-top: 1px solid @medium-light-gray;
+  //}
 
+  //.card-body-plain {
+  //  padding-top: 0.1em;
+  //  padding-bottom: 0.5em;
+  //}
 
-  .actions {
-    padding: 1em;
-    border-top: 1px solid @medium-light-gray;
+  .card-body-map {
+    background-color: transparent;
   }
 
-  .closestStation {
+  .map-widget-small {
     width: 100%;
-    height: 234px;
-    margin-top: 76px;
+    height: 225px;
+    margin-top: 82px;
+  }
 
-    .leaflet-control-zoom {
-      visibility: hidden;
-    }
+  .leaflet-control-zoom {
+    visibility: hidden;
+  }
+
+  .leaflet-control-layers {
+    visibility: hidden;
+  }
+
+  #heatmap {
+    margin-top: 82px;
   }
 }
-

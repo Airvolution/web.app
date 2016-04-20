@@ -1,6 +1,6 @@
 <main>
     <map-toolbox></map-toolbox>
-    <map-search></map-search>
+    <map-search ng-show="siteSearchVisible"></map-search>
     <leaflet id="map" lf-center="ctrl.center" markers="ctrl.markers" defaults="ctrl.defaults" tiles="ctrl.tiles" layers="ctrl.layers" controls="ctrl.controls" event-broadcast="ctrl.events"></leaflet>
 
     <!-- Coordinate bounds of Map for development purposes
@@ -21,8 +21,9 @@
         </div>
     </div>-->
 
-    <div id="details-plot" ng-class="{'hidden':!ctrl.plotVisible}">
-        <nvd3 class="dark-plot" options="ctrl.chartOptions" data="ctrl.chartData"></nvd3>
+    <div id="details-plot" ng-class="{'hidden':!plotVisible}">
+        <nvd3 class="dark-plot" options="chartOptions" data="chartData"></nvd3>
+        <button class="btn btn-primary close-button" ng-click="ctrl.hideChart()">Close</button>
     </div>
     <map-details visible="ctrl.detailsVisible" data="ctrl.selectedStation" loading="ctrl.loadingStationData" type="ctrl.detailsMode"></map-details>
 </main>

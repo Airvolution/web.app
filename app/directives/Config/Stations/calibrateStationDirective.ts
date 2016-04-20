@@ -1,7 +1,7 @@
 /// <reference path="../../../../typings/tsd.d.ts" />
 
 import CalibrateStationController = require("./calibrateStationController");
-export = CalibrateStationDirective
+export = CalibrateStationDirective;
 
 class CalibrateStationDirective implements ng.IDirective{
     public static htmlName = "calibrateStation";
@@ -12,7 +12,6 @@ class CalibrateStationDirective implements ng.IDirective{
     public controllerAs = "ctrl";
     public bindToController = true;
 
-    
     public static create(){
         return new CalibrateStationDirective();
     }

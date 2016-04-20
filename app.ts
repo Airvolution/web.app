@@ -98,6 +98,14 @@ angular.module('app', [
             url: 'email/confirmed',
             template: "<email-confirmed-modal></email-confirmed-modal>"
         });
+        states.push({
+            name: 'modal.editGroup',
+            url: 'group/:id/:name',
+            params: {
+                name: ''
+            },
+            template: '<edit-group></edit-group>'
+        });
 
         states.push({
             name: 'app',

@@ -1,16 +1,16 @@
 <!-- SEARCH -->
 <div class="search-container box well">
     <span class="icon"><i class="fa fa-search"></i></span>
-    <input type="search" class="search" placeholder="Search for a station"
-           ng-model="ctrl.stationQuery"
+    <input type="search" class="search" placeholder="Search for a station or group"
+           ng-model="ctrl.query"
            update-on-enter
-           ng-change="ctrl.searchStations()"
+           ng-change="ctrl.search()"
            ng-model-options="ctrl.searchOptions"/>
 </div>
 
 <!-- SEARCH RESULTS -->
-<div class="search-results" ng-if="ctrl.stationQueryResults.length > 0">
-
+<div class="search-results" ng-if="ctrl.showSearchResults">
+    <div ng-click="ctrl.closeSearchResults()" class="pull-right"><i class="fa fa-times"></i></div>
     <!-- STATIONS -->
     <div class="station-container">
         <table class="table">
@@ -18,7 +18,7 @@
             <tr>
                 <th><span class="pull-left">Find</span></th>
                 <th><span>Station Name</span></th>
-                <th><input type="checkbox"></th>
+                <th>Add</th>
             </tr>
             </thead>
             <!-- TODO: getting an error here:
@@ -40,27 +40,87 @@
     </div>
 
     <!-- GROUPS -->
-    <div class="group-container" ng-if="ctrl.stationQueryResults.length > 0">
+    <div class="group-container" ng-if="ctrl.groupQueryResults.length > 0">
         <table class="table">
             <thead>
             <tr>
-                <th><span>Group Name</span></th>
-                <th><input class="pull-right" type="checkbox"></th>
+                <th>Group Name</th>
+                <th>Stations</th>
+                <th>Add</th>
             </tr>
             </thead>
-            <tr ng-repeat="marker in ctrl.stationQueryResults track by marker.id">
-                <td>{{::marker.name}}</td>
-                <!-- TODO: add all markers in GROUP -->
-                <td><input class="pull-right" type="checkbox"></td>
+            <tr ng-repeat="group in ctrl.groupQueryResults track by group.id">
+                <td>{{group.name || 'No Name'}}</td>
+                <td>{{group.stations.length}}</td>
+                <td><input class="pull-right" type="checkbox"
+                           ng-click="ctrl.toggleGroup(group)"
+                           ng-checked="ctrl.markersInGroup(group)"></td>
             </tr>
         </table>
     </div>
 </div>
 
-<!-- USER STATION SELECTION -->
+<!-- USER's STATIONS -->
+<div class="container-header" ng-if="!ctrl.showUserGroups">
+    <span class="pull-left">My Stations: </span>
+    <button class="btn btn-primary pull-right"
+            ng-click="ctrl.showUserGroups = true">
+        Show My Groups</button>
+</div>
+<div class="selection-container" ng-if="!ctrl.showUserGroups">
+    <table class="table">
+        <thead>
+        <tr>
+            <th><span class="pull-left">Find</span></th>
+            <th><span>Station Name</span></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tr ng-repeat="marker in ctrl.userStations track by marker.id">
+            <td>
+                <button class="btn btn-map-marker pull-left" ng-click="ctrl.setSelectedStation(marker)">
+                    <span class="fa fa-map-marker" uib-tooltip="Locate On Map" tooltip-placement="left"></span>
+                </button>
+            </td>
+            <td>{{::marker.name}}</td>
+            <td><input class="pull-right"
+                       type="checkbox"
+                       ng-click="ctrl.toggleMarker(marker)"
+                       ng-checked="ctrl.isMarkerInGroup(marker)"></td>
+        </tr>
+    </table>
+</div>
+
+<!-- USER's GROUPS -->
+<div class="container-header" ng-if="ctrl.showUserGroups">
+    <span class="pull-left">My Groups: </span>
+    <button class="btn btn-primary pull-right"
+            ng-click="ctrl.showUserGroups = false">
+        Show My Stations</button>
+</div>
+<div class="selection-container" ng-if="ctrl.showUserGroups">
+    <table class="table">
+        <thead>
+        <tr>
+            <th><span>Name</span></th>
+            <th><span>Description</span></th>
+        </tr>
+        </thead>
+        <tr ng-repeat="group in ctrl.userGroups track by group.id">
+            <td>{{::group.name || 'No Name'}}</td>
+            <td>{{::group.description || 'No Description'}}</td>
+            <td><input class="pull-right" type="checkbox"
+                       ng-click="ctrl.toggleGroup(group)"
+                       ng-checked="ctrl.markersInGroup(group)"></td>
+        </tr>
+    </table>
+</div>
+
+<!-- USER SELECTION -->
 <div class="container-header">
     <span class="pull-left">Selected Stations: </span>
-    <span class="pull-right">{{ctrl.markerSelection.length}}</span>
+    <!--<span class="pull-right">{{ctrl.markerSelection.length}}</span>-->
+    <button class="btn btn-danger btn-action pull-right" ng-if="ctrl.markerSelection.length > 0" ng-click="ctrl.clearSelectionGroup()">Clear</button>
 </div>
 <div class="selection-container">
     <table class="table">
@@ -68,7 +128,7 @@
         <tr>
             <th><span class="pull-left">Find</span></th>
             <th><span>Station Name</span></th>
-            <th><input class="pull-right" type="checkbox"></th>
+            <th></th>
         </tr>
         </thead>
         <tr ng-repeat="marker in ctrl.markerSelection track by marker.id">
@@ -86,8 +146,8 @@
     </table>
 </div>
 <div class="container-header">
-    <button class="btn btn-primary btn-action pull-right" ng-click="ctrl.saveSelectionGroup()">Save</button>
-    <button class="btn btn-danger btn-action pull-right" ng-click="ctrl.clearSelectionGroup()">Clear</button>
+    <!--<button class="btn btn-primary btn-action pull-right" ng-click="ctrl.saveSelectionGroup()">Save</button>-->
+    <!--<button class="btn btn-danger btn-action pull-right" ng-click="ctrl.clearSelectionGroup()">Clear</button>-->
 </div>
 
 <!-- PARAMETER SELECTION -->
@@ -127,8 +187,18 @@
 
 <!-- PLOT / DOWNLOAD -->
 <div class="datetime-container">
-    <button class="btn btn-primary" id="plot-button" ng-click="ctrl.showPlot()">Plot</button>
-    <button class="btn btn-default" id="download-button" ng-click="ctrl.downloadData()">
-        <span class="fa fa-download"></span>
-    </button>
+    <div class="btn-group dropdown"  id="plot-button"  uib-dropdown="" style="">
+        <button id="split-button" type="button" class="btn btn-primary" ng-click="ctrl.showPlot()">Plot</button>
+        <button type="button" class="btn btn-primary dropdown-toggle" uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Plot/Download button!</span>
+        </button>
+        <ul class="dropdown-menu" uib-dropdown-menu="" role="menu" aria-labelledby="split-button">
+            <li role="menuitem"ng-click="ctrl.downloadData()"><a href="#">Download</a></li>
+        </ul>
+    </div>
+    <!--<button class="btn btn-primary"ng-click="ctrl.showPlot()">Plot</button>-->
+    <!--<button class="btn btn-default" id="download-button" ng-click="ctrl.downloadData()">-->
+        <!--<span class="fa fa-download"></span>-->
+    <!--</button>-->
 </div>
