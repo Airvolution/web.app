@@ -15,50 +15,6 @@ class SVGAQIDirective implements ng.IDirective {
         aqi: '='
     };
 
-    public link = ($scope, $element, $attrs,$ctrl)=> {
-
-        //DO NOT USE ANGULAR HERE. Regular DOM Manipulation with SVG doesn't work.
-        //Relevant (necessary) styles are in aqiScale.less
-        var rand = new Date().getTime() + Math.ceil(Math.random()*50);
-        $ctrl.id = 'aqi_scale_'+rand;
-        $element.attr('id',$ctrl.id);
-        var category = $scope.$watch('ctrl.category', (newVal)=> {
-            if(newVal === undefined){
-                return;
-            }
-            document.querySelector('#'+$ctrl.id+' #indicator circle').setAttribute("class", newVal + '_indicator');
-            document.querySelector('#'+$ctrl.id+' #gradient').setAttribute("class", newVal + '_gradient');
-        });
-
-        var aqi = $scope.$watch('ctrl.aqi', (newVal)=> {
-            if(newVal === undefined){
-                return;
-            }
-            document.querySelector('#'+$ctrl.id+' #indicator text').textContent = "" + newVal ? newVal : '';
-            $ctrl.update(newVal);
-        });
-
-        var percent = $scope.$watch('ctrl.percentOfCategory', (newVal)=> {
-            if (newVal == undefined) {
-                return;
-            }
-            newVal = newVal < 0 ? 0 : newVal;
-            newVal = newVal > 100 ? 100 : newVal;
-            var yBase = 35;
-            var base = 32;
-            var factor = 4.66;
-            var update = base + newVal * factor;
-            document.querySelector('#'+$ctrl.id+' #indicator').setAttribute('transform', "translate(" + update + "," + yBase + ")");
-        });
-
-        $scope.$on('$destroy',()=>{
-            category();
-            aqi();
-            percent();
-        })
-
-    };
-
     public static create() {
         return new SVGAQIDirective();
     }

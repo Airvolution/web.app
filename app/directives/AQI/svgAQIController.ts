@@ -2,13 +2,29 @@
 
 export = SVGAQIController;
 
+//controls animation on bubble indicator
+const X_BASE = 32;
+const OFFSET_FACTOR = 4.66;
 class SVGAQIController {
     public aqi;
     public category;
-    public percentOfCategory;
-    public id;
+    public offset;
     static $inject = ['$scope'];
-    constructor(private $scope){}
+    constructor(private $scope){
+        this.category = 'green';
+        this.offset = X_BASE;
+        var self = this;
+        var aqi = $scope.$watch('ctrl.aqi', (newVal)=> {
+            if(newVal === undefined){
+                return;
+            }
+            self.update(newVal);
+        });
+
+        $scope.$on('$destroy',()=>{
+            aqi();
+        });
+    }
 
     public update(aqi){
         if(aqi === undefined) {
@@ -16,7 +32,10 @@ class SVGAQIController {
         }
         var cat = this.getCategory(aqi);
         this.category = cat.category;
-        this.percentOfCategory = this.getPercentOfCategory(cat,aqi);
+        var percent = this.getPercentOfCategory(cat,aqi);
+        percent = percent < 0 ? 0 : percent;
+        percent = percent > 100 ? 100 : percent;
+        this.offset = X_BASE + percent * OFFSET_FACTOR;
     }
 
     public getCategory(aqi){
