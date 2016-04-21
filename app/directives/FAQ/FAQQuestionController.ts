@@ -13,7 +13,7 @@ class FAQQuestionController {
         this.question.chevron = 'DOWN';
 
         this.APIService.getUserProfile().then((userProfile)=> {
-            if(userProfile.id != undefined) {
+            if(userProfile && userProfile.id != undefined) {
                 this.userId = userProfile.id;
 
                 var score = this.getMyQuestionReivewScore();

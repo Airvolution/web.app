@@ -20,7 +20,7 @@ module.exports = function (grunt) {
         },
         "webpack": {
             bundle: {
-                entry: "./app.ts",
+                entry: "./app-built.ts",
                 progress: true,
                 output: {
                     filename: 'bundle.js'
@@ -36,7 +36,7 @@ module.exports = function (grunt) {
                 }
             },
             prod: {
-                entry: "./app.ts",
+                entry: "./app-built.ts",
                 progress: true,
                 output: {
                     filename: 'bundle.js'
@@ -90,11 +90,6 @@ module.exports = function (grunt) {
                         dest: 'build/index.html'
                     },
                     {
-                        nonull: true,
-                        src: 'templates.js',
-                        dest: 'build/index.html'
-                    },
-                    {
                         src: 'app/**/*.html',
                         dest: 'build/'
                     },
@@ -133,6 +128,10 @@ module.exports = function (grunt) {
             less: {
                 src: 'app/assets/styles/**/*.less',
                 dest: 'app/assets/styles/app.less'
+            },
+            templates:{
+                src:['app.ts','templates.js'],
+                dest: 'app-built.ts'
             }
         },
         cssmin: {
@@ -202,9 +201,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-angular-templates');
     grunt.loadNpmTasks('grunt-postcss');
 
-    grunt.registerTask('build:prod', ['tslint', 'clean:all', 'concat:less', 'less', 'postcss:prefixer', 'cssmin:app', 'webpack:prod', 'ngtemplates', 'copy:build', 'clean:build']);
-    grunt.registerTask('build:dev', ['tslint', 'clean:all', 'concat:less', 'less', 'postcss:prefixer', 'cssmin:app', 'webpack:bundle', 'ngtemplates', 'copy:build', 'clean:build']);
-    grunt.registerTask('build:test', ['tslint', 'clean:local', 'concat:less', 'less', 'postcss:prefixer', 'cssmin:app', 'webpack:test', 'ngtemplates']);
+    grunt.registerTask('build:prod', ['tslint', 'clean:all', 'concat:less', 'less', 'postcss:prefixer', 'cssmin:app', 'ngtemplates', 'concat:templates','webpack:prod', 'copy:build', 'clean:build']);
+    grunt.registerTask('build:dev', ['tslint', 'clean:all', 'concat:less', 'less', 'postcss:prefixer', 'cssmin:app', 'ngtemplates',  'concat:templates','webpack:bundle', 'copy:build', 'clean:build']);
+    grunt.registerTask('build:test', ['tslint', 'clean:local', 'concat:less', 'less', 'postcss:prefixer', 'cssmin:app', 'ngtemplates', 'concat:templates', 'webpack:test']);
     // Default task
-    grunt.registerTask('default', ['clean:local', 'concat:less', 'less', 'postcss:prefixer', 'cssmin:app', 'webpack:bundle', 'ngtemplates']);
+    grunt.registerTask('default', ['clean:local', 'concat:less', 'less', 'postcss:prefixer', 'cssmin:app', 'ngtemplates', 'concat:templates','webpack:bundle' ]);
 };
