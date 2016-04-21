@@ -29,41 +29,7 @@
 </head>
 <body ng-app="app">
 <div class="site-wrapper">
-    <header class="header" ng-controller="HeaderController as hctrl" ng-cloak>
-        <div class="headerzone col-md-1"><img src="app/assets/images/AirLogo.svg" alt="University of Utah" id="logo"></div>
-        <ul class="nav navbar-nav col-md-3">
-            <li ui-sref-active="active" class="tab"><a ui-sref="app.almanac">Almanac</a></li>
-            <li ui-sref-active="active" class="tab"><a ui-sref="app.map">Map</a></li>
-            <li ui-sref-active="active" class="tab"><a ui-sref="app.faq">FAQ</a></li>
-            <li ui-sref-active="active" class="tab"><a ui-sref="app.about">About</a></li>
-        </ul>
-        <div class="headerzone col-md-3" id="aqi" ng-controller="AQIController as qctrl">
-            <span class="epa-aqi-title">Air Quality Index<br/>{{qctrl.localCity}}, {{qctrl.localRegion}}</span>
-            <span class="fa-stack fa-2x epa-aqi-icon" ng-click="qctrl.showPopup = !qctrl.showPopup">
-                <i class="fa fa-circle fa-stack-2x epa-aqi" ng-class="{'low':qctrl.localCategory == 'Good',
-                                                                        'med':qctrl.localCategory == 'Moderate',
-                                                                        'high':qctrl.localCategory != 'Good' && qctrl.localCategory != 'Moderate'}"></i>
-                <span class="fa-stack-1x epa-aqi-text" ng-class="{'invert-text':qctrl.localCategory != 'Moderate'}">{{qctrl.localAQI}}</span>
-            </span>
-            <aqi-popover aqi="qctrl.localAQI" category="qctrl.localCategory"
-                         ng-class="{'hidden':qctrl.showPopup == false}"></aqi-popover>
-
-        </div>
-        <div class="headerzone col-md-2" id="weather">
-            <weather></weather>
-        </div>
-
-        <div class="headerzone col-md-3" id="login">
-            <a class="header-text" ng-hide="hctrl.AuthService.authentication.isAuth" ui-sref="modal.login">Register /
-                Login</a>
-            <span class="header-text" ng-show="hctrl.AuthService.authentication.isAuth">Welcome, {{hctrl.AuthService.authentication.userName}}</span>
-            <a class="header-text" ng-show="hctrl.AuthService.authentication.isAuth" ng-click="hctrl.AuthService.logOut()">Logout</a>
-            <div>
-                <i class="fa fa-cog fa-2x config-menu-icon" ui-sref="app.config"></i>
-            </div>
-
-        </div>
-    </header>
+    <site-header></site-header>
     <section id="mainContent"ui-view="app">
     </section>
 </div>
