@@ -1,38 +1,54 @@
+//==========================================General==============================================//
+.almanac-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.widget-controls {
+  position: relative;
+  min-height:100%;
+
+}
+
+.widget-grid {
+  position: relative;
+  min-height:100%;
+}
+
+//==========================================Widgets===============================================//
+@widgetBorder: 1px solid @widgetBorderColor;
+@widgetStepSize: 150;
+@widgetRowSize: 300px;
+@widgetColSpacing: 10px;
+@widgetRowSpacing: @widgetColSpacing;
 almanac-widget {
   position: absolute;
-  border: 1px solid black;
+  border: @widgetBorder;
+  height: @widgetRowSize + @widgetRowSpacing;
+  &[tall]{
+    @scale: 2;
+    height: @widgetRowSize*@scale + @widgetRowSpacing*(@scale + 1);
+  }
 
   &[widget-size="small"] {
-    width: 150px;
-    height: 310px;
-
-    &[tall]{
-      height: 630px;
-    }
+    width: @widgetStepSize;
   }
-  &[widget-size="medium"] {
-    width: 310px;
-    height: 310px;
 
-    &[tall]{
-      height: 630px;
-    }
+  &[widget-size="medium"] {
+    //Scale must use units px so less will output correct units
+    @scale: 2px;
+    width: (@widgetStepSize*@scale + @widgetColSpacing*(@scale - 1));
   }
   &[widget-size="large"] {
-    width: 630px;
-    height: 310px;
-
-    &[tall]{
-      height: 630px;
-    }
+    @scale: 4px;
+    width: (@widgetStepSize*@scale + @widgetColSpacing*(@scale - 1));
   }
   &[widget-size="xl"] {
-    width: 950px;
-    height: 310px;
-
-    &[tall]{
-      height: 630px;
-    }
+    @scale: 6px;
+    width: (@widgetStepSize*@scale + @widgetColSpacing*(@scale - 1));
   }
   box-shadow: 0 5px 10px @dark-gray;
   text-align: left;
@@ -43,51 +59,51 @@ almanac-widget {
     padding: 1em;
     padding-bottom: 0;
     overflow: auto;
-    box-shadow: 0 0 1px @medium-darker-gray;
-    background-color: @medium-light-gray;
+    box-shadow: 0 0 1px @widgetShadowColor;
+    background-color: @widgetBackground;
     z-index: 0;
     &.neutral {
-      background-color: @medium-dark-gray;
+      background-color: @widgetHeaderNeutral;
     }
     &.green {
-      background-color: @aqiGreen;
+      background-color: @widgetHeaderGreen;
     }
     &.yellow {
-      background-color: @aqiYellow;
+      background-color: @widgetHeaderYellow;
     }
     &.orange {
-      background-color:@aqiOrange;
+      background-color:@widgetHeaderOrange;
     }
     &.red {
-      background-color: @aqiRed;
+      background-color: @widgetHeaderRed;
     }
     &.purple {
-      background-color: @aqiPurple;
+      background-color: @widgetHeaderPurple;
     }
     &.maroon {
-      background-color: @aqiMaroon;
+      background-color: @widgetHeaderMaroon;
     }
 
     .category {
       font-size: 1em;
-      color: @light-gray;
+      color: @widgetText;
       font-weight: bold;
       text-shadow: 1px 1px 1px black;
     }
 
     .title {
       font-size: 1.5em;
-      color: white;
+      color: @widgetText;
       font-weight: bolder;
       text-shadow: 1px 1px 2px black;
     }
 
     .emoji {
       vertical-align: text-bottom;
-      border: 3px solid white;
+      border: 3px solid @widgetEmojiBorder;
       border-radius: 8px;
-      box-shadow: 0 0 5px @true-white;
-      color: @true-white;
+      box-shadow: 0 0 5px @widgetEmojiShadow;
+      color: @widgetEmoji;
     }
   }
 

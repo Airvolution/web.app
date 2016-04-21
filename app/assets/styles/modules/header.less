@@ -1,16 +1,16 @@
+//========================================General========================================//
 @header-height: 50px;
 .header {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: @medium-darker-gray;
+  background-color: @headerBackground;
   font-size: 1.25em;
   line-height: 1.25em;
-  //overflow: hidden;
 
   .headerzone {
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-left: 0;
+    padding-right: 0;
     height: @header-height;
 
     img {
@@ -25,62 +25,35 @@
 
   }
 
-
-  #logo {
-  }
-
   .nav {
     .tab {
-      background-color: @medium-darker-gray;
+      background-color: @headerBackground;
       a {
-        color: @white;
+        color: @headerText;
       }
     }
     .active {
-      background-color: @black;
+      background-color: @headerActiveTab;
       a {
-        color: @white;
+        color: @headerText;
       }
     }
     a {
       &:hover {
-        background-color: @black;
-        color: @white;
+        background-color: @headerHover;
+        color: @headerText;
       }
       &:focus {
-        background-color: @black;
-        color: @white;
+        background-color: @headerHover;
+        color: @headerText;
       }
     }
   }
 }
-#hamburger {
-  text-align: center;
-  &:hover {
-    color: @medium-light-gray;
-  }
-}
-
-/*
-#quicklinks {
-  position: relative;
-  input {
-    text-indent: 30px;
-    max-width: 100%;
-  }
-
-  .fa-search {
-    position: absolute;
-    top: 5px;
-    left: 7px;
-    font-size: 15px;
-  }
-}
-*/
-
+//==============================================Controls========================================//
 #weather {
-  background-color: @medium-light-gray;
-  border-left: 1px solid @dark-gray;
+  background-color: @headerLightBackground;
+  border-left: 1px solid @headerDividerColor;
 
   .weather_wrapper {
     text-align: center;
@@ -88,7 +61,6 @@
     .weather-icon {
       font-size: 2em;
       padding: .25em;
-      //height: 50px;
 
       .wi-degrees{
         margin-left: -.2em;
@@ -114,16 +86,16 @@
 
 }
 .header-text {
-  color: @light-gray;
+  color: @headerText;
 
   a& {
     &:hover {
-      color: @medium-light-gray;
+      color: @headerHoverText;
       cursor: pointer;
       text-decoration: none;
     }
     &:focus {
-      color:@medium-light-gray;
+      color:@headerHoverText;
       cursor: pointer;
       text-decoration: initial;
     }
@@ -137,10 +109,10 @@
 }
 
 .config-menu-icon  {
-  color: @light-gray;
+  color: @headerText;
 
   &:hover {
-    color: @medium-light-gray;
+    color: @headerHoverText;
     cursor: pointer;
   }
 }
@@ -150,12 +122,14 @@
 
 }
 .welcome-message {
-  color: @light-gray;
+  color: @headerText;
   height: 100%;
 }
 
+//=========================================AQI Meter Dropdown====================================//
+
 .dropdown-menu {
-  color: @medium-darker-gray;
+  color: @headerBackground;
 }
 
 .aqi-meter-low {
@@ -166,7 +140,7 @@
   margin-right: -10%;
 
   .fa-circle {
-    color: @white;
+    color: @aqi_neutral;
   }
 
   .indicator {
@@ -193,7 +167,7 @@
   margin-right: -10%;
 
   .fa-circle {
-    color: @white;
+    color: @aqi_neutral;
   }
 
   .indicator {
@@ -221,7 +195,7 @@
   margin-right: -10%;
 
   .fa-circle {
-    color: @white;
+    color: @aqi_neutral;
   }
 
   .indicator {
@@ -247,16 +221,16 @@
   left: 0;
   right: 0;
   z-index: 10;
-  background-color: @medium-dark-gray;
+  background-color: @headerBackground;
 
   &.panel {
     margin-top:3%;
     padding: 1em;
-    color: @medium-lighter-gray;
+    color: @headerText;
 
     .panel-title {
       font-size: 1.5em;
-      color: @white;
+      color: @headerText;
     }
   }
 
@@ -264,7 +238,7 @@
     margin-top: 1em;
 
     a {
-      color: @medium-lighter-gray;
+      color: @headerText;
       font-size: 1.25em;
     }
   }
@@ -284,8 +258,8 @@
 }
 
 #aqi {
-  background-color: @medium-light-gray;
-  border-left: 1px solid @dark-gray;
+  background-color: @headerLightBackground;
+  border-left: 1px solid @headerDividerColor;
 
   .epa-aqi-icon{
     margin-left: 25%;
@@ -318,11 +292,11 @@
   }
 
   .epa-aqi {
-    color: @light-gray;
+    color: @aqi_neutral;
   }
 
   .epa-aqi-text {
-    color: @dark-gray;
+    color: @black;
   }
 }
 
