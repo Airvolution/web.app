@@ -33,23 +33,23 @@
     .tab {
       background-color: @medium-darker-gray;
       a {
-        color: white;
+        color: @white;
       }
     }
     .active {
-      background-color: black;
+      background-color: @black;
       a {
-        color: white;
+        color: @white;
       }
     }
     a {
       &:hover {
-        background-color: black;
-        color: white;
+        background-color: @black;
+        color: @white;
       }
       &:focus {
-        background-color: black;
-        color: white;
+        background-color: @black;
+        color: @white;
       }
     }
   }
@@ -161,26 +161,26 @@
 .aqi-meter-low {
   position: relative;
   min-height: 3em;
-  background: linear-gradient(to right, green, yellow);
+  background: linear-gradient(to right, @aqiGreen, @aqiYellow);
   margin-left: -10%;
   margin-right: -10%;
 
   .fa-circle {
-    color: #FFF;
+    color: @white;
   }
 
   .indicator {
     margin-left: 42%;
 
     .aqi-number {
-      color: black;
+      color: @black;
     }
     .indicator-line {
       position: absolute;
       margin-left: 50%;
       min-height: 100%;
       width: 1px;
-      background: #000;
+      background: @black;
     }
   }
 }
@@ -188,19 +188,19 @@
 .aqi-meter-med {
   position: relative;
   min-height: 3em;
-  background: linear-gradient(to right, yellow, orange);
+  background: linear-gradient(to right, @aqiYellow, @aqiOrange);
   margin-left: -10%;
   margin-right: -10%;
 
   .fa-circle {
-    color: #FFF;
+    color: @white;
   }
 
   .indicator {
     margin-left: 42%;
 
     .aqi-number {
-      color: black;
+      color: @black;
     }
 
     .indicator-line {
@@ -208,7 +208,7 @@
       margin-left: 50%;
       min-height: 100%;
       width: 1px;
-      background: #000;
+      background: @black;
     }
   }
 }
@@ -216,19 +216,19 @@
 .aqi-meter-high {
   position: relative;
   min-height: 3em;
-  background: linear-gradient(to right, orange, red);
+  background: linear-gradient(to right, @aqiOrange, @aqiRed);
   margin-left: -10%;
   margin-right: -10%;
 
   .fa-circle {
-    color: #FFF;
+    color: @white;
   }
 
   .indicator {
     margin-left: 42%;
 
     .aqi-number {
-      color: black;
+      color: @black;
     }
 
     .indicator-line {
@@ -236,7 +236,7 @@
       margin-left: 50%;
       min-height: 100%;
       width: 1px;
-      background: #000;
+      background: @black;
     }
   }
 }
@@ -256,7 +256,7 @@
 
     .panel-title {
       font-size: 1.5em;
-      color: #fff;
+      color: @white;
     }
   }
 
@@ -270,15 +270,15 @@
   }
 
   .aqi-good {
-    color: Green;
+    color: @aqiGreen;
   }
 
   .aqi-med {
-    color: Yellow;
+    color: @aqiYellow;
   }
   /* TODO get higher categories */
   .aqi-high{
-    color: red;
+    color: @aqiRed;
     font-size: 0.8em;
   }
 }
@@ -296,18 +296,18 @@
     }
 
     .low {
-      color: green;
+      color: @aqiGreen;
     }
 
     .med {
-      color: yellow;
+      color: @aqiYellow;
     }
 
     .high {
-      color: red;
+      color: @aqiRed;
     }
     .invert-text {
-      color: white;
+      color: @white;
     }
   }
 

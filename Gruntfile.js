@@ -18,16 +18,16 @@ module.exports = function (grunt) {
                 }]
             }
         },
-        "webpack":{
+        "webpack": {
             bundle: {
                 entry: "./app.ts",
-                progress:true,
+                progress: true,
                 output: {
                     filename: 'bundle.js'
                 },
                 devtool: 'source-map',
                 resolve: {
-                    extensions: ['','webpack.js','.web.js','.js','.ts']
+                    extensions: ['', 'webpack.js', '.web.js', '.js', '.ts']
                 },
                 module: {
                     loaders: [
@@ -37,13 +37,21 @@ module.exports = function (grunt) {
             },
             prod: {
                 entry: "./app.ts",
-                progress:true,
+                progress: true,
                 output: {
                     filename: 'bundle.js'
                 },
                 resolve: {
-                    extensions: ['','webpack.js','.web.js','.js','.ts']
+                    extensions: ['', 'webpack.js', '.web.js', '.js', '.ts']
                 },
+                plugins: [
+                    new webpack.optimize.UglifyJsPlugin({
+                        mangle: false,
+                        compress: {
+                            unused: false
+                        }
+                    })
+                ],
                 module: {
                     loaders: [
                         {test: /\.ts/, loader: 'ts-loader'}
@@ -52,13 +60,13 @@ module.exports = function (grunt) {
             },
             test: {
                 entry: "./test.ts",
-                progress:true,
+                progress: true,
                 output: {
                     filename: 'bundle-test.js'
                 },
                 devtool: 'source-map',
                 resolve: {
-                    extensions: ['','webpack.js','.web.js','.js','.ts']
+                    extensions: ['', 'webpack.js', '.web.js', '.js', '.ts']
                 },
                 module: {
                     loaders: [
@@ -72,7 +80,7 @@ module.exports = function (grunt) {
             build: {
                 files: [
                     {
-                      nonull: true,
+                        nonull: true,
                         src: 'bundle.js',
                         dest: 'build/bundle.js'
                     },
@@ -82,7 +90,12 @@ module.exports = function (grunt) {
                         dest: 'build/index.html'
                     },
                     {
-                      src: 'app/**/*.html',
+                        nonull: true,
+                        src: 'templates.js',
+                        dest: 'build/index.html'
+                    },
+                    {
+                        src: 'app/**/*.html',
                         dest: 'build/'
                     },
                     {
@@ -90,7 +103,7 @@ module.exports = function (grunt) {
                         dest: 'build/'
                     },
                     {
-                        src: ['app/**/*.jpeg','app/**/*.jpg','app/**/*.png'],
+                        src: ['app/**/*.jpeg', 'app/**/*.jpg', 'app/**/*.png'],
                         dest: 'build/'
                     },
                     {
@@ -103,7 +116,7 @@ module.exports = function (grunt) {
                         dest: 'build/app.min.css'
                     },
                     {
-                        nonull:true,
+                        nonull: true,
                         dest: 'build',
                         expand: true,
                         src: [
@@ -116,8 +129,8 @@ module.exports = function (grunt) {
                 ]
             }
         },
-        concat:{
-            less:{
+        concat: {
+            less: {
                 src: 'app/assets/styles/**/*.less',
                 dest: 'app/assets/styles/app.less'
             }
@@ -129,15 +142,15 @@ module.exports = function (grunt) {
             }
         },
         clean: {
-            options:{
+            options: {
                 force: true
             },
-            local: ['app/assets/styles/app.*css','app/assets/styles/app.less'],
+            local: ['app/assets/styles/app.*css', 'app/assets/styles/app.less'],
             all: {
-                options:{
+                options: {
                     force: true
                 },
-                src: ['build/**/*', 'build/*', 'app/assets/styles/app.*css','app/assets/styles/app.less'],
+                src: ['build/**/*', 'build/*', 'app/assets/styles/app.*css', 'app/assets/styles/app.less'],
             },
             build: []
         },
@@ -148,6 +161,35 @@ module.exports = function (grunt) {
             files: {
                 src: ['app/**/*.ts']
             }
+        },
+        ngtemplates: {
+            app: {
+                src: 'app/**/*.html',
+                dest: 'templates.js',
+                options: {
+                    htmlmin: {
+                        collapseWhitespace: true,
+                        collapseBooleanAttributes: true,
+                        removeComments: true,
+                        removeScriptTypeAttributes: true,
+                        removeStyleLinkTypeAttributes: true,
+                        keepClosingSlash: true
+                    }
+                }
+            }
+        },
+        postcss: {
+            options: {
+                map: true,
+                processors: [
+                    require('autoprefixer')({
+                        browsers: ['last 2 versions']
+                    })
+                ]
+            },
+            prefixer: {
+                src: 'app/assets/styles/app.css'
+            }
         }
     });
     grunt.loadNpmTasks('grunt-contrib-less');
@@ -157,10 +199,12 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-webpack');
     grunt.loadNpmTasks('grunt-tslint');
+    grunt.loadNpmTasks('grunt-angular-templates');
+    grunt.loadNpmTasks('grunt-postcss');
 
-    grunt.registerTask('build:prod', ['tslint', 'clean:all', 'concat:less','less','cssmin:app', 'webpack:prod','copy:build', 'clean:build']);
-    grunt.registerTask('build:dev', ['tslint', 'clean:all', 'concat:less','less','cssmin:app', 'webpack:bundle','copy:build', 'clean:build']);
-    grunt.registerTask('build:test', ['tslint', 'clean:local','concat:less','less','cssmin:app','webpack:test']);
+    grunt.registerTask('build:prod', ['tslint', 'clean:all', 'concat:less', 'less', 'postcss:prefixer', 'cssmin:app', 'webpack:prod', 'ngtemplates', 'copy:build', 'clean:build']);
+    grunt.registerTask('build:dev', ['tslint', 'clean:all', 'concat:less', 'less', 'postcss:prefixer', 'cssmin:app', 'webpack:bundle', 'ngtemplates', 'copy:build', 'clean:build']);
+    grunt.registerTask('build:test', ['tslint', 'clean:local', 'concat:less', 'less', 'postcss:prefixer', 'cssmin:app', 'webpack:test', 'ngtemplates']);
     // Default task
-    grunt.registerTask('default', ['clean:local', 'concat:less','less', 'cssmin:app','webpack:bundle']);
+    grunt.registerTask('default', ['clean:local', 'concat:less', 'less', 'postcss:prefixer', 'cssmin:app', 'webpack:bundle', 'ngtemplates']);
 };

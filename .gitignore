@@ -16,6 +16,7 @@ boot.js
 static
 test.js
 bundle*.js*
+templates.js
 vendor.js*
 app/assets/styles/app.css*
 app/assets/styles/app.less*

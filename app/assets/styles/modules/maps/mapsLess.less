@@ -18,64 +18,64 @@
   }
 
   .marker-green {
-    background-color: rgba(0, 255, 0, 0.5);
+    background-color: fade(@aqiGreen, 50%);
   }
 
   .marker-green div {
-    background-color: rgba(0, 200, 0, 1.0);
-    color: white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    background-color: @aqiGreen;
+    color: @white;
+    text-shadow: -1px 0 @black, 0 1px @black, 1px 0 @black, 0 -1px @black;
   }
 
   .marker-yellow {
-    background-color: rgba(255, 255, 0, 0.5);
+    background-color: fade(@aqiYellow, 50%);
   }
   .marker-yellow div {
-    background-color: rgba(222, 222, 0, 1.0);
-    color: white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    background-color: @aqiYellow;
+    color: @white;
+    text-shadow: -1px 0 @black, 0 1px @black, 1px 0 @black, 0 -1px @black;
   }
 
   .marker-orange {
-    background-color: rgba(255, 165, 0, 0.5);
+    background-color: fade(@aqiOrange, 50%);
   }
   .marker-orange div {
-    background-color: rgba(255, 140, 0, 1.0);
-    color: white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    background-color: @aqiOrange;
+    color: @white;
+    text-shadow: -1px 0 @black, 0 1px @black, 1px 0 @black, 0 -1px @black;
   }
 
   .marker-red {
-    background-color: rgba(255, 25, 0, 0.5);
+    background-color: fade(@aqiRed, 50%);
   }
   .marker-red div {
-    background-color: rgba(244, 0, 0, 1.0);
-    color: white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    background-color: @aqiRed;
+    color: @white;
+    text-shadow: -1px 0 @black, 0 1px @black, 1px 0 @black, 0 -1px @black;
   }
 
   .marker-purple {
-    background-color: rgba(222, 0, 222, 0.5);
+    background-color: fade(@aqiPurple, 50%);
   }
   .marker-purple div {
-    background-color: rgba(200, 0, 200, 1.0);
-    color: white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    background-color: @aqiPurple;
+    color: @white;
+    text-shadow: -1px 0 @black, 0 1px @black, 1px 0 @black, 0 -1px @black;
   }
 
   .marker-maroon {
-    background-color: rgba(140, 20, 20, 0.5);
+    background-color: fade(@aqiMaroon, 50%);
   }
   .marker-maroon div {
-    background-color: rgba(140, 0, 0, 1.0);
-    color: white;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    background-color: @aqiMaroon;
+    color: @white;
+    text-shadow: -1px 0 @black, 0 1px @black, 1px 0 @black, 0 -1px @black;
   }
 
   .marker {
     background-clip: padding-box;
     border-radius: 30px;
-    box-shadow: 0px 0px 10px black;
+    box-shadow: 0 0 10px @black;
   }
 
   .marker div {
@@ -87,7 +87,7 @@
     text-align: center;
     border-radius: 20px;
     font: 18px "Helvetica Neue", Arial, Helvetica, sans-serif;
-    box-shadow: 0px 0px 10px white;
+    box-shadow: 0 0 10px @white;
   }
 
   .marker span {
@@ -102,7 +102,7 @@
   overflow: hidden;
 
   .coord-bound {
-    background: rgba(0, 0, 0, 0.25);
+    background: @mapOverlay;
     border-radius: 5px;
   }
 
@@ -134,7 +134,7 @@
   padding: 0;
 
   color: @medium-lighter-gray;
-  background-color: rgba(0, 0, 0, .75);
+  background-color: @mapOverlay;
   border-radius: 1em;
   max-width: 40em;
 
@@ -147,12 +147,12 @@
     box-sizing: border-box;
 
     color: @medium-lighter-gray;
-    background: transparent;
+    background: @transparent;
     border: none;
 
     &:focus {
       outline-style: none !important;
-      box-shadow: 0 0 2pt 1pt #e6e6e6
+      box-shadow: 0 0 2pt 1pt @white
     }
 
     &::-webkit-input-placeholder {
@@ -177,18 +177,18 @@
   }
 
   .search-result {
-    border-top: 1px solid #e6e6e6;
+    border-top: 1px solid @white;
     padding: .5em;
 
     &:hover {
-      box-shadow: inset 0 0 10px 1px #FFF;
+      box-shadow: inset 0 0 10px 1px @light-blue;
     }
 
     & mark {
       background: none;
-      color: white;
+      color: @white;
       font-weight: bolder;
-      text-shadow: 0 0 4px #3F8CFF;
+      text-shadow: 0 0 4px @blue;
       padding: .5em;
     }
   }

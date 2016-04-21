@@ -5,7 +5,7 @@
   right: 1%;
   padding: 0;
   overflow-y: hidden;
-  background-color: transparent;
+  background-color: @transparent;
   text-align: left;
   width: 20%;
   height: 25%;
@@ -20,12 +20,12 @@
     position: relative;
     min-width: 100%;
     min-height: 100%;
-    background: rgba(0,0,0,.75);
+    background: @mapOverlay;
     padding: .5em;
 
     color: @medium-lighter-gray;
 
-    border: 2px solid rgba(0,0,0,.85);
+    border: 2px solid ;
 
     .panel-loading {
       z-index: 999;
@@ -35,7 +35,7 @@
       left: 0;
       right: 0;
 
-      background-color: rgba(255,255,255,.8);
+      background-color: @loadingOverlay;
 
     }
 

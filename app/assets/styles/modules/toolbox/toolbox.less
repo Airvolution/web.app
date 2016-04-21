@@ -16,7 +16,7 @@
 
     &:hover {
       cursor: pointer;
-      color: @button-hover;
+      color: @light-blue;
     }
 
     .expander-wrapper {
@@ -36,9 +36,7 @@
     }
   }
 }
-@toolbox-background: rgba(0,0,0,.75);
-@toolbox-drawer-background: rgba(0,0,0,.75);
-@toolbox-border: 2px solid rgba(0,0,0,.90);
+@toolbox-border: 2px solid @mapOverlayBorder;
 .toolbox {
   position: absolute;
   top: 0;
@@ -46,8 +44,8 @@
   bottom: 0;
   z-index: 5;
   padding: .5em;
-  background: @toolbox-background;
-  color: white;
+  background: @mapOverlay;
+  color: @white;
 
   &.hidden{
     display: none;
@@ -72,7 +70,7 @@
     transition: height 1s;
 
     &.bordered{
-      border: 1px solid white;
+      border: 1px solid @white;
     }
     &.expanded {
       height: 4em;
@@ -83,7 +81,7 @@
 
     &:hover {
       cursor: pointer;
-      color: @button-hover;
+      color: @light-blue;
     }
 
     i {
@@ -96,7 +94,7 @@
       transform: translate(-50%, -50%);
 
       &:focus {
-        color: @button-hover;
+        color: @light-blue;
       }
     }
   }
@@ -107,8 +105,8 @@
   position: absolute;
   z-index: 1;
   border: @toolbox-border;
-  background: @toolbox-drawer-background;
-  color: white;
+  background: @mapOverlay;
+  color: @white;
   top: 0;
   left: -@toolbox-drawer-width;
   bottom: 0;
@@ -122,7 +120,7 @@
 
   .search-container {
     padding: .25em;
-    background-color: transparent;
+    background-color: @transparent;
     border-radius: 1em;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -130,7 +128,7 @@
 
     .search {
       width: 80%;
-      background-color: transparent;
+      background-color: @transparent;
       border: none;
       &:focus {
         outline-style: none !important;
@@ -154,7 +152,7 @@
     position: absolute;
     height: 40%;
     width: 100%;
-    background-color: black;
+    background-color: @black;
     z-index: 1;
 
     .station-container {
@@ -195,7 +193,7 @@
   }
 
   .btn-map-marker {
-    color: black;
+    color: @black;
     padding-top: 0;
     padding-bottom: 0;
     padding-left: 0.5em;
@@ -210,7 +208,7 @@
     width: 100%;
     height: 15%;
     margin-top: 0.5em;
-    background-color: transparent;
+    background-color: @transparent;
     overflow-y: auto;
     border-top: groove 1px;
     border-bottom: groove 1px;
@@ -224,7 +222,7 @@
     padding-right: 0.5em;
 
     input {
-      background-color: transparent;
+      background-color: @transparent;
       margin-right: 1em;
     }
   }
@@ -245,8 +243,8 @@
 
   .toolbar-input-text {
     width: 100%;
-    color: white;
-    background-color: transparent;
+    color: @white;
+    background-color: @transparent;
   }
 
   /* Old Toolbar */
