@@ -37,8 +37,9 @@
 @headerDividerColor: darken(@dark-blue, 10%);
 
 //============================================Maps=============================================//
-@mapOverlay: fade(@dark-blue,85%);
-@mapOverlayBorder: fade(@dark-blue,95%);
+@mapOverlaySolid: @dark-blue;
+@mapOverlay: fade(@mapOverlaySolid,85%);
+@mapOverlayBorder: fade(@mapOverlaySolid,95%);
 @mapOverlayText: @medium-lighter-gray;
 @mapOverlayHover: @green;
 @mapOverlayFocus: @green;

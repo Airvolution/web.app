@@ -7,7 +7,10 @@ class AuthService {
 
     public authentication = {
         isAuth: false,
-        userName: ''
+        userName: '',
+        firstName: '',
+        lastName: '',
+
     };
 
     public static $inject = ['$http', '$q', '$localStorage', '$rootScope', 'notificationService'];

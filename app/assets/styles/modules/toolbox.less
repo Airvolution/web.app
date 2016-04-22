@@ -46,7 +46,7 @@
   bottom: 0;
   z-index: 5;
   padding: .5em;
-  background: @mapOverlay;
+  background: @mapOverlaySolid;
   color: @mapOverlayText;
 
   &.hidden {
@@ -72,7 +72,7 @@
     transition: height 1s;
 
     &.bordered {
-      border: 1px solid @mapOverlayText;
+      border: 1px solid @mapOverlayBorder;
     }
     &.expanded {
       height: 4em;

@@ -10,6 +10,11 @@
   height: 100%;
   width:100%;
 
+  .profile-image {
+    border-radius: 50%;
+    width: @header-height;
+  }
+
   .headerzone {
     padding-left: 0;
     padding-right: 0;
@@ -34,20 +39,32 @@
         color: @headerText;
       }
     }
-    .active {
+    .tab.active {
       background-color: @headerActiveTab;
       a {
         color: @headerText;
+      }
+      &:hover {
+        background-color: @headerActiveTab !important;
+        a {
+          color:@headerText !important;
+        }
+      }
+      &:focus {
+        background-color: @headerActiveTab !important;
+        a{
+          color: @headerText !important;
+        }
       }
     }
     a {
       &:hover {
         background-color: @headerHover;
-        color: @headerText;
+        color: @headerBackground;
       }
       &:focus {
         background-color: @headerHover;
-        color: @headerText;
+        color: @headerBackground;
       }
     }
   }

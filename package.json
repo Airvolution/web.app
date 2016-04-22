@@ -23,6 +23,7 @@
   "homepage": "git+ssh://git@bitbucket.org/airu2/airu.web.app.git#README",
   "dependencies": {
     "angular": "^1.4.9",
+    "angular-md5": "^0.1.10",
     "angular-nvd3": "^1.0.5",
     "angular-simple-logger": "^0.1.5",
     "angular-ui-bootstrap": "^1.1.1",
