@@ -168,7 +168,7 @@ module.exports = function (grunt) {
                 options: {
                     htmlmin: {
                         collapseWhitespace: true,
-                        collapseBooleanAttributes: true,
+                        collapseBooleanAttributes: false,
                         removeComments: true,
                         removeScriptTypeAttributes: true,
                         removeStyleLinkTypeAttributes: true,
