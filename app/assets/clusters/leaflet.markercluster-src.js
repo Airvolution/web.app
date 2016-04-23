@@ -608,27 +608,26 @@ L.MarkerClusterGroup = L.FeatureGroup.extend({
 	_aqiIconCreateFunction: function (cluster) {
 		var clusterAQI = cluster.getClusterAQI();
 
-		var averageAQI = clusterAQI.sum;
-		if (clusterAQI.count > 0) {
-			averageAQI = clusterAQI.sum / clusterAQI.count;
-		}
+		var maxAQI = clusterAQI.max;
+
+		averageAQI = maxAQI;
 
 		var c = ' marker-cluster-';
-		if (averageAQI <= 50) {
+		if (maxAQI <= 50) {
 			c += 'green';
-		} else if (averageAQI <= 100) {
+		} else if (maxAQI <= 100) {
 			c += 'yellow';
-		} else if (averageAQI <= 150) {
+		} else if (maxAQI <= 150) {
 			c += 'orange';
-		} else if (averageAQI <= 200) {
+		} else if (maxAQI <= 200) {
 			c += 'red';
-		} else if (averageAQI <= 300) {
+		} else if (maxAQI <= 300) {
 			c += 'purple';
 		} else {
 			c += 'maroon';
 		}
 
-		return new L.DivIcon({ html: '<div><span>' + (averageAQI | 0) + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(60, 60) });
+		return new L.DivIcon({ html: '<div><span>' + (maxAQI | 0) + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(60, 60) });
 	},
 
 	_bindEvents: function () {
@@ -1109,14 +1108,16 @@ L.MarkerCluster = L.Marker.extend({
 	},
 
 	getClusterAQI: function (clusterAQI) {
-		clusterAQI = clusterAQI || { sum: 0, count: 0 };
+		clusterAQI = clusterAQI || { max: 0, count: 0 };
 
 		for (var i = this._childClusters.length - 1; i >= 0; i--) {
 			this._childClusters[i].getClusterAQI(clusterAQI);
 		}
 
 		for (var j = this._markers.length - 1; j >= 0; j--) {
-			clusterAQI.sum += this._markers[j].options.aqi;
+			if (clusterAQI.max < this._markers[j].options.aqi) {
+				clusterAQI.max = this._markers[j].options.aqi;
+			}
 			clusterAQI.count += 1;
 		}
 		return clusterAQI;
