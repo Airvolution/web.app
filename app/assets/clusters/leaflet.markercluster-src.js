@@ -39,8 +39,9 @@ L.MarkerClusterGroup = L.FeatureGroup.extend({
 	initialize: function (options) {
 		L.Util.setOptions(this, options);
 		if (!this.options.iconCreateFunction) {
-			//this.options.iconCreateFunction = this._defaultIconCreateFunction;
-			this.options.iconCreateFunction = this._aqiIconCreateFunction;
+			//this.options.iconCreateFunction = this._defaultIconCreateFunction;    // Icons with child count in Cluster
+			//this.options.iconCreateFunction = this._aqiAverageIconCreateFunction; // Icons with average AQI in Cluster
+			this.options.iconCreateFunction = this._aqiMaxIconCreateFunction;       // Icons with max AQI found in Cluster
 		}
 
 		this._featureGroup = L.featureGroup();
@@ -605,12 +606,34 @@ L.MarkerClusterGroup = L.FeatureGroup.extend({
 	},
 
 	//Icons for AQI averages
-	_aqiIconCreateFunction: function (cluster) {
-		var clusterAQI = cluster.getClusterAQI();
+	_aqiAverageIconCreateFunction: function (cluster) {
+		var clusterAQI = cluster.getClusterAverageAQI();
+		var averageAQI = clusterAQI.sum;
+		if (clusterAQI.count > 0) {
+			averageAQI = clusterAQI.sum / clusterAQI.count;
+		}
 
+		var c = ' marker-cluster-';
+		if (averageAQI <= 50) {
+			c += 'green';
+		} else if (averageAQI <= 100) {
+			c += 'yellow';
+		} else if (averageAQI <= 150) {
+			c += 'orange';
+		} else if (averageAQI <= 200) {
+			c += 'red';
+		} else if (averageAQI <= 300) {
+			c += 'purple';
+		} else {
+			c += 'maroon';
+		}
+
+		return new L.DivIcon({ html: '<div><span>' + (averageAQI | 0) + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(60, 60) });
+	},
+
+	_aqiMaxIconCreateFunction: function (cluster) {
+		var clusterAQI = cluster.getClusterMaxAQI();
 		var maxAQI = clusterAQI.max;
-
-		averageAQI = maxAQI;
 
 		var c = ' marker-cluster-';
 		if (maxAQI <= 50) {
@@ -1107,11 +1130,25 @@ L.MarkerCluster = L.Marker.extend({
 		return storageArray;
 	},
 
-	getClusterAQI: function (clusterAQI) {
+	getClusterAverageAQI: function (clusterAQI) {
+		clusterAQI = clusterAQI || { sum: 0, count: 0 };
+
+		for (var i = this._childClusters.length - 1; i >= 0; i--) {
+			this._childClusters[i].getClusterAverageAQI(clusterAQI);
+		}
+
+		for (var j = this._markers.length - 1; j >= 0; j--) {
+			clusterAQI.sum += this._markers[j].options.aqi;
+			clusterAQI.count += 1;
+		}
+		return clusterAQI;
+	},
+
+	getClusterMaxAQI: function (clusterAQI) {
 		clusterAQI = clusterAQI || { max: 0, count: 0 };
 
 		for (var i = this._childClusters.length - 1; i >= 0; i--) {
-			this._childClusters[i].getClusterAQI(clusterAQI);
+			this._childClusters[i].getClusterMaxAQI(clusterAQI);
 		}
 
 		for (var j = this._markers.length - 1; j >= 0; j--) {
