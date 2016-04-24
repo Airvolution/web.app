@@ -152,7 +152,7 @@
   color: @headerBackground;
 }
 
-.aqi-meter-low {
+.aqi-meter-green {
   position: relative;
   min-height: 3em;
   background: linear-gradient(to right, @aqiGreen, @aqiYellow);
@@ -179,7 +179,7 @@
   }
 }
 
-.aqi-meter-med {
+.aqi-meter-yellow {
   position: relative;
   min-height: 3em;
   background: linear-gradient(to right, @aqiYellow, @aqiOrange);
@@ -207,10 +207,94 @@
   }
 }
 
-.aqi-meter-high {
+.aqi-meter-orange {
   position: relative;
   min-height: 3em;
   background: linear-gradient(to right, @aqiOrange, @aqiRed);
+  margin-left: -10%;
+  margin-right: -10%;
+
+  .fa-circle {
+    color: @aqiNeutral;
+  }
+
+  .indicator {
+    margin-left: 42%;
+
+    .aqi-number {
+      color: @black;
+    }
+
+    .indicator-line {
+      position: absolute;
+      margin-left: 50%;
+      min-height: 100%;
+      width: 1px;
+      background: @black;
+    }
+  }
+}
+
+.aqi-meter-red {
+  position: relative;
+  min-height: 3em;
+  background: linear-gradient(to right, @aqiRed, @aqiPurple);
+  margin-left: -10%;
+  margin-right: -10%;
+
+  .fa-circle {
+    color: @aqiNeutral;
+  }
+
+  .indicator {
+    margin-left: 42%;
+
+    .aqi-number {
+      color: @black;
+    }
+
+    .indicator-line {
+      position: absolute;
+      margin-left: 50%;
+      min-height: 100%;
+      width: 1px;
+      background: @black;
+    }
+  }
+}
+
+.aqi-meter-purple {
+  position: relative;
+  min-height: 3em;
+  background: linear-gradient(to right, @aqiPurple, @aqiMaroon);
+  margin-left: -10%;
+  margin-right: -10%;
+
+  .fa-circle {
+    color: @aqiNeutral;
+  }
+
+  .indicator {
+    margin-left: 42%;
+
+    .aqi-number {
+      color: @black;
+    }
+
+    .indicator-line {
+      position: absolute;
+      margin-left: 50%;
+      min-height: 100%;
+      width: 1px;
+      background: @black;
+    }
+  }
+}
+
+.aqi-meter-maroon {
+  position: relative;
+  min-height: 3em;
+  background: linear-gradient(to right, @aqiMaroon, @aqiMaroon);
   margin-left: -10%;
   margin-right: -10%;
 
@@ -263,17 +347,31 @@
     }
   }
 
-  .aqi-good {
+  .aqi-green {
     color: @aqiGreen;
   }
 
-  .aqi-med {
+  .aqi-yellow {
     color: @aqiYellow;
   }
-  /* TODO get higher categories */
-  .aqi-high{
+
+  .aqi-orange {
+    color: @aqiOrange;
+  }
+
+  .aqi-red {
     color: @aqiRed;
-    font-size: 0.8em;
+    font-size: 0.8em; // TODO: is there a better fix for this
+  }
+
+  .aqi-purple {
+    color: @aqiPurple;
+    font-size: 0.8em; // TODO: is there a better fix for this
+  }
+
+  .aqi-maroon {
+    color: @aqiMaroon;
+    font-size: 0.8em; // TODO: is there a better fix for this
   }
 }
 
@@ -289,17 +387,30 @@
       cursor: pointer;
     }
 
-    .low {
+    .green {
       color: @aqiGreen;
     }
 
-    .med {
+    .yellow {
       color: @aqiYellow;
     }
 
-    .high {
+    .orange {
+      color: @aqiOrange;
+    }
+
+    .red {
       color: @aqiRed;
     }
+
+    .purple {
+      color: @aqiPurple;
+    }
+
+    .maroon {
+      color: @aqiMaroon;
+    }
+
     .invert-text {
       color: @white;
     }
@@ -319,4 +430,3 @@
     color: @black;
   }
 }
-

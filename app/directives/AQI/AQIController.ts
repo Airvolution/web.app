@@ -35,14 +35,20 @@ class AQIController {
     }
 
     public tryMe() {
-        let rand = Math.floor(Math.random() * 149);
+        let rand = Math.floor(Math.random() * 499);
         this.aqi = rand;
-        if (rand < 50) {
-            this.category = 'Good';
-        } else if (rand < 100) {
-            this.category = 'Moderate';
+        if (rand <= 50) {
+            this.category = 1;
+        } else if (rand <= 100) {
+            this.category = 2;
+        } else if (rand <= 150) {
+            this.category = 3;
+        } else if (rand <= 200) {
+            this.category = 4;
+        } else if (rand <= 300) {
+            this.category = 5;
         } else {
-            this.category = 'Hold your breath...';
+            this.category = 6;
         }
     }
 
