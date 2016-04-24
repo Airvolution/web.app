@@ -11,9 +11,9 @@ class TrendsWidgetController {
     public now;
     public loading;
 
-    public static $inject = ['$scope', 'AQIColors'];
+    public static $inject = ['$scope', 'AQIService'];
 
-    public constructor(private $scope, private AQIColors) {
+    public constructor(private $scope, private AQIService) {
         var today = new Date();
         this.now = today.getTime();
         this.then = new Date().setDate(today.getDate() - 45);
@@ -89,7 +89,7 @@ class TrendsWidgetController {
                 value.label = new Date(daily.date).getTime();
             }
             value.value = daily.maxAQI ? daily.maxAQI : 0;
-            value.color = self.AQIColors.getColorFromCategory(daily.maxCategory);
+            value.color = self.AQIService.getColorFromCategory(daily.maxCategory);
             data.values.push(value);
         });
         self.plotData = [data];
