@@ -90,7 +90,7 @@ class MapFactory {
 
     private getChartWidth() {
         let divWidth = angular.element(document).find('#details-plot').innerWidth();
-        return divWidth - 90; // yay for magic numbers!
+        return divWidth - 130; // yay for magic numbers!
     }
 
     public getChartOptions() {
@@ -110,12 +110,14 @@ class MapFactory {
                 duration: 100,
                 useInteractiveGuideline: true,
                 xAxis: {
+                    axisLabel: 'Date',
                     showMaxMin: false,
                     tickFormat: function (d) {
                         return d3.time.format('%x')(new Date(d));
                     }
                 },
                 yAxis: {
+                    axisLabel: 'Air Quality Index',
                     tickFormat: function (d) {
                         return d3.format(',.2f')(d);
                     }
@@ -207,10 +209,11 @@ class MapFactory {
     public getCenter() {
         // the map by default must initialize with a valid center
         return {
-            //autoDiscover: true, // Leaflet deprecated autoDiscover support for non-HTTPS origins
+            autoDiscover: true, // Leaflet deprecated autoDiscover support for non-HTTPS origins
+            // There is a strange bug happening here when returning moving the map, going to another view, and returning
             // force center on Nebraska :)
-            lat: 39.091042,
-            lng: -98.178785,
+            //lat: 39.091042,
+            //lng: -98.178785,
             zoom: 5
         };
     }
