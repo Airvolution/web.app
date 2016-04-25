@@ -119,9 +119,9 @@ class AQIService {
         if (aqi < 0) {
             return '';
         } else if (aqi <= 50) {
-            return 'Air quality is considered satisfactory, and air pollution poses little or no risk.';
+            return 'Your air quality is considered satisfactory, and air pollution poses little or no risk.';
         } else if (aqi <= 100) {
-            return 'Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number of people who are unusually sensitive to air pollution.';
+            return 'Your air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number of people who are unusually sensitive to air pollution.';
         } else if (aqi <= 150) {
             return 'Members of sensitive groups may experience health effects. The general public is not likely to be affected.';
         } else if (aqi <= 200) {
