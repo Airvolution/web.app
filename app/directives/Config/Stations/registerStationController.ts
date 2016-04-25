@@ -9,18 +9,29 @@ class RegisterStationController {
     constructor(private $http) {}
 
     public formSubmit() {
-        if (!this.formData.owner) {
-            this.formData.owner = '';
-        }
-        if (!this.formData.purpose) {
-            this.formData.purpose = '';
-        }
-        if (!this.formData.location) {
-            this.formData.location = {lat: 0, lng: 0};
-        }
-        if (this.formData.id == undefined || this.formData.indoor == undefined) {
+        let station = {};
+
+        if (this.formData.id === undefined ||
+            this.formData.indoor === undefined ||
+            this.formData.name === undefined) {
             return;
         }
-        this.$http.post('api/stations/register', this.formData);
+
+        station['agency'] = 'Airvolution';
+        station['type'] = 'BeagleBone';
+        station['id'] = this.formData.id;
+        station['name'] = this.formData.name;
+        station['indoor'] = this.formData.indoor;
+
+        if (this.formData.purpose !== undefined) {
+            station['purpose'] = this.formData.purpose;
+        } else {
+            station['purpose'] = '';
+        }
+
+        let onError = (error) => { console.log('could not register station') };
+        this.$http.post('api/stations/register', station).then((station) => {
+            console.log('we have a success');
+        });
     }
 }

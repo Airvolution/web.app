@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="stationID" class="pull-left">Station ID</label>
+            <label for="stationID" class="pull-left">Station Id</label>
             <input type="text" name="stationID" class="form-control" id="stationID" placeholder="Station ID"
                    ng-model="ctrl.formData.id" required/>
             <div ng-show="(!ctrl.registerForm.stationID.$pristine || ctrl.registerForm.$submitted) && ctrl.registerForm.stationID.$error"
@@ -24,8 +24,8 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="stationPurpose" class="Purpose">Sation Purpose</label>
-            <textarea class="form-control vresize" id="stationPurpose" placeholder="Station Purpose"
+            <label for="stationPurpose" class="Purpose">Station Purpose</label>
+            <textarea class="form-control vresize" id="stationPurpose" name="purpose" placeholder="Station Purpose"
                       ng-model="ctrl.formData.purpose"></textarea>
         </div>
         <div class="form-group">
@@ -36,8 +36,7 @@
             </div>
             <div class="radio-group col-md-2">
                 <label for="amsOutdoor">
-                    <input type="radio" name="indoor" id="amsOutdoor" ng-value="false" ng-model="ctrl.formData.indoor"
-                           checked>
+                    <input type="radio" name="indoor" id="amsOutdoor" ng-value="false" ng-model="ctrl.formData.indoor">
                     Outdoor
                 </label>
                 <label for="amsIndoor">
