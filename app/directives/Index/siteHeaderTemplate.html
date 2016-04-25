@@ -31,16 +31,17 @@
     </div>
 
     <div class="headerzone col-xs-2 col-sm-offset-5 col-md-offset-0" id="login">
-        <a class="header-text" ng-hide="ctrl.AuthService.authentication.isAuth" ui-sref="modal.login">Register /
-            Login</a>
-        <span class="header-text" ng-show="ctrl.AuthService.authentication.isAuth" uib-dropdown>
-             <div uib-dropdown-toggle><img class="profile-image"
-                                           ng-src="http://gravatar.com/avatar/{{ctrl.emailHash || ''}}?d=identicon&r=pg"
-                                           alt="Profile Image"> Welcome <i class="fa fa-caret-down"></i></div>
-            <ul uib-dropdown-menu>
-                <li><a ui-sref="app.config"><i class="fa fa-cog"></i> Settings</a></li>
-                <li><a ng-click="ctrl.AuthService.logOut()"><i class="fa fa-sign-out"></i> Logout</a></li>
-            </ul>
-        </span>
+        <ui class="nav navbar-nav">
+            <li class="tab"><a class="header-text" ng-hide="ctrl.AuthService.authentication.isAuth" ui-sref="modal.login">Login</a></li>
+            <li class="tab"><span class="header-text" ng-show="ctrl.AuthService.authentication.isAuth" uib-dropdown>
+                <div uib-dropdown-toggle><img class="profile-image"
+                                               ng-src="http://gravatar.com/avatar/{{ctrl.emailHash || ''}}?d=identicon&r=pg"
+                                               alt="Profile Image"> Welcome <i class="fa fa-caret-down"></i></div>
+                <ul uib-dropdown-menu id="login-dropdown">
+                    <li><a ui-sref="app.config"><i class="fa fa-cog"></i> Settings</a></li>
+                    <li><a ng-click="ctrl.AuthService.logOut()"><i class="fa fa-sign-out"></i> Logout</a></li>
+                </ul>
+            </span></li>
+        </ui>
     </div>
 </header>

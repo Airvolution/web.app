@@ -126,6 +126,21 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+
+  span {
+    &:hover {
+      color: @headerHover;
+      cursor: pointer;
+    }
+    &:focus {
+      color: @headerHover;
+    }
+  }
+}
+
+#login-dropdown {
+  background-color: @headerBackground;
+  color: @headerText;
 }
 
 .config-menu-icon  {
