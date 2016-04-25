@@ -34,6 +34,34 @@
   }
 }
 
+
+.marker:before {
+  -webkit-filter: drop-shadow(0px 5px 3px rgba(0,0,0,1));
+
+  content: "";
+  position: absolute;
+  border-top: 27px solid purple;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  top: 55px;
+  left: 21px;
+}
+
+
+
+.marker:after {
+  -webkit-filter: drop-shadow(0px 2px 3px rgba(255,255,255,0.5));
+
+  content: "";
+  position: absolute;
+  border-top: 45px solid @aqiGreen;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  top: 38px;
+  left: 12px;
+}
+
+
 .marker-green {
   background-color: fade(@aqiGreen, 50%);
 
