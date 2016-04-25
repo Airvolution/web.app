@@ -20,11 +20,11 @@
         <div class="col-md-2">
             <h3>Top 5 Most Viewed Questions</h3>
             <ol class="nav nav-pills nav-stacked jump-menu">
-                <li ng-repeat="faq in ctrl.top5Viewed"><div><a class="menu-items" ng-click="ctrl.scrollTo(faq.id)">{{faq.question}}</a></div></li>
+                <li ng-repeat="faq in ctrl.top5Viewed"><div><a class="menu-items" ng-click="ctrl.scrollTo(faq.id, 'question')">{{faq.question}}</a></div></li>
             </ol>
             <h3>Top 5 User Recommended Questions</h3>
             <ol class="nav nav-pills nav-stacked jump-menu">
-                <li ng-repeat="faq in ctrl.top5Rated"><div><a class="menu-items" ng-click="ctrl.scrollTo(faq.id)">{{faq.question}}</a></div></li>
+                <li ng-repeat="faq in ctrl.top5Rated"><div><a class="menu-items" ng-click="ctrl.scrollTo(faq.id, 'question')">{{faq.question}}</a></div></li>
             </ol>
             <h3>Sections</h3>
             <ul class="nav nav-pills nav-stacked jump-menu">
@@ -43,6 +43,9 @@
                           question="faq"></faq-question>
             <h2 id="section3">What Can I Do?</h2>
             <faq-question ng-repeat="faq in ctrl.faqList | filter: {section:{name:'What Can I Do'}}"
+                          question="faq"></faq-question>
+            <h2 id="section4">Idling</h2>
+            <faq-question ng-repeat="faq in ctrl.faqList | filter: {section:{name:'Idling'}}"
                           question="faq"></faq-question>
         </div>
     </div>
