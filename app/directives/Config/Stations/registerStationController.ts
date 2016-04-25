@@ -18,6 +18,7 @@ class RegisterStationController {
         if (this.formData.id === undefined ||
             this.formData.indoor === undefined ||
             this.formData.name === undefined) {
+            this.alert = {type: 'danger', message: 'We would be happier if you would fill out the form. :)' };
             return;
         }
 
