@@ -1,6 +1,9 @@
 <main id="registerAMSPage">
     <h1 class="col-md-8 col-md-offset-2">Register a Station</h1>
 
+    <uib-alert class="col-md-12" ng-if="ctrl.alert" type="{{ctrl.alert.type}}"
+               dismiss-on-timeout="{{ctrl.alertTimeout}}" close="ctrl.onAlertClose(ctrl.alert)">{{ctrl.alert.message}}</uib-alert>
+
     <form id="registerAMS" class="col-md-offset-2 col-md-8" name="ctrl.registerForm" novalidate ng-submit="ctrl.formSubmit()" autocomplete="off">
         <input type="hidden" ng-model="ctrl.formData.owner" value="">
         <input type="hidden" ng-model="ctrl.formData.location.lat" value="0">
@@ -8,7 +11,7 @@
         <div class="form-group">
             <label for="stationName" class="pull-left">Station Name</label>
             <input type="text" id="stationName" name="stationName" class="form-control" ng-model="ctrl.formData.name"
-                   placeholder="Station Name" required/>
+                   placeholder="My Station" required/>
             <div ng-show="(!ctrl.registerForm.stationName.$pristine || ctrl.registerForm.$submitted) && ctrl.registerForm.stationName.$error"
                  ng-messages="ctrl.registerForm.stationName.$error">
                 <div ng-messages-include="app/templates/validation.html"></div>
@@ -16,7 +19,7 @@
         </div>
         <div class="form-group">
             <label for="stationID" class="pull-left">Station Id</label>
-            <input type="text" name="stationID" class="form-control" id="stationID" placeholder="Station ID"
+            <input type="text" name="stationID" class="form-control" id="stationID" placeholder="Station Id"
                    ng-model="ctrl.formData.id" required/>
             <div ng-show="(!ctrl.registerForm.stationID.$pristine || ctrl.registerForm.$submitted) && ctrl.registerForm.stationID.$error"
                  ng-messages="ctrl.registerForm.stationID.$error">
@@ -25,7 +28,7 @@
         </div>
         <div class="form-group">
             <label for="stationPurpose" class="Purpose">Station Purpose</label>
-            <textarea class="form-control vresize" id="stationPurpose" name="purpose" placeholder="Station Purpose"
+            <textarea class="form-control vresize" id="stationPurpose" name="purpose" placeholder="(Optional) Tell us why you like to monitor air quality..."
                       ng-model="ctrl.formData.purpose"></textarea>
         </div>
         <div class="form-group">

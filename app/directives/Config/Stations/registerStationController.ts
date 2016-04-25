@@ -5,8 +5,12 @@ export = RegisterStationController;
 class RegisterStationController {
 
     public formData: any = {};
+    public alert;
+    public alertTimeout;
     public static $inject = ['$http'];
-    constructor(private $http) {}
+    constructor(private $http) {
+        this.formData['indoor'] = true;
+    }
 
     public formSubmit() {
         let station = {};
@@ -29,9 +33,17 @@ class RegisterStationController {
             station['purpose'] = '';
         }
 
-        let onError = (error) => { console.log('could not register station') };
-        this.$http.post('api/stations/register', station).then((station) => {
-            console.log('we have a success');
-        });
+        let onError = (error) => {
+            this.alert = {type: 'danger', message: error.data.message};
+        };
+        let onSuccess = (response) => {
+            let message = 'Awesome! We will now accept data from your device: ' + response.data.name + ".";
+            this.alert = {type: 'success', message: message};
+        };
+        this.$http.post('api/stations/register', station).then(onSuccess, onError);
+    }
+
+    public onAlertClose(alert) {
+        this.alert = undefined;
     }
 }
