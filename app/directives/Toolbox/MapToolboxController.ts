@@ -35,7 +35,7 @@ class MapToolboxController {
     public newGroupDesc;
     public userAddingNewGroup;
 
-    public static $inject = ['$scope','$state', '$log', 'mapFactory', 'selectionService','SearchService', 'AQIColors', 'preferencesService', 'notificationService', 'APIService'];
+    public static $inject = ['$scope','$state', '$log', 'mapFactory', 'selectionService','SearchService', 'AQIService', 'preferencesService', 'notificationService', 'APIService'];
     constructor(
         private $scope,
         private $state,
@@ -43,7 +43,7 @@ class MapToolboxController {
         private mapFactory,
         private selectionService,
         private SearchService,
-        private AQIColors,
+        private AQIService,
         private preferencesService,
         private notificationService,
         private APIService
@@ -51,7 +51,7 @@ class MapToolboxController {
         this.markerSelection = [];    // array of all markers in selection group
         this.markerSelectionIds = {}; // maps marker.id to index in marker array
         this.markerUncheckedIds = {}; // maps marker.id to index in marker array, contains unchecked markers which must still be displayed
-        this.availableParameters = this.AQIColors.getParameterList();
+        this.availableParameters = this.AQIService.getParameterList();
         this.selectedParameters = [];
         //this.loadUserDefaults(); // <-- TODO: see comment in method declaration!
         this.toDate = new Date();

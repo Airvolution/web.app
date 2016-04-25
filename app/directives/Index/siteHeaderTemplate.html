@@ -12,12 +12,17 @@
     <div class="headerzone hidden-sm col-md-3" id="aqi">
         <span class="epa-aqi-title">Air Quality Index<br/>{{ctrl.location.city}}, {{ctrl.location.state}}</span>
             <span class="fa-stack fa-2x epa-aqi-icon" ng-click="ctrl.showPopup = !ctrl.showPopup">
-                <i class="fa fa-circle fa-stack-2x epa-aqi" ng-class="{'low':ctrl.category == 'Good',
-                                                                        'med':ctrl.category == 'Moderate',
-                                                                        'high':ctrl.category != 'Good' && ctrl.category != 'Moderate'}"></i>
-                <span class="fa-stack-1x epa-aqi-text" ng-class="{'invert-text':ctrl.category != 'Moderate'}">{{ctrl.aqi}}</span>
+                <i class="fa fa-circle fa-stack-2x epa-aqi" ng-class="{ 'green' :ctrl.category == 1,
+                                                                        'yellow':ctrl.category == 2,
+                                                                        'orange':ctrl.category == 3,
+                                                                        'red'   :ctrl.category == 4,
+                                                                        'purple':ctrl.category == 5,
+                                                                        'maroon':ctrl.category == 6 }"></i>
+                <span class="fa-stack-1x epa-aqi-text" ng-class="{ 'invert-text':ctrl.category != 1 &&
+                                                                                 ctrl.category != 2 }">
+                    {{ctrl.aqi}}</span>
             </span>
-        <aqi-popover aqi="ctrl.aqi" category="ctrl.category"
+        <aqi-popover aqi="::ctrl.aqi" category="::ctrl.category" health-label="::ctrl.healthLabel"
                      ng-class="{'hidden':ctrl.showPopup == false}"></aqi-popover>
 
     </div>

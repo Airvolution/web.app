@@ -9,12 +9,12 @@ class MonthlyPieChartWidgetController {
     public plotData;
     public loading;
 
-    public static $inject = ['$scope', '$log', 'AQIColors'];
+    public static $inject = ['$scope', '$log', 'AQIService'];
 
     public constructor(
         private $scope,
         private $log,
-        private AQIColors
+        private AQIService
     ) {
         this.$log.log('MonthlyPieChartController: constructor called');
         let self = this;
@@ -81,32 +81,32 @@ class MonthlyPieChartWidgetController {
             {
                 key: 'Green',
                 y: categories[1],
-                color: this.AQIColors.getColorFromCategory(1)
+                color: this.AQIService.getColorFromCategory(1)
             },
             {
                 key: 'Yellow',
                 y: categories[2],
-                color: this.AQIColors.getColorFromCategory(2)
+                color: this.AQIService.getColorFromCategory(2)
             },
             {
                 key: 'Orange',
                 y: categories[3],
-                color: this.AQIColors.getColorFromCategory(3)
+                color: this.AQIService.getColorFromCategory(3)
             },
             {
                 key: 'Red',
                 y: categories[4],
-                color: this.AQIColors.getColorFromCategory(4)
+                color: this.AQIService.getColorFromCategory(4)
             },
             {
                 key: 'Purple',
                 y: categories[5],
-                color: this.AQIColors.getColorFromCategory(5)
+                color: this.AQIService.getColorFromCategory(5)
             },
             {
                 key: 'Maroon',
                 y: categories[6],
-                color: this.AQIColors.getColorFromCategory(6)
+                color: this.AQIService.getColorFromCategory(6)
             }
         ];
 

@@ -6,6 +6,7 @@ class SiteHeaderController {
     public location;
     public aqi;
     public category;
+    public healthLabel;
     public showPopup;
 
     public emailHash;
@@ -17,7 +18,8 @@ class SiteHeaderController {
         'locationService',
         'APIService',
         'md5',
-        'notificationService'
+        'notificationService',
+        'AQIService'
     ];
 
     constructor(private $scope,
@@ -26,7 +28,8 @@ class SiteHeaderController {
                 private locationService,
                 private APIService,
                 private md5,
-                private notificationService) {
+                private notificationService,
+                private AQIService) {
         this.showPopup = false;
         var self = this;
         //TODO logic here to check if user has a default location/station set. If so use that instead of current location
@@ -62,28 +65,8 @@ class SiteHeaderController {
                 lng: station.lng
             };
             self.aqi = station.aqi;
-
-            //TODO extract this and inject it in a service. This code is many other places
-            self.category = self.getCategoryFromAqi(station.aqi);
+            self.category = self.AQIService.getCategoryFromAqi(self.aqi);
+            self.healthLabel = self.AQIService.getHealthLabelFromAqi(self.aqi);
         });
-    }
-
-
-    private getCategoryFromAqi(aqi) {
-        if (aqi < 0) {
-            return '';
-        } else if (aqi <= 50) {
-            return 'Good';
-        } else if (aqi <= 100) {
-            return 'Moderate';
-        } else if (aqi <= 150) {
-            return 'Unhealthy for sensitive groups';
-        } else if (aqi <= 200) {
-            return 'Unhealthy';
-        } else if (aqi <= 300) {
-            return 'Very Unhealthy';
-        } else {
-            return 'Hazardous';
-        }
     }
 }

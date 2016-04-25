@@ -1,16 +1,16 @@
 <div class="panel aqi-popover">
-    <div class="panel-title">Today's AQI is <span ng-class="ctrl.getCategoryClass()">{{ctrl.category}}</span></div>
-    <div class="panel-body">
-        <aqi-scale aqi="ctrl.aqi"></aqi-scale>
+    <aqi-scale aqi="ctrl.aqi"></aqi-scale>
 
-        <div class="epa-link"><a href="http://air.utah.gov">Where do we get this data?</a></div>
-        <hr/>
-        <div class="epa-link"><a href="http://www.health.utah.gov/utahair/AQI/">What does this data
-            mean?</a></div>
-        <hr/>
-        <div class="epa-link"><a href="http://www.health.utah.gov/utahair/">What is considered healthy?</a>
-        </div>
-        <hr />
-        <button ng-click="ctrl.tryMe()" style="float:right" class="btn btn-default">Try Me</button>
+    <div class="panel-body">
+        <div class="panel-title">
+            <p>{{ctrl.getTitle()}}</p>
+        </div><hr/>
+        <div class="panel-title">
+            <p>{{ctrl.getMeaning()}}</p>
+        </div><hr/>
+
+        <div class="popover-link"><a ui-sref="app.faq">Want to know more about the AQI?</a></div><hr/>
+        <button class="btn btn-success pull-left" ng-click="ctrl.reset()">Reset AQI</button>
+        <button class="btn btn-warning pull-right" ng-click="ctrl.randomize()">Randomize</button>
     </div>
 </div>
