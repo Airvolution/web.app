@@ -10,7 +10,10 @@
         </div><hr/>
 
         <div class="popover-link"><a ui-sref="app.faq">Want to know more about the AQI?</a></div><hr/>
-        <button class="btn btn-success pull-left" ng-click="ctrl.reset()">Reset AQI</button>
-        <button class="btn btn-warning pull-right" ng-click="ctrl.randomize()">Randomize</button>
+        <div class="popover-buttons">
+            <button class="btn btn-warning pull-left" ng-click="ctrl.previous()"><span class="fa fa-chevron-circle-left"></span></button>
+            <button class="btn btn-success" ng-click="ctrl.reset()">Reset AQI</button>
+            <button class="btn btn-warning pull-right" ng-click="ctrl.next()"><span class="fa fa-chevron-circle-right"></span></button>
+        </div>
     </div>
 </div>
