@@ -1,4 +1,4 @@
-<svg ng-cloak version="1.1" id="aqi_svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 530 70"xml:space="preserve">
+<svg class="ng-cloak" version="1.1" id="aqi_svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 530 70"xml:space="preserve">
       <defs>
         <linearGradient id="green_scale" gradientUnits="userSpaceOnUse" x1="0%" x2="100%" y1="0%" y2="0%">
           <stop offset="0%"/>
@@ -26,7 +26,7 @@
         </linearGradient>
       </defs>
       <rect x="15" y="10" id="gradient" class="{{ctrl.category}}_gradient" width="500" height="50" />
-      <g id="indicator" transform="translate({{ctrl.offset}},35)">
+      <g id="indicator" ng-attr-transform="translate({{ctrl.offset}},35)">
         <circle class="{{ctrl.category}}_indicator" cx="0" cy="0" r="30" />
         <text text-anchor="middle" alignment-baseline="middle" class="aqi_text" x="0" y="5">{{ctrl.aqi}}</text>
       </g>

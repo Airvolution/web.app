@@ -69,6 +69,8 @@ class AuthService {
                 } else {
                     self.notificationService.notify('UserLogin');
                 }
+            }).catch((error)=>{
+                self.logOut();
             });
         }
     };
