@@ -34,39 +34,38 @@
   }
 }
 
-
-.marker:before {
+.marker-green:before {
   -webkit-filter: drop-shadow(0px 5px 3px rgba(0,0,0,1));
 
   content: "";
   position: absolute;
-  border-top: 27px solid purple;
+  border-top: 15px solid @markerInnerGreen;
   border-left: 9px solid transparent;
   border-right: 9px solid transparent;
   top: 55px;
   left: 21px;
 }
 
-
-
-.marker:after {
-  -webkit-filter: drop-shadow(0px 2px 3px rgba(255,255,255,0.5));
+.marker-green:after {
+  -webkit-filter: drop-shadow(0px 4px 3px rgba(255,255,255,0.5));
 
   content: "";
   position: absolute;
-  border-top: 45px solid @aqiGreen;
+  border-top: 35px solid @markerInnerGreen;
   border-left: 18px solid transparent;
   border-right: 18px solid transparent;
   top: 38px;
   left: 12px;
 }
 
-
 .marker-green {
-  background-color: fade(@aqiGreen, 50%);
+  //background-color: fade(@aqiGreen, 50%);
+  background-color: rgba(0, 255, 0, 0.5);
+
+
 
   div {
-    background-color: @aqiGreen;
+    background-color: @markerInnerGreen;
     color: @white;
     text-shadow: -1px 0 @black, 0 1px @black, 1px 0 @black, 0 -1px @black;
   }
