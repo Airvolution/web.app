@@ -21,36 +21,38 @@ class FAQViewController {
                 private APIService,
                 private $q,
                 private SearchService) {
-        if($stateParams.id){
-            var prefix = 'section';
-            this.scrollTo(prefix+$stateParams.id);
-        }
 
         this.getFAQs();
         this.getTop5Lists();
     };
 
-    public scrollTo(id) {
-        // Check if question is collapsed.
-        if(!angular.element('#' + id).hasClass('in')) {
-            for(var i = 0; i < this.faqList.length; i++) {
-                if(this.faqList[i].id == id) {
-                    this.faqList[i].chevron = 'UP';
-                    break;
+    public scrollTo(id, prefix) {
+
+        if(prefix == 'question') {
+            $('html, body').animate({
+                scrollTop: $('#' + prefix + id).offset().top
+            }, 1000);
+
+            // Check if question is collapsed.
+            if(!angular.element('#answer' + id).hasClass('in')) {
+                for(var i = 0; i < this.faqList.length; i++) {
+                    if(this.faqList[i].id == id) {
+                        this.faqList[i].chevron = 'UP';
+                        break;
+                    }
                 }
+
+                // Increment view count.
+                this.APIService.PostFaqViewCount(id).then(()=>{
+                }, (error) => {
+                });
             }
-
-            // Increment view count.
-            this.APIService.PostFaqViewCount(id).then(()=>{
-            }, (error) => {
-            });
         }
-
-        this.scrollPos = id;
-        var self = this;
-        this.$timeout(()=> {
-            self.scrollPos = undefined;
-        }, 250);
+        else {
+            $('html, body').animate({
+                scrollTop: $('#' + id).offset().top
+            }, 1000);
+        }
     };
 
     public getFAQs() {
@@ -77,7 +79,7 @@ class FAQViewController {
     public onSearchSelect(result){
         this.searchResults = undefined;
         this.resultsCount = 0;
-        this.scrollTo('question'+result._id);
+        this.scrollTo(result._id, "question");
         this.resultsVisible = false;
         this.search = '';
     };
