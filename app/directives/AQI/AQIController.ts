@@ -75,8 +75,30 @@ class AQIController {
         if (this.originalAqi === undefined) {
             this.originalAqi = this.aqi;
         }
-        let rand = Math.floor(Math.random() * 499);
-        this.aqi = rand;
+        let randCategory = Math.floor(Math.random() * 6 + 1);
+        switch (randCategory) {
+            case 1:
+                this.aqi = Math.floor(Math.random() * 51);
+                break;
+            case 2:
+                this.aqi = Math.floor(Math.random() * 50 + 51);
+                break;
+            case 3:
+                this.aqi = Math.floor(Math.random() * 50 + 101);
+                break;
+            case 4:
+                this.aqi = Math.floor(Math.random() * 50 + 151);
+                break;
+            case 5:
+                this.aqi = Math.floor(Math.random() * 100 + 201);
+                break;
+            case 6:
+                this.aqi = Math.floor(Math.random() * 200 + 301);
+                break;
+            default:
+                this.aqi = Math.floor(Math.random() * 499);
+                break;
+        }
         this.category = this.AQIService.getCategoryFromAqi(this.aqi);
         this.healthLabel = this.AQIService.getHealthLabelFromAqi(this.aqi);
     }
