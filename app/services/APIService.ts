@@ -14,6 +14,14 @@ class APIService {
         private $timeout
     ) {}
 
+    public registerStation(station) {
+        let deferred = this.$q.defer();
+        let onError = (error) => { deferred.reject(error); };
+        return this.$http.post('api/stations/register', station).then((response) => {
+            return response.data;
+        }, onError);
+    }
+
     public createGroup(group){
         var deferred = this.$q.defer();
         let onError = (error) => { deferred.reject(error); };
