@@ -71,8 +71,7 @@
 }
 //==============================================Controls========================================//
 #weather {
-  background-color: @headerLightBackground;
-  border-left: 1px solid @headerDividerColor;
+  color: @headerText;
 
   .weather_wrapper {
     text-align: center;
@@ -141,6 +140,7 @@
 #login-dropdown {
   background-color: @headerBackground;
   color: @headerText;
+  font-size: 1em;
 }
 
 .config-menu-icon  {
@@ -229,10 +229,10 @@
 }
 
 #aqi {
-  background-color: @headerLightBackground;
-  border-left: 1px solid @headerDividerColor;
+  color: @headerText;
 
   .epa-aqi-icon{
+    -webkit-filter: drop-shadow(0px 0px 25px rgba(255,255,255,1));
     margin-left: 25%;
     font-size: 1.5em;
 
