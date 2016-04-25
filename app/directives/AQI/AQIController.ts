@@ -3,17 +3,15 @@
 export = AQIController;
 
 class AQIController {
+    private originalAqi;
+
     public aqi;
     public category;
     public healthLabel;
     public aqiRange;
 
-    public originalAqi;
-    public showRandomAqi;
-
     public static $inject = ['AQIService'];
     constructor(private AQIService) {
-        this.showRandomAqi = false;
     }
 
     public onAQIUpdate(newAQI) {
@@ -86,7 +84,8 @@ class AQIController {
     public reset() {
         if (this.originalAqi !== undefined) {
             this.aqi = this.originalAqi;
+            this.category = this.AQIService.getCategoryFromAqi(this.aqi);
+            this.healthLabel = this.AQIService.getHealthLabelFromAqi(this.aqi);
         }
     }
-
 }
