@@ -21,10 +21,6 @@ class FAQViewController {
                 private APIService,
                 private $q,
                 private SearchService) {
-        //if($stateParams.id) {
-        //    var prefix = 'section';
-        //    this.scrollTo(prefix+$stateParams.id);
-        //}
 
         this.getFAQs();
         this.getTop5Lists();
