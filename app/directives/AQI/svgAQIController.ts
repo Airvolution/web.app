@@ -3,8 +3,8 @@
 export = SVGAQIController;
 
 //controls animation on bubble indicator
-const X_BASE = 42;
-const OFFSET_FACTOR = 4.44;
+const X_BASE = 44;
+const OFFSET_FACTOR = 4.40;
 class SVGAQIController {
     public aqi;
     public category;
