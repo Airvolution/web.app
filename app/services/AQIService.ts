@@ -113,4 +113,23 @@ class AQIService {
             return 'Hazardous';
         }
     }
+
+    public getHealthLabelExpandedFromAqi(aqi) {
+        // cite: https://airnow.gov/index.cfm?action=aqibasics.aqi
+        if (aqi < 0) {
+            return '';
+        } else if (aqi <= 50) {
+            return 'Air quality is considered satisfactory, and air pollution poses little or no risk.';
+        } else if (aqi <= 100) {
+            return 'Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number of people who are unusually sensitive to air pollution.';
+        } else if (aqi <= 150) {
+            return 'Members of sensitive groups may experience health effects. The general public is not likely to be affected.';
+        } else if (aqi <= 200) {
+            return 'Everyone may begin to experience health effects; members of sensitive groups may experience more serious health effects.';
+        } else if (aqi <= 300) {
+            return 'Health warnings of emergency conditions. The entire population is more likely to be affected.';
+        } else {
+            return 'Health alert: everyone may experience more serious health effects.';
+        }
+    }
 }
