@@ -1,11 +1,17 @@
 <div class="panel aqi-popover">
-    <div class="panel-title">
-        {{ctrl.getTitle()}}
-    </div>
+    <aqi-scale aqi="ctrl.aqi"></aqi-scale>
+
     <div class="panel-body">
-        <aqi-scale aqi="ctrl.aqi"></aqi-scale>
+        <div class="panel-title">
+            <p>{{ctrl.getTitle()}}</p>
+        </div>
+        <div class="panel-title">
+            <p>{{ctrl.getMeaning()}}</p>
+        </div>
+
+
         <div class="epa-link"><a href="http://www.health.utah.gov/utahair/AQI/" target="_blank">
-            What does this datamean?</a></div>
+            What does this data mean?</a></div>
         <hr/>
         <div class="epa-link"><a href="http://www.health.utah.gov/utahair/" target="_blank">
             What is considered healthy?</a>
@@ -14,6 +20,8 @@
         <div class="epa-link"><a href="http://air.utah.gov" target="_blank">
             Where do we get this data?</a></div>
         <hr/>
+
+
         <button ng-click="ctrl.tryMe()" style="float:right" class="btn btn-default">Try Me</button>
     </div>
 </div>

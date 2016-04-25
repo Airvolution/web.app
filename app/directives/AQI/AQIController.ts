@@ -53,7 +53,7 @@ class AQIController {
         }
     }
 
-    public getMessage() {
+    public getTitle() {
         let article = 'a ';
         let categoryLabel = this.AQIService.getCategoryLabel(this.category);
         if (categoryLabel.startsWith('O') || categoryLabel.startsWith('o')) {
@@ -62,6 +62,10 @@ class AQIController {
         return "The AQI is " + this.aqi + " for " + article + categoryLabel + " Air Day. " +
             categoryLabel + " is considered " + this.healthLabel + ". " +
             this.AQIService.getCategoryUpperLimit(this.category) + " is the upper limit for " + categoryLabel + ".";
+    }
+
+    public getMeaning() {
+        return this.AQIService.getHealthLabelExpandedFromAqi(this.aqi);
     }
 
     public tryMe() {
