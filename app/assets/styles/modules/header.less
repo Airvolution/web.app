@@ -71,8 +71,7 @@
 }
 //==============================================Controls========================================//
 #weather {
-  background-color: @headerLightBackground;
-  border-left: 1px solid @headerDividerColor;
+  color: @headerText;
 
   .weather_wrapper {
     text-align: center;
@@ -126,6 +125,22 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+
+  span {
+    &:hover {
+      color: @headerHover;
+      cursor: pointer;
+    }
+    &:focus {
+      color: @headerHover;
+    }
+  }
+}
+
+#login-dropdown {
+  background-color: @headerBackground;
+  color: @headerText;
+  font-size: 1em;
 }
 
 .config-menu-icon  {
@@ -170,7 +185,7 @@
     color: @headerText;
 
     .panel-title {
-      font-size: 1.5em;
+      font-size: 1.1em;
       line-height: 1.3em;
       color: @headerText;
     }
@@ -181,7 +196,7 @@
 
     a {
       color: @headerText;
-      font-size: 1.25em;
+      font-size: 1.1em;
     }
   }
 
@@ -218,10 +233,10 @@
 }
 
 #aqi {
-  background-color: @headerLightBackground;
-  border-left: 1px solid @headerDividerColor;
+  color: @headerText;
 
   .epa-aqi-icon{
+    -webkit-filter: drop-shadow(0px 0px 25px rgba(255,255,255,1));
     margin-left: 25%;
     font-size: 1.5em;
 

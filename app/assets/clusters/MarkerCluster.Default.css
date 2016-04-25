@@ -25,7 +25,7 @@
 	background-color: rgba(0, 255, 0, 0.5);
 }
 .marker-cluster-green div {
-	background-color: rgba(0, 200, 0, 1.0);
+	background-color: #15E000;
 	color: white;
 	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
@@ -34,7 +34,7 @@
 	background-color: rgba(255, 255, 0, 0.5);
 }
 .marker-cluster-yellow div {
-	background-color: rgba(222, 222, 0, 1.0);
+	background-color: rgba(238, 238, 0, 1.0);
 	color: white;
 	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
@@ -52,7 +52,7 @@
 	background-color: rgba(255, 25, 0, 0.5);
 }
 .marker-cluster-red div {
-	background-color: rgba(244, 0, 0, 1.0);
+	background-color: #E50D08;
 	color: white;
 	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }

@@ -19,14 +19,13 @@ class HeatmapWidgetController {
         this.getMapData();
         this.tiles = mapFactory.createTilesFromKey('light');
         this.center = {
-            lat: 38,
-            lng: -98,
+            lat: 39.091042,
+            lng: -98.178785,
             zoom: 3
         };
         this.defaults = {
             minZoom: 3,
             maxZoom: 3,
-            dragging: false
         };
         this.layers = {
             overlays: {

@@ -34,61 +34,205 @@
   }
 }
 
+.marker-green:before {
+  -webkit-filter: @markerBeforeShadow;
+
+  content: "";
+  position: absolute;
+  border-top: 15px solid @markerInnerGreen;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  top: 55px;
+  left: 21px;
+}
+
+.marker-green:after {
+  -webkit-filter: @markerAfterShadow;
+
+  content: "";
+  position: absolute;
+  border-top: 35px solid @markerInnerGreen;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  top: 38px;
+  left: 12px;
+}
+
 .marker-green {
-  background-color: fade(@aqiGreen, 50%);
+  background-color: @markerOuterGreen;
 
   div {
-    background-color: @aqiGreen;
+    background-color: @markerInnerGreen;
     color: @white;
     text-shadow: -1px 0 @black, 0 1px @black, 1px 0 @black, 0 -1px @black;
   }
+}
+
+.marker-yellow:before {
+  -webkit-filter: @markerBeforeShadow;
+
+  content: "";
+  position: absolute;
+  border-top: 15px solid @markerInnerYellow;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  top: 55px;
+  left: 21px;
+}
+
+.marker-yellow:after {
+  -webkit-filter: @markerAfterShadow;
+
+  content: "";
+  position: absolute;
+  border-top: 35px solid @markerInnerYellow;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  top: 38px;
+  left: 12px;
 }
 
 .marker-yellow {
-  background-color: fade(@aqiYellow, 50%);
+  background-color: @markerOuterYellow;
 
   div {
-    background-color: @aqiYellow;
+    background-color: @markerInnerYellow;
     color: @white;
     text-shadow: -1px 0 @black, 0 1px @black, 1px 0 @black, 0 -1px @black;
   }
+}
+
+.marker-orange:before {
+  -webkit-filter: @markerBeforeShadow;
+
+  content: "";
+  position: absolute;
+  border-top: 15px solid @markerInnerOrange;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  top: 55px;
+  left: 21px;
+}
+
+.marker-orange:after {
+  -webkit-filter: @markerAfterShadow;
+
+  content: "";
+  position: absolute;
+  border-top: 35px solid @markerInnerOrange;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  top: 38px;
+  left: 12px;
 }
 
 .marker-orange {
-  background-color: fade(@aqiOrange, 50%);
+  background-color: @markerOuterOrange;
 
   div {
-    background-color: @aqiOrange;
+    background-color: @markerInnerOrange;
     color: @white;
     text-shadow: -1px 0 @black, 0 1px @black, 1px 0 @black, 0 -1px @black;
   }
+}
+
+.marker-red:before {
+  -webkit-filter: @markerBeforeShadow;
+
+  content: "";
+  position: absolute;
+  border-top: 15px solid @markerInnerRed;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  top: 55px;
+  left: 21px;
+}
+
+.marker-red:after {
+  -webkit-filter: @markerAfterShadow;
+
+  content: "";
+  position: absolute;
+  border-top: 35px solid @markerInnerRed;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  top: 38px;
+  left: 12px;
 }
 
 .marker-red {
-  background-color: fade(@aqiRed, 50%);
+  background-color: @markerOuterRed;
 
   div {
-    background-color: @aqiRed;
+    background-color: @markerInnerRed;
     color: @white;
     text-shadow: -1px 0 @black, 0 1px @black, 1px 0 @black, 0 -1px @black;
   }
+}
+
+.marker-purple:before {
+  -webkit-filter: @markerBeforeShadow;
+
+  content: "";
+  position: absolute;
+  border-top: 15px solid @markerInnerPurple;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  top: 55px;
+  left: 21px;
+}
+
+.marker-purple:after {
+  -webkit-filter: @markerAfterShadow;
+
+  content: "";
+  position: absolute;
+  border-top: 35px solid @markerInnerPurple;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  top: 38px;
+  left: 12px;
 }
 
 .marker-purple {
-  background-color: fade(@aqiPurple, 50%);
+  background-color: @markerOuterPurple;
 
   div {
-    background-color: @aqiPurple;
+    background-color: @markerInnerPurple;
     color: @white;
     text-shadow: -1px 0 @black, 0 1px @black, 1px 0 @black, 0 -1px @black;
   }
 }
 
+.marker-maroon:before {
+  -webkit-filter: @markerBeforeShadow;
+
+  content: "";
+  position: absolute;
+  border-top: 15px solid @markerInnerMaroon;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  top: 55px;
+  left: 21px;
+}
+
+.marker-maroon:after {
+  -webkit-filter: @markerAfterShadow;
+
+  content: "";
+  position: absolute;
+  border-top: 35px solid @markerInnerMaroon;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  top: 38px;
+  left: 12px;
+}
+
 .marker-maroon {
-  background-color: fade(@aqiMaroon, 50%);
+  background-color: @markerOuterMaroon;
 
   div {
-    background-color: @aqiMaroon;
+    background-color: @markerInnerMaroon;
     color: @white;
     text-shadow: -1px 0 @black, 0 1px @black, 1px 0 @black, 0 -1px @black;
   }
@@ -171,12 +315,18 @@
   width: 100%;
   background-color: @mapOverlay;
   bottom: 0;
-  padding-left: 2em;
+  padding-left: 4em;
 
   .close-button {
     position: absolute;
     right: .5em;
     top: .5em;
+  }
+
+  svg text {
+    fill: white;
+    font-weight: bold;
+    font-size: 1em;
   }
 }
 

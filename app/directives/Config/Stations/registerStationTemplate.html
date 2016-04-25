@@ -1,54 +1,58 @@
 <main id="registerAMSPage">
-    <h1 class="col-md-8 col-md-offset-2">Register a Station</h1>
+    <div class="stations-wrapper col-md-8 col-md-offset-2">
+        <h1>Register a Station</h1>
 
-    <form id="registerAMS" class="col-md-offset-2 col-md-8" name="ctrl.registerForm" novalidate ng-submit="ctrl.formSubmit()" autocomplete="off">
-        <input type="hidden" ng-model="ctrl.formData.owner" value="">
-        <input type="hidden" ng-model="ctrl.formData.location.lat" value="0">
-        <input type="hidden" ng-model="ctrl.formData.location.lng" value="0">
-        <div class="form-group">
-            <label for="stationName" class="pull-left">Station Name</label>
-            <input type="text" id="stationName" name="stationName" class="form-control" ng-model="ctrl.formData.name"
-                   placeholder="Station Name" required/>
-            <div ng-show="(!ctrl.registerForm.stationName.$pristine || ctrl.registerForm.$submitted) && ctrl.registerForm.stationName.$error"
-                 ng-messages="ctrl.registerForm.stationName.$error">
-                <div ng-messages-include="app/templates/validation.html"></div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="stationID" class="pull-left">Station ID</label>
-            <input type="text" name="stationID" class="form-control" id="stationID" placeholder="Station ID"
-                   ng-model="ctrl.formData.id" required/>
-            <div ng-show="(!ctrl.registerForm.stationID.$pristine || ctrl.registerForm.$submitted) && ctrl.registerForm.stationID.$error"
-                 ng-messages="ctrl.registerForm.stationID.$error">
-                <div ng-messages-include="app/templates/validation.html"></div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="stationPurpose" class="Purpose">Sation Purpose</label>
-            <textarea class="form-control vresize" id="stationPurpose" placeholder="Station Purpose"
-                      ng-model="ctrl.formData.purpose"></textarea>
-        </div>
-        <div class="form-group">
-            <div class="row">
-                <div class="col-md-12">
-                    <label class="pull-left">Station Type</label>
+        <form id="registerAMS" name="ctrl.registerForm" novalidate ng-submit="ctrl.formSubmit()" autocomplete="off">
+            <uib-alert class="col-md-12" ng-if="ctrl.alert" type="{{ctrl.alert.type}}"
+                       dismiss-on-timeout="{{ctrl.alertTimeout}}" close="ctrl.onAlertClose(ctrl.alert)">{{ctrl.alert.message}}</uib-alert>
+
+            <input type="hidden" ng-model="ctrl.formData.owner" value="">
+            <input type="hidden" ng-model="ctrl.formData.location.lat" value="0">
+            <input type="hidden" ng-model="ctrl.formData.location.lng" value="0">
+            <div class="form-group">
+                <label for="stationName" class="pull-left">Station Name</label>
+                <input type="text" id="stationName" name="stationName" class="form-control" ng-model="ctrl.formData.name"
+                       placeholder="My Station" required/>
+                <div ng-show="(!ctrl.registerForm.stationName.$pristine || ctrl.registerForm.$submitted) && ctrl.registerForm.stationName.$error"
+                     ng-messages="ctrl.registerForm.stationName.$error">
+                    <div ng-messages-include="app/templates/validation.html"></div>
                 </div>
             </div>
-            <div class="radio-group col-md-2">
-                <label for="amsOutdoor">
-                    <input type="radio" name="indoor" id="amsOutdoor" ng-value="false" ng-model="ctrl.formData.indoor"
-                           checked>
-                    Outdoor
-                </label>
-                <label for="amsIndoor">
-                    <input type="radio" name="indoor" id="amsIndoor" ng-value="true" ng-model="ctrl.formData.indoor">
-                    Indoor
-                </label>
+            <div class="form-group">
+                <label for="stationID" class="pull-left">Station Id</label>
+                <input type="text" name="stationID" class="form-control" id="stationID" placeholder="Station Id"
+                       ng-model="ctrl.formData.id" required/>
+                <div ng-show="(!ctrl.registerForm.stationID.$pristine || ctrl.registerForm.$submitted) && ctrl.registerForm.stationID.$error"
+                     ng-messages="ctrl.registerForm.stationID.$error">
+                    <div ng-messages-include="app/templates/validation.html"></div>
+                </div>
             </div>
-        </div>
-        <div class="form-group" id="submitGroup">
-            <button type="submit" class="btn btn-primary" id="submitRegisterAMS">Register AMS</button>
-        </div>
+            <div class="form-group">
+                <label for="stationPurpose" class="Purpose">Station Purpose</label>
+                <textarea class="form-control vresize" id="stationPurpose" name="purpose" placeholder="(Optional) Tell us why you like to monitor air quality..."
+                          ng-model="ctrl.formData.purpose"></textarea>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="pull-left">Where did you put your station?</label>
+                    </div>
+                </div>
+                <div class="radio-group col-md-2">
+                    <label for="amsOutdoor">
+                        <input type="radio" name="indoor" id="amsOutdoor" ng-value="false" ng-model="ctrl.formData.indoor">
+                        Outdoors
+                    </label>
+                    <label for="amsIndoor">
+                        <input type="radio" name="indoor" id="amsIndoor" ng-value="true" ng-model="ctrl.formData.indoor">
+                        Indoors
+                    </label>
+                </div>
+            </div>
+            <div class="form-group" id="submitGroup">
+                <button type="submit" class="btn btn-primary create-btn" id="submitRegisterAMS">Register AMS</button>
+            </div>
 
-    </form>
+        </form>
+    </div>
 </main>
