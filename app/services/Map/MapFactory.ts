@@ -207,7 +207,10 @@ class MapFactory {
     public getCenter() {
         // the map by default must initialize with a valid center
         return {
-            autoDiscover: true,
+            //autoDiscover: true, // Leaflet deprecated autoDiscover support for non-HTTPS origins
+            // force center on Nebraska :)
+            lat: 39.091042,
+            lng: -98.178785,
             zoom: 5
         };
     }
