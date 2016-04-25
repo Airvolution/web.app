@@ -110,14 +110,16 @@ class MapFactory {
                 duration: 100,
                 useInteractiveGuideline: true,
                 xAxis: {
-                    axisLabel: 'Date',
                     showMaxMin: false,
+                    staggerLabels: true,
                     tickFormat: function (d) {
-                        return d3.time.format('%x')(new Date(d));
+                        //return d3.time.format('%x')(new Date(d));
+                        return d3.time.format('%b %d, %I:%M %p')(new Date(d));
                     }
                 },
                 yAxis: {
                     axisLabel: 'Air Quality Index',
+                    showMaxMin: false,
                     tickFormat: function (d) {
                         return d3.format(',.2f')(d);
                     }
