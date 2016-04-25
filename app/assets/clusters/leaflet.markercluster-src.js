@@ -628,7 +628,7 @@ L.MarkerClusterGroup = L.FeatureGroup.extend({
 			c += 'maroon';
 		}
 
-		return new L.DivIcon({ html: '<div><span>' + (averageAQI | 0) + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(60, 60), iconAnchor: [30, 75] });
+		return new L.DivIcon({ html: '<div><span>' + (averageAQI | 0) + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(60, 60) });
 	},
 
 	_aqiMaxIconCreateFunction: function (cluster) {
@@ -650,7 +650,7 @@ L.MarkerClusterGroup = L.FeatureGroup.extend({
 			c += 'maroon';
 		}
 
-		return new L.DivIcon({ html: '<div><span>' + (maxAQI | 0) + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(60, 60), iconAnchor: [30, 75] });
+		return new L.DivIcon({ html: '<div><span>' + (maxAQI | 0) + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(60, 60) });
 	},
 
 	_bindEvents: function () {
