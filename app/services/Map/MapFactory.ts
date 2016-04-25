@@ -174,7 +174,7 @@ class MapFactory {
         var icon = {
             type: 'div',
             iconSize: [60, 60],
-            iconAnchor: [30, 30]
+            iconAnchor: [30, 75] // puts the tip of the marker at the GPS coordinate
         };
 
         let marker = angular.copy(icon);
