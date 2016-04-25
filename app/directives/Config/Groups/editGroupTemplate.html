@@ -42,7 +42,19 @@
     <i class="fa fa-spinner fa-pulse fa-3x" ng-if="ctrl.loading">
         <span class="sr-only">Loading...</span>
     </i>
-    <form id="editGroup" ng-if="!ctrl.loading" novalidate ng-submit="ctrl.formSubmit()" autocomplete="off">
+    <form name="ctrl.editGroupForm" ng-if="!ctrl.loading" novalidate ng-submit="ctrl.formSubmit()" autocomplete="off">
+        <div class="form-group" ng-if="ctrl.group.id == 0">
+            <label class="pull-left">Group Name</label>
+            <input class="form-control" type="text" placeholder="Name" name="name" ng-model="ctrl.formData.name" ng-model-options="ctrl.modelOptions" required>
+            <div ng-show="(!ctrl.editGroupForm.name.$pristine || ctrl.editGroupForm.$submitted) && ctrl.editGroupForm.name.$error"
+                 ng-messages="ctrl.editGroupForm.name.$error">
+                <div ng-messages-include="app/templates/validation.html"></div>
+            </div>
+        </div>
+        <div class="form-group"  ng-if="ctrl.group.id == 0">
+            <label class="pull-left">Group Description</label>
+            <textarea class="form-control" type="text" placeholder="Description" ng-model="ctrl.formData.description" ng-model-options="ctrl.modelOptions"></textarea>
+        </div>
         <div>
             <table class="table table-striped">
                 <thead>

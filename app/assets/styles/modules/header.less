@@ -1,16 +1,23 @@
+//========================================General========================================//
 @header-height: 50px;
 .header {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: @medium-darker-gray;
+  background-color: @headerBackground;
   font-size: 1.25em;
   line-height: 1.25em;
-  //overflow: hidden;
+  height: 100%;
+  width:100%;
+
+  .profile-image {
+    border-radius: 50%;
+    width: @header-height;
+  }
 
   .headerzone {
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-left: 0;
+    padding-right: 0;
     height: @header-height;
 
     img {
@@ -25,62 +32,47 @@
 
   }
 
-
-  #logo {
-  }
-
   .nav {
     .tab {
-      background-color: @medium-darker-gray;
+      background-color: @headerBackground;
       a {
-        color: white;
+        color: @headerText;
       }
     }
-    .active {
-      background-color: black;
+    .tab.active {
+      background-color: @headerActiveTab;
       a {
-        color: white;
+        color: @headerText;
+      }
+      &:hover {
+        background-color: @headerActiveTab !important;
+        a {
+          color:@headerText !important;
+        }
+      }
+      &:focus {
+        background-color: @headerActiveTab !important;
+        a{
+          color: @headerText !important;
+        }
       }
     }
     a {
       &:hover {
-        background-color: black;
-        color: white;
+        background-color: @headerHover;
+        color: @headerBackground;
       }
       &:focus {
-        background-color: black;
-        color: white;
+        background-color: @headerHover;
+        color: @headerBackground;
       }
     }
   }
 }
-#hamburger {
-  text-align: center;
-  &:hover {
-    color: @medium-light-gray;
-  }
-}
-
-/*
-#quicklinks {
-  position: relative;
-  input {
-    text-indent: 30px;
-    max-width: 100%;
-  }
-
-  .fa-search {
-    position: absolute;
-    top: 5px;
-    left: 7px;
-    font-size: 15px;
-  }
-}
-*/
-
+//==============================================Controls========================================//
 #weather {
-  background-color: @medium-light-gray;
-  border-left: 1px solid @dark-gray;
+  background-color: @headerLightBackground;
+  border-left: 1px solid @headerDividerColor;
 
   .weather_wrapper {
     text-align: center;
@@ -88,7 +80,6 @@
     .weather-icon {
       font-size: 2em;
       padding: .25em;
-      //height: 50px;
 
       .wi-degrees{
         margin-left: -.2em;
@@ -113,17 +104,18 @@
   }
 
 }
+
 .header-text {
-  color: @light-gray;
+  color: @headerText;
 
   a& {
     &:hover {
-      color: @medium-light-gray;
+      color: @headerHoverText;
       cursor: pointer;
       text-decoration: none;
     }
     &:focus {
-      color:@medium-light-gray;
+      color:@headerHoverText;
       cursor: pointer;
       text-decoration: initial;
     }
@@ -137,10 +129,10 @@
 }
 
 .config-menu-icon  {
-  color: @light-gray;
+  color: @headerText;
 
   &:hover {
-    color: @medium-light-gray;
+    color: @headerHoverText;
     cursor: pointer;
   }
 }
@@ -150,37 +142,39 @@
 
 }
 .welcome-message {
-  color: @light-gray;
+  color: @headerText;
   height: 100%;
 }
 
+//=========================================AQI Meter Dropdown====================================//
+
 .dropdown-menu {
-  color: @medium-darker-gray;
+  color: @headerBackground;
 }
 
 .aqi-meter-low {
   position: relative;
   min-height: 3em;
-  background: linear-gradient(to right, green, yellow);
+  background: linear-gradient(to right, @aqiGreen, @aqiYellow);
   margin-left: -10%;
   margin-right: -10%;
 
   .fa-circle {
-    color: #FFF;
+    color: @aqiNeutral;
   }
 
   .indicator {
     margin-left: 42%;
 
     .aqi-number {
-      color: black;
+      color: @black;
     }
     .indicator-line {
       position: absolute;
       margin-left: 50%;
       min-height: 100%;
       width: 1px;
-      background: #000;
+      background: @black;
     }
   }
 }
@@ -188,19 +182,19 @@
 .aqi-meter-med {
   position: relative;
   min-height: 3em;
-  background: linear-gradient(to right, yellow, orange);
+  background: linear-gradient(to right, @aqiYellow, @aqiOrange);
   margin-left: -10%;
   margin-right: -10%;
 
   .fa-circle {
-    color: #FFF;
+    color: @aqiNeutral;
   }
 
   .indicator {
     margin-left: 42%;
 
     .aqi-number {
-      color: black;
+      color: @black;
     }
 
     .indicator-line {
@@ -208,7 +202,7 @@
       margin-left: 50%;
       min-height: 100%;
       width: 1px;
-      background: #000;
+      background: @black;
     }
   }
 }
@@ -216,19 +210,19 @@
 .aqi-meter-high {
   position: relative;
   min-height: 3em;
-  background: linear-gradient(to right, orange, red);
+  background: linear-gradient(to right, @aqiOrange, @aqiRed);
   margin-left: -10%;
   margin-right: -10%;
 
   .fa-circle {
-    color: #FFF;
+    color: @aqiNeutral;
   }
 
   .indicator {
     margin-left: 42%;
 
     .aqi-number {
-      color: black;
+      color: @black;
     }
 
     .indicator-line {
@@ -236,7 +230,7 @@
       margin-left: 50%;
       min-height: 100%;
       width: 1px;
-      background: #000;
+      background: @black;
     }
   }
 }
@@ -247,16 +241,16 @@
   left: 0;
   right: 0;
   z-index: 10;
-  background-color: @medium-dark-gray;
+  background-color: @headerBackground;
 
   &.panel {
     margin-top:3%;
     padding: 1em;
-    color: @medium-lighter-gray;
+    color: @headerText;
 
     .panel-title {
       font-size: 1.5em;
-      color: #fff;
+      color: @headerText;
     }
   }
 
@@ -264,28 +258,28 @@
     margin-top: 1em;
 
     a {
-      color: @medium-lighter-gray;
+      color: @headerText;
       font-size: 1.25em;
     }
   }
 
   .aqi-good {
-    color: Green;
+    color: @aqiGreen;
   }
 
   .aqi-med {
-    color: Yellow;
+    color: @aqiYellow;
   }
   /* TODO get higher categories */
   .aqi-high{
-    color: red;
+    color: @aqiRed;
     font-size: 0.8em;
   }
 }
 
 #aqi {
-  background-color: @medium-light-gray;
-  border-left: 1px solid @dark-gray;
+  background-color: @headerLightBackground;
+  border-left: 1px solid @headerDividerColor;
 
   .epa-aqi-icon{
     margin-left: 25%;
@@ -296,18 +290,18 @@
     }
 
     .low {
-      color: green;
+      color: @aqiGreen;
     }
 
     .med {
-      color: yellow;
+      color: @aqiYellow;
     }
 
     .high {
-      color: red;
+      color: @aqiRed;
     }
     .invert-text {
-      color: white;
+      color: @white;
     }
   }
 
@@ -318,11 +312,11 @@
   }
 
   .epa-aqi {
-    color: @light-gray;
+    color: @aqiNeutral;
   }
 
   .epa-aqi-text {
-    color: @dark-gray;
+    color: @black;
   }
 }
 

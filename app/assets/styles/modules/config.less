@@ -1,0 +1,168 @@
+//===============================================General============================================//
+.sidenav {
+  align-self: stretch;
+
+  ul {
+    margin-top: 1em;
+  }
+
+  li a {
+    border-radius: 2px;
+    padding: 1em;
+    font-size: 1.5em;
+
+    &.sidenav-active {
+      background-color: @configBackground;
+      color: @configText;
+    }
+
+    &:hover {
+      background-color: @configHover;
+      color: @configHoverText;
+    }
+  }
+}
+
+//==============================================My Profile==========================================//
+#myProfile {
+
+  h1, h2, h3, h4, h5, h6 {
+    text-align: left;
+  }
+
+  form {
+    margin-top: .7em;
+
+    .submitButton {
+      text-align: right;
+    }
+  }
+
+}
+
+.initials {
+  .initialsBorder {
+    color: @profileInitialsBorderColor;
+  }
+  .initialsBG {
+    color: @profileInitialsBackground;
+    font-size: 1.8em;
+  }
+  .profile-image{
+    width: 100%;
+    border-radius: 50%;
+  }
+}
+
+//===============================================Groups/Stations====================================//
+@stationBorder: 1px solid @stationBorderColor;
+
+#myGroups, #myStations {
+  overflow-y: auto;
+
+  h1 {
+    text-align: left;
+  }
+
+  .create-btn {
+    margin: 1em 0;
+  }
+}
+
+.group-wrapper, .station-wrapper {
+  overflow-y: auto;
+
+  .no-content-warning {
+    font-size: 1.5em;
+    padding: 2em;
+  }
+}
+
+.station {
+  position: relative;
+  border: @stationBorder;
+  border-radius: 5px 5px 0 0;
+  margin-top: 2em;
+
+  .station-content {
+    position: relative;
+    text-align: left;
+    font-size: 1.15em;
+  }
+  & .row {
+    margin: 0;
+  }
+  .radio-group {
+    display: inline-block;
+    padding: 0 .25em;
+    font-size: .8em;
+
+    label {
+      display: block;
+    }
+  }
+
+  .panel-body {
+    text-align: left;
+    .btn {
+      margin: .5em;
+    }
+
+    hr {
+      margin-bottom: 0;
+    }
+  }
+
+  .panel-title {
+    text-align: left;
+  }
+
+  .station-header {
+    font-size: 1.25em;
+    padding: .5em 2em;
+  }
+
+  .station-update {
+    display: flex;
+    align-items: center;
+    padding: .5em 0;
+  }
+  .expander {
+    border-top: @stationBorder;
+    line-height: .75em;
+    text-align: center;
+
+    &:hover {
+      background-color: @configHover;
+    }
+  }
+}
+
+#calibrateStation {
+  input {
+    width: 6em;
+  }
+}
+
+//=================================================Register=========================================//
+#registerAMSPage h1 {
+  text-align: left;
+}
+#registerAMS {
+  textarea {
+    resize: vertical;
+  }
+  .radio-group {
+    text-align: left;
+    padding-left: 0;
+    label {
+      display: block;
+    }
+  }
+  #submitGroup {
+    text-align: right;
+  }
+  .form-group .radio {
+    padding-left: 0;
+  }
+}

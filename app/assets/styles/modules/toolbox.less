@@ -1,3 +1,5 @@
+//===========================================General============================================//
+@toolbox-border: 2px solid @mapOverlayBorder;
 .toolbox-wrapper {
   position: relative;
   width: 100%;
@@ -16,7 +18,7 @@
 
     &:hover {
       cursor: pointer;
-      color: @button-hover;
+      color: @mapOverlayHover;
     }
 
     .expander-wrapper {
@@ -24,21 +26,19 @@
       width: 100%;
       position: relative;
 
-        i {
-          display: block!important;
-          margin: auto;
+      i {
+        display: block !important;
+        margin: auto;
 
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-        }
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
     }
   }
 }
-@toolbox-background: rgba(0,0,0,.75);
-@toolbox-drawer-background: rgba(0,0,0,.75);
-@toolbox-border: 2px solid rgba(0,0,0,.90);
+
 .toolbox {
   position: absolute;
   top: 0;
@@ -46,14 +46,14 @@
   bottom: 0;
   z-index: 5;
   padding: .5em;
-  background: @toolbox-background;
-  color: white;
+  background: @mapOverlaySolid;
+  color: @mapOverlayText;
 
-  &.hidden{
+  &.hidden {
     display: none;
   }
   &.expanded {
-      padding: 1em;
+    padding: 1em;
   }
 
   .tool {
@@ -71,8 +71,8 @@
     transition: width 1s;
     transition: height 1s;
 
-    &.bordered{
-      border: 1px solid white;
+    &.bordered {
+      border: 1px solid @mapOverlayBorder;
     }
     &.expanded {
       height: 4em;
@@ -83,11 +83,11 @@
 
     &:hover {
       cursor: pointer;
-      color: @button-hover;
+      color: @mapOverlayHover;
     }
 
     i {
-      display: block!important;
+      display: block !important;
       margin: auto;
 
       position: absolute;
@@ -96,19 +96,21 @@
       transform: translate(-50%, -50%);
 
       &:focus {
-        color: @button-hover;
+        color: @mapOverlayFocus;
       }
     }
   }
 }
+
+//=============================Drawers=======================================//
 
 @toolbox-drawer-width: 25em;
 .toolbox-drawer {
   position: absolute;
   z-index: 1;
   border: @toolbox-border;
-  background: @toolbox-drawer-background;
-  color: white;
+  background: @mapOverlay;
+  color: @mapOverlayText;
   top: 0;
   left: -@toolbox-drawer-width;
   bottom: 0;
@@ -119,10 +121,13 @@
   -webkit-transition: left 1s;
   transition: left 1s;
 
+  &.drawer-open {
+    left: 100%;
+  }
 
   .search-container {
     padding: .25em;
-    background-color: transparent;
+    background-color: @transparent;
     border-radius: 1em;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -130,31 +135,30 @@
 
     .search {
       width: 80%;
-      background-color: transparent;
+      background-color: @transparent;
       border: none;
       &:focus {
         outline-style: none !important;
       }
       &::-webkit-input-placeholder {
-        color: @medium-lighter-gray;
+        color: @mapOverlayText;
         opacity: 1;
       }
       &::-moz-placeholder {
-        color: @medium-lighter-gray;
+        color: @mapOverlayText;
         opacity: 1;
       }
       &:-ms-input-placeholder {
-        color: @medium-lighter-gray;
+        color: @mapOverlayText;
       }
     }
   }
-
 
   .search-results {
     position: absolute;
     height: 40%;
     width: 100%;
-    background-color: black;
+    background-color: darken(@mapOverlay, 20%);
     z-index: 1;
 
     .station-container {
@@ -195,7 +199,7 @@
   }
 
   .btn-map-marker {
-    color: black;
+    color: @dark-blue;
     padding-top: 0;
     padding-bottom: 0;
     padding-left: 0.5em;
@@ -210,7 +214,7 @@
     width: 100%;
     height: 15%;
     margin-top: 0.5em;
-    background-color: transparent;
+    background-color: @transparent;
     overflow-y: auto;
     border-top: groove 1px;
     border-bottom: groove 1px;
@@ -224,160 +228,39 @@
     padding-right: 0.5em;
 
     input {
-      background-color: transparent;
+      background-color: @transparent;
       margin-right: 1em;
     }
   }
-
-  #plot-button {
-    width: 100%;
-    padding: 0.5em;
-
-    #split-button {
-      width: 90%;
-      margin:0;
-    }
+  .tooltip-inner {
+    width: 30em;
+    height: 2.5em;
+    font-size: 1.5em;
   }
-
-  #download-button {
-    padding: 0.5em;
-  }
-
-  .toolbar-input-text {
-    width: 100%;
-    color: white;
-    background-color: transparent;
-  }
-
-  /* Old Toolbar */
-  /*
-  .item-location {
-    float: right;
-    padding-right: 4em;
-  }
-
-  .item-add {
-
-  }
-
-  .box {
-    padding: 0.5em;
-    .container {
-      i {
-        padding-right: 1em;
-      }
-      .search {
-        width: 80%;
-        background-color: transparent;
-        border: none;
-        &:focus {
-          outline: none !important;
-          border: 1px solid @button-green;
-        }
-      }
-    }
-  }
-
-  .btn {
-    background-color: @button-red;
-    color: white;
-    box-shadow: @button-box-shadow;
-    margin-left: 1em;
-
-    &:hover {
-      background-color: @button-hover;
-      color: black;
-    }
-  }
-
-  .active {
-    background-color: @button-green;
-    color: black;
-  }
-
-  .btn-map-marker {
-    background-color: @button-light-blue;
-    color: black;
-  }
-
-  .btn-sort {
-    background-color: @button-light-blue;
-    color: black;
-    margin: 0.25em;
-  }
-
-  .sort-order {
-    padding-bottom: 1.5em;
-  }
-
-  .list-group {
-    height: 15em;
-    overflow-y: scroll;
-
-    // I'm not sure why this didn't work here
-    //#station-container {
-    //  overflow-y: hidden;
-    //}
-
-    .list-group-item {
-      height: 4em;
-      max-width: 30em;
-      text-align: left;
-      overflow-x: hidden;
-      overflow-y: hidden;
-
-      //span {
-      //  padding-top: 0.5em;
-      //  overflow-x: hidden;
-      //}
-
-      .item-label {
-        padding-top: 0.5em;
-        max-width: 15em;
-      }
-    }
-  }
-
-  .cluster-toggles {
-    .btn {
-      background-color: @button-green;
-      color: black;
-      box-shadow: @button-box-shadow;
-      margin-left: 0.5em;
-      margin-right: 0.5em;
-    }
-
-    .active {
-      background-color: @button-red;
-      color: white;
-    }
-  }
-
-  .well {
-    max-width: 30em;
-
-    .station-desc {
-      span {
-        display: block;
-        text-align: left;
-        max-width: 30em;
-      }
-    }
-  }
-  */
 }
 
-.drawer-open {
-  left: 100%;
+#plot-button {
+  width: 100%;
+  padding: 0.5em;
 
+  #split-button {
+    width: 90%;
+    margin: 0;
+  }
+}
+
+#download-button {
+  padding: 0.5em;
+}
+
+.toolbar-input-text {
+  width: 100%;
+  color: @mapOverlayText;
+  background-color: @transparent;
 }
 
 #station-container {
   overflow-y: hidden;
 }
 
-.tooltip-inner {
-  width: 30em;
-  height: 2.5em;
-  font-size: 1.5em;
-}
+

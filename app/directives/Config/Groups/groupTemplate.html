@@ -1,7 +1,7 @@
 <div class="panel panel-primary" ng-if="ctrl.group">
     <div class="panel-heading">
         <div class="panel-title row">
-            <span class="col-md-12">{{ctrl.group.name || "No Name" }} - {{ctrl.group.id}}</span>
+            <span class="col-md-12">{{ctrl.group.name || "No Name" }} - Id# {{ctrl.group.id}} <span class="pull-right">({{ctrl.group.stations.length}} {{ctrl.group.stations.length == 1 ? 'Station' : 'Stations'}})</span></span>
         </div>
     </div>
     <div class="panel-body">

@@ -1,0 +1,41 @@
+<header class="header ng-cloak">
+    <div class="headerzone col-xs-2 col-sm-1"><img src="app/assets/images/AirLogo.svg" alt="University of Utah"
+                                                   id="logo"></div>
+    <div class="headerzone col-xs-8 col-sm-4">
+        <ul class="nav navbar-nav">
+            <li ui-sref-active="active" class="tab"><a ui-sref="app.almanac">Almanac</a></li>
+            <li ui-sref-active="active" class="tab"><a ui-sref="app.map">Map</a></li>
+            <li ui-sref-active="active" class="tab"><a ui-sref="app.faq">FAQ</a></li>
+            <li ui-sref-active="active" class="tab"><a ui-sref="app.about">About</a></li>
+        </ul>
+    </div>
+    <div class="headerzone hidden-sm col-md-3" id="aqi">
+        <span class="epa-aqi-title">Air Quality Index<br/>{{ctrl.location.city}}, {{ctrl.location.state}}</span>
+            <span class="fa-stack fa-2x epa-aqi-icon" ng-click="ctrl.showPopup = !ctrl.showPopup">
+                <i class="fa fa-circle fa-stack-2x epa-aqi" ng-class="{'low':ctrl.category == 'Good',
+                                                                        'med':ctrl.category == 'Moderate',
+                                                                        'high':ctrl.category != 'Good' && ctrl.category != 'Moderate'}"></i>
+                <span class="fa-stack-1x epa-aqi-text" ng-class="{'invert-text':ctrl.category != 'Moderate'}">{{ctrl.aqi}}</span>
+            </span>
+        <aqi-popover aqi="ctrl.aqi" category="ctrl.category"
+                     ng-class="{'hidden':ctrl.showPopup == false}"></aqi-popover>
+
+    </div>
+    <div class="headerzone hidden-sm col-md-2" id="weather">
+        <weather></weather>
+    </div>
+
+    <div class="headerzone col-xs-2 col-sm-offset-5 col-md-offset-0" id="login">
+        <a class="header-text" ng-hide="ctrl.AuthService.authentication.isAuth" ui-sref="modal.login">Register /
+            Login</a>
+        <span class="header-text" ng-show="ctrl.AuthService.authentication.isAuth" uib-dropdown>
+             <div uib-dropdown-toggle><img class="profile-image"
+                                           ng-src="http://gravatar.com/avatar/{{ctrl.emailHash || ''}}?d=identicon&r=pg"
+                                           alt="Profile Image"> Welcome <i class="fa fa-caret-down"></i></div>
+            <ul uib-dropdown-menu>
+                <li><a ui-sref="app.config"><i class="fa fa-cog"></i> Settings</a></li>
+                <li><a ng-click="ctrl.AuthService.logOut()"><i class="fa fa-sign-out"></i> Logout</a></li>
+            </ul>
+        </span>
+    </div>
+</header>
