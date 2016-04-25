@@ -1,5 +1,7 @@
 <div class="panel aqi-popover">
-    <div class="panel-title">Today's AQI is <span ng-class="ctrl.getCategoryClass()">{{ctrl.category}}</span></div>
+    <div class="panel-title">
+        {{ctrl.getMessage()}}
+    </div>
     <div class="panel-body">
         <aqi-scale aqi="ctrl.aqi"></aqi-scale>
 

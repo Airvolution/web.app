@@ -5,51 +5,69 @@ export = AQIController;
 class AQIController {
     public aqi;
     public category;
+    public healthLabel;
     public aqiRange;
 
-    constructor() {
-    };
+    public static $inject = ['AQIService'];
+    constructor(private AQIService) {}
 
     public onAQIUpdate(newAQI) {
         this.aqiRange = ((newAQI % 50) * 2 - 7) + '%';
     }
+
     public getMeterClass() {
         switch (this.category) {
-            case 'Good':
-                return 'aqi-meter-low';
-            case 'Moderate':
-                return 'aqi-meter-med';
+            case 1:
+                return 'aqi-meter-green';
+            case 2:
+                return 'aqi-meter-yellow';
+            case 3:
+                return 'aqi-meter-orange';
+            case 4:
+                return 'aqi-meter-red';
+            case 5:
+                return 'aqi-meter-purple';
+            case 6:
+                return 'aqi-meter-maroon';
             default:
-                return 'aqi-meter-high';
+                return 'aqi-meter';
         }
     }
+
     public getCategoryClass() {
         switch (this.category) {
-            case 'Good':
-                return 'aqi-good';
-            case 'Moderate':
-                return 'aqi-med';
+            case 1:
+                return 'aqi-green';
+            case 2:
+                return 'aqi-yellow';
+            case 3:
+                return 'aqi-orange';
+            case 4:
+                return 'aqi-red';
+            case 5:
+                return 'aqi-purple';
+            case 6:
+                return 'aqi-maroon';
             default:
-                return 'aqi-high';
+                return '';
         }
+    }
+
+    public getMessage() {
+        let article = 'a ';
+        let categoryLabel = this.AQIService.getCategoryLabel(this.category);
+        if (categoryLabel.startsWith('O') || categoryLabel.startsWith('o')) {
+            article = 'an ';
+        }
+        return "The AQI is " + this.aqi + " for " + article + categoryLabel + " Air Day. " +
+            categoryLabel + " is considered " + this.healthLabel + ". " +
+            this.AQIService.getCategoryUpperLimit(this.category) + " is the upper limit for " + categoryLabel + ".";
     }
 
     public tryMe() {
         let rand = Math.floor(Math.random() * 499);
         this.aqi = rand;
-        if (rand <= 50) {
-            this.category = 1;
-        } else if (rand <= 100) {
-            this.category = 2;
-        } else if (rand <= 150) {
-            this.category = 3;
-        } else if (rand <= 200) {
-            this.category = 4;
-        } else if (rand <= 300) {
-            this.category = 5;
-        } else {
-            this.category = 6;
-        }
+        this.category = this.AQIService.getCategoryFromAqi(this.aqi);
+        this.healthLabel = this.AQIService.getHealthLabelFromAqi(this.aqi);
     }
-
 }

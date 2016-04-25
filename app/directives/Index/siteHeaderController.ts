@@ -6,6 +6,7 @@ class SiteHeaderController {
     public location;
     public aqi;
     public category;
+    public healthLabel;
     public showPopup;
 
     public emailHash;
@@ -64,9 +65,8 @@ class SiteHeaderController {
                 lng: station.lng
             };
             self.aqi = station.aqi;
-
-            //TODO extract this and inject it in a service. This code is many other places
-            self.category = self.AQIService.getCategoryFromAqi(station.aqi);
+            self.category = self.AQIService.getCategoryFromAqi(self.aqi);
+            self.healthLabel = self.AQIService.getHealthLabelFromAqi(self.aqi);
         });
     }
 }

@@ -18,9 +18,11 @@
                                                                         'red'   :ctrl.category == 4,
                                                                         'purple':ctrl.category == 5,
                                                                         'maroon':ctrl.category == 6 }"></i>
-                <span class="fa-stack-1x epa-aqi-text" ng-class="{'invert-text':ctrl.category != 2}">{{ctrl.aqi}}</span>
+                <span class="fa-stack-1x epa-aqi-text" ng-class="{ 'invert-text':ctrl.category != 1 &&
+                                                                                 ctrl.category != 2 }">
+                    {{ctrl.aqi}}</span>
             </span>
-        <aqi-popover aqi="ctrl.aqi" category="ctrl.category"
+        <aqi-popover aqi="ctrl.aqi" category="ctrl.category" health-label="ctrl.healthLabel"
                      ng-class="{'hidden':ctrl.showPopup == false}"></aqi-popover>
 
     </div>
