@@ -58,6 +58,44 @@ class AQIService {
         }
     }
 
+    public getCategoryUpperLimit(category) {
+        switch (category) {
+            case 1:
+                return 50;
+            case 2:
+                return 100;
+            case 3:
+                return 150;
+            case 4:
+                return 200;
+            case 5:
+                return 300;
+            case 6:
+                return 500;
+            default:
+                return -1;
+        }
+    }
+
+    public getCategoryLabel(category) {
+        switch (category) {
+            case 1:
+                return 'Green';
+            case 2:
+                return 'Yellow';
+            case 3:
+                return 'Orange';
+            case 4:
+                return 'Red';
+            case 5:
+                return 'Purple';
+            case 6:
+                return 'Maroon';
+            default:
+                return '';
+        }
+    }
+
     public getHealthLabelFromAqi(aqi) {
         if (aqi < 0) {
             return '';
@@ -66,7 +104,7 @@ class AQIService {
         } else if (aqi <= 100) {
             return 'Moderate';
         } else if (aqi <= 150) {
-            return 'Unhealthy for sensitive groups';
+            return 'Unhealthy for Sensitive Groups';
         } else if (aqi <= 200) {
             return 'Unhealthy';
         } else if (aqi <= 300) {
