@@ -8,8 +8,13 @@ class AQIController {
     public healthLabel;
     public aqiRange;
 
+    public originalAqi;
+    public showRandomAqi;
+
     public static $inject = ['AQIService'];
-    constructor(private AQIService) {}
+    constructor(private AQIService) {
+        this.showRandomAqi = false;
+    }
 
     public onAQIUpdate(newAQI) {
         this.aqiRange = ((newAQI % 50) * 2 - 7) + '%';
@@ -59,7 +64,7 @@ class AQIController {
         if (categoryLabel.startsWith('O') || categoryLabel.startsWith('o')) {
             article = 'an ';
         }
-        return "The AQI is " + this.aqi + " for " + article + categoryLabel + " Air Day. " +
+        return "The AQI is " + this.aqi + " for " + article + categoryLabel + " air day. " +
             categoryLabel + " is considered " + this.healthLabel + ". " +
             this.AQIService.getCategoryUpperLimit(this.category) + " is the upper limit for " + categoryLabel + ".";
     }
@@ -68,10 +73,20 @@ class AQIController {
         return this.AQIService.getHealthLabelExpandedFromAqi(this.aqi);
     }
 
-    public tryMe() {
+    public randomize() {
+        if (this.originalAqi === undefined) {
+            this.originalAqi = this.aqi;
+        }
         let rand = Math.floor(Math.random() * 499);
         this.aqi = rand;
         this.category = this.AQIService.getCategoryFromAqi(this.aqi);
         this.healthLabel = this.AQIService.getHealthLabelFromAqi(this.aqi);
     }
+
+    public reset() {
+        if (this.originalAqi !== undefined) {
+            this.aqi = this.originalAqi;
+        }
+    }
+
 }

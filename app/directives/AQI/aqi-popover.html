@@ -4,24 +4,13 @@
     <div class="panel-body">
         <div class="panel-title">
             <p>{{ctrl.getTitle()}}</p>
-        </div>
+        </div><hr/>
         <div class="panel-title">
             <p>{{ctrl.getMeaning()}}</p>
-        </div>
+        </div><hr/>
 
-
-        <div class="epa-link"><a href="http://www.health.utah.gov/utahair/AQI/" target="_blank">
-            What does this data mean?</a></div>
-        <hr/>
-        <div class="epa-link"><a href="http://www.health.utah.gov/utahair/" target="_blank">
-            What is considered healthy?</a>
-        </div>
-        <hr />
-        <div class="epa-link"><a href="http://air.utah.gov" target="_blank">
-            Where do we get this data?</a></div>
-        <hr/>
-
-
-        <button ng-click="ctrl.tryMe()" style="float:right" class="btn btn-default">Try Me</button>
+        <div class="popover-link"><a ui-sref="app.faq">Want to know more about the AQI?</a></div><hr/>
+        <button class="btn btn-success pull-left" ng-click="ctrl.reset()">Reset AQI</button>
+        <button class="btn btn-warning pull-right" ng-click="ctrl.randomize()">Randomize</button>
     </div>
 </div>
