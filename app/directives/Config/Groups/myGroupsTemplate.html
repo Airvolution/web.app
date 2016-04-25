@@ -3,6 +3,15 @@
         <h1>My Groups</h1>
 
         <div class="col-md-12 group-wrapper">
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="create-btn btn btn-primary pull-left" ui-sref="modal.editGroup({id:0})">Create Group</button>
+                </div>
+            </div>
+            <div ng-hide="ctrl.groups && ctrl.groups.length > 0" class="no-content-warning">
+                <span>You do not have any groups... <br>You may create a new one here or on the <a
+                        ui-sref="app.map">Map</a>.</span>
+            </div>
             <div ng-repeat="group in ctrl.groups">
                 <group group="group" refresh="ctrl.refreshGroups()"></group>
             </div>

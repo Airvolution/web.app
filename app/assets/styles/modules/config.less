@@ -30,19 +30,6 @@
     text-align: left;
   }
 
-  .initials {
-    button {
-      text-align: center;
-      vertical-align: center;
-    }
-    .initialsBorder {
-      color: @profileInitialsBorderColor;
-    }
-    .initialsBG {
-      color: @profileInitialsBackground;
-      font-size: 1.8em;
-    }
-  }
   form {
     margin-top: .7em;
 
@@ -51,6 +38,20 @@
     }
   }
 
+}
+
+.initials {
+  .initialsBorder {
+    color: @profileInitialsBorderColor;
+  }
+  .initialsBG {
+    color: @profileInitialsBackground;
+    font-size: 1.8em;
+  }
+  .profile-image{
+    width: 100%;
+    border-radius: 50%;
+  }
 }
 
 //===============================================Groups/Stations====================================//
@@ -62,10 +63,19 @@
   h1 {
     text-align: left;
   }
+
+  .create-btn {
+    margin: 1em 0;
+  }
 }
 
 .group-wrapper, .station-wrapper {
   overflow-y: auto;
+
+  .no-content-warning {
+    font-size: 1.5em;
+    padding: 2em;
+  }
 }
 
 .station {
