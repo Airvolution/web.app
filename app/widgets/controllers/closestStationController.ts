@@ -47,8 +47,9 @@ class ClosestStationWidgetController {
                     }
                 ];
 
+
                 var bounds = L.latLngBounds(self.markers);
-                leafletData.getMap().then(function(map) {
+                leafletData.getMap('nearestmap').then(function(map) {
                     map.fitBounds(bounds);
                     map.dragging.disable();
                     map.touchZoom.disable();
@@ -56,6 +57,7 @@ class ClosestStationWidgetController {
                     map.scrollWheelZoom.disable();
                     map.keyboard.disable();
                 });
+
             });
         });
 
