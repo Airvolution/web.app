@@ -71,12 +71,27 @@ class AQIController {
         return this.AQIService.getHealthLabelExpandedFromAqi(this.aqi);
     }
 
-    public randomize() {
+    public previous() {
+        this.category = this.category - 1;
+        if (this.category < 1) {
+            this.category = 6;
+        }
+        this.randomize(this.category);
+    }
+
+    public next() {
+        this.category = this.category + 1;
+        if (this.category > 6) {
+            this.category = 1;
+        }
+        this.randomize(this.category);
+    }
+
+    public randomize(category) {
         if (this.originalAqi === undefined) {
             this.originalAqi = this.aqi;
         }
-        let randCategory = Math.floor(Math.random() * 6 + 1);
-        switch (randCategory) {
+        switch (category) {
             case 1:
                 this.aqi = Math.floor(Math.random() * 51);
                 break;
