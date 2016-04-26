@@ -24,6 +24,7 @@ class AQIService {
             { name: 'PM10',        unit: 'UG/M3'  },
             { name: 'CO',          unit: 'PPM'    },
             { name: 'NO2',         unit: 'PPB'    },
+            { name: 'SO2',         unit: 'PPB'    },
             { name: 'OZONE',       unit: 'PPB'    },
             { name: 'Altitude',    unit: 'M'      },
             { name: 'Humidity',    unit: '%'      },
