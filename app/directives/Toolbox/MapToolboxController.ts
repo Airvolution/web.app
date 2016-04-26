@@ -193,7 +193,7 @@ class MapToolboxController {
     public addMarker(marker) {
         // TODO: This implementation breaks when removing groups from selection
         // TODO: Use the CLEAR button for now
-        if (this.markerSelectionIds[marker.id]) {
+        if (this.markerSelectionIds[marker.id] !== undefined) {
             return;
         }
         this.markerSelectionIds[marker.id] = this.markerSelection.length;
