@@ -64,6 +64,15 @@ class APIService {
         }, onError);
     }
 
+    public updateGroup(group, stationIdsToAdd, stationIdsToRemove) {
+        let deferred = this.$q.defer();
+        let onError = (error) => { deferred.reject(error); };
+        let params = { stationsToAdd: stationIdsToAdd, stationsToRemove: stationIdsToRemove };
+        return this.$http.post('api/groups/'+group.id+'/stations/', params).then((response) => {
+            return response.data;
+        }, onError);
+    }
+
     public deleteGroup(group){
         var deferred = this.$q.defer();
         let onError = (error) => { deferred.reject(error); };

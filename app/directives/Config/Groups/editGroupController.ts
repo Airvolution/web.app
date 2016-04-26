@@ -105,17 +105,7 @@ class EditGroupController {
 
     private updateGroup(markersToAdd, markersToRemove) {
         var self = this;
-        if (markersToAdd.length > 0) {
-            this.APIService.addStationToGroup(this.group, markersToAdd).then((group) => {
-                if (markersToRemove.length > 0) {
-                    self.APIService.removeStationFromGroup(self.group, markersToRemove).then(self.onSuccess, self.onUpdateError);
-                } else {
-                    self.onSuccess(group);
-                }
-            }, self.onUpdateError);
-        } else if (markersToRemove.length > 0) {
-            self.APIService.removeStationFromGroup(self.group, markersToRemove).then(self.onSuccess, self.onUpdateError);
-        }
+        this.APIService.updateGroup(this.group, markersToAdd, markersToRemove).then(self.onSuccess, self.onUpdateError);
     }
 
     private onUpdateError = (error) => {
