@@ -1,62 +1,55 @@
-@aqi_green: #56B947;
-@aqi_yellow: #F6EC13;
-@aqi_orange: #F57D20;
-@aqi_red: #ED1F24;
-@aqi_purple: #981B4F;
-@aqi_maroon: #7D1226;
-@aqi_end: #44101D;
-@aqi_neutral: #E6E7E8;
+//=========================================Gradients==============================================//
 #green_scale {
   & stop:first-child {
-    stop-color: @aqi_green;
+    stop-color: @aqiGreen;
   }
   & stop:last-child {
-    stop-color: @aqi_yellow;
+    stop-color: @aqiYellow;
   }
 }
 
 #yellow_scale {
   & stop:first-child {
-    stop-color: @aqi_yellow;
+    stop-color: @aqiYellow;
   }
   & stop:last-child {
-    stop-color: @aqi_orange;
+    stop-color: @aqiOrange;
   }
 }
 
 #orange_scale {
   & stop:first-child {
-    stop-color: @aqi_orange;
+    stop-color: @aqiOrange;
   }
   & stop:last-child {
-    stop-color: @aqi_red;
+    stop-color: @aqiRed;
   }
 }
 
 #red_scale {
   & stop:first-child {
-    stop-color: @aqi_red;
+    stop-color: @aqiRed;
   }
   & stop:last-child {
-    stop-color: @aqi_purple;
+    stop-color: @aqiPurple;
   }
 }
 
 #purple_scale {
   & stop:first-child {
-    stop-color: @aqi_purple;
+    stop-color: @aqiPurple;
   }
   & stop:last-child {
-    stop-color: @aqi_maroon;
+    stop-color: @aqiMaroon;
   }
 }
 
 #maroon_scale {
   & stop:first-child {
-    stop-color: @aqi_maroon;
+    stop-color: @aqiMaroon;
   }
   & stop:last-child {
-    stop-color: @aqi_end;
+    stop-color: @aqiEnd;
   }
 }
 
@@ -84,45 +77,46 @@
   fill: url(#maroon_scale);
 }
 
+//============================================Indicators===========================================//
 .green_indicator {
-  fill: @aqi_neutral;
-  stroke: @aqi_green;
-  stroke-width: 3;
+  fill: @aqiNeutral;
+  stroke: @aqiGreen;
+  stroke-width: 5;
   stroke-miterlimit: 10;
 }
 
 .yellow_indicator {
-  fill: @aqi_neutral;
-  stroke: @aqi_yellow;
-  stroke-width: 3;
+  fill: @aqiNeutral;
+  stroke: @aqiYellow;
+  stroke-width: 5;
   stroke-miterlimit: 10;
 }
 
 .orange_indicator {
-  fill: @aqi_neutral;
-  stroke: @aqi_orange;
-  stroke-width: 3;
+  fill: @aqiNeutral;
+  stroke: @aqiOrange;
+  stroke-width: 5;
   stroke-miterlimit: 10;
 }
 
 .red_indicator {
-  fill: @aqi_neutral;
-  stroke: @aqi_red;
-  stroke-width: 3;
+  fill: @aqiNeutral;
+  stroke: @aqiRed;
+  stroke-width: 5;
   stroke-miterlimit: 10;
 }
 
 .purple_indicator {
-  fill: @aqi_neutral;
-  stroke: @aqi_purple;
-  stroke-width: 3;
+  fill: @aqiNeutral;
+  stroke: @aqiPurple;
+  stroke-width: 5;
   stroke-miterlimit: 10;
 }
 
 .maroon_indicator {
-  fill: @aqi_neutral;
-  stroke: @aqi_maroon;
-  stroke-width: 3;
+  fill: @aqiNeutral;
+  stroke: @aqiMaroon;
+  stroke-width: 5;
   stroke-miterlimit: 10;
 }
 

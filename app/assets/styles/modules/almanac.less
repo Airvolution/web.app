@@ -1,112 +1,119 @@
+//==========================================General==============================================//
+.almanac-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.widget-controls {
+  position: relative;
+  min-height:100%;
+
+}
+
+.widget-grid {
+  position: relative;
+  min-height:100%;
+}
+
+//==========================================Widgets===============================================//
+@widgetBorder: 1px solid @widgetBorderColor;
+@widgetStepSize: 150;
+@widgetRowSize: 300px;
+@widgetColSpacing: 10px;
+@widgetRowSpacing: @widgetColSpacing;
 almanac-widget {
   position: absolute;
-  border: 1px solid black;
+  border: @widgetBorder;
+  height: @widgetRowSize + @widgetRowSpacing;
+  &[tall]{
+    @scale: 2;
+    height: @widgetRowSize*@scale + @widgetRowSpacing*(@scale + 1);
+  }
 
   &[widget-size="small"] {
-    width: 150px;
-    height: 310px;
-
-    &[tall]{
-      height: 630px;
-    }
+    width: @widgetStepSize;
   }
-  &[widget-size="medium"] {
-    width: 310px;
-    height: 310px;
 
-    &[tall]{
-      height: 630px;
-    }
+  &[widget-size="medium"] {
+    //Scale must use units px so less will output correct units
+    @scale: 2px;
+    width: (@widgetStepSize*@scale + @widgetColSpacing*(@scale - 1));
   }
   &[widget-size="large"] {
-    width: 630px;
-    height: 310px;
-
-    &[tall]{
-      height: 630px;
-    }
+    @scale: 4px;
+    width: (@widgetStepSize*@scale + @widgetColSpacing*(@scale - 1));
   }
   &[widget-size="xl"] {
-    width: 950px;
-    height: 310px;
-
-    &[tall]{
-      height: 630px;
-    }
+    @scale: 6px;
+    width: (@widgetStepSize*@scale + @widgetColSpacing*(@scale - 1));
   }
   box-shadow: 0 5px 10px @dark-gray;
   text-align: left;
-  background-color: white;
+  background-color: @true-white;
 
   .card-header {
     position: relative;
     padding: 1em;
     padding-bottom: 0;
     overflow: auto;
-    box-shadow: 0 0 1px @medium-darker-gray;
-    background-color: @medium-light-gray;
+    box-shadow: 0 0 1px @widgetShadowColor;
+    background-color: @widgetBackground;
     z-index: 0;
     &.neutral {
-      background-color: @medium-dark-gray;
+      background-color: @widgetHeaderNeutral;
     }
     &.green {
-      background-color: #00e400;
+      background-color: @widgetHeaderGreen;
     }
     &.yellow {
-      background-color: #ffff00;
+      background-color: @widgetHeaderYellow;
     }
     &.orange {
-      background-color: #ff7e00;
+      background-color:@widgetHeaderOrange;
     }
     &.red {
-      background-color: #ff0000;
+      background-color: @widgetHeaderRed;
     }
     &.purple {
-      background-color: #99004c;
+      background-color: @widgetHeaderPurple;
     }
     &.maroon {
-      background-color: #7e0023;
+      background-color: @widgetHeaderMaroon;
     }
 
     .category {
       font-size: 1em;
-      color: @light-gray;
+      color: @widgetText;
       font-weight: bold;
       text-shadow: 1px 1px 1px black;
     }
 
     .title {
       font-size: 1.5em;
-      color: white;
+      color: @widgetText;
       font-weight: bolder;
       text-shadow: 1px 1px 2px black;
     }
 
     .emoji {
       vertical-align: text-bottom;
-      border: 3px solid white;
+      border: 3px solid @widgetEmojiBorder;
       border-radius: 8px;
-      box-shadow: 0 0 5px @white;
-      color: @white;
+      box-shadow: 0 0 5px @widgetEmojiShadow;
+      color: @widgetEmoji;
     }
   }
 
   .card-body {
-    //padding: 1em;
-    //padding-top: 0;
     padding-left: 1em;
     padding-right: 1em;
-    //background-color: white;
 
     .value {
       font-size: 7em;
       text-align: center;
-      //color: #09AA00;
-      //text-shadow:
-      //  -1px -1px 0 #000,
-      //   1px -1px 0 #000,
-      //  -1px  1px 0 #000,
-      //   1px  1px 0 #000;;
     }
 
     .container {
@@ -125,7 +132,6 @@ almanac-widget {
         left: 12.25em;
         height: 10em;
         width: 20.5em;
-        //background-color: #00c800;
       }
 
       .ranking {
@@ -134,7 +140,6 @@ almanac-widget {
         height: 10em;
         top: 16.5em;
         width: 41em;
-        //background-color: #ffaa00;
       }
 
       /* Bottom-Half of Widget */
@@ -144,7 +149,6 @@ almanac-widget {
         position: absolute;
         top: 26.5em;
         width: 20.5em;
-        //background-color: #ffff00;
       }
 
       .worst-container {
@@ -153,7 +157,6 @@ almanac-widget {
         position: absolute;
         top: 26.5em;
         width: 20.5em;
-        //background-color: #00b3ee;
       }
     }
 
@@ -161,16 +164,6 @@ almanac-widget {
       font-size: 1em;
     }
   }
-
-  //.actions {
-  //  padding: 1em;
-  //  border-top: 1px solid @medium-light-gray;
-  //}
-
-  //.card-body-plain {
-  //  padding-top: 0.1em;
-  //  padding-bottom: 0.5em;
-  //}
 
   .card-body-map {
     background-color: transparent;

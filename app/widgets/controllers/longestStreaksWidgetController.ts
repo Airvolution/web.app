@@ -4,13 +4,13 @@ export = LongestStreaksWidgetController;
 
 class LongestStreaksWidgetController {
     public static name = 'LongestStreaksWidgetController';
-    public static $inject = ['ConsecutiveDaysFactory', 'AQIColors', '$scope'];
+    public static $inject = ['ConsecutiveDaysFactory', 'AQIService', '$scope'];
     public longestStreaks;
     public plotOptions;
     public plotData;
     public loading;
 
-    constructor(ConsecutiveDaysFactory, private AQIColors, private $scope) {
+    constructor(ConsecutiveDaysFactory, private AQIService, private $scope) {
         var self = this;
 
         self.configurePlotOptions();
@@ -71,32 +71,32 @@ class LongestStreaksWidgetController {
                     {
                         label: 'Green',
                         value: longestStreaks.longestGreen,
-                        color: this.AQIColors.getColorFromCategory(1)
+                        color: this.AQIService.getColorFromCategory(1)
                     },
                     {
                         label: 'Yellow',
                         value: longestStreaks.longestYellow,
-                        color: this.AQIColors.getColorFromCategory(2)
+                        color: this.AQIService.getColorFromCategory(2)
                     },
                     {
                         label: 'Orange',
                         value: longestStreaks.longestOrange,
-                        color: this.AQIColors.getColorFromCategory(3)
+                        color: this.AQIService.getColorFromCategory(3)
                     },
                     {
                         label: 'Red',
                         value: longestStreaks.longestRed,
-                        color: this.AQIColors.getColorFromCategory(4)
+                        color: this.AQIService.getColorFromCategory(4)
                     },
                     {
                         label: 'Purple',
                         value: longestStreaks.longestPurple,
-                        color: this.AQIColors.getColorFromCategory(5)
+                        color: this.AQIService.getColorFromCategory(5)
                     },
                     {
                         label: 'Maroon',
                         value: longestStreaks.longestMaroon,
-                        color: this.AQIColors.getColorFromCategory(6)
+                        color: this.AQIService.getColorFromCategory(6)
                     }
                 ]
             }

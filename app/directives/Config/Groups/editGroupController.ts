@@ -15,17 +15,19 @@ class EditGroupController {
     public alert;
     public alertTimeout;
 
-    public static $inject = ['$scope', '$state','$stateParams','APIService', 'SearchService', 'notificationService'];
-    public constructor(
-        private $scope,
-        private $state,
-        private $stateParams,
-        private APIService,
-        private SearchService,
-        private notificationService
-    ) {
+    public editGroupForm;
+    public formData;
+
+    public static $inject = ['$scope', '$state', '$stateParams', 'APIService', 'SearchService', 'notificationService'];
+
+    public constructor(private $scope,
+                       private $state,
+                       private $stateParams,
+                       private APIService,
+                       private SearchService,
+                       private notificationService) {
         this.loading = true;
-        this.searchOptions = {updateOn: 'default blur', debounce: {'default': 250 , 'blur': 0}};
+        this.searchOptions = {updateOn: 'default blur', debounce: {'default': 250, 'blur': 0}};
         this.stationQueryResults = [];
 
         this.alert = undefined;
@@ -38,18 +40,37 @@ class EditGroupController {
             console.log('Error loading group in modal: ' + error);
         };
 
-        this.APIService.getUserGroup($stateParams.id).then((group) => {
-            self.group = group;
-            self.groupOriginalMarkers = angular.copy(group.stations);
+        if ($stateParams.id != 0) {
+            this.APIService.getUserGroup($stateParams.id).then((group) => {
+                self.group = group;
+                self.groupOriginalMarkers = angular.copy(group.stations);
+                this.loading = false;
+            }, onError);
+        } else {
+            this.group = {
+                id: 0,
+                name: '',
+                description: '',
+                stations: []
+            };
+            this.groupOriginalMarkers = [];
             this.loading = false;
-        }, onError);
+        }
 
-        $scope.configureModal('Edit Group: ' + $stateParams.name,
+        var name = $stateParams.id == 0 ? 'Create Group' : 'Edit Group: ' + $stateParams.name;
+
+        $scope.configureModal(name,
             'Save',
             ()=> {
                 let markersToAdd = [];
                 let markersToRemove = [];
 
+
+                if(!self.editGroupForm.$valid){
+                    self.editGroupForm.$setSubmitted();
+                    self.alert = {type: 'danger', message: 'Invalid group, please fill in remaining required data.'};
+                    return;
+                }
                 angular.forEach(self.group.stations, (marker) => {
                     if (!self.originalGroupContainsStation(marker)) {
                         markersToAdd.push(marker.id);
@@ -62,48 +83,55 @@ class EditGroupController {
                     }
                 });
 
-                let onUpdateError = (error) => {
-                    self.alert = { type: 'danger', message: 'Sorry. We encountered an error while saving your group.' };
-                };
-
-                let onSuccess = (group) => {
-                    self.group = group;
-                    self.groupOriginalMarkers = angular.copy(group.stations);
-                    self.notificationService.notify('GroupModified');
-                    self.alert = { type: 'success', message: 'Changes to your group have been saved.' };
-                };
-
-                if (markersToAdd.length > 0) {
-                    self.APIService.addStationToGroup(self.group, markersToAdd).then((group) => {
-                        if (markersToRemove.length > 0) {
-                            self.APIService.removeStationFromGroup(self.group, markersToRemove).then(onSuccess, onUpdateError);
-                        } else {
-                            self.group = group;
-                            self.groupOriginalMarkers = angular.copy(group.stations);
-                            self.notificationService.notify('GroupModified');
-                            self.alert = { type: 'success', message: 'Changes to your group have been saved.' };
-                        }
-                    }, onUpdateError);
-                } else if (markersToRemove.length > 0) {
-                    self.APIService.removeStationFromGroup(self.group, markersToRemove).then(onSuccess, onUpdateError);
+                if (self.group.id == 0) {
+                    var create = {
+                        name: self.formData.name,
+                        description: self.formData.description,
+                        stationIds: markersToAdd
+                    };
+                    self.APIService.createGroup(create).then(self.onSuccess, self.onUpdateError);
+                } else {
+                    self.updateGroup(markersToAdd, markersToRemove);
                 }
             },
             'Cancel',
-            ()=> { $scope.closeModal(); });
+            ()=> {
+                $scope.closeModal();
+            });
 
         //TODO Load Adjustment params here
         console.log('Editing group: ' + $stateParams.id);
     }
 
+    private updateGroup(markersToAdd, markersToRemove) {
+        var self = this;
+        this.APIService.updateGroup(this.group, markersToAdd, markersToRemove).then(self.onSuccess, self.onUpdateError);
+    }
+
+    private onUpdateError = (error) => {
+        this.alert = {type: 'danger', message: 'Sorry. We encountered an error while saving your group.'};
+    };
+
+    private onSuccess = (group) => {
+        if(!group){
+            this.onUpdateError("Could not save group.");
+            return;
+        }
+        this.group = group;
+        this.groupOriginalMarkers = angular.copy(group.stations);
+        this.notificationService.notify('GroupModified');
+        this.alert = {type: 'success', message: 'Changes to your group have been saved.'};
+    };
+
     public searchStations() {
-        if(!this.stationQuery || this.stationQuery  == ''){
+        if (!this.stationQuery || this.stationQuery == '') {
             this.stationQueryResults = [];
             return;
         }
 
         var self = this;
-        this.SearchService.searchStations(this.stationQuery).then((results)=>{
-            self.stationQueryResults = _.map(results.hits,(result:any)=>{
+        this.SearchService.searchStations(this.stationQuery).then((results)=> {
+            self.stationQueryResults = _.map(results.hits, (result:any)=> {
                 return result._source;
             });
         });
@@ -149,8 +177,8 @@ class EditGroupController {
         return false;
     }
 
-    public onAlertClose(alert){
-        if (alert.type == 'success'){
+    public onAlertClose(alert) {
+        if (alert.type == 'success') {
             this.alert = undefined;
             this.$scope.closeModal();
         } else {

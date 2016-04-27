@@ -14,6 +14,14 @@ class APIService {
         private $timeout
     ) {}
 
+    public registerStation(station) {
+        let deferred = this.$q.defer();
+        let onError = (error) => { deferred.reject(error); };
+        return this.$http.post('api/stations/register', station).then((response) => {
+            return response.data;
+        }, onError);
+    }
+
     public createGroup(group){
         var deferred = this.$q.defer();
         let onError = (error) => { deferred.reject(error); };
@@ -52,6 +60,15 @@ class APIService {
         let onError = (error) => { deferred.reject(error); };
         let params = this.$httpParamSerializer({ 'id': stationIds });
         return this.$http.delete('api/groups/'+group.id+'/stations?'+params).then((response) => {
+            return response.data;
+        }, onError);
+    }
+
+    public updateGroup(group, stationIdsToAdd, stationIdsToRemove) {
+        let deferred = this.$q.defer();
+        let onError = (error) => { deferred.reject(error); };
+        let params = { stationsToAdd: stationIdsToAdd, stationsToRemove: stationIdsToRemove };
+        return this.$http.post('api/groups/'+group.id+'/stations/', params).then((response) => {
             return response.data;
         }, onError);
     }

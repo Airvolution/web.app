@@ -23,7 +23,8 @@ angular.module('app', [
         'ngSanitize',
         'angularMoment',
         'ngMaterial',
-        'ngMessages'
+        'ngMessages',
+        'angular-md5'
     ])
     .config(($stateProvider, $urlRouterProvider, $httpProvider) => {
 

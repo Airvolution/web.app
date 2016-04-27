@@ -10,8 +10,7 @@ import OpenWeatherService = require('./Weather/OpenWeatherService');
 import MapFactory = require("./Map/MapFactory");
 import SearchService = require("./SearchService");
 import PreferencesService = require('./Preferences/PreferencesService');
-import AQIColors = require('./AQIColors');
-import ParameterService = require('./ParameterService');
+import AQIService = require('./AQIService');
 
 export = angular.module('services', [])
             .service(NotificationService.serviceName, NotificationService)
@@ -25,5 +24,4 @@ export = angular.module('services', [])
             .service(MapFactory.serviceName, MapFactory)
             .service(SearchService.serviceName, SearchService)
             .service(PreferencesService.serviceName, PreferencesService)
-            .service(AQIColors.serviceName, AQIColors)
-            .service(ParameterService.serviceName, ParameterService);
+            .service(AQIService.serviceName, AQIService);

@@ -12,8 +12,7 @@ class GroupDirective implements ng.IDirective{
     public controllerAs = "ctrl";
     public bindToController = true;
     public scope = {
-        group: '=',
-        refresh: '&refreshGroups'
+        group: '='
     };
     
     public static create(){

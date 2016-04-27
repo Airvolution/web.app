@@ -9,7 +9,8 @@ class AQIDirective implements ng.IDirective {
     public scope = {};
     public bindToController = {
         aqi: '=',
-        category: '='
+        category: '=',
+        healthLabel: '='
     };
     public templateUrl = 'app/directives/AQI/aqi-popover.html';
     public restrict = 'E';

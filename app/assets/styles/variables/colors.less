@@ -1,8 +1,141 @@
-@system-warning: yellow;
-@system-error: red;
-@button-light-blue: rgb(173, 216, 230);
-@button-green: rgb(0, 240, 0);
-@button-red: rgb(255, 70, 70);
-@button-hover: yellow;
-@search-focus-color: rgb(0, 240, 0);
-@button-box-shadow: 0 0 3px 0.5px gray;
+//=========================================Site Colors========================================//
+@dark-blue: #19325C;
+@blue: #4CB6C2;
+@light-blue: #B2D7D9;
+@white: #EDF7F2;
+@light-green: #EDF7F2;
+@green: #B5E555;
+@dark-green: #468F2E;
+@orange: #FC941C;
+@red: #E3442B;
+@true-white: #fff;
+
+//========================================AQI Colors==========================================//
+//original
+//@aqiGreen: #00e400;
+//@aqiYellow: #ffff00;
+//@aqiOrange: #ff7e00;
+//@aqiRed:#ff0000;
+//@aqiPurple:#99004c;
+//@aqiMaroon:#7e0023;
+//@aqiEnd: #44101D;
+//@aqiNeutral: #E6E7E8;
+//new
+//@aqiGreen: #38aa27;
+//@aqiYellow: #e5db27;
+//@aqiOrange: #f7931e;
+//@aqiRed:#d31726;
+//@aqiPurple:#894389;
+//@aqiMaroon:#7f2a31;
+//@aqiEnd: #44101D;
+//@aqiNeutral: #E6E7E8;
+//Flat
+//@aqiGreen: #439658;
+//@aqiYellow: #F2E977;
+//@aqiOrange: #F2A048;
+//@aqiRed:#E56457;
+//@aqiPurple:#AD4D76;
+//@aqiMaroon:#702D2F;
+//@aqiEnd: #381718;
+//@aqiNeutral: #E6E7E8;
+//3
+@aqiGreen: #16EB00;
+@aqiYellow: #FAEF15;
+@aqiOrange: #FF8C00;
+@aqiRed: #E50D08;
+@aqiPurple: #CF005F;
+@aqiMaroon: #780012;
+@aqiEnd: #380009;
+@aqiNeutral: #E6E7E8;
+
+//=======================================Marker Colors=========================================//
+@markerBeforeShadow: drop-shadow(0px 5px 3px rgba(0,0,0,1));
+@markerAfterShadow: drop-shadow(0px 4px 3px rgba(255,255,255,0.5));
+
+@markerInnerGreen: #15E000;
+@markerOuterGreen: rgba(0, 255, 0, 0.5);
+
+@markerInnerYellow: #EEEE00;
+@markerOuterYellow: rgba(255, 255, 0, 0.5);
+
+@markerInnerOrange: @aqiOrange;
+@markerOuterOrange: rgba(255, 165, 0, 0.5);
+
+@markerInnerRed: @aqiRed;
+@markerOuterRed: rgba(255, 25, 0, 0.5);
+
+@markerInnerPurple: #C800C8;
+@markerOuterPurple: rgba(222, 0, 222, 0.5);
+
+@markerInnerMaroon: #8C0000;
+@markerOuterMaroon: rgba(140, 20, 20, 0.5);
+
+//===========================================Header============================================//
+@headerBackground: @dark-blue;
+@headerText: @medium-lighter-gray;
+@headerHover: @green;
+@headerHoverText: @dark-blue;
+@headerActiveTab: @dark-green;
+@headerLightBackground: @light-green;
+@headerDividerColor: darken(@dark-blue, 10%);
+
+//============================================Maps=============================================//
+@mapOverlaySolid: @dark-blue;
+@mapOverlay: fade(@mapOverlaySolid,85%);
+@mapOverlayBorder: fade(@mapOverlaySolid,95%);
+@mapOverlayText: @medium-lighter-gray;
+@mapOverlayHover: @green;
+@mapOverlayFocus: @green;
+
+
+//===========================================NVD3===============================================//
+@plotBackground: rgba(0, 0, 0, 0.25);
+
+//==========================================Almanac=============================================//
+@widgetBackground: @medium-light-gray;
+@widgetBorderColor: @black;
+@widgetShadowColor: @medium-darker-gray;
+@widgetText: @light-gray;
+
+@widgetHeaderNeutral: @medium-dark-gray;
+@widgetHeaderGreen: @aqiGreen;
+@widgetHeaderYellow: @aqiYellow;
+@widgetHeaderOrange: @aqiOrange;
+@widgetHeaderRed: @aqiRed;
+@widgetHeaderPurple: @aqiPurple;
+@widgetHeaderMaroon: @aqiMaroon;
+
+@widgetEmoji: @widgetText;
+@widgetEmojiBorder: @true-white;
+@widgetEmojiShadow: @true-white;
+
+//============================================Config=============================================//
+@configBackground: @true-white;
+@configText: @dark-blue;
+@configHover: @true-white;
+@configHoverText: @blue;
+
+@profileInitialsBackground: @medium-light-gray;
+@profileInitialsBorderColor: @medium-darker-gray;
+
+@stationBorderColor: @medium-dark-gray;
+
+//============================================About==============================================//
+@aboutBackground: @medium-darker-gray;
+@aboutProfileBackground: @true-white;
+
+//=============================================FAQ===============================================//
+@faqQAUsefulText: @green;
+@faqQANotUsefulText: @red;
+
+@faqSearchResultsBorderColor: @medium-light-gray;
+@faqSearchResultsBackground: @true-white;
+@faqSearchResultsText: @medium-darker-gray;
+@faqSearchHover: @medium-light-gray;
+@faqSearchFieldHighlight: @blue;
+
+//==========================================UX Controls==========================================//
+@loadingOverlay: rgba(255,255,255,.8);
+
+//============================================General============================================//
+@transparent: transparent;

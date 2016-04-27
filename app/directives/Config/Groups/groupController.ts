@@ -4,7 +4,6 @@ export = GroupController;
 
 class GroupController {
     public group;
-    public refresh:()=>void;
     public static $inject = ['$state', 'APIService', 'notificationService'];
     public constructor(
         private $state,
@@ -17,7 +16,7 @@ class GroupController {
         this.APIService.deleteGroup(this.group).then((succeeded)=>{
             if(succeeded){
                 self.group = undefined;
-                self.refresh();
+                self.notificationService.notify('GroupModified');
             }
         });
     }

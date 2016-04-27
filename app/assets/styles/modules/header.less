@@ -1,0 +1,291 @@
+//========================================General========================================//
+@header-height: 50px;
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: @headerBackground;
+  font-size: 1.25em;
+  line-height: 1.25em;
+  height: 100%;
+  width:100%;
+
+  .profile-image {
+    border-radius: 50%;
+    width: @header-height;
+  }
+
+  .headerzone {
+    padding-left: 0;
+    padding-right: 0;
+    height: @header-height;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    button {
+      padding-left: 1em;
+      padding-right: 1em;
+    }
+
+  }
+
+  .nav {
+    .tab {
+      background-color: @headerBackground;
+      a {
+        color: @headerText;
+      }
+    }
+    .tab.active {
+      background-color: @headerActiveTab;
+      a {
+        color: @headerText;
+      }
+      &:hover {
+        background-color: @headerActiveTab !important;
+        a {
+          color:@headerText !important;
+        }
+      }
+      &:focus {
+        background-color: @headerActiveTab !important;
+        a{
+          color: @headerText !important;
+        }
+      }
+    }
+    a {
+      &:hover {
+        background-color: @headerHover;
+        color: @headerBackground;
+      }
+      &:focus {
+        background-color: @headerHover;
+        color: @headerBackground;
+      }
+    }
+  }
+}
+//==============================================Controls========================================//
+#weather {
+  color: @headerText;
+
+  .weather_wrapper {
+    text-align: center;
+
+    .weather-icon {
+      font-size: 2em;
+      padding: .25em;
+
+      .wi-degrees{
+        margin-left: -.2em;
+      }
+    }
+
+    .high-temp {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin-top: 4%;
+      margin-right: 9%;
+    }
+
+    .low-temp {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin-right: 9%;
+      margin-bottom: 4%;
+    }
+  }
+
+}
+
+.header-text {
+  color: @headerText;
+
+  a& {
+    &:hover {
+      color: @headerHoverText;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    &:focus {
+      color:@headerHoverText;
+      cursor: pointer;
+      text-decoration: initial;
+    }
+  }
+}
+
+#login {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  span {
+    &:hover {
+      color: @headerHover;
+      cursor: pointer;
+    }
+    &:focus {
+      color: @headerHover;
+    }
+  }
+}
+
+#login-dropdown {
+  background-color: @headerBackground;
+  color: @headerText;
+  font-size: 1em;
+}
+
+.config-menu-icon  {
+  color: @headerText;
+
+  &:hover {
+    color: @headerHoverText;
+    cursor: pointer;
+  }
+}
+.config-menu {
+  top: 50%;
+  right: 50%;
+
+}
+.welcome-message {
+  color: @headerText;
+  height: 100%;
+}
+
+//=========================================AQI Meter Dropdown====================================//
+
+.dropdown-menu {
+  color: @headerBackground;
+}
+
+.aqi-popover {
+  position: absolute;
+  top: 80%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background-color: @headerBackground;
+
+  &.expanded {
+    bottom: 0;
+  }
+
+  &.panel {
+    margin-top:3%;
+    padding-top: 1em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    color: @headerText;
+
+    .panel-title {
+      font-size: 1.1em;
+      line-height: 1.3em;
+      color: @headerText;
+    }
+  }
+
+  .popover-link {
+    margin-top: 1em;
+
+    a {
+      color: @headerText;
+      font-size: 1.1em;
+    }
+  }
+
+  .popover-buttons {
+    text-align: center;
+  }
+
+  .aqi-green {
+    color: @aqiGreen;
+  }
+
+  .aqi-yellow {
+    color: @aqiYellow;
+  }
+
+  .aqi-orange {
+    color: @aqiOrange;
+  }
+
+  .aqi-red {
+    color: @aqiRed;
+    //font-size: 0.8em; // TODO: is there a better fix for this
+  }
+
+  .aqi-purple {
+    color: @aqiPurple;
+    //font-size: 0.8em; // TODO: is there a better fix for this
+  }
+
+  .aqi-maroon {
+    color: @aqiMaroon;
+    //font-size: 0.8em; // TODO: is there a better fix for this
+  }
+}
+
+#aqi {
+  color: @headerText;
+
+  .epa-aqi-icon{
+    -webkit-filter: drop-shadow(0px 0px 25px rgba(255,255,255,1));
+    margin-left: 25%;
+    font-size: 1.5em;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    .green {
+      color: @aqiGreen;
+    }
+
+    .yellow {
+      color: @aqiYellow;
+    }
+
+    .orange {
+      color: @aqiOrange;
+    }
+
+    .red {
+      color: @aqiRed;
+    }
+
+    .purple {
+      color: @aqiPurple;
+    }
+
+    .maroon {
+      color: @aqiMaroon;
+    }
+
+    .invert-text {
+      color: @white;
+    }
+  }
+
+  .epa-aqi-title {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 5%;
+  }
+
+  .epa-aqi {
+    color: @aqiNeutral;
+  }
+
+  .epa-aqi-text {
+    color: @black;
+  }
+}
