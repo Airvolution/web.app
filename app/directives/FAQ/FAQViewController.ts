@@ -8,7 +8,7 @@ class FAQViewController {
     public top5Viewed;
     public top5Rated;
     public faqDict = {};
-    public search;
+    public search = '';
     public resultsVisible;
     public searchResults;
     public resultsCount;

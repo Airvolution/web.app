@@ -1,5 +1,4 @@
 <main>
-
     <div id="about" class="col-md-offset-2 col-md-8 about-text">
         <h1>About Us</h1>
         <p>
@@ -40,9 +39,9 @@
     </div>
     <div id="contact" class="col-md-8 col-md-offset-2 about-text">
         <h1>Contact Us</h1>
-        <uib-alert class="col-md-12" ng-if="ctrl.emailAlert" type="{{ctrl.emailAlert.type}}"
-                   dismiss-on-timeout="{{ctrl.alertTimeout}}" close="ctrl.onAlertClose(ctrl.profileAlert)">
-            {{ctrl.emailAlert.message}}
+        <uib-alert class="col-md-12" ng-if="ctrl.alert" type="{{ctrl.alert.type}}"
+                   dismiss-on-timeout="{{ctrl.alertTimeout}}" close="ctrl.onAlertClose(ctrl.alert)">
+            {{ctrl.alert.message}}
         </uib-alert>
         <form name="ctrl.contactUsForm" ng-submit="ctrl.sendEmail()" novalidate>
             <div class="form-group">
