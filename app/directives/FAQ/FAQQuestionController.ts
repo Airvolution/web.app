@@ -27,8 +27,7 @@ class FAQQuestionController {
 
         self.question.chevron = 'DOWN';
 
-        if(self.authService.authentication.isAuth)
-        {
+        if(self.authService.authentication.isAuth) {
             self.loadUserState();
         }
 
@@ -39,10 +38,9 @@ class FAQQuestionController {
         self.notificationService.subscribe($scope, 'UserLogout', () => {
             self.clearUserState();
         });
-    };
+    }
 
-    public loadUserState()
-    {
+    public loadUserState() {
         // Only call if user logs in or is already logged in.
         this.APIService.getUserProfile().then((userProfile)=> {
             if(userProfile && userProfile.id != undefined) {
@@ -51,22 +49,19 @@ class FAQQuestionController {
                 var score = this.getMyQuestionReivewScore();
                 if(score == 1) {
                     this.userReviewColor = 'green';
-                }
-                else if(score == -1) {
+                } else if(score == -1) {
                     this.userReviewColor = 'red';
-                }
-                else {
+                } else {
                     this.userReviewColor = 'black';
                 }
             }
         });
-    };
+    }
 
-    public clearUserState()
-    {
+    public clearUserState() {
         // Only call if the user logs out.
         this.userReviewColor = 'black';
-    };
+    }
 
     public toggleChevron() {
         if(this.question.chevron == 'DOWN') {
@@ -80,7 +75,7 @@ class FAQQuestionController {
         } else {
             this.question.chevron = 'DOWN';
         }
-    };
+    }
 
     public vote(direction) {
 
@@ -101,34 +96,29 @@ class FAQQuestionController {
             score: 0
         };
 
-        if(direction == 'up') {
+        if (direction == 'up') {
 
-            if(this.userReviewColor == 'green') {
+            if (this.userReviewColor == 'green') {
                 review.score = 0;
                 this.userReviewColor = 'black';
-            }
-            else {
+            } else {
                 review.score = 1;
                 this.userReviewColor = 'green';
             }
-            this.APIService.PostFaqUserReview(review).then((data)=>{
-            });
-        }
-        else if(direction == 'down') {
+            this.APIService.PostFaqUserReview(review).then((data)=>{});
+        } else if(direction == 'down') {
 
-            if(this.userReviewColor == 'red') {
+            if (this.userReviewColor == 'red') {
                 review.score = 0;
                 this.userReviewColor = 'black';
-            }
-            else {
+            } else {
                 review.score = -1;
                 this.userReviewColor = 'red';
             }
 
-            this.APIService.PostFaqUserReview(review).then((data)=>{
-            });
+            this.APIService.PostFaqUserReview(review).then((data)=>{});
         }
-    };
+    }
 
     public getMyQuestionReivewScore(){
         for(var i = 0; i < this.question.userReviews.length; i++) {
@@ -136,5 +126,5 @@ class FAQQuestionController {
                 return this.question.userReviews[i].userReviewScore;
             }
         }
-    };
+    }
 }

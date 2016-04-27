@@ -24,17 +24,17 @@ class FAQViewController {
 
         this.getFAQs();
         this.getTop5Lists();
-    };
+    }
 
     public scrollTo(id, prefix) {
 
-        if(prefix == 'question') {
+        if (prefix == 'question') {
             $('html, body').animate({
                 scrollTop: $('#' + prefix + id).offset().top
             }, 1000);
 
             // Check if question is collapsed.
-            if(!angular.element('#answer' + id).hasClass('in')) {
+            if (!angular.element('#answer' + id).hasClass('in')) {
                 for(var i = 0; i < this.faqList.length; i++) {
                     if(this.faqList[i].id == id) {
                         this.faqList[i].chevron = 'UP';
@@ -44,16 +44,14 @@ class FAQViewController {
 
                 // Increment view count.
                 this.APIService.PostFaqViewCount(id).then(()=>{
-                }, (error) => {
-                });
+                }, (error) => {});
             }
-        }
-        else {
+        } else {
             $('html, body').animate({
                 scrollTop: $('#' + id).offset().top
             }, 1000);
         }
-    };
+    }
 
     public getFAQs() {
         var self = this;
@@ -66,7 +64,7 @@ class FAQViewController {
                 //display an error here... if we want
             }
         );
-    };
+    }
 
     public onSearchChange(){
         var self = this;
@@ -74,7 +72,7 @@ class FAQViewController {
             self.searchResults = results.hits;
             self.resultsCount = results.total;
         });
-    };
+    }
 
     public onSearchSelect(result){
         this.searchResults = undefined;
@@ -82,7 +80,7 @@ class FAQViewController {
         this.scrollTo(result._id, "question");
         this.resultsVisible = false;
         this.search = '';
-    };
+    }
 
     public getTop5Lists() {
         this.top5Viewed = this.APIService.GetTop5MostViewedList().then((top5viewed)=>{

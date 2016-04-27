@@ -44,7 +44,6 @@ class HeatmapWidgetController {
             }
         };
 
-
         leafletData.getMap('heatmap').then(function(map) {
             map.dragging.disable();
             map.touchZoom.disable();

@@ -65,7 +65,6 @@ class EditGroupController {
                 let markersToAdd = [];
                 let markersToRemove = [];
 
-
                 if(!self.editGroupForm.$valid){
                     self.editGroupForm.$setSubmitted();
                     self.alert = {type: 'danger', message: 'Invalid group, please fill in remaining required data.'};
@@ -103,11 +102,6 @@ class EditGroupController {
         console.log('Editing group: ' + $stateParams.id);
     }
 
-    private updateGroup(markersToAdd, markersToRemove) {
-        var self = this;
-        this.APIService.updateGroup(this.group, markersToAdd, markersToRemove).then(self.onSuccess, self.onUpdateError);
-    }
-
     private onUpdateError = (error) => {
         this.alert = {type: 'danger', message: 'Sorry. We encountered an error while saving your group.'};
     };
@@ -122,6 +116,11 @@ class EditGroupController {
         this.notificationService.notify('GroupModified');
         this.alert = {type: 'success', message: 'Changes to your group have been saved.'};
     };
+
+    private updateGroup(markersToAdd, markersToRemove) {
+        var self = this;
+        this.APIService.updateGroup(this.group, markersToAdd, markersToRemove).then(self.onSuccess, self.onUpdateError);
+    }
 
     public searchStations() {
         if (!this.stationQuery || this.stationQuery == '') {
