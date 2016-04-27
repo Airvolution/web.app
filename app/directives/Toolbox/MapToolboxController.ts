@@ -33,7 +33,7 @@ class MapToolboxController {
     public newGroupDesc;
     public userAddingNewGroup;
 
-    public static $inject = ['$scope','$state', '$log', 'mapFactory', 'selectionService','SearchService', 'AQIService', 'preferencesService', 'notificationService', 'APIService'];
+    public static $inject = ['$scope','$state', '$log', 'mapFactory', 'selectionService','SearchService', 'AQIService', 'preferencesService', 'notificationService', 'APIService', 'AuthService'];
     constructor(
         private $scope,
         private $state,
@@ -44,7 +44,8 @@ class MapToolboxController {
         private AQIService,
         private preferencesService,
         private notificationService,
-        private APIService
+        private APIService,
+        private AuthService
     ) {
         this.markerSelection = [];
         this.availableParameters = this.AQIService.getParameterList();
@@ -386,6 +387,11 @@ class MapToolboxController {
     }
 
     public toggleStationDrawer() {
+        if (!this.AuthService.authentication.isAuth) {
+            this.$state.go('modal.login');
+            return;
+        }
+
         if (this.showStationDrawer) {
             this.closeAllDrawers();
         } else {
