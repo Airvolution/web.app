@@ -12,7 +12,7 @@
         </thead>
         <tr ng-repeat="marker in ctrl.userStations track by marker.id">
             <td>
-                <button class="btn btn-map-marker pull-left" ng-click="ctrl.setSelectedStation(marker)">
+                <button class="btn btn-info btn-map-marker pull-left" ng-click="ctrl.setSelectedStation(marker)">
                     <span class="fa fa-map-marker" uib-tooltip="Locate On Map" tooltip-placement="left"></span>
                 </button>
             </td>
@@ -53,7 +53,7 @@
             <td>{{::group.name}}</td>
             <td>{{::group.description}}</td>
             <td>
-                <button class="btn btn-primary pull-right"
+                <button class="btn btn-info pull-right"
                         ng-if="ctrl.selectedGroup != group"
                         ng-click="ctrl.listStationsInGroup(group)">
                 List</button>
@@ -71,7 +71,7 @@
     <span class="pull-left">Stations in {{ctrl.selectedGroup.name}}: </span>
     <button class="btn btn-warning pull-right" ng-click="ctrl.editGroup(ctrl.selectedGroup)">Edit Group</button>
 </div>
-<div class="selection-container" ng-if="ctrl.selectedGroup['id'] != undefined">
+<div class="home-selection-container" ng-if="ctrl.selectedGroup['id'] != undefined">
     <span ng-if="ctrl.markersInSelectedGroup == 0">You do not have any stations in {{ctrl.selectedGroup.name}}. Please click "Edit Group" button to add some.</span>
     <table class="table" ng-if="ctrl.markersInSelectedGroup.length > 0">
         <thead>
@@ -82,7 +82,7 @@
         </thead>
         <tr ng-repeat="marker in ctrl.markersInSelectedGroup track by marker.id">
             <td>
-                <button class="btn btn-map-marker pull-left" ng-click="ctrl.setSelectedStation(marker)">
+                <button class="btn btn-info btn-map-marker pull-left" ng-click="ctrl.setSelectedStation(marker)">
                     <span class="fa fa-map-marker" uib-tooltip="Locate On Map" tooltip-placement="left"></span>
                 </button>
             </td>

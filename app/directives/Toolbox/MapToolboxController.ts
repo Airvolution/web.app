@@ -380,6 +380,11 @@ class MapToolboxController {
     }
 
     public toggleStationDrawer() {
+        if (!this.AuthService.authentication.isAuth) {
+            this.$state.go('modal.login');
+            return;
+        }
+
         if (this.showStationDrawer) {
             this.closeAllDrawers();
         } else {
