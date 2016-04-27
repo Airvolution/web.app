@@ -63,61 +63,63 @@
     </div>
 </div>
 
-<!-- USER's STATIONS -->
-<div class="container-header" ng-if="!ctrl.showUserGroups">
-    <span class="pull-left">My Stations: </span>
-    <button class="btn btn-info pull-right"
-            ng-click="ctrl.showUserGroups = true">
-        Show My Groups</button>
-</div>
-<div class="selection-container" ng-if="!ctrl.showUserGroups">
-    <table class="table">
-        <thead>
-        <tr>
-            <th><span class="pull-left">Find</span></th>
-            <th><span>Station Name</span></th>
-            <th></th>
-        </tr>
-        </thead>
-        <tr ng-repeat="marker in ctrl.userStations track by marker.id">
-            <td>
-                <button class="btn btn-info btn-map-marker pull-left" ng-click="ctrl.setSelectedStation(marker)">
-                    <span class="fa fa-map-marker" uib-tooltip="Locate On Map" tooltip-placement="right"></span>
-                </button>
-            </td>
-            <td>{{::marker.name}}</td>
-            <td><input class="pull-right"
-                       type="checkbox"
-                       ng-click="ctrl.toggleMarker(marker)"
-                       ng-checked="ctrl.isMarkerInGroup(marker)"></td>
-        </tr>
-    </table>
-</div>
+<div ng-if="ctrl.userLoggedIn">
+    <!-- USER's STATIONS -->
+    <div class="container-header" ng-if="!ctrl.showUserGroups">
+        <span class="pull-left">My Stations: </span>
+        <button class="btn btn-info pull-right"
+                ng-click="ctrl.showUserGroups = true">
+            Show My Groups</button>
+    </div>
+    <div class="selection-container" ng-if="!ctrl.showUserGroups">
+        <table class="table">
+            <thead>
+            <tr>
+                <th><span class="pull-left">Find</span></th>
+                <th><span>Station Name</span></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tr ng-repeat="marker in ctrl.userStations track by marker.id">
+                <td>
+                    <button class="btn btn-info btn-map-marker pull-left" ng-click="ctrl.setSelectedStation(marker)">
+                        <span class="fa fa-map-marker" uib-tooltip="Locate On Map" tooltip-placement="right"></span>
+                    </button>
+                </td>
+                <td>{{::marker.name}}</td>
+                <td><input class="pull-right"
+                           type="checkbox"
+                           ng-click="ctrl.toggleMarker(marker)"
+                           ng-checked="ctrl.isMarkerInGroup(marker)"></td>
+            </tr>
+        </table>
+    </div>
 
-<!-- USER's GROUPS -->
-<div class="container-header" ng-if="ctrl.showUserGroups">
-    <span class="pull-left">My Groups: </span>
-    <button class="btn btn-primary pull-right"
-            ng-click="ctrl.showUserGroups = false">
-        Show My Stations</button>
-</div>
-<div class="selection-container" ng-if="ctrl.showUserGroups">
-    <table class="table">
-        <thead>
-        <tr>
-            <th><span>Name</span></th>
-            <th><span>Description</span></th>
-            <th></th>
-        </tr>
-        </thead>
-        <tr ng-repeat="group in ctrl.userGroups track by group.id">
-            <td>{{::group.name || 'No Name'}}</td>
-            <td>{{::group.description || 'No Description'}}</td>
-            <td><input class="pull-right" type="checkbox"
-                       ng-click="ctrl.toggleGroup(group)"
-                       ng-checked="ctrl.markersInGroup(group)"></td>
-        </tr>
-    </table>
+    <!-- USER's GROUPS -->
+    <div class="container-header" ng-if="ctrl.showUserGroups">
+        <span class="pull-left">My Groups: </span>
+        <button class="btn btn-primary pull-right"
+                ng-click="ctrl.showUserGroups = false">
+            Show My Stations</button>
+    </div>
+    <div class="selection-container" ng-if="ctrl.showUserGroups">
+        <table class="table">
+            <thead>
+            <tr>
+                <th><span>Name</span></th>
+                <th><span>Description</span></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tr ng-repeat="group in ctrl.userGroups track by group.id">
+                <td>{{::group.name || 'No Name'}}</td>
+                <td>{{::group.description || 'No Description'}}</td>
+                <td><input class="pull-right" type="checkbox"
+                           ng-click="ctrl.toggleGroup(group)"
+                           ng-checked="ctrl.markersInGroup(group)"></td>
+            </tr>
+        </table>
+    </div>
 </div>
 
 <!-- USER SELECTION -->

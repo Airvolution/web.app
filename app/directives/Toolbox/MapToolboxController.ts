@@ -19,6 +19,7 @@ class MapToolboxController {
     public toDate;
 
     // variables for user defaults
+    public userLoggedIn;
     public userDefaultStation;
     public userDefaultParameters;
 
@@ -64,6 +65,7 @@ class MapToolboxController {
         };
 
         let loadUserGroups = (groups) => {
+            self.userLoggedIn = true;
             self.userGroups = groups;
             self.userGroupsMap = {};
             angular.forEach(groups, (group) => {
@@ -408,6 +410,7 @@ class MapToolboxController {
     }
 
     public resetDefaults() {
+        this.userLoggedIn = false;
         this.markerSelection = [];    // array of all markers in selection group
         this.availableParameters = this.AQIService.getParameterList();
         this.selectedParameters = [];

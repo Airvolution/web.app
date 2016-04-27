@@ -2,6 +2,8 @@
 export = StationController;
 
 class StationController {
+    public alert;
+    public alertTimeout;
     public station;
     public formStation;
     public collapsed = true;
@@ -11,6 +13,7 @@ class StationController {
     public static $inject = ['$scope','APIService','$state'];
 
     constructor(private $scope, private APIService, private $state) {
+        this.alertTimeout = 2000;
         var self = this;
         var unregister = $scope.$watch('ctrl.station',(newVal)=>{
             self.formStation = angular.copy(self.station);
@@ -45,10 +48,20 @@ class StationController {
     public onSubmit(){
         this.updating = true;
         var self = this;
-        this.APIService.updateStation(this.formStation).then((station)=>{
+
+        let onSuccess = (station) => {
             self.station = station;
             this.updating = false;
-        });
+            let message = 'Great news! We saved your changes. Have a nice day!';
+            this.alert = {type: 'success', message: message};
+        };
+
+        let onError = (reaponse) => {
+            let message = 'Hmmm. This almost never happens. Please try again.';
+            this.alert = {type: 'success', message: message};
+        };
+
+        this.APIService.updateStation(this.formStation).then(onSuccess, onError);
 
     }
 
@@ -56,4 +69,7 @@ class StationController {
         this.$state.go('modal.calibrate',{id:this.station.id});
     }
 
+    public onAlertClose(alert) {
+        this.alert = undefined;
+    }
 }

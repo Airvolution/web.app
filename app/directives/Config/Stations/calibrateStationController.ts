@@ -51,7 +51,7 @@ class CalibrateStationController {
                     }
                 });
                 let onSuccess = (reaponse) => {
-                    let message = 'Hooray! We will start applying those calibrations on your data';
+                    let message = 'Hooray! We will start applying those calibrations on your data.';
                     this.alert = {type: 'success', message: message};
                 };
 
