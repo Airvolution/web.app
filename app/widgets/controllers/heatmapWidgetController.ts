@@ -21,7 +21,8 @@ class HeatmapWidgetController {
         this.center = {
             lat: 39.091042,
             lng: -98.178785,
-            zoom: 3
+            zoom: 3,
+            draggable: false
         };
         this.defaults = {
             minZoom: 3,
