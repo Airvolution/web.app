@@ -31,7 +31,7 @@ class AboutController {
             'https://github.com/Jmoore1127',
             'app/assets/images/profilePictures/jared_moore.png');
         var taylorW = new UserProfile('Taylor Wilson',
-            'Frontend Angular.JS, Backend ASP.NET API, and Architecture',
+            'Frontend Angular.JS, Leaflet, Backend ASP.NET API, Python for BeagleBone, and Architecture',
             'https://www.linkedin.com/in/t3ilson',
             'https://github.com/rolyatwilson',
             'app/assets/images/profilePictures/taylor_wilson.png');
