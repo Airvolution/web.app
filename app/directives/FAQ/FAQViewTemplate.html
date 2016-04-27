@@ -1,8 +1,36 @@
 <main>
     <div id="faq" class="content-wrapper">
-        <div>
-            <div class="col-md-offset-3 col-md-9 faq-title">Frequently Asked Questions</div>
-            <div class="search-bar col-md-offset-3  col-md-4">
+        <div class="col-md-3 panel-group">
+            <div class="panel panel-default panel-margin">
+                <h4 class="panel-heading section-header center-text">Top 5 Viewed Questions</h4>
+                <div class="panel-body">
+                    <ol class="nav nav-pills nav-stacked jump-menu">
+                        <li ng-repeat="faq in ctrl.top5Viewed"><div><a class="menu-items" ng-click="ctrl.scrollTo(faq.id, 'question')">{{faq.question}}</a></div></li>
+                    </ol>
+                </div>
+            </div>
+            <div class="panel panel-default panel-margin">
+                <h4 class="panel-heading section-header center-text">Recommended Questions</h4>
+                <div class="panel-body">
+                    <ol class="nav nav-pills nav-stacked jump-menu">
+                        <li ng-repeat="faq in ctrl.top5Rated"><div><a class="menu-items" ng-click="ctrl.scrollTo(faq.id, 'question')">{{faq.question}}</a></div></li>
+                    </ol>
+                </div>
+            </div>
+            <div class="panel panel-default panel-margin">
+                <h4 class="panel-heading section-header center-text">Sections</h4>
+                <div class="panel-body">
+                    <ul class="nav nav-pills nav-stacked jump-menu">
+                        <li><div><a class="menu-items" ng-click="ctrl.scrollTo('section1', '')">General</a></div></li>
+                        <li><div><a class="menu-items" ng-click="ctrl.scrollTo('section2', '')">Pollutants</a></div></li>
+                        <li><div><a class="menu-items" ng-click="ctrl.scrollTo('section3', '')">What Can I Do To Reduce Pollution?</a></div></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <h1 class="faq-title">Frequently Asked Questions</h1>
+            <div class="search-bar col-md-4">
                 <input type="text"
                        placeholder="Search FAQs" class="search-box"
                        update-on-enter
@@ -12,40 +40,42 @@
                        ng-focus="ctrl.resultsVisible = true"
                 >
                 <faq-search-results search-results="ctrl.searchResults" total-results="ctrl.resultsCount"
-                                    ng-show="ctrl.resultsVisible"
-                                    on-result-click="ctrl.onSearchSelect(result)"></faq-search-results>
+                                    on-result-click="ctrl.onSearchSelect(result)"
+                                    ng-show="ctrl.resultsVisible && ctrl.search != '' "
+                                                                 ></faq-search-results>
             </div>
         </div>
-        <div class="col-md-12"></div>
-        <div class="col-md-2">
-            <h3>Top 5 Most Viewed Questions</h3>
-            <ol class="nav nav-pills nav-stacked jump-menu">
-                <li ng-repeat="faq in ctrl.top5Viewed"><div><a class="menu-items" ng-click="ctrl.scrollTo(faq.id, 'question')">{{faq.question}}</a></div></li>
-            </ol>
-            <h3>Top 5 User Recommended Questions</h3>
-            <ol class="nav nav-pills nav-stacked jump-menu">
-                <li ng-repeat="faq in ctrl.top5Rated"><div><a class="menu-items" ng-click="ctrl.scrollTo(faq.id, 'question')">{{faq.question}}</a></div></li>
-            </ol>
-            <h3>Sections</h3>
-            <ul class="nav nav-pills nav-stacked jump-menu">
-                <li><div><a class="menu-items" ng-click="ctrl.scrollTo('section1', '')">General</a></div></li>
-                <li><div><a class="menu-items" ng-click="ctrl.scrollTo('section2', '')">Pollutants</a></div></li>
-                <li><div><a class="menu-items" ng-click="ctrl.scrollTo('section3', '')">What Can I Do To Reduce Pollution?</a></div></li>
-            </ul>
-        </div>
-        <div class="col-md-6 col-md-offset-1 question-answer" scroll-to="ctrl.scrollPos">
-            <h2 id="section1">General</h2>
-            <faq-question ng-repeat="faq in ctrl.faqList | filter: {section:{name:'General'}}"
-                          question="faq"></faq-question>
-            <h2 id="section2">Pollutants</h2>
-            <faq-question ng-repeat="faq in ctrl.faqList | filter: {section:{name:'Pollutants'}}"
-                          question="faq"></faq-question>
-            <h2 id="section3">What Can I Do?</h2>
-            <faq-question ng-repeat="faq in ctrl.faqList | filter: {section:{name:'What Can I Do'}}"
-                          question="faq"></faq-question>
-            <h2 id="section4">Idling</h2>
-            <faq-question ng-repeat="faq in ctrl.faqList | filter: {section:{name:'Idling'}}"
-                          question="faq"></faq-question>
+
+        <div class="col-md-6 question-answer-container panel-group" scroll-to="ctrl.scrollPos">
+            <div class="panel panel-default panel-margin">
+                <h2 class="panel-heading section-header" id="section1">General</h2>
+                <div class="panel-body">
+                    <faq-question ng-repeat="faq in ctrl.faqList | filter: {section:{name:'General'}}"
+                                   question="faq"></faq-question>
+                </div>
+
+            </div>
+            <div class="panel panel-default panel-margin">
+                <h2 class="panel-heading section-header" id="section2">Pollutants</h2>
+                <div class="panel-body">
+                    <faq-question ng-repeat="faq in ctrl.faqList | filter: {section:{name:'Pollutants'}}"
+                                  question="faq"></faq-question>
+                </div>
+            </div>
+            <div class="panel panel-default panel-margin">
+                <h2 class="panel-heading section-header" id="section3">What Can I Do?</h2>
+                <div class="panel-body">
+                    <faq-question ng-repeat="faq in ctrl.faqList | filter: {section:{name:'What Can I Do'}}"
+                                  question="faq"></faq-question>
+                </div>
+            </div>
+            <div class="panel panel-default panel-margin">
+                <h2 class="panel-heading section-header" id="section4">Idling</h2>
+                <div class="panel-body">
+                    <faq-question ng-repeat="faq in ctrl.faqList | filter: {section:{name:'Idling'}}"
+                                  question="faq"></faq-question>
+                </div>
+            </div>
         </div>
     </div>
 </main>
