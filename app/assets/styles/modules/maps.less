@@ -246,7 +246,8 @@
   top: 2em;
   left: 5em;
   text-align: left;
-  padding: 0;
+  padding: 0.20em;
+
 
   color: @mapOverlayText;
   background-color: @mapOverlay;
@@ -255,11 +256,13 @@
 
   input {
     width: 20em;
+    height: 1.5em;
     border-radius: 1em;
-    padding: .25em .5em;
+    padding: .25em .45em;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    font-size: 1.2em;
 
     color: @mapOverlayText;
     background: @transparent;
@@ -267,7 +270,6 @@
 
     &:focus {
       outline-style: none !important;
-      box-shadow: 0 0 2pt 1pt @true-white
     }
 
     &::-webkit-input-placeholder {
@@ -400,7 +402,7 @@
       .extra-info {
         padding: 0;
         color: @mapOverlayText;
-        font-size: .75em;
+        font-size: .90em;
         min-width: 100%;
         margin: 0 -1em -1em;
 
@@ -414,7 +416,7 @@
       color: @mapOverlayText;
       display: inline-block;
       width: 100%;
-      font-size: .75em;
+      font-size: .90em;
       overflow-x: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -427,7 +429,7 @@
       color: @mapOverlayText;
       display: inline-block;
       width: 95%;
-      font-size: 1.15em;
+      font-size: 1.25em;
       overflow-x: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
