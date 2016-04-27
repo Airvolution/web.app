@@ -50,7 +50,7 @@ class ClosestStationWidgetController {
 
                 var bounds = L.latLngBounds(self.markers);
                 leafletData.getMap('closestmap').then(function(map) {
-                    map.fitBounds(bounds);
+                    map.fitBounds(bounds,{padding:[50,50]});
                     map.dragging.disable();
                     map.touchZoom.disable();
                     map.doubleClickZoom.disable();

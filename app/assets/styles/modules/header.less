@@ -43,6 +43,9 @@
       background-color: @headerActiveTab;
       a {
         color: @headerText;
+        &:focus, &:hover{
+          color:@headerBackground
+        }
       }
       &:hover {
         background-color: @headerActiveTab !important;
@@ -53,7 +56,7 @@
       &:focus {
         background-color: @headerActiveTab !important;
         a{
-          color: @headerText !important;
+          color: @headerBackground !important;
         }
       }
     }

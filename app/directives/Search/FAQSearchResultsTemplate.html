@@ -1,4 +1,4 @@
-<div class="search-results">
+<div class="results">
     <div ng-if="!ctrl.searchResults || ctrl.searchResults.length == 0">No results found...</div>
     <div ng-if="ctrl.searchResults">
         <div ng-repeat="result in ctrl.searchResults track by result._source.id" class="search-result" ng-click="ctrl.onResultClick({result: result})">
