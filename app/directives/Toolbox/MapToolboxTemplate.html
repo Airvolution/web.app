@@ -28,11 +28,11 @@
             <i class="fa fa-line-chart" ng-class="{'fa-2x':!ctrl.expanded, 'fa-3x':ctrl.expanded}" ng-click="ctrl.togglePlotDrawer()"></i>
         </tool>
 
-        <div class="toolbox-expander" ng-click="ctrl.expanded = !ctrl.expanded">
-            <div class="expander-wrapper">
-                <i class="fa fa-chevron-right" ng-class="{'fa-chevron-right':!ctrl.expanded, 'fa-chevron-left':ctrl.expanded}"></i>
-            </div>
-        </div>
+        <!--<div class="toolbox-expander" ng-click="ctrl.expanded = !ctrl.expanded">-->
+            <!--<div class="expander-wrapper">-->
+                <!--<i class="fa fa-chevron-right" ng-class="{'fa-chevron-right':!ctrl.expanded, 'fa-chevron-left':ctrl.expanded}"></i>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
 
     <div class="toolbox-drawer" ng-class="{'drawer-open':ctrl.showStationDrawer,'expanded':ctrl.expanded}" ng-include="'app/directives/Toolbox/templates/stationDrawer.html'"></div>

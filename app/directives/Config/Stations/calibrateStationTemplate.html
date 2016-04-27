@@ -3,6 +3,9 @@
         <span class="sr-only">Loading...</span>
     </i>
     <form id="calibrateStation" ng-if="!ctrl.loading" novalidate ng-submit="ctrl.formSubmit()" autocomplete="off">
+        <uib-alert class="col-md-12" ng-if="ctrl.alert" type="{{ctrl.alert.type}}"
+                   dismiss-on-timeout="{{ctrl.alertTimeout}}" close="ctrl.onAlertClose(ctrl.alert)">{{ctrl.alert.message}}</uib-alert>
+
         <div ng-if="ctrl.existingAdjustments.length > 0">
             <table class="table table-striped">
                 <thead>
@@ -38,7 +41,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="adjustment in ctrl.newAdjustments">
-                    <td><select ng-options="parameter.name for parameter in ctrl.unadjustedParameters"
+                    <td><select ng-options="parameter.name for parameter in ctrl.unadjustedParameters track by parameter.name"
                                 ng-model="adjustment.parameter"
                                 required></select></td>
                     <td>{{adjustment.parameter.unit}}</td>
