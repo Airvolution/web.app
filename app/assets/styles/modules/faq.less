@@ -1,10 +1,31 @@
 //======================================================General=======================================================//
 #faq {
-  .question-answer {
+
+  .question-answer-container {
     text-align: left;
-    font-size: 1em;
     max-height: 90%;
     overflow-y: auto;
+  }
+
+  .panel-margin {
+    margin-top: 10px;
+  }
+
+  .section-header {
+    margin-top: 0px;
+    margin-bottom: 0;
+    color: @medium-lighter-gray;
+    background-color: @dark-blue;
+  }
+
+  .center-text {
+    text-align: center;
+  }
+
+  .answer-text p {
+    color: @medium-darker-gray;
+    font-size: 15px;
+    font-family: Georgia,Serif;
   }
 
   .jump-menu {
@@ -13,8 +34,6 @@
 
   .faq-title {
     text-align: left;
-    font-size: 2.5em;
-    padding: .5em;
   }
 
   .faq-header {
@@ -37,7 +56,7 @@
   .chevron {
     float: left;
     margin-right: 10px;
-    margin-top: -5px;
+    margin-top: 3px;
   }
 
   .clear {
@@ -47,14 +66,15 @@
   .voteButtons {
     text-shadow: 1px 1px 1px @white;
     outline: none;
+    margin-right: 10px;
   }
 
   .green {
-    color: @faqQAUsefulText;
+    color: @dark-green;
   }
 
   .red {
-    color: @faqQANotUsefulText;
+    color: @red;
   }
 }
 
@@ -66,13 +86,22 @@
 //========================================================Search=====================================================//
 @searchResultsBorder: 1px solid @faqSearchResultsBorderColor;
 #faq .search-bar {
+
   position: relative;
   height: 100%;
-
+  margin-left: 0px;
+  padding-left: 0px;
 
   .search-box {
     font-size: 1.25em;
-    width: 50%;
+    text-align: left;
+    padding: .25em .5em;
+    background-color: rgba(25,50,92,.85);
+    max-width: 40em;
+    border-radius: 1em;
+    color: @medium-lighter-gray;
+    border: none;
+    outline: none;
   }
   .search-results {
     text-align: left;

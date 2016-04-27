@@ -33,7 +33,7 @@ class MapToolboxController {
     public newGroupDesc;
     public userAddingNewGroup;
 
-    public static $inject = ['$scope','$state', '$log', 'mapFactory', 'selectionService','SearchService', 'AQIService', 'preferencesService', 'notificationService', 'APIService'];
+    public static $inject = ['$scope','$state', '$log', 'mapFactory', 'selectionService','SearchService', 'AQIService', 'preferencesService', 'notificationService', 'APIService', 'AuthService'];
     constructor(
         private $scope,
         private $state,
@@ -44,40 +44,20 @@ class MapToolboxController {
         private AQIService,
         private preferencesService,
         private notificationService,
-        private APIService
+        private APIService,
+        private AuthService
     ) {
-        this.markerSelection = [];
-        this.availableParameters = this.AQIService.getParameterList();
-        this.selectedParameters = [];
-        //this.loadUserDefaults(); // <-- TODO: see comment in method declaration!
-        this.toDate = new Date();
-        this.fromDate = new Date();
-        this.fromDate.setDate(this.fromDate.getDate() - 7);
-
-        this.showPlotDrawer = false;
-        this.showStationDrawer = false;
-
+        this.resetDefaults();
         this.searchOptions = {updateOn: 'default blur', debounce: {'default': 250, 'blur': 0}};
-        this.stationQueryResults = [];
-        this.groupQueryResults = [];
-        this.userStations = [];
-        this.userGroups = [];
-        this.userGroupsMap = {};
-        this.selectedGroup = {};
-        this.markersInSelectedGroup = [];
-
-        this.showUserGroups = false;
-        this.newGroupName = '';
-        this.newGroupDesc = '';
-        this.userAddingNewGroup = false;
 
         let self = this;
-
         // try to load user stations and groups first
         let loadUserMarkers = (markers) => {
-            self.userStations = markers;
-            for (let i = 0; i < self.userStations.length; i++) {
-                self.markerSelection.push(self.userStations[i]);
+            if (markers) {
+                self.userStations = markers;
+                for (let i = 0; i < self.userStations.length; i++) {
+                    self.markerSelection.push(self.userStations[i]);
+                }
             }
         };
 
@@ -103,6 +83,11 @@ class MapToolboxController {
             });
         };
 
+        let loadDefaults = () => {
+            self.APIService.getUserStations().then(loadUserMarkers, waitForUserMarkers);
+            self.APIService.getUserGroups().then(loadUserGroups, waitForUserGroups);
+        };
+
         this.notificationService.subscribe(this.$scope, 'GroupModified', () => {
             self.APIService.getUserGroups().then((groups) => {
                 loadUserGroups(groups);
@@ -111,8 +96,17 @@ class MapToolboxController {
             }, waitForUserGroups);
         });
 
-        this.APIService.getUserStations().then(loadUserMarkers, waitForUserMarkers);
-        this.APIService.getUserGroups().then(loadUserGroups, waitForUserGroups);
+        if (this.AuthService.authentication.isAuth) {
+            loadDefaults();
+        }
+
+        this.notificationService.subscribe(this.$scope, 'UserLogin', () => {
+            loadDefaults();
+        });
+
+        this.notificationService.subscribe(this.$scope, 'UserLogout', () => {
+            self.resetDefaults();
+        });
     }
 
     public search() {
@@ -386,6 +380,11 @@ class MapToolboxController {
     }
 
     public toggleStationDrawer() {
+        if (!this.AuthService.authentication.isAuth) {
+            this.$state.go('modal.login');
+            return;
+        }
+
         if (this.showStationDrawer) {
             this.closeAllDrawers();
         } else {
@@ -403,5 +402,30 @@ class MapToolboxController {
             this.showPlotDrawer = true;
         }
         this.$scope.toggleSiteSearch(!this.showPlotDrawer);
+    }
+
+    public resetDefaults() {
+        this.markerSelection = [];    // array of all markers in selection group
+        this.availableParameters = this.AQIService.getParameterList();
+        this.selectedParameters = [];
+        //this.loadUserDefaults(); // <-- TODO: see comment in method declaration!
+        this.toDate = new Date();
+        this.fromDate = new Date();
+        this.fromDate.setDate(this.fromDate.getDate() - 7);
+
+        this.showPlotDrawer = false;
+        this.showStationDrawer = false;
+        this.stationQueryResults = [];
+        this.groupQueryResults = [];
+        this.userStations = [];
+        this.userGroups = [];
+        this.userGroupsMap = {};
+        this.selectedGroup = {};
+        this.markersInSelectedGroup = [];
+
+        this.showUserGroups = false;
+        this.newGroupName = '';
+        this.newGroupDesc = '';
+        this.userAddingNewGroup = false;
     }
 }
