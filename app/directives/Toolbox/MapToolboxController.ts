@@ -56,7 +56,9 @@ class MapToolboxController {
             if (markers) {
                 self.userStations = markers;
                 for (let i = 0; i < self.userStations.length; i++) {
-                    self.markerSelection.push(self.userStations[i]);
+                    if (!self.isMarkerInGroup(self.userStations[i])) {
+                        self.markerSelection.push(self.userStations[i]);
+                    }
                 }
             }
         };

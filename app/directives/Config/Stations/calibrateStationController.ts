@@ -3,22 +3,25 @@
 export = CalibrateStationController;
 
 class CalibrateStationController {
+    public alert;
+    public alertTimeout;
     public station;
     public existingAdjustments;
     public newAdjustments;
     public unadjustedParameters;
     public loading;
-    public static $inject = ['$scope', '$state','$stateParams','APIService', 'ParameterService'];
+    public static $inject = ['$scope', '$state','$stateParams','APIService', 'AQIService'];
     public constructor(
         private $scope,
         private $state,
         private $stateParams,
         private APIService,
-        private ParameterService
+        private AQIService
     ){
+        this.alertTimeout = 2000;
         this.loading = true;
         this.newAdjustments = [];
-        this.unadjustedParameters = angular.copy(this.ParameterService.getParameterList());
+        this.unadjustedParameters = angular.copy(this.AQIService.getParameterList());
 
         var self = this;
         this.APIService.getStation($stateParams.id).then((station) => {
@@ -47,12 +50,16 @@ class CalibrateStationController {
                         newAdjustments.push(newAdjustment);
                     }
                 });
-                let onError = (error) => { /*TODO*/
-                    console.log('error!!!' + error);
+                let onSuccess = (reaponse) => {
+                    let message = 'Hooray! We will start applying those calibrations on your data';
+                    this.alert = {type: 'success', message: message};
                 };
-                self.APIService.updateStationAdjustments($stateParams.id, newAdjustments.concat(self.existingAdjustments)).then((response) => {
-                    // success
-                }, onError);
+
+                let onError = (error) => {
+                    let message = 'Oh no! We were unable to save your selection. Please try again.';
+                    this.alert = {type: 'error', message: message};
+                };
+                self.APIService.updateStationAdjustments($stateParams.id, newAdjustments.concat(self.existingAdjustments)).then(onSuccess, onError);
             },
             "Cancel",
             ()=> {
@@ -80,5 +87,14 @@ class CalibrateStationController {
             scaleFactor: 1.0,
             shiftFactor: 0.0
         });
+    }
+
+    public onAlertClose(alert) {
+        if (alert.type == 'success') {
+            this.alert = undefined;
+            this.$scope.closeModal();
+        } else {
+            this.alert = undefined;
+        }
     }
 }
