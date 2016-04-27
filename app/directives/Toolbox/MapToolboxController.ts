@@ -108,6 +108,7 @@ class MapToolboxController {
 
         this.notificationService.subscribe(this.$scope, 'UserLogout', () => {
             self.resetDefaults();
+            self.hideStationsInGroup();
         });
     }
 
