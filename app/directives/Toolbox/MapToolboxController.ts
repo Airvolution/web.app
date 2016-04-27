@@ -13,8 +13,6 @@ class MapToolboxController {
     public showSearchResults;
 
     public markerSelection;
-    public markerSelectionIds;
-    public markerUncheckedIds;
     public availableParameters;
     public selectedParameters;
     public fromDate;
@@ -48,9 +46,7 @@ class MapToolboxController {
         private notificationService,
         private APIService
     ) {
-        this.markerSelection = [];    // array of all markers in selection group
-        this.markerSelectionIds = {}; // maps marker.id to index in marker array
-        this.markerUncheckedIds = {}; // maps marker.id to index in marker array, contains unchecked markers which must still be displayed
+        this.markerSelection = [];
         this.availableParameters = this.AQIService.getParameterList();
         this.selectedParameters = [];
         //this.loadUserDefaults(); // <-- TODO: see comment in method declaration!
@@ -82,7 +78,6 @@ class MapToolboxController {
             self.userStations = markers;
             for (let i = 0; i < self.userStations.length; i++) {
                 self.markerSelection.push(self.userStations[i]);
-                self.markerSelectionIds[self.userStations[i].id] = i;
             }
         };
 
@@ -152,13 +147,13 @@ class MapToolboxController {
     }
 
     public isMarkerInGroup(marker) {
-        var result;
-        if (!marker.id) {
-            result = this.markerSelectionIds[marker];
-        } else {
-            result = this.markerSelectionIds[marker.id];
+        let id = marker.id ? marker.id : marker;
+        for (let i = 0; i < this.markerSelection.length; i++) {
+            if (this.markerSelection[i].id == id) {
+                return true;
+            }
         }
-        return result !== undefined;
+        return false;
     }
 
     public markersInGroup(group) {
@@ -173,17 +168,12 @@ class MapToolboxController {
         return true;
     }
 
-    public isMarkerChecked(marker) {
-        return this.markerUncheckedIds[marker.id] == undefined;
-    }
-
     public isParameterChecked(parameter) {
         return this.selectedParameters.indexOf(parameter) > -1;
     }
 
     public toggleMarker(marker) {
-        let index = this.markerSelectionIds[marker.id];
-        if (index != undefined) {
+        if (this.isMarkerInGroup(marker)) {
             this.removeMarker(marker);
         } else {
             this.addMarker(marker);
@@ -191,26 +181,24 @@ class MapToolboxController {
     }
 
     public addMarker(marker) {
-        // TODO: This implementation breaks when removing groups from selection
-        // TODO: Use the CLEAR button for now
-        if (this.markerSelectionIds[marker.id]) {
-            return;
+        if (!this.isMarkerInGroup(marker)) {
+            this.markerSelection.push(marker);
         }
-        this.markerSelectionIds[marker.id] = this.markerSelection.length;
-        this.markerSelection.push(marker);
     }
 
     public removeMarker(marker) {
-        // TODO: This implementation breaks when removing group from selection
-        // TODO: Use the CLEAR button for now
         var id = marker.id ? marker.id : marker;
-        let index = this.markerSelectionIds[id];
-        if (index === undefined) {
-            return;
+        let i = 0;
+        let found = false;
+        for (; i < this.markerSelection.length; i++) {
+            if (this.markerSelection[i].id == id) {
+                found = true;
+                break;
+            }
         }
-        this.markerSelection.splice(index, 1);
-        delete this.markerSelectionIds[id];
-        delete this.markerUncheckedIds[id];
+        if (found) {
+            this.markerSelection.splice(i, 1);
+        }
     }
 
     public toggleGroup(group) {
@@ -249,13 +237,10 @@ class MapToolboxController {
     }
 
     public toggleChecked(marker) {
-        let index = this.markerUncheckedIds[marker.id];
-        if (index != undefined) {
-            // Re-Checks the marker in the Selection Group
-            delete this.markerUncheckedIds[marker.id];
+        if (this.isMarkerInGroup(marker)) {
+            this.removeMarker(marker);
         } else {
-            // Un-Checks the marker in the Selection Group
-            this.markerUncheckedIds[marker.id] = this.markerSelectionIds[marker.id];
+            this.addMarker(marker);
         }
     }
 
@@ -285,7 +270,7 @@ class MapToolboxController {
         let self = this;
         // sets markers
         angular.forEach(self.markerSelection, (marker) => {
-            if (self.isMarkerChecked(marker)) {
+            if (self.isMarkerInGroup(marker)) {
                 self.selectionService.addStationToSelection(marker);
             }
         });
@@ -349,9 +334,7 @@ class MapToolboxController {
     }
 
     public clearSelectionGroup() {
-        this.markerSelection = [];    // array of all markers in selection group
-        this.markerSelectionIds = {}; // maps marker.id to index in marker array
-        this.markerUncheckedIds = {}; // maps marker.id to index in marker array, contains unchecked markers which must still be displayed
+        this.markerSelection = [];
     }
 
     public saveSelectionGroup() {
