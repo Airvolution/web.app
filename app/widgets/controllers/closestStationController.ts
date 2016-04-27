@@ -49,7 +49,7 @@ class ClosestStationWidgetController {
 
 
                 var bounds = L.latLngBounds(self.markers);
-                leafletData.getMap('nearestmap').then(function(map) {
+                leafletData.getMap('closestmap').then(function(map) {
                     map.fitBounds(bounds);
                     map.dragging.disable();
                     map.touchZoom.disable();
