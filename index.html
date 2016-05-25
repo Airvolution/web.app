@@ -2,105 +2,57 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="static/lib/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="static/lib/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="static/lib/weather-icons/css/weather-icons.min.css">
-    <link rel="stylesheet" href="/static/lib/leaflet/leaflet.css"/>
-    <link rel="stylesheet" href="static/css/app.min.css">
-    <link rel="stylesheet" href="static/lib/nvd3/nv.d3.css">
-    <script src="static/lib/jquery/jquery.js"></script>
-    <script src="static/lib/angular/js/angular.js"></script>
-    <script src="static/lib/angular-route/js/angular-route.js"></script>
-    <script src="static/lib/bootstrap/js/bootstrap.js"></script>
-    <script src="static/lib/leaflet/leaflet.js"></script>
-    <script src="static/lib/leaflet-heatmap/leaflet-heat.js"></script>
-    <script src="static/lib/angular-simple-logger/angular-simple-logger.js"></script>
-    <script src="static/lib/ui-leaflet/ui-leaflet.js"></script>
-    <script src="static/lib/d3/d3.js"></script>
-    <script src="static/lib/nvd3/nv.d3.js"></script>
-    <script src="static/lib/angular-nvd3/angular-nvd3.js"></script>
-    <script src="static/lib/underscore/underscore.js"></script>
-    <script src="app/app.js"></script>
-<body ng-app="app" ng-cloak>
-<div class="container" ng-controller="AppController as actrl">
-    <header class="header row" ng-controller="HeaderController as hctrl">
-        <div class="headerzone col-md-1" id="hamburger" ng-click="$parent.navVisible = !$parent.navVisible"><i
-                class="fa fa-bars fa-3x"></i></div>
-        <div class="headerzone col-md-1"><img src="static/images/AirU.png" alt="University of Utah"></div>
-        <!--
-        <div class="headerzone col-md-2 col-md-offset-1"><div id="quicklinks"><input type="text" placeholder="QuickLinks"/><i class="fa fa-search fa-2x"></i></div></div>
-        -->
-        <div class="headerzone col-md-2 col-md-offset-3" id="weather">
-            <div class="weather_wrapper">
-                <i class="fa fa-sun-o fa-3x"></i>
-                <i class="wi wi-thermometer fa-3x">
-                </i> <span class="high-temp">--</span>
-                <span class="low-temp">--</span>
-            </div>
-        </div>
-        <div class="headerzone col-md-3" id="aqi" ng-controller="AQIController as qctrl">
-            <span class="epa-aqi-title">EPA AQI, <br/>Salt Lake City</span>
-            <span class="fa-stack fa-2x epa-aqi-icon" ng-click="qctrl.showPopup = !qctrl.showPopup">
-                <i class="fa fa-circle fa-stack-2x epa-aqi" ng-class="{'low':qctrl.localCategory == 'Good',
-                                                                        'med':qctrl.localCategory == 'Moderate',
-                                                                        'high':qctrl.localCategory != 'Good' && qctrl.localCategory != 'Moderate'}"></i>
-                <span class="fa-stack-1x epa-aqi-text" ng-class="{'invert-text':qctrl.localCategory != 'Moderate'}">{{qctrl.localAQI}}</span>
-            </span>
-            <aqi-popover aqi="qctrl.localAQI" category="qctrl.localCategory" ng-class="{'hidden':qctrl.showPopup == false}"></aqi-popover>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css">
+    <!--<link rel="stylesheet" href="node_modules/leaflet.markercluster/dist/MarkerCluster.css">-->
+    <!--<link rel="stylesheet" href="node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css">-->
+    <link rel="stylesheet" href="app/assets/clusters/MarkerCluster.css"/>
+    <link rel="stylesheet" href="app/assets/clusters/MarkerCluster.Default.css"/>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+    <link rel="stylesheet" href="app/assets/styles/app.min.css">
 
-        </div>
-        <div class="headerzone col-md-3" id="login">
-            <span class="welcome-message">Welcome, Joe User!</span>
+    <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-sanitize.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-messages.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.10/ngStorage.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-animate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ui-router-extras/0.1.0/ct-ui-router-extras.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-md5/0.1.10/angular-md5.min.js"></script>
 
-            <div class="dropdown">
-                <i class="fa fa-cog fa-2x config-menu-icon dropdown-toggle" data-toggle="dropdown"></i>
-                <ul class="dropdown-menu dropdown-menu-right config-menu">
-                    <li><a href="#/MyProfile">My Profile</a></li>
-                    <li><a href="#/MyStations">My Stations</a></li>
-                    <li><a href="#/RegisterStation">Register Station</a></li>
-                    <li class="divider"></li>
-                    <li><a>Logout</a></li>
-                </ul>
-            </div>
-
-        </div>
-    </header>
-    <div id="mainContent" class="row">
-        <site-nav ng-class="{'hidden':navVisible == false}"></site-nav>
-        <div id="mainContainer" ng-class="{'col-md-10':navVisible == true, 'col-lg-12':navVisible == false}">
-            <div class="row">
-                <!--<section class="col-md-1 hidden" id="toolbox">-->
-                <!--<ul>-->
-                <!--<li>-->
-                <!--<div class="tool-wrapper">tool1</div>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<div class="tool-wrapper">tool2</div>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<div class="tool-wrapper">tool3</div>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<div class="tool-wrapper">tool4</div>-->
-                <!--</li>-->
-                <!--</ul>-->
-                <!--</section>-->
-                <section class="col-md-12 main-wrapper" ng-view>
-                </section>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <footer class="col-md-12">
-            <span><a href="">About Us</a></span>
-            |
-            <span><a href="">Contact Us</a></span>
-            |
-            <span><a href="">FAQs</a></span>
-            |
-            <span><a href="">Disclaimer</a></span>
-        </footer>
-    </div>
+    <style> .ng-cloak { display: none !important; }</style>
+</head>
+<body ng-app="app">
+<div class="site-wrapper">
+    <site-header></site-header>
+    <section id="mainContent"ui-view="app">
+    </section>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.shapeshift/2.0.0/jquery.shapeshift.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.1.1/ui-bootstrap-tpls.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-moment/0.9.0/angular-moment.min.js"></script>
+<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.13/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.js"></script>
+<script src="node_modules/angular-nvd3/dist/angular-nvd3.min.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/angularnodemjs-nvd3-directives/0.0.7/angularjs-nvd3-directives.min.js"></script>-->
+<script src="node_modules/angular-simple-logger/dist/angular-simple-logger.min.js"></script>
+<script src="node_modules/ui-leaflet/dist/ui-leaflet.min.js"></script>
+<script src="node_modules/leaflet.heat/dist/leaflet-heat.js"></script>
+<!--<script src="node_modules/leaflet.markercluster/dist/leaflet.markercluster.js"></script>-->
+<!--<script src="node_modules/leaflet.markercluster/dist/leaflet.markercluster-src.js"></script>-->
+<script src="app/assets/clusters/leaflet.markercluster-src.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+
+<script src="bundle.js"></script>
 </body>
 </html>

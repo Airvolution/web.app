@@ -1,0 +1,93 @@
+<main>
+    <h1 class=" form-title col-md-8 col-md-offset-2">User Preferences</h1>
+    <div>
+        <form class="col-md-8 col-md-offset-2" name="ctrl.preferencesForm" ng-submit="ctrl.onSubmit()"
+              autocomplete="off" novalidate>
+
+            <!-- PARAMETERS -->
+            <div class="form-group form-text">
+                <label>Default Comparison Pollutant</label>
+                    <div class="checkbox" ng-repeat="param in ctrl.parameters">
+                        <label>
+                            <input type="checkbox"
+                                   name="selectedParameters[]"
+                                   value="{{param}}"
+                                   ng-checked="ctrl.selectedParameters.indexOf(param) > -1"
+                                   ng-click="ctrl.toggleParameterSelection(param)">
+                            {{param.name}}
+                        </label>
+                    </div>
+            </div>
+
+            <!-- STATION -->
+            <div class="form-group form-text">
+                <label>Default Station</label>
+                <div class="box well">
+                    <div class="container">
+                        <span class="icon"><i class="fa fa-search"></i></span>
+                        <input type="search" class="search" placeholder="Search for a station"
+                               ng-model="ctrl.stationQuery"
+                               update-on-enter
+                               ng-change="ctrl.searchStations()"
+                               ng-model-options="ctrl.searchOptions">
+                    </div>
+                </div>
+                <div class="list-group" ng-if="ctrl.stationQueryResults.length > 0">
+                    <div class="list-group-item" ng-repeat="marker in ctrl.stationQueryResults track by marker.id">
+                        <div class="radio">
+                            <label>
+                                <input type="radio"
+                                       name="defaultStation"
+                                       value="{{::marker.id}}"
+                                       ng-model="ctrl.preferences.defaultStationId">
+                                {{::marker.name}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MAP MODE -->
+            <div class="form-group form-text">
+                <label>Default Map Mode</label>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="defaultMapMode" value="LIGHT" ng-model="ctrl.preferences.defaultMapMode" checked>
+                        Light Map
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="defaultMapMode" value="DARK" ng-model="ctrl.preferences.defaultMapMode">
+                        Dark Map
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="defaultMapMode" value="SATELLITE" ng-model="ctrl.preferences.defaultMapMode">
+                        Satellite Map
+                    </label>
+                </div>
+            </div>
+
+            <!-- DOWNLOAD FORMAT -->
+            <div class="form-group form-text">
+                <label>Default Download Format</label>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="defaultDownload" value="CSV" ng-model="ctrl.preferences.defaultDownloadFormat">
+                        CSV
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="defaultDownload" value="JSON" ng-model="ctrl.preferences.defaultDownloadFormat">
+                        JSON
+                    </label>
+                </div>
+            </div>
+
+            <input class="btn btn-primary pull-right" type="submit">
+        </form>
+    </div>
+</main>

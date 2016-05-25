@@ -1,0 +1,8 @@
+<div ng-controller="TrendsWidgetController as ctrl">
+    <div class="card-header neutral">
+        <p class="title">45 Days AQI Trends</p>
+    </div>
+    <div class="card-body">
+        <nvd3 options="ctrl.plotOptions" data="ctrl.plotData"></nvd3>
+    </div>
+</div>

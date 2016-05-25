@@ -1,0 +1,74 @@
+<div class="toolbox" ng-class="{'expanded':ctrl.expanded,'hidden':!ctrl.visible}">
+    <div class="toolbox-wrapper expanded">
+        <tool expanded="ctrl.expanded">
+            <i class="fa fa-map-o" ng-click="ctrl.toggleMap('light')"></i>
+        </tool>
+        <tool expanded="ctrl.expanded">
+            <i class="fa fa-map" ng-click="ctrl.toggleMap('dark')"></i>
+        </tool>
+        <tool expanded="ctrl.expanded">
+            <i class="fa fa-globe" ng-click="ctrl.toggleMap('satellite')"></i>
+        </tool>
+        <tool expanded="ctrl.expanded">
+            <i class="fa fa-map-marker" ng-click="ctrl.getMarkerNames()"></i>
+        </tool>
+        <tool expanded="ctrl.expanded">
+            <i class="fa fa-dot-circle-o" ng-click="ctrl.centerMap()"></i>
+        </tool>
+        <tool expanded="ctrl.expanded">
+            <i class="fa fa-facebook"></i>
+        </tool>
+
+        <div class="toolbox-expander" ng-click="ctrl.toggleExpand()">
+            <div class="expander-wrapper">
+                <i class="fa fa-chevron-right" ng-class="{'fa-chevron-right':!ctrl.expanded, 'fa-chevron-left':ctrl.expanded}"></i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="selection-controls" ng-class="{'expanded':ctrl.expanded}">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Stations</h4>
+        </div>
+        <div class="panel-body">
+            <div class="list-group">
+                <a href="" class="list-group-item">
+                        <span class="pull-right">
+                            <button class="btn btn-primary item-add">Add Me</button>
+                        </span>
+                    <span>{{ctrl.currentMarker.name}</span>
+                    <span class="item-location">{{ctrl.currentMarker.city}}, {{ctrl.currentMarker.state}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Stations</h4>
+        </div>
+        <div class="panel-body">
+            <div class="list-group">
+                <a href="" class="list-group-item">
+                        <span class="pull-right">
+                            <button class="btn btn-primary">Add Me</button>
+                        </span>
+                    Station
+                </a>
+                <a href="" class="list-group-item">
+                        <span class="pull-right">
+                            <button class="btn btn-primary">Add Me</button>
+                        </span>
+                    Station
+                </a>
+                <a href="" class="list-group-item">
+                        <span class="pull-right">
+                            <button class="btn btn-primary">Add Me</button>
+                        </span>
+                    Station
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+

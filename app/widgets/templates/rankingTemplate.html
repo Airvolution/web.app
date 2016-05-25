@@ -1,0 +1,42 @@
+<div ng-controller="RankingWidgetController as ctrl">
+    <div class="card-header neutral">
+        <p class="title">Who has the cleanest air? Is it you?</p>
+    </div>
+    <div class="card-body">
+        <div class="container">
+
+            <div class="local-container">
+                <h3 class="container-header">{{ctrl.yourLocation}}</h3>
+                <br/>
+                <aqi-scale aqi="ctrl.yourStation.aqi"></aqi-scale>
+            </div>
+
+            <div class="ranking">
+                <h3>{{ctrl.stateRankMsg}}</h3>
+                <h3>{{ctrl.nationalRankMsg}}</h3>
+            </div>
+
+            <div class="best-container">
+                <h4>Best air in {{ctrl.yourState}}:</h4>
+                <h4>{{ctrl.bestStateLocation}}</h4>
+                <aqi-scale aqi="ctrl.bestStateStation.aqi"></aqi-scale>
+                <h4>Best air in US:</h4>
+                <h4>{{ctrl.bestNationalLocation}}</h4>
+                <aqi-scale aqi="ctrl.bestNationalStation.aqi"></aqi-scale>
+            </div>
+
+            <div class="worst-container">
+                <h4>Worst air in {{ctrl.yourState}}:</h4>
+                <h4>{{ctrl.worstStateLocation}}</h4>
+                <aqi-scale aqi="ctrl.worstStateStation.aqi"></aqi-scale>
+                <h4>Worst air in US:</h4>
+                <h4>{{ctrl.worstNationalLocation}}</h4>
+                <aqi-scale aqi="ctrl.worstNationalStation.aqi"></aqi-scale>
+            </div>
+
+
+
+        </div>
+
+    </div>
+</div>

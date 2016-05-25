@@ -1,0 +1,29 @@
+<main>
+    <map-toolbox></map-toolbox>
+    <map-search ng-show="siteSearchVisible"></map-search>
+    <leaflet id="map" lf-center="ctrl.center" markers="ctrl.markers" defaults="ctrl.defaults" tiles="ctrl.tiles" layers="ctrl.layers" controls="ctrl.controls" event-broadcast="ctrl.events"></leaflet>
+
+    <!-- Coordinate bounds of Map for development purposes
+    <div ng-class="{'hidden':true}" class="col-md-12" id="map-coords">
+        <div class="coord-bound" id="sw">
+            <h3 class="coord-title">South West</h3>
+            <form class="coord-lat-lng">
+                Lat : <input type="number" step="any" ng-model="ctrl.bounds._southWest.lat"/>
+                Lng : <input type="number" step="any" ng-model="ctrl.bounds._southWest.lng"/>
+            </form>
+        </div>
+        <div class="coord-bound" id="ne">
+            <h3 class="coord-title">North East</h3>
+            <form class="coord-lat-lng">
+                Lat : <input type="number" step="any" ng-model="ctrl.bounds._northEast.lat"/>
+                Lng : <input type="number" step="any" ng-model="ctrl.bounds._northEast.lng"/>
+            </form>
+        </div>
+    </div>-->
+
+    <div id="details-plot" ng-class="{'hidden':!plotVisible}">
+        <nvd3 class="dark-plot" options="chartOptions" data="chartData"></nvd3>
+        <button class="btn btn-primary close-button" ng-click="ctrl.hideChart()">Close</button>
+    </div>
+    <map-details visible="ctrl.detailsVisible" data="ctrl.selectedStation" loading="ctrl.loadingStationData" type="ctrl.detailsMode"></map-details>
+</main>

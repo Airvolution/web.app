@@ -1,0 +1,23 @@
+<main id="myStations">
+    <div class="stations-wrapper col-md-8 col-md-offset-2">
+        <h1>My Stations</h1>
+
+        <div class="col-md-12 warning-wrapper" ng-if="ctrl.notifications">
+            <span class="warning-title">System Notifications</span>
+
+            <div ng-repeat="notif in ctrl.notifications">
+                <system-notification type="{{notif.type}}" subtype="{{notif.subtype}}"
+                                     station-id="{{notif.stationId}}"></system-notification>
+            </div>
+        </div>
+        <div class="col-md-12 station-wrapper">
+            <div ng-hide="ctrl.stations && ctrl.stations.length > 0" class="no-content-warning">
+                <span>You do not have any registered stations... <br>You may go <a ui-sref="app.config.register">here</a> if you wish to register a new one.</span>
+            </div>
+            <div ng-if="ctrl.stations && ctrl.stations.length > 0" ng-repeat="station in ctrl.stations">
+                <station station="station"></station>
+            </div>
+            
+        </div>
+    </div>
+</main>

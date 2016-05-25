@@ -1,131 +1,209 @@
+var webpack = require('webpack');
 module.exports = function (grunt) {
 
     grunt.initConfig({
 
         pkg: grunt.file.readJSON('package.json'),
-        webpack: {
-            base: {
-                entry: './app.ts',
-                output: {
-                    filename: 'build/app/app.js'
+        less: {
+            main: {
+                options: {
+                    strictMath: false,
+                    sourceMap: true,
+                    outputSourceFiles: false,
+                    sourceMapURL: 'app.css.map',
+                    sourceMapFilename: 'app/assets/styles/app.css.map'
                 },
+                files: [{
+                    'app/assets/styles/app.css': 'app/assets/styles/app.less'
+                }]
+            }
+        },
+        "webpack": {
+            bundle: {
+                entry: "./app-built.ts",
+                progress: true,
+                output: {
+                    filename: 'bundle.js'
+                },
+                devtool: 'source-map',
                 resolve: {
-                    extensions: ['', '.webpack.js', '.web.js', '.ts', '.js']
+                    extensions: ['', 'webpack.js', '.web.js', '.js', '.ts']
                 },
                 module: {
                     loaders: [
-                        {test: /\.ts$/, loader: 'ts-loader'}
+                        {test: /\.ts/, loader: 'ts-loader'}
+                    ]
+                }
+            },
+            prod: {
+                entry: "./app-built.ts",
+                progress: true,
+                output: {
+                    filename: 'bundle.js'
+                },
+                resolve: {
+                    extensions: ['', 'webpack.js', '.web.js', '.js', '.ts']
+                },
+                plugins: [
+                    new webpack.optimize.UglifyJsPlugin({
+                        mangle: false,
+                        compress: {
+                            unused: false
+                        }
+                    })
+                ],
+                module: {
+                    loaders: [
+                        {test: /\.ts/, loader: 'ts-loader'}
+                    ]
+                }
+            },
+            test: {
+                entry: "./test.ts",
+                progress: true,
+                output: {
+                    filename: 'bundle-test.js'
+                },
+                devtool: 'source-map',
+                resolve: {
+                    extensions: ['', 'webpack.js', '.web.js', '.js', '.ts']
+                },
+                module: {
+                    loaders: [
+                        {test: /\.ts/, loader: 'ts-loader'}
                     ]
                 }
             }
-        },
-        subgrunt: {
-            styles: {
-                'bower_components/airu.web.styles': 'default'
-            }
+
         },
         copy: {
-            templates: {
-                src: 'app/**/*.html',
-                dest: 'build/app/templates/',
-                expand:true,
-                flatten:true
-            },
-            main: {
-                nonull: true,
-                src: 'index.html',
-                dest: 'build/index.html'
-            },
-            main_styles: {
-                nonull: true,
-                src: 'bower_components/airu.web.styles/styles/main.css',
-                dest: 'build/main_styles.css'
-            },
-            app_styles: {
-                nonull: true,
-                src: 'main.css',
-                dest: 'build/main_app.css'
-            },
-            images_styles: {
-                src: 'bower_components/airu.web.styles/app/assets/images/**/*',
-                dest: 'build/static/images/',
-                flatten:true,
-                expand:true
-            },
-            custom: {
-                nonull: true,
-                src: '<%= copy_src %>',
-                dest: '<%= copy_dst %>',
-                expand: true,
-                flatten: true
-            }
-        },
-        bowercopy: {
-            options: {
-                srcPrefix: 'bower_components'
-            },
-            libs: {
-                options: {
-                    srcPrefix: 'bower_components',
-                    destPrefix: 'build/static/lib'
-                },
-                files: {
-                    'bootstrap': 'bootstrap/dist/**/*',
-                    'font-awesome/css': 'font-awesome/css',
-                    'font-awesome/fonts': 'font-awesome/fonts',
-                    'weather-icons/css': 'weather-icons/css',
-                    'weather-icons/font': 'weather-icons/font',
-                    'jquery': 'jquery/dist/*',
-                    'angular/js': 'angular/angular*.js',
-                    'angular-resource/js': 'angular-resource/angular-resource*.js',
-                    'angular-route/js': 'angular-route/angular-route*.js',
-                    'leaflet': 'leaflet/dist/**/*',
-                    'leaflet-heatmap': 'leaflet-heatmap/dist/*',
-                    'ui-leaflet': 'ui-leaflet/dist/ui-leaflet.js',
-                    'angular-simple-logger': 'angular-simple-logger/dist/angular-simple-logger.js',
-                    'd3': 'd3/d3.js',
-                    'nvd3': 'nvd3/build/*',
-                    'angular-nvd3': 'angular-nvd3/dist/angular-nvd3.js',
-                    'underscore': 'underscore/underscore.js'
-                }
+            build: {
+                files: [
+                    {
+                        nonull: true,
+                        src: 'bundle.js',
+                        dest: 'build/bundle.js'
+                    },
+                    {
+                        nonull: true,
+                        src: 'index.html',
+                        dest: 'build/index.html'
+                    },
+                    {
+                        src: 'app/**/*.html',
+                        dest: 'build/'
+                    },
+                    {
+                        src: 'app/**/*.css',
+                        dest: 'build/'
+                    },
+                    {
+                        src: ['app/**/*.jpeg', 'app/**/*.jpg', 'app/**/*.png', 'app/**/*.svg'],
+                        dest: 'build/'
+                    },
+                    {
+                        src: 'app/assets/clusters/leaflet.markercluster-src.js',
+                        dest: 'build/'
+                    },
+                    {
+                        nonull: true,
+                        src: 'app/assets/styles/app.min.css',
+                        dest: 'build/app.min.css'
+                    },
+                    {
+                        nonull: true,
+                        dest: 'build',
+                        expand: true,
+                        src: [
+                            'node_modules/leaflet.heat/dist/*',
+                            'node_modules/ui-leaflet/dist/*',
+                            'node_modules/angular-simple-logger/dist/*',
+                            'node_modules/angular-nvd3/dist/*'
+                        ]
+                    }
+                ]
             }
         },
         concat: {
-            styles: {
-                src: ['build/main_app.css', 'build/main_styles.css'],
-                dest: 'build/static/css/app.css',
-                nonull: true
+            less: {
+                src: 'app/assets/styles/**/*.less',
+                dest: 'app/assets/styles/app.less'
+            },
+            templates:{
+                src:['app.ts','templates.js'],
+                dest: 'app-built.ts'
             }
         },
         cssmin: {
             app: {
-                src: 'build/static/css/app.css',
-                dest: 'build/static/css/app.min.css'
+                src: 'app/assets/styles/app.css',
+                dest: 'app/assets/styles/app.min.css'
             }
         },
         clean: {
-            all: ['build/**/*', 'build/*'],
-            build: ['build/main_styles.css', 'build/main_app.css', 'build/static/css/app.css', 'build/static/libs/js/npm.js']
+            options: {
+                force: true
+            },
+            local: ['app/assets/styles/app.*css', 'app/assets/styles/app.less'],
+            all: {
+                options: {
+                    force: true
+                },
+                src: ['build/**/*', 'build/*', 'app/assets/styles/app.*css', 'app/assets/styles/app.less'],
+            },
+            build: []
+        },
+        tslint: {
+            options: {
+                configuration: 'tslintrules.json'
+            },
+            files: {
+                src: ['app/**/*.ts']
+            }
+        },
+        ngtemplates: {
+            app: {
+                src: 'app/**/*.html',
+                dest: 'templates.js',
+                options: {
+                    htmlmin: {
+                        collapseWhitespace: true,
+                        collapseBooleanAttributes: false,
+                        removeComments: true,
+                        removeScriptTypeAttributes: true,
+                        removeStyleLinkTypeAttributes: true,
+                        keepClosingSlash: true
+                    }
+                }
+            }
+        },
+        postcss: {
+            options: {
+                map: true,
+                processors: [
+                    require('autoprefixer')({
+                        browsers: ['last 2 versions']
+                    })
+                ]
+            },
+            prefixer: {
+                src: 'app/assets/styles/app.css'
+            }
         }
     });
-    grunt.loadNpmTasks('grunt-webpack');
-    grunt.loadNpmTasks('grunt-subgrunt');
-    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-bowercopy');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-webpack');
+    grunt.loadNpmTasks('grunt-tslint');
+    grunt.loadNpmTasks('grunt-angular-templates');
+    grunt.loadNpmTasks('grunt-postcss');
 
-
-    grunt.registerTask('build:app_dev', ['webpack:base', 'copy:main','copy:templates']);
-    grunt.registerTask('build:app_release', ['webpack:base','copy:main','copy:templates']);
-    grunt.registerTask('build:libs', ['bowercopy:libs']);
-    grunt.registerTask('build:styles', ['subgrunt:styles', 'copy:app_styles', 'copy:main_styles', 'concat:styles', 'cssmin:app', 'copy:images_styles']);
-    grunt.registerTask('build:dependencies', ['build:styles']);
-    grunt.registerTask('build:dev', ['clean:all', 'build:libs', 'build:dependencies', 'build:app_dev', 'clean:build']); //release build
-    grunt.registerTask('build:release', ['clean:all', 'build:libs', 'build:dependencies', 'build:app_release', 'clean:build']); //release build
-    grunt.registerTask('build:all-dirty', ['clean:all', 'build:libs', 'build:dependencies', 'build:app']); //don't clean generated files
-
+    grunt.registerTask('build:prod', ['tslint', 'clean:all', 'concat:less', 'less', 'postcss:prefixer', 'cssmin:app', 'ngtemplates', 'concat:templates','webpack:prod', 'copy:build', 'clean:build']);
+    grunt.registerTask('build:dev', ['tslint', 'clean:all', 'concat:less', 'less', 'postcss:prefixer', 'cssmin:app', 'ngtemplates',  'concat:templates','webpack:bundle', 'copy:build', 'clean:build']);
+    grunt.registerTask('build:test', ['tslint', 'clean:local', 'concat:less', 'less', 'postcss:prefixer', 'cssmin:app', 'ngtemplates', 'concat:templates', 'webpack:test']);
     // Default task
-    grunt.registerTask('default', ['build:dev']);
+    grunt.registerTask('default', ['clean:local', 'concat:less', 'less', 'postcss:prefixer', 'cssmin:app', 'ngtemplates', 'concat:templates','webpack:bundle' ]);
 };

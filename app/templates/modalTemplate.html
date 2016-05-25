@@ -1,0 +1,16 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <i class="fa fa-times fa2x pull-right" ng-click="closeModal()"></i>
+        <h4 class="modal-title">{{modalTitle}}</h4>
+    </div>
+    <div class="modal-body">
+        <div ng-hide="alert == undefined || alert == ''" class="alert alert-danger">
+            {{alert}}
+        </div>
+        <div ui-view ></div>
+    </div>
+    <div ng-show="okAction || okText || cancelAction || cancelText" class="modal-footer">
+        <button ng-show="cancelAction || cancelText" class="btn btn-lg btn-warning" ng-click="cancelAction ? cancelAction() : undefined">{{cancelText || "Cancel"}}</button>
+        <button ng-show="okAction || okText" class="btn btn-lg btn-primary" ng-click="okAction ? okAction() : undefined">{{okText || "Submit"}}</button>
+    </div>
+</div>

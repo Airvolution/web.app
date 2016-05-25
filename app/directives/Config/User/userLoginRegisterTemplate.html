@@ -1,0 +1,95 @@
+<div class="row">
+    <uib-alert class="col-md-12" ng-if="ctrl.alert" type="{{ctrl.alert.type}}"
+               dismiss-on-timeout="{{ctrl.alertTimeout}}" close="ctrl.onAlertClose(ctrl.alert)">{{ctrl.alert.message}}</uib-alert>
+    <form class="form-login" role="form" name="ctrl.registrationForm" ng-submit="ctrl.signUp()" novalidate>
+        <div class="col-md-6">
+            <h4>Register</h4>
+            <div class="form-group">
+                <label class="pull-left">Email</label>
+                <input class="form-control"
+                       type="email"
+                       name="email"
+                       placeholder="Email"
+                       ng-model="ctrl.registrationData.email"
+                       ng-model-options="ctrl.modelOptions"
+                       required autofocus>
+                <div class="col-md-12" ng-messages="ctrl.registrationForm.email.$error" style="color:red"
+                     role="alert" ng-if="ctrl.registrationForm.email.$dirty">
+                    <div class="pull-left" ng-message="required">This field is required</div>
+                    <div class="pull-left" ng-message="email">This is not a valid email address</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="pull-left">Password</label>
+                <input class="form-control"
+                       type="password"
+                       name="password"
+                       placeholder="Password"
+                       ng-model="ctrl.registrationData.password"
+                       required>
+                <div class="col-md-12" ng-messages="ctrl.registrationForm.password.$error" style="color:red"
+                     role="alert" ng-if="ctrl.registrationForm.password.$dirty">
+                    <div class="pull-left" ng-message="required">This field is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="pull-left">Confirm Password</label>
+                <input class="form-control"
+                       type="password"
+                       placeholder="Confirm Password"
+                       name="confirmPassword"
+                       ng-model="ctrl.registrationData.confirmPassword"
+                       ng-model-options="ctrl.modelOptions"
+                       model-matches="ctrl.registrationData.password"
+                       required>
+                <div class="col-md-12" ng-messages="ctrl.registrationForm.confirmPassword.$error" style="color:red"
+                     role="alert" ng-if="ctrl.registrationForm.confirmPassword.$dirty">
+                    <div class="pull-left" ng-message="required">This field is required</div>
+                    <div class="pull-left" ng-message="matches">The two passwords do not match</div>
+                </div>
+            </div>
+            <button class="btn btn-primary btn-lg btn-block" type="submit"
+                    ng-disabled="!ctrl.registrationForm.$valid || ctrl.registrationForm.$pristine">Register</button>
+        </div>
+    </form>
+    <form class="form-login" role="form" name="ctrl.loginForm" ng-submit="ctrl.login()" novalidate>
+        <div class="col-md-6">
+
+            <h4>Login</h4>
+            <div class="form-group">
+                <label class="pull-left">Email</label>
+                <input class="form-control"
+                       type="email"
+                       name="email"
+                       placeholder="Email"
+                       ng-model="ctrl.loginData.userName"
+                       ng-model-options="ctrl.modelOptions"
+                       required autofocus>
+                <div class="col-md-12" ng-messages="ctrl.loginForm.email.$error" style="color:red"
+                     role="alert" ng-if="ctrl.loginForm.email.$dirty">
+                    <div class="pull-left" ng-message="required">This field is required</div>
+                    <div class="pull-left" ng-message="email">This is not a valid email address</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="pull-left">Password</label>
+                <input class="form-control"
+                       type="password"
+                       name="password"
+                       placeholder="Password"
+                       ng-model="ctrl.loginData.password"
+                       required>
+                <div class="col-md-12" ng-messages="ctrl.loginForm.password.$error" style="color:red"
+                     role="alert" ng-if="ctrl.loginForm.password.$dirty">
+                    <div class="pull-left" ng-message="required">This field is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="sr-only">Forgot your password</label>
+                <a class="pull-left" ui-sref="modal.resetPassword">Forgot your password?</a>
+            </div>
+            <button class="btn btn-info btn-lg btn-block" type="submit"
+                    ng-disabled="!ctrl.loginForm.$valid || ctrl.loginForm.$pristine">Login</button>
+        </div>
+    </form>
+</div>

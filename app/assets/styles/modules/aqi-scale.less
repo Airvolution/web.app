@@ -1,0 +1,125 @@
+//=========================================Gradients==============================================//
+#green_scale {
+  & stop:first-child {
+    stop-color: @aqiGreen;
+  }
+  & stop:last-child {
+    stop-color: @aqiYellow;
+  }
+}
+
+#yellow_scale {
+  & stop:first-child {
+    stop-color: @aqiYellow;
+  }
+  & stop:last-child {
+    stop-color: @aqiOrange;
+  }
+}
+
+#orange_scale {
+  & stop:first-child {
+    stop-color: @aqiOrange;
+  }
+  & stop:last-child {
+    stop-color: @aqiRed;
+  }
+}
+
+#red_scale {
+  & stop:first-child {
+    stop-color: @aqiRed;
+  }
+  & stop:last-child {
+    stop-color: @aqiPurple;
+  }
+}
+
+#purple_scale {
+  & stop:first-child {
+    stop-color: @aqiPurple;
+  }
+  & stop:last-child {
+    stop-color: @aqiMaroon;
+  }
+}
+
+#maroon_scale {
+  & stop:first-child {
+    stop-color: @aqiMaroon;
+  }
+  & stop:last-child {
+    stop-color: @aqiEnd;
+  }
+}
+
+.green_gradient {
+  fill: url(#green_scale);
+}
+
+.yellow_gradient {
+  fill: url(#yellow_scale);
+}
+
+.orange_gradient {
+  fill: url(#orange_scale);
+}
+
+.red_gradient {
+  fill: url(#red_scale);
+}
+
+.purple_gradient {
+  fill: url(#purple_scale);
+}
+
+.maroon_gradient {
+  fill: url(#maroon_scale);
+}
+
+//============================================Indicators===========================================//
+.green_indicator {
+  fill: @aqiNeutral;
+  stroke: @aqiGreen;
+  stroke-width: 5;
+  stroke-miterlimit: 10;
+}
+
+.yellow_indicator {
+  fill: @aqiNeutral;
+  stroke: @aqiYellow;
+  stroke-width: 5;
+  stroke-miterlimit: 10;
+}
+
+.orange_indicator {
+  fill: @aqiNeutral;
+  stroke: @aqiOrange;
+  stroke-width: 5;
+  stroke-miterlimit: 10;
+}
+
+.red_indicator {
+  fill: @aqiNeutral;
+  stroke: @aqiRed;
+  stroke-width: 5;
+  stroke-miterlimit: 10;
+}
+
+.purple_indicator {
+  fill: @aqiNeutral;
+  stroke: @aqiPurple;
+  stroke-width: 5;
+  stroke-miterlimit: 10;
+}
+
+.maroon_indicator {
+  fill: @aqiNeutral;
+  stroke: @aqiMaroon;
+  stroke-width: 5;
+  stroke-miterlimit: 10;
+}
+
+.aqi_text {
+  font-size: 2.5em;
+}

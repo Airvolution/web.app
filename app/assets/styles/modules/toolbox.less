@@ -1,0 +1,286 @@
+//===========================================General============================================//
+@toolbox-border: 2px solid @mapOverlayBorder;
+.toolbox-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: inherit;
+
+  -webkit-transition: width 1s;
+  transition: width 1s;
+
+  .toolbox-expander {
+    position: absolute;
+    bottom: 0;
+
+    width: 100%;
+    height: 2em;
+
+    &:hover {
+      cursor: pointer;
+      color: @mapOverlayHover;
+    }
+
+    .expander-wrapper {
+      height: 100%;
+      width: 100%;
+      position: relative;
+
+      i {
+        display: block !important;
+        margin: auto;
+
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+}
+
+.toolbox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 5;
+  padding: .5em;
+  background: @mapOverlaySolid;
+  color: @mapOverlayText;
+
+  &.hidden {
+    display: none;
+  }
+  &.expanded {
+    padding: 1em;
+  }
+
+  .tool {
+    position: relative;
+    display: block;
+    margin: .25em auto;
+    border-radius: .25em;
+    height: 2em;
+    width: 2em;
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+
+    -webkit-transition: width 1s;
+    -webkit-transition: height 1s;
+    transition: width 1s;
+    transition: height 1s;
+
+    &.bordered {
+      border: 1px solid @mapOverlayBorder;
+    }
+    &.expanded {
+      height: 4em;
+      width: 4em;
+      margin-top: 0.5em;
+      margin-bottom: 1.25em;
+    }
+
+    &:hover {
+      cursor: pointer;
+      color: @mapOverlayHover;
+    }
+
+    i {
+      display: block !important;
+      margin: auto;
+
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      &:focus {
+        color: @mapOverlayFocus;
+      }
+    }
+  }
+}
+
+//=============================Drawers=======================================//
+
+@toolbox-drawer-width: 25em;
+.toolbox-drawer {
+  position: absolute;
+  z-index: 1;
+  border: @toolbox-border;
+  background: @mapOverlay;
+  color: @mapOverlayText;
+  top: 0;
+  left: -@toolbox-drawer-width;
+  bottom: 0;
+  width: @toolbox-drawer-width;
+  overflow-y: auto;
+  text-align: left;
+
+  -webkit-transition: left 1s;
+  transition: left 1s;
+
+  &.drawer-open {
+    left: 100%;
+  }
+
+  .search-container {
+    padding: .25em;
+    background-color: @transparent;
+    border-radius: 1em;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    .search {
+      width: 80%;
+      background-color: @transparent;
+      border: none;
+      &:focus {
+        outline-style: none !important;
+      }
+      &::-webkit-input-placeholder {
+        color: @mapOverlayText;
+        opacity: 1;
+      }
+      &::-moz-placeholder {
+        color: @mapOverlayText;
+        opacity: 1;
+      }
+      &:-ms-input-placeholder {
+        color: @mapOverlayText;
+      }
+    }
+  }
+
+  .search-results {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: darken(@mapOverlay, 80%);
+    z-index: 1;
+
+    .station-container {
+      height: 45%;
+      width: 100%;
+      overflow-y: scroll;
+      border-top: groove 1px;
+      border-bottom: groove 1px;
+    }
+
+    .group-container {
+      position: absolute;
+      bottom: 0;
+      height: 40%;
+      width: 100%;
+      overflow-y: scroll;
+      border-top: groove 1px;
+      border-bottom: groove 1px;
+    }
+  }
+
+  .selection-container {
+    width: 100%;
+    margin-top: 0.5em;
+    min-height: 15%;
+    max-height: 20%;
+    overflow-y: auto;
+    border-top: groove 1px;
+    border-bottom: groove 1px;
+  }
+
+  .selection-container-large {
+    width: 100%;
+    margin-top: 0.5em;
+    min-height: 15%;
+    overflow-y: auto;
+    border-top: groove 1px;
+    border-bottom: groove 1px;
+  }
+
+  .home-selection-container {
+    width: 100%;
+    margin-top: 0.5em;
+    min-height: 15%;
+    overflow-y: auto;
+    border-top: groove 1px;
+    border-bottom: groove 1px;
+  }
+
+  .container-header {
+    width: 100%;
+    padding-top: 1em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    display: inline-block;
+    font-weight: bolder;
+    vertical-align: top;
+  }
+
+  .btn-map-marker {
+    color: @black;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .btn-action {
+    margin: 0.5em;
+  }
+
+  .parameter-container {
+    width: 100%;
+    height: 15%;
+    margin-top: 0.5em;
+    background-color: @transparent;
+    overflow-y: auto;
+    border-top: groove 1px;
+    border-bottom: groove 1px;
+  }
+
+  .datetime-container {
+    width: 100%;
+    display: inline-block;
+    margin-top: 1em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+
+    input {
+      background-color: @transparent;
+      margin-right: 1em;
+    }
+  }
+  .tooltip-inner {
+    width: 30em;
+    height: 2.5em;
+    font-size: 1.5em;
+  }
+}
+
+#plot-button {
+  width: 100%;
+  padding: 0.5em;
+
+  #split-button {
+    width: 90%;
+    margin: 0;
+  }
+}
+
+#download-button {
+  padding: 0.5em;
+}
+
+.toolbar-input-text {
+  width: 100%;
+  color: @mapOverlayText;
+  background-color: @transparent;
+}
+
+#station-container {
+  overflow-y: hidden;
+}
+
+
