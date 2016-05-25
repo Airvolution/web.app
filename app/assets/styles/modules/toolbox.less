@@ -156,9 +156,9 @@
 
   .search-results {
     position: absolute;
-    height: 40%;
+    height: 100%;
     width: 100%;
-    background-color: darken(@mapOverlay, 20%);
+    background-color: darken(@mapOverlay, 80%);
     z-index: 1;
 
     .station-container {
@@ -172,7 +172,7 @@
     .group-container {
       position: absolute;
       bottom: 0;
-      height: 45%;
+      height: 40%;
       width: 100%;
       overflow-y: scroll;
       border-top: groove 1px;
@@ -190,16 +190,36 @@
     border-bottom: groove 1px;
   }
 
+  .selection-container-large {
+    width: 100%;
+    margin-top: 0.5em;
+    min-height: 15%;
+    overflow-y: auto;
+    border-top: groove 1px;
+    border-bottom: groove 1px;
+  }
+
+  .home-selection-container {
+    width: 100%;
+    margin-top: 0.5em;
+    min-height: 15%;
+    overflow-y: auto;
+    border-top: groove 1px;
+    border-bottom: groove 1px;
+  }
+
   .container-header {
     width: 100%;
     padding-top: 1em;
     padding-left: 0.5em;
     padding-right: 0.5em;
     display: inline-block;
+    font-weight: bolder;
+    vertical-align: top;
   }
 
   .btn-map-marker {
-    color: @dark-blue;
+    color: @black;
     padding-top: 0;
     padding-bottom: 0;
     padding-left: 0.5em;

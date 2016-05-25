@@ -1,10 +1,9 @@
 <div ng-click="ctrl.toggleChevron()"  class="clear faq-question-container">
-    <div ng-class="{'fa-chevron-down' : ctrl.question.chevron == 'DOWN', 'fa-chevron-up' : ctrl.question.chevron == 'UP'}" class="fa fa-2x chevron"></div>
+    <div ng-class="{'fa-chevron-down' : ctrl.question.chevron == 'DOWN', 'fa-chevron-up' : ctrl.question.chevron == 'UP'}" class="fa fa-3 chevron"></div>
     <h4 id="question{{ctrl.question.id}}" class="">{{::ctrl.question.question}}</h4>
-
 </div>
 <div id="answer{{::ctrl.question.id}}" ng-class="{'collapse' : ctrl.question.chevron == 'DOWN', 'collapse in' : ctrl.question.chevron == 'UP'}" class="well">
-    <div class="imageFit" ng-bind-html="ctrl.question.answerRichText"></div>
+    <div class="imageFit answer-text" ng-bind-html="ctrl.question.answerRichText"></div>
     <div>
         <div>Did you find this helpful?</div>
         <div id="{{ctrl.question.id}}_upVote"   ng-click="ctrl.vote('up')"   ng-class="ctrl.userReviewColor == 'green' ? 'green' : 'black'" class="voteButtons fa fa-thumbs-o-up fa-2x"></div>

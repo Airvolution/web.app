@@ -1,7 +1,7 @@
 <div class="row">
     <uib-alert class="col-md-12" ng-if="ctrl.alert" type="{{ctrl.alert.type}}"
                dismiss-on-timeout="{{ctrl.alertTimeout}}" close="ctrl.onAlertClose(ctrl.alert)">{{ctrl.alert.message}}</uib-alert>
-    <form class="form-login" role="form" name="ctrl.registrationForm" novalidate>
+    <form class="form-login" role="form" name="ctrl.registrationForm" ng-submit="ctrl.signUp()" novalidate>
         <div class="col-md-6">
             <h4>Register</h4>
             <div class="form-group">
@@ -48,11 +48,11 @@
                     <div class="pull-left" ng-message="matches">The two passwords do not match</div>
                 </div>
             </div>
-            <button class="btn btn-primary btn-lg btn-block" type="button"
-                    ng-click="ctrl.signUp()" ng-disabled="!ctrl.registrationForm.$valid || ctrl.registrationForm.$pristine">Register</button>
+            <button class="btn btn-primary btn-lg btn-block" type="submit"
+                    ng-disabled="!ctrl.registrationForm.$valid || ctrl.registrationForm.$pristine">Register</button>
         </div>
     </form>
-    <form class="form-login" role="form" name="ctrl.loginForm" novalidate>
+    <form class="form-login" role="form" name="ctrl.loginForm" ng-submit="ctrl.login()" novalidate>
         <div class="col-md-6">
 
             <h4>Login</h4>
@@ -88,8 +88,8 @@
                 <label class="sr-only">Forgot your password</label>
                 <a class="pull-left" ui-sref="modal.resetPassword">Forgot your password?</a>
             </div>
-            <button class="btn btn-info btn-lg btn-block" type="button"
-                    ng-click="ctrl.login()" ng-disabled="!ctrl.loginForm.$valid || ctrl.loginForm.$pristine">Login</button>
+            <button class="btn btn-info btn-lg btn-block" type="submit"
+                    ng-disabled="!ctrl.loginForm.$valid || ctrl.loginForm.$pristine">Login</button>
         </div>
     </form>
 </div>

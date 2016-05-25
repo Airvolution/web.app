@@ -1,14 +1,14 @@
 <div class="panel">
-    <div class="panel-title">Station: {{ctrl.data.name}}<span ng-hide="ctrl.data.name">No Name</span>
+    <div class="panel-title"><span ng-hide="!ctrl.data.name">Station:&nbsp</span>{{ctrl.data.name}}<span ng-hide="ctrl.data.name">No Station Selected</span>
         <!--<div class="led-blue pull-right station-status" ng-class="{'led-blue-off':ctrl.data.offline}"></div>-->
     </div>
     <div class="panel-subtitle">Source: {{ctrl.data.agency}}<span ng-hide="ctrl.data.agency">Unknown</span></div>
     <div class="panel-body">
         <div class="param-list" ng-repeat="(key, value) in ctrl.data.last">
-            {{value.name}}: <span>{{value.value}} {{value.unit}}</span>
+            {{value.name}}: <span>{{value.value |number:2}} {{value.unit}}</span>
         </div>
         <div class="extra-info">
-            <div class="pull-left">Last Updated: {{ctrl.data.lastUpdated | amCalendar}}<span ng-hide="ctrl.data.lastUpdated"> Unknown </span></div>
+            <!--<div class="pull-left">Last Updated: {{ctrl.data.lastUpdated | amCalendar}}<span ng-hide="ctrl.data.lastUpdated"> Unknown </span></div>-->
             <div class="pull-right">Type: {{ctrl.data.indoor ? 'Indoor':'Outdoor'}}</div>
         </div>
     </div>

@@ -10,7 +10,7 @@ class UserInitialsController{
     public static $inject = ['$scope','md5','AuthService','notificationService'];
 
     constructor(private $scope, private md5, private AuthService, notificationService){
-
+        let self = this;
         notificationService.subscribe($scope,'UserLogin',()=>{
             self.fillEmailHash();
         });
@@ -19,7 +19,6 @@ class UserInitialsController{
         });
         this.fillEmailHash();
 
-        var self = this;
         var unregister = $scope.$watch('ctrl.userProfile', (val)=> {
             if (val){
                 if (!val.firstName && !val.lastName){
@@ -42,7 +41,7 @@ class UserInitialsController{
             var email = this.AuthService.authentication.userName;
             email = email.trim();
             email = email.toLowerCase();
-            this.emailHash = this.md5.createHash( email || '')
+            this.emailHash = this.md5.createHash( email || '');
         }
     }
 }

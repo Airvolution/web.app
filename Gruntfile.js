@@ -98,7 +98,7 @@ module.exports = function (grunt) {
                         dest: 'build/'
                     },
                     {
-                        src: ['app/**/*.jpeg', 'app/**/*.jpg', 'app/**/*.png'],
+                        src: ['app/**/*.jpeg', 'app/**/*.jpg', 'app/**/*.png', 'app/**/*.svg'],
                         dest: 'build/'
                     },
                     {

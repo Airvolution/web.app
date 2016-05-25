@@ -7,11 +7,41 @@ class FAQQuestionController {
     public userId = undefined;
     public userReviewColor = 'black';
 
-    public static $inject = ['$sanitize', 'APIService', 'preferencesService', '$state', 'AuthService'];
-    constructor(private $sanitize, private APIService, private preferencesService, private $state, private authService) {
+    public static $inject = ['$scope',
+                                '$sanitize',
+                                'APIService',
+                                'preferencesService',
+                                '$state',
+                                'AuthService',
+                                'notificationService'
+                            ];
+    constructor(private $scope,
+                private $sanitize,
+                private APIService,
+                private preferencesService,
+                private $state,
+                private authService,
+                private notificationService) {
 
-        this.question.chevron = 'DOWN';
+        let self = this;
 
+        self.question.chevron = 'DOWN';
+
+        if(self.authService.authentication.isAuth) {
+            self.loadUserState();
+        }
+
+        self.notificationService.subscribe($scope, 'UserLogin', () => {
+            self.loadUserState();
+        });
+
+        self.notificationService.subscribe($scope, 'UserLogout', () => {
+            self.clearUserState();
+        });
+    }
+
+    public loadUserState() {
+        // Only call if user logs in or is already logged in.
         this.APIService.getUserProfile().then((userProfile)=> {
             if(userProfile && userProfile.id != undefined) {
                 this.userId = userProfile.id;
@@ -19,12 +49,19 @@ class FAQQuestionController {
                 var score = this.getMyQuestionReivewScore();
                 if(score == 1) {
                     this.userReviewColor = 'green';
-                }else if(score == -1) {
+                } else if(score == -1) {
                     this.userReviewColor = 'red';
+                } else {
+                    this.userReviewColor = 'black';
                 }
             }
         });
-    };
+    }
+
+    public clearUserState() {
+        // Only call if the user logs out.
+        this.userReviewColor = 'black';
+    }
 
     public toggleChevron() {
         if(this.question.chevron == 'DOWN') {
@@ -38,7 +75,7 @@ class FAQQuestionController {
         } else {
             this.question.chevron = 'DOWN';
         }
-    };
+    }
 
     public vote(direction) {
 
@@ -59,34 +96,29 @@ class FAQQuestionController {
             score: 0
         };
 
-        if(direction == 'up') {
+        if (direction == 'up') {
 
-            if(this.userReviewColor == 'green') {
+            if (this.userReviewColor == 'green') {
                 review.score = 0;
                 this.userReviewColor = 'black';
-            }
-            else {
+            } else {
                 review.score = 1;
                 this.userReviewColor = 'green';
             }
-            this.APIService.PostFaqUserReview(review).then((data)=>{
-            });
-        }
-        else if(direction == 'down') {
+            this.APIService.PostFaqUserReview(review).then((data)=>{});
+        } else if(direction == 'down') {
 
-            if(this.userReviewColor == 'red') {
+            if (this.userReviewColor == 'red') {
                 review.score = 0;
                 this.userReviewColor = 'black';
-            }
-            else {
+            } else {
                 review.score = -1;
                 this.userReviewColor = 'red';
             }
 
-            this.APIService.PostFaqUserReview(review).then((data)=>{
-            });
+            this.APIService.PostFaqUserReview(review).then((data)=>{});
         }
-    };
+    }
 
     public getMyQuestionReivewScore(){
         for(var i = 0; i < this.question.userReviews.length; i++) {
@@ -94,5 +126,5 @@ class FAQQuestionController {
                 return this.question.userReviews[i].userReviewScore;
             }
         }
-    };
+    }
 }

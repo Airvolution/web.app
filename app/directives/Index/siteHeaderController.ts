@@ -51,7 +51,7 @@ class SiteHeaderController {
             var email = this.AuthService.authentication.userName;
             email = email.trim();
             email = email.toLowerCase();
-            this.emailHash = this.md5.createHash( email || '')
+            this.emailHash = this.md5.createHash( email || '');
         }
     }
 

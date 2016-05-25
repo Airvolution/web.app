@@ -1,5 +1,4 @@
 <main>
-
     <div id="about" class="col-md-offset-2 col-md-8 about-text">
         <h1>About Us</h1>
         <p>
@@ -24,8 +23,8 @@
                     <div class="col-md-8">
                         <h4 class="col-md-12">{{value.name}}</h4>
                         <div class="col-md-12">
-                            <a href="{{value.githubUrl}}"><i class="fa fa-3x fa-github-square"></i></a>
-                            <a href="{{value.linkedInUrl}}"><i class="fa fa-3x fa-linkedin-square"></i></a>
+                            <a href="{{value.githubUrl}}" target="_blank"><i class="fa fa-3x fa-github-square"></i></a>
+                            <a href="{{value.linkedInUrl}}" target="_blank"><i class="fa fa-3x fa-linkedin-square"></i></a>
                         </div>
                         <div class="col-md-12"></div>
                         <span class="col-md-12">Involvement: {{value.involvement}}</span>
@@ -40,9 +39,9 @@
     </div>
     <div id="contact" class="col-md-8 col-md-offset-2 about-text">
         <h1>Contact Us</h1>
-        <uib-alert class="col-md-12" ng-if="ctrl.emailAlert" type="{{ctrl.emailAlert.type}}"
-                   dismiss-on-timeout="{{ctrl.alertTimeout}}" close="ctrl.onAlertClose(ctrl.profileAlert)">
-            {{ctrl.emailAlert.message}}
+        <uib-alert class="col-md-12" ng-if="ctrl.alert" type="{{ctrl.alert.type}}"
+                   dismiss-on-timeout="{{ctrl.alertTimeout}}" close="ctrl.onAlertClose(ctrl.alert)">
+            {{ctrl.alert.message}}
         </uib-alert>
         <form name="ctrl.contactUsForm" ng-submit="ctrl.sendEmail()" novalidate>
             <div class="form-group">
@@ -90,7 +89,7 @@
             to create and/or support public policy decisions, guidance, regulation, or trends.
 
             For officially verified and validated air quality, visit the EPA’s Air Quality System (<a
-                href="http://www.epa.gov/aqs">http://www.epa.gov/aqs</a>).
+                href="http://www.epa.gov/aqs" target="_blank">http://www.epa.gov/aqs</a>).
         </p>
     </div>
 </main>

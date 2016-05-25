@@ -11,17 +11,19 @@ class HeatmapWidgetController {
     public layers;
     public data = [];
 
-    public static $inject = ['mapFactory', 'APIService'];
+    public static $inject = ['mapFactory', 'APIService','leafletData'];
     public constructor(
         private mapFactory,
-        private APIService
+        private APIService,
+        private leafletData
     ) {
         this.getMapData();
         this.tiles = mapFactory.createTilesFromKey('light');
         this.center = {
             lat: 39.091042,
             lng: -98.178785,
-            zoom: 3
+            zoom: 3,
+            draggable: false
         };
         this.defaults = {
             minZoom: 3,
@@ -41,6 +43,14 @@ class HeatmapWidgetController {
                 }
             }
         };
+
+        leafletData.getMap('heatmap').then(function(map) {
+            map.dragging.disable();
+            map.touchZoom.disable();
+            map.doubleClickZoom.disable();
+            map.scrollWheelZoom.disable();
+            map.keyboard.disable();
+        });
     }
 
     public getMapData() {

@@ -9,7 +9,7 @@ class SVGAQIController {
     public aqi;
     public category;
     public offset;
-    static $inject = ['$scope'];
+    public static $inject = ['$scope'];
     constructor(private $scope){
         this.category = 'green';
         this.offset = X_BASE;

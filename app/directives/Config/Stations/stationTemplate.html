@@ -14,6 +14,9 @@
     </div>
     <div class="panel-body">
         <form name="ctrl.updateForm" class="station-body" ng-hide="ctrl.collapsed" ng-submit="ctrl.onSubmit()">
+            <uib-alert class="col-md-12" ng-if="ctrl.alert" type="{{ctrl.alert.type}}"
+                       dismiss-on-timeout="{{ctrl.alertTimeout}}" close="ctrl.onAlertClose(ctrl.alert)">{{ctrl.alert.message}}</uib-alert>
+
             <input type="hidden" name="id" value="{{ctrl.station.id}}" ng-model="ctrl.formStation.id">
             <div class="row">
                 <div class="col-md-12">
@@ -61,8 +64,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class=" update-buttons col-md-12 ">
-                    <button class="btn btn-info btn-lg pull-left" ng-click="ctrl.calibrate()">Calibrate Station</button>
+                <div class="col-md-12 ">
+                    <button class="btn btn-warning btn-lg pull-left" ng-click="ctrl.calibrate()">Calibrate Station</button>
                     <button class="btn btn-primary btn-lg pull-right" type="submit">Save</button>
                     <button class="btn btn-default btn-lg pull-right">Cancel</button>
                 </div>
